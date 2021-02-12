@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "ConquerorOfTheSky"
+		},
+		{
+			"path": "ConquerorOfTheSkyClient"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "ConquerorOfTheSkyClient",
+		"files.exclude": {
+			"**/.classpath": true,
+			"**/.project": true,
+			"**/.settings": true,
+			"**/.factorypath": true
+		},
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}
