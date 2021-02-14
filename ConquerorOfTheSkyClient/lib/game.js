@@ -79,11 +79,11 @@ function create() {
         },
         fire: function (x, y)
         {
+            this.rotation = Phaser.Math.DegToRad(avion.body.rotation);
             this.setPosition(avion.x, avion.y);
-            var angle = Phaser.Math.Angle.Between(avion.x, avion.y, punteroX, punteroY);
-            this.setRotation(angle);
+            var angle = Phaser.Math.DegToRad(avion.body.rotation);
             this.incX = Math.cos(angle);
-            this.incY = Math.sin(angle)
+            this.incY = Math.sin(angle);
             this.setActive(true);
             this.setVisible(true);
             this.lifespan = 1000;
