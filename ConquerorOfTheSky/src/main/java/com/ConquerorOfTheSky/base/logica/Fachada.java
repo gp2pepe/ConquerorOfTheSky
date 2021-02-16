@@ -55,6 +55,9 @@ class Fachada implements IFachada{
 
         return  partidaNueva.getIdpartida();
     }
+    public String listarPartidas(Long idPartida){
+      return "";
+    }
 
     public void ingresarAPartida(Long idPartida){
 
