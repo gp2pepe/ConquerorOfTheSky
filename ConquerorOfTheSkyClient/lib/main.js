@@ -1,7 +1,10 @@
 import Bootloader from '../Scenes/Bootloader.js';
 import Play from '../Scenes/Play.js';
+import Client from './websocket.js';
+import Partida from '../Objects/Partida.js';
 
-const config = {
+
+var config = {
     type: Phaser.AUTO,
     scale :{
         mode : Phaser.Scale.fit,
@@ -17,11 +20,14 @@ const config = {
             debug: false
         }
     },
-    scene: [Bootloader, Play]
+    scene: [Bootloader, Play],
+    WebSocket: new Client(),
+    Part: new Partida(),
+
 };
 
 export {
-    game
+    game,config
   }
   
 var game = new Phaser.Game(config);

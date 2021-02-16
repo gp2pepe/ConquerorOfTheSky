@@ -1,3 +1,5 @@
+import {config} from '../lib/main.js';
+
 class Bootloader extends Phaser.Scene {
     constructor(){
         super('Bootloader');
@@ -17,6 +19,7 @@ class Bootloader extends Phaser.Scene {
         this.load.on('complete',()=>{
             this.scene.start('Play');
         })
+        config.WebSocket.openConnection();
     }
     create(){       
         

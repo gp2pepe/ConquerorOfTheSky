@@ -1,7 +1,7 @@
 package com.ConquerorOfTheSky.base.modelo;
 
 import java.util.List;
-import javax.websocket.Session;
+import org.springframework.web.socket.WebSocketSession;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ public class Jugador {
     
     //Este campo no se guarda en la BD ya que no es necesario, la etiqueta Transient hace que no se guarde 
     @Transient
-    private Session sesionActual;
+    private WebSocketSession sesionActual;
     
     //Genera la relacion entre jugador y sus aviones y los guarda en la tabla aviones_jugador
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -41,7 +41,7 @@ public class Jugador {
     public Jugador() {
     }
 
-    public Jugador(String nick, Session sesionActual, List<Avion> aviones) {
+    public Jugador(String nick, WebSocketSession sesionActual, List<Avion> aviones) {
         this.nick = nick;
         this.sesionActual = sesionActual;
         this.aviones = aviones;
@@ -63,11 +63,11 @@ public class Jugador {
         this.nick = nick;
     }
 
-    public Session getSesionActual() {
+    public WebSocketSession getSesionActual() {
         return sesionActual;
     }
 
-    public void setSesionActual(Session sesionActual) {
+    public void setSesionActual(WebSocketSession sesionActual) {
         this.sesionActual = sesionActual;
     }
 

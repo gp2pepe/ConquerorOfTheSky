@@ -60,8 +60,9 @@ public class TWebSocketHandler extends TextWebSocketHandler {
         }
         String op = (String) map.get("operacion");
         if(op.equals(new String("iniciarPartida"))){
-            //fachada.crearPartida((String) map.get("nick"),session,);
-
+            Long idpartida = fachada.crearPartida((String) map.get("nick"),session, (boolean) map.get("publica"), (String) map.get("passwd"),
+              (String) map.get("bando"));
+            session.sendMessage(new TextMessage("{idpartida: "+idpartida+"}"));
         }else if(op.equals(new String("sincronizarAvion"))){
             sessions.forEach(webSocketSession -> {
                 try {

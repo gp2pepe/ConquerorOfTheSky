@@ -27,7 +27,7 @@ class Fachada implements IFachada{
 
     private List<Partida> partidas;
 
-    public Long crearPartida(String nick, Session sesionUsu, boolean publica, String passwd, String bando){
+    public Long crearPartida(String nick, WebSocketSession sesionUsu, boolean publica, String passwd, String bando){
 
         List<Avion> aviones = new LinkedList<>();
         aviones.add(new Avion( "Avion", 200,12,200, 400, "Alta", 0, 0));
@@ -64,7 +64,7 @@ class Fachada implements IFachada{
     }
 
 
-    public List<WebSocketSession> sincronizarPartida(){
+    public List<WebSocketSession> sincronizarPartida(Long idpartida){
       List<WebSocketSession> sessions = null;
       return sessions;
 
