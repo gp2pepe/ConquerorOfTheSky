@@ -1,4 +1,4 @@
-package com.ConquerorOfTheSky.modelos;
+package com.ConquerorOfTheSky.base.modelo;
 
 
 import javax.persistence.Column;
@@ -9,27 +9,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Avion")
+@Table(name="avion")
 public class Avion {
     
     @Id
     @Column(name="id_avion")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long idAvion;
+    
     private String nombre;
     private int salud;
     private int danio;
     private int velocidad;
+    private int combustible;
     private String altitud;
     private int posicionX;
     private int posicionY;
-
-    public Avion(String nombre, int salud, int danio, int velocidad, String altitud, int posicionX,
+    
+    public Avion(){}
+    
+    public Avion(String nombre, int salud, int danio, int velocidad, int combustible, String altitud, int posicionX,
             int posicionY) {
         this.nombre = nombre;
         this.salud = salud;
         this.danio = danio;
         this.velocidad = velocidad;
+        this.combustible = combustible;
         this.altitud = altitud;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
@@ -97,6 +102,14 @@ public class Avion {
 
     public void setPosicionY(int posicionY) {
         this.posicionY = posicionY;
+    }
+
+    public int getCombustible() {
+        return combustible;
+    }
+
+    public void setCombustible(int combustible) {
+        this.combustible = combustible;
     }
 
     

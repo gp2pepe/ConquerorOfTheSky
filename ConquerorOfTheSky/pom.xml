@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ConquerorOfTheSky</groupId>
-	<artifactId>ConquerorOfTheSky</artifactId>
+	<artifactId>base</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ConquerorOfTheSky</name>
+	<name>base</name>
 	<description>Juego de aviones Conqueror Of The Sky basado en la primera guerra mundial</description>
 	<properties>
 		<java.version>11</java.version>
