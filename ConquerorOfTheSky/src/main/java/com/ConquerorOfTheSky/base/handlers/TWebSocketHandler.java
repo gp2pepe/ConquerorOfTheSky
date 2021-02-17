@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.ConquerorOfTheSky.base.logica.Fachada;
 import com.ConquerorOfTheSky.base.logica.IFachada;
+
 import com.mysql.cj.Session;
 
 import org.slf4j.Logger;
@@ -25,7 +27,6 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
     
-    @Autowired
     private static IFachada fachada;
 
     @Override
@@ -46,29 +47,32 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
+        fachada = (IFachada) Fachada.getInstancia();
         super.handleTextMessage(session, message);
        
 
         JsonParser springParser = JsonParserFactory.getJsonParser();
         Map<String, Object> map = springParser.parseMap(message.getPayload());
 
-        int i = 0;
+        /*int i = 0;
         for (Map.Entry<String, Object> entry : map.entrySet()) {
                 System.out.println(entry.getKey() + " = " + entry.getValue());
                 i++;
-        }
+        }*/
+
         String op = (String) map.get("operacion");
         if(op.equals(new String("iniciarPartida"))){
-            Long idpartida = fachada.crearPartida((String) map.get("nick"),session, (boolean) map.get("publica"), (String) map.get("passwd"),
-              (String) map.get("bando"));
-            session.sendMessage(new TextMessage("{idpartida: "+idpartida+"}"));
+            LOGGER.debug("Llego un iniciarPartida: " + map.toString());
+            Long idpartida = fachada.crearPartida((String) map.get("nick"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
+            session.sendMessage(new TextMessage("{ \"operacion\":\"iniciarPartida\",\"idpartida\": \""+idpartida+"\" }"));
+
+
         }else if(op.equals(new String("sincronizarAvion"))){
+            LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
+
             sessions.forEach(webSocketSession -> {
                 try {
-    
                     webSocketSession.sendMessage(message);
-    
                 } catch (IOException e) {
     
                     LOGGER.error("Error occurred.", e);

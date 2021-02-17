@@ -6,30 +6,28 @@ class Client {
     constructor() {
     }
     openConnection() {
-        var url = 'ws://localhost:8080/web-socket    ';
+        var url = 'ws://localhost:8082/web-socket    ';
 
         this.ws = new WebSocket(url);
         this.connected = false;
         this.ws.onmessage = this.onMessage.bind(this);        
         this.ws.onerror = this.displayError.bind(this);        
-        this.ws.onopen = this.connectionOpen.bind(this);  
-        
+        this.ws.onopen = this.connectionOpen.bind(this);     
     }
 
     connectionOpen() {
         this.connected = true;    
         console.log("conexion abierta"); 
-      //  myText.text = 'connected\n';
     }
+
     isConnected() {
         return this.connected;
     }
-    onMessage(message) {
-      //  myText.text = message.data;
-        var msg = JSON.parse(message.data);
-        console.log(msg);
-        config.Part.avion.moverAvion(msg);
 
+    onMessage(message) {
+        var msg = JSON.parse(message.data);
+        console.log("Recibí el mensaje : " + msg);
+        config.Partida.procesarMensaje(msg);
     }
 
     displayError(err) {

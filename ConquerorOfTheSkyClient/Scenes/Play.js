@@ -23,14 +23,14 @@ class Play extends Phaser.Scene {
             myText.text= "conectado";   
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.add.image(433, 46, "mapa_1").setOrigin(0); 
-        config.Part.iniciarPartida();       
+        config.Partida.iniciarPartida();       
         // Personaje
         avion = new Avion({
             scene: this,
             x: 100,
             y: 100            
         });
-        config.Part.avion = avion;
+        config.Partida.avion = avion;
         this.input.on('pointerdown',this.onObjectClicked); 
 
         circle = this.add.circle(avion.x, avion.y, 100 , 0xffffff, 0.2); 
@@ -47,7 +47,7 @@ class Play extends Phaser.Scene {
     onObjectClicked(pointer)
     {  
         avion.moverAvion({x: pointer.x, y: pointer.y});
-        config.Part.sincronizarAvion({x: pointer.x, y: pointer.y});
+        config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
     }
 
     update(time,delta)

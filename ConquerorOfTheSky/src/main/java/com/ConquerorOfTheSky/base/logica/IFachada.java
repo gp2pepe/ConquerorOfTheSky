@@ -2,8 +2,6 @@ package com.ConquerorOfTheSky.base.logica;
 
 import java.util.List;
 
-import javax.websocket.Session;
-
 import org.springframework.web.socket.WebSocketSession;
 
 public interface IFachada {
@@ -13,7 +11,7 @@ public interface IFachada {
 
     public String listarPartidas(Long idPartida);
 
-    public void ingresarAPartida(Long idPartida);
+    public void ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, boolean publica, String passwd, String bando);
     
     public List<WebSocketSession>  sincronizarPartida(Long idpartida);
 
@@ -21,5 +19,6 @@ public interface IFachada {
 
     public void recuperarPartida();
 
+    public void terminarPartida();
 
 }

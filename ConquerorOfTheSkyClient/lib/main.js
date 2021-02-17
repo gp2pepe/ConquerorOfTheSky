@@ -22,7 +22,7 @@ var config = {
     },
     scene: [Bootloader, Play],
     WebSocket: new Client(),
-    Part: new Partida(),
+    Partida: new Partida(),
 
 };
 
