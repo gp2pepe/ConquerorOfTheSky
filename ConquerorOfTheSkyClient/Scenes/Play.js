@@ -6,7 +6,6 @@ var avion;
 var cursors;
 var bullets;
 var circle;
-var myText = null;
 
 class Play extends Phaser.Scene {
 
@@ -15,14 +14,10 @@ class Play extends Phaser.Scene {
         this.bullets;
     }
 
-    create(){
-               
-        myText = this.add.text(0, 0, "started (not yet connected)", { font: "14px Arial", fill: "#ff0044"}).setDepth(2);
-        if (config.WebSocket.isConnected())
-            myText.text= "conectado";   
+    create(){ 
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.add.image(433, 46, "mapa_1").setOrigin(0); 
-        config.Partida.iniciarPartida();       
+               
         // Personaje
         avion = new Avion({
             scene: this,
@@ -58,10 +53,10 @@ class Play extends Phaser.Scene {
             bullet.fire(avion);            
         }
     }
-    
+
     update(time,delta)
 	{ 
-        circle.setPosition(avion.x, avion.y);        
+       circle.setPosition(avion.x, avion.y);        
 	}
 }
 

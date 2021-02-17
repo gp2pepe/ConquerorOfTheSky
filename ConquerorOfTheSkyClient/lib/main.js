@@ -1,5 +1,6 @@
 import Bootloader from '../Scenes/Bootloader.js';
 import Play from '../Scenes/Play.js';
+import MenuInicial from '../Scenes/MenuInicial.js';
 import Client from './websocket.js';
 import Partida from '../Objects/Partida.js';
 
@@ -20,7 +21,7 @@ var config = {
             debug: false
         }
     },
-    scene: [Bootloader, Play],
+    scene: [Bootloader, Play,MenuInicial],
     WebSocket: new Client(),
     Partida: new Partida(),
 

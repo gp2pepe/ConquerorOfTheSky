@@ -20,8 +20,8 @@ class Partida {
             //(String nick, Session sesionUsu, boolean publica, String passwd, String bando)
             console.log("Voy a crear partida");
             config.WebSocket.ws.send(JSON.stringify({operacion:"iniciarPartida",nick:"pepe",publica:"true",passww:"0",bando:"Aleman"}));
-        }
-        
+        //aca el backend registrara una nueva partida y la sesion del usuaria, ademas retornara la sesion del juego.
+        }        
     }
 
     sincronizarAvion(msg){
