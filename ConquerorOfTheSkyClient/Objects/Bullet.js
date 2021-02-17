@@ -25,7 +25,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
     }
 
 	update(time,delta)
-	{
+	{		
 		this.lifespan -= delta;
 		this.x += this.incX * (this.speed * delta);
 		this.y += this.incY * (this.speed * delta);

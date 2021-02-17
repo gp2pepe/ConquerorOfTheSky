@@ -5,7 +5,6 @@ import { config } from '../lib/main.js';
 var avion;
 var cursors;
 var bullets;
-var lastFired = 0;
 var circle;
 var myText = null;
 
@@ -30,18 +29,19 @@ class Play extends Phaser.Scene {
             x: 100,
             y: 100            
         });
+        cursors = this.input.keyboard.createCursorKeys(); 
         config.Partida.avion = avion;
         this.input.on('pointerdown',this.onObjectClicked); 
-
+        
         circle = this.add.circle(avion.x, avion.y, 100 , 0xffffff, 0.2); 
-
+        
         //Bullets
         bullets = this.add.group({
             classType: Bullet,
             maxSize: 10,
             runChildUpdate: true
         });
-        cursors = this.input.keyboard.createCursorKeys();       
+        this.input.keyboard.on('keydown-SPACE', this.disparar);   
     }
 
     onObjectClicked(pointer)
@@ -49,18 +49,18 @@ class Play extends Phaser.Scene {
         avion.moverAvion({x: pointer.x, y: pointer.y});
         config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
     }
-
-    update(time,delta)
-	{
-        if (cursors.up.isDown && time > lastFired)
+    
+    disparar()
+    {        
+        var bullet = bullets.get();
+        if (bullet)
         {
-            var bullet = bullets.get();
-            if (bullet)
-            {
-                bullet.fire(avion);
-                lastFired = time + 50;
-            }
+            bullet.fire(avion);            
         }
+    }
+    
+    update(time,delta)
+	{ 
         circle.setPosition(avion.x, avion.y);        
 	}
 }
