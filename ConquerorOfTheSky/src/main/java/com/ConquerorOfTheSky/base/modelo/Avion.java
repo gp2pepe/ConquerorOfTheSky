@@ -1,11 +1,13 @@
 package com.ConquerorOfTheSky.base.modelo;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +27,10 @@ public class Avion {
     private String altitud;
     private int posicionX;
     private int posicionY;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_bomba", referencedColumnName = "id_bomba")
+    private Bomba bomba;
     
     public Avion(){}
     

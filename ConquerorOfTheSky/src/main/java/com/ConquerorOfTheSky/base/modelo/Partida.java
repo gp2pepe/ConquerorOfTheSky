@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="partida")
@@ -35,9 +36,11 @@ public class Partida {
                 inverseJoinColumns = {@JoinColumn(name = "id_equipo")})
     private List<Equipo> equipos;
     
-    //Genera la relacion entre partida y su mapa mediante una foreign key en partida de nombre id_mapa
+    /*//Genera la relacion entre partida y su mapa mediante una foreign key en partida de nombre id_mapa
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_mapa", referencedColumnName = "id_mapa")
+    @JoinColumn(name = "id_mapa", referencedColumnName = "id_mapa")*/
+    //PAra que no rompa ahora
+    @Transient
     private Mapa mapa;
 
     public Partida(){}

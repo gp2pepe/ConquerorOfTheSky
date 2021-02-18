@@ -6,28 +6,44 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
 
-@Entity
-@Table(name="mapa")
+import java.util.List;
+
+import javax.persistence.CascadeType;
+
+/*@Entity
+@Table(name="mapa")*/
 public class Mapa {
 
-    @Id
+   /* @Id
     @Column(name="id_mapa")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)*/
     private Long idMapa;
     private String nombre;
     private int tamanioX;
     private int tamanioY;
 
+   /* @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "campos_mapa",
+                joinColumns = {@JoinColumn(name = "id_mapa")},
+                inverseJoinColumns = {@JoinColumn(name = "id_campo")})*/
+    private List<Campo> campos;
+
     public Mapa() {
     }
 
-    public Mapa(String nombre, int tamanioX, int tamanioY) {
+    public Mapa(Long idMapa, String nombre, int tamanioX, int tamanioY, List<Campo> campos) {
+        this.idMapa = idMapa;
         this.nombre = nombre;
         this.tamanioX = tamanioX;
         this.tamanioY = tamanioY;
+        this.campos = campos;
     }
-
+    
     public Long getIdMapa() {
         return idMapa;
     }
@@ -59,6 +75,14 @@ public class Mapa {
     public void setTamanioY(int tamanioY) {
         this.tamanioY = tamanioY;
     }
-    
-    
+
+    public List<Campo> getCampos() {
+        return campos;
+    }
+
+    public void setCampos(List<Campo> campos) {
+        this.campos = campos;
+    }
+
+
 }

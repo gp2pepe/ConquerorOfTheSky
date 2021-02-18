@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,12 +33,17 @@ public class Equipo {
                 inverseJoinColumns = {@JoinColumn(name = "id_jugador")})
     private List<Jugador> jugadores;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_campo", referencedColumnName = "id_campo")
+    private Campo campo;
+
     public Equipo() {
     }
 
-    public Equipo(String bando, List<Jugador> jugadores) {
+    public Equipo(String bando, List<Jugador> jugadores, Campo campo) {
         this.bando = bando;
         this.jugadores = jugadores;
+        this.campo = campo;
     }
 
     public Long getIdEquipo() {
@@ -62,6 +68,14 @@ public class Equipo {
 
     public void setJugadores(List<Jugador> jugadores) {
         this.jugadores = jugadores;
+    }
+
+    public Campo getCampo() {
+        return campo;
+    }
+
+    public void setCampo(Campo campo) {
+        this.campo = campo;
     }
     
     

@@ -1,10 +1,13 @@
 package com.ConquerorOfTheSky.base.modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,13 +21,29 @@ public class Base {
     private int posicionX;
     private int posicionY;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_deposito", referencedColumnName = "id_deposito")
+    private DepositoDeExplosivos depositoExplosivos;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_torre", referencedColumnName = "id_torre")
+    private TorreDeControl torreControl;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_tanque", referencedColumnName = "id_tanque")
+    private TanqueDeCombustible tanqueCombustible;
+
     public Base() {
     }
 
-    public Base(Long idBase, int posicionX, int posicionY) {
+    public Base(Long idBase, int posicionX, int posicionY, DepositoDeExplosivos depositoExplosivos,
+            TorreDeControl torreControl, TanqueDeCombustible tanqueCombustible) {
         this.idBase = idBase;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
+        this.depositoExplosivos = depositoExplosivos;
+        this.torreControl = torreControl;
+        this.tanqueCombustible = tanqueCombustible;
     }
 
     public Long getIdBase() {
@@ -51,6 +70,29 @@ public class Base {
         this.posicionY = posicionY;
     }
 
+    public DepositoDeExplosivos getDepositoExplosivos() {
+        return depositoExplosivos;
+    }
+
+    public void setDepositoExplosivos(DepositoDeExplosivos depositoExplosivos) {
+        this.depositoExplosivos = depositoExplosivos;
+    }
+
+    public TorreDeControl getTorreControl() {
+        return torreControl;
+    }
+
+    public void setTorreControl(TorreDeControl torreControl) {
+        this.torreControl = torreControl;
+    }
+
+    public TanqueDeCombustible getTanqueCombustible() {
+        return tanqueCombustible;
+    }
+
+    public void setTanqueCombustible(TanqueDeCombustible tanqueCombustible) {
+        this.tanqueCombustible = tanqueCombustible;
+    }
     
     
 }
