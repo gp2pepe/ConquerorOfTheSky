@@ -23,18 +23,19 @@ class MenuInicial extends Phaser.Scene {
     
 	create() {
         //Carga boton de nueva partida y dirije a la escena nueva partida
+        this.add.image(0, 0, "fondoMenu").setOrigin(0);
+        this.add.image(900, 100, "titulo").setOrigin(0);
 
-        this.logoMenu = this.add.image(
-            this.scale.width/2,
-            this.scale.height/2,
-            'logo'
-        ).setScale(2).setInteractive();
+
+
+        this.logoMenu = this.add.image(1050,300,'nuevaPartida'
+        ).setOrigin(0).setScale(0.8).setInteractive();
         
         this.logoMenu.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.logoMenu,
                 ease: 'Bounce.easeIn',
-                y: -200,
+                x:1300,
                 duration: 1000,
                 onComplete: () => {
                     config.Partida.iniciarPartida();
@@ -48,6 +49,10 @@ class MenuInicial extends Phaser.Scene {
                 duration: 1000
             });
         });
+    }
+    update(){
+       
+
     }
 }
 export  default MenuInicial;

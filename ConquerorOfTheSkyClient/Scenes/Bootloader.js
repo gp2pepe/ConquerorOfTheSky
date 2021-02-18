@@ -14,8 +14,15 @@ class Bootloader extends Phaser.Scene {
             'Nieuport_28C1_2',
             'fondoMapa',
             'mapa_1',
+            'mapa_2',
             'bullet',
-            'logo'
+            'fondoMenu',
+            'nuevaPartida',
+            'titulo',
+            'contenedor',
+            'torre',
+            'muralla',
+            'deposito'
         ])
         this.load.on('complete',()=>{
             this.scene.start('MenuInicial');
