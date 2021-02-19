@@ -18,6 +18,7 @@ class Bootloader extends Phaser.Scene {
             'bullet',
             'fondoMenu',
             'nuevaPartida',
+            'nuevaPartida_2',
             'titulo',
             'contenedor',
             'torre',

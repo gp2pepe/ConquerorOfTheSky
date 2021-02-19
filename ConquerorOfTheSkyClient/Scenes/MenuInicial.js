@@ -7,7 +7,7 @@ class MenuInicial extends Phaser.Scene {
 	 */
     
 	constructor() {
-		super({key: 'MenuInicial'});
+		super({key: 'MenuInicial'});        
 	}
 	
 	/**
@@ -38,7 +38,32 @@ class MenuInicial extends Phaser.Scene {
                 x:1300,
                 duration: 1000,
                 onComplete: () => {
+                    console.log('Entre iniciando partida');
                     config.Partida.iniciarPartida();
+                    config.Partida.Bando=1;
+                    this.scene.start('Play');
+                }
+            });
+
+            this.add.tween({
+                targets: [ this.pointsText, this.bestPointsText ],                
+                y: 400,
+                duration: 1000
+            });
+        });
+
+        this.logoMenu_2 = this.add.image(1050,600,'nuevaPartida_2'
+        ).setOrigin(0).setScale(0.8).setInteractive();
+        
+        this.logoMenu_2.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.logoMenu_2,
+                ease: 'Bounce.easeIn',
+                x:1300,
+                duration: 1000,
+                onComplete: () => {
+                   // config.Partida.iniciarPartida();      
+                    config.Partida.Bando=0;             
                     this.scene.start('Play');
                 }
             });

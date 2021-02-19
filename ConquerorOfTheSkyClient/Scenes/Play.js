@@ -3,6 +3,7 @@ import Bullet from '../Objects/Bullet.js';
 import { config } from '../lib/main.js';
 
 var avion;
+var avion_1;
 var cursors;
 var bullets;
 var circle;
@@ -53,17 +54,42 @@ console.log(numero);
                 this.posicionAleatoria(opcion6);
 				break;
 	} 
-   
-
-               
-        // Personaje
         avion = new Avion({
             scene: this,
             x: 100,
-            y: 100            
+            y: 100                     
         });
+        
+     
+        // Personaje
+        avion_1 = new Avion({
+            scene: this,
+            x: 200,
+            y: 200                   
+        }).setInteractive();
+        
+
+        var avion_2 = new Avion({
+            scene: this,
+            x: 300,
+            y: 300            
+        });
+
+     /*   if (config.Partida.Bando==1)
+            avion_2.setVisible(false);
+        else
+            avion_1.setVisible(false);*/
+        avion_1.on('clicked', this.clickHandler, this);
+            
+        this.input.on('gameobjectup', function (pointer, gameObject)
+        {
+            gameObject.emit('clicked', gameObject);
+        }, this);
+ 
+
         cursors = this.input.keyboard.createCursorKeys(); 
         config.Partida.avion = avion;
+        config.Partida.avion_1 = avion_1;
         this.input.on('pointerdown',this.onObjectClicked); 
         
         circle = this.add.circle(avion.x, avion.y, 100 , 0xffffff, 0.2); 
@@ -77,10 +103,20 @@ console.log(numero);
         this.input.keyboard.on('keydown-SPACE', this.disparar);   
     }
 
+    clickHandler (avion_1)
+    {        
+        avion_1.focus=true;
+        console.log(avion_1.focus);
+    }
+
     onObjectClicked(pointer)
-    {  
-        avion.moverAvion({x: pointer.x, y: pointer.y});
-        config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+    {     
+        if (avion_1.focus==true)
+        {            
+            config.Partida.idavion=1;
+            avion_1.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        }   
     }
     
     disparar()
@@ -91,6 +127,7 @@ console.log(numero);
             bullet.fire(avion);            
         }
     }
+
     posicionAleatoria (Array)
     {	
 	    this.add.image(Array[0], Array[1], 'muralla').setScale(.65);
@@ -98,6 +135,8 @@ console.log(numero);
 	    this.add.image(Array[4], Array[5], 'deposito').setScale(.40);
         this.add.image(Array[6], Array[7], 'torre').setScale(.450);
     }
+    
+
 
     update(time,delta)
 	{ 

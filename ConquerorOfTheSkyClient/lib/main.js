@@ -23,8 +23,8 @@ var config = {
     },
     scene: [Bootloader, Play,MenuInicial],
     WebSocket: new Client(),
-    Partida: new Partida(),
-
+    Partida: new Partida(),   
+    
 };
 
 export {

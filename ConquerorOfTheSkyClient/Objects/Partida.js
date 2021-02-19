@@ -5,13 +5,14 @@ class Partida {
     
     constructor() {
 
-
     }
+
     procesarMensaje(msg){
         if(msg.operacion == "iniciarPartida"){
             this.idpartida = msg.idpartida;
-        }else if(msg.operacion == "sincronizarAvion"){
-            this.avion.moverAvion(msg);
+        }else if(msg.operacion == "sincronizarAvion"){            
+            if (msg.idavion ==1)
+                this.avion_1.moverAvion(msg);
         }
     }
     
@@ -26,7 +27,7 @@ class Partida {
 
     sincronizarAvion(msg){
         if (config.WebSocket.isConnected()) {        
-            config.WebSocket.ws.send(JSON.stringify({operacion:"sincronizarAvion",idpartida:this.idpartida,x: msg.x, y: msg.y}));
+            config.WebSocket.ws.send(JSON.stringify({operacion:"sincronizarAvion",idpartida:this.idpartida,idavion:this.idavion,x: msg.x, y: msg.y}));
         }
     }
 
