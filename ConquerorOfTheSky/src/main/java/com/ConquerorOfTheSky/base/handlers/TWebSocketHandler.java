@@ -69,10 +69,11 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
         }else if(op.equals(new String("sincronizarAvion"))){
             LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
-
-            sessions.forEach(webSocketSession -> {
+            List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((String) map.get("idPartida"))));
+            listaSesiones.forEach(webSocketSession -> {
                 try {
-                    webSocketSession.sendMessage(message);
+                    if(webSocketSession != session)
+                        webSocketSession.sendMessage(message);
                 } catch (IOException e) {
     
                     LOGGER.error("Error occurred.", e);
