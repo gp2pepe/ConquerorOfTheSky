@@ -62,7 +62,7 @@ class MenuInicial extends Phaser.Scene {
                 x:1300,
                 duration: 1000,
                 onComplete: () => {
-                   // config.Partida.iniciarPartida();      
+                    config.Partida.ingresarAPartida();      
                     config.Partida.Bando=0;             
                     this.scene.start('Play');
                 }

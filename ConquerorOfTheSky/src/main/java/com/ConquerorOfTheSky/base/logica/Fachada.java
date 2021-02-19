@@ -105,7 +105,7 @@ public class Fachada implements IFachada{
       return "";
     }
 
-    public void ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, boolean publica, String passwd, String bando){
+    public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd){
        
       Configuracion conf = new Configuracion(   
         1, 200, 50, 200, 200,100, //Avion
@@ -127,20 +127,21 @@ public class Fachada implements IFachada{
         artillerias.add(new Artilleria());
         
         Base base2 = new Base();
-
+        String bando = "Aleman";
         Campo campo2 = new Campo(Long.valueOf(0), conf.getCampoTamanioX(), conf.getCampoTamanioY(), conf.getCampoPosicion(), artillerias, base2);
-
-        Equipo equipo2 = new Equipo(bando, jugadores, campo2);
-        equipo2.setJugadores(jugadores);
-
         for(Partida par: this.partidas ){
-            if(par.getIdpartida()==idPartida){
-                List<Equipo> equipos = par.getEquipos();
-                equipos.add(equipo2);
-                par.setEquipos(equipos);
-            }
-        }
-        
+          if(par.getIdpartida()==idPartida){
+              List<Equipo> equipos = par.getEquipos();
+              if(equipos.get(0).getBando().equals("Aleman"))
+                bando = "Frances";
+
+              Equipo equipo2 = new Equipo(bando, jugadores, campo2);
+              equipo2.setJugadores(jugadores);
+              equipos.add(equipo2);
+              par.setEquipos(equipos);
+          }
+      }
+      return bando;   
     }
 
 

@@ -62,14 +62,22 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
         String op = (String) map.get("operacion");
         if(op.equals(new String("iniciarPartida"))){
+
             LOGGER.debug("Llego un iniciarPartida: " + map.toString());
             Long idpartida = fachada.crearPartida((String) map.get("nick"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
             session.sendMessage(new TextMessage("{ \"operacion\":\"iniciarPartida\",\"idpartida\": \""+idpartida+"\" }"));
 
 
+        }else if(op.equals(new String("ingresarAPartida"))){
+
+            LOGGER.debug("Llego un ingresarAPartida: " + map.toString());
+            String bando = fachada.ingresarAPartida(Long.valueOf(((String) map.get("idpartida"))), (String) map.get("nick"), session,(String) map.get("passwd"));
+            session.sendMessage(new TextMessage("{ \"operacion\":\"ingresarAPartida\",\"bando\": \""+bando+"\" }"));
+
         }else if(op.equals(new String("sincronizarAvion"))){
+
             LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
-            List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((String) map.get("idPartida"))));
+            List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((String) map.get("idpartida"))));
             listaSesiones.forEach(webSocketSession -> {
                 try {
                     if(webSocketSession != session)
@@ -84,27 +92,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
         }
 
-
-        
-        //fachada.sincronizarPartida( );
-
-
     }
 
-    protected void enviaMensaje(List<WebSocketSession> destinatarios, TextMessage message){
-        sessions.forEach(webSocketSession -> {
-            try {
-
-                webSocketSession.sendMessage(message);
-
-            } catch (IOException e) {
-
-                LOGGER.error("Error occurred.", e);
-
-            }
-
-        });
-
-    }
 
 }
