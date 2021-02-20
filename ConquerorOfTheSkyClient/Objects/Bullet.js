@@ -5,10 +5,10 @@ class Bullet extends Phaser.GameObjects.Sprite {
 	 */
 	constructor (scene, x, y)
     {		
-        super(scene, x, y, 'bullet').setScale(2);	
+        super(scene, x, y, 'bullet').setScale(6);	
 		this.incX = 0;
 		this.incY = 0;
-		this.speed = Phaser.Math.GetSpeed(1000, 1);
+		this.speed = Phaser.Math.GetSpeed(400, 1);
 		this.scene.physics.world.enable(this);
     }
 
@@ -17,6 +17,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
 		this.rotation = Phaser.Math.DegToRad(avion.body.rotation);
 		this.setPosition(avion.x, avion.y);
 		var angle = Phaser.Math.DegToRad(avion.body.rotation);
+		this.scene.physics.world.enable(this);
 		this.incX = Math.cos(angle);
 		this.incY = Math.sin(angle);
 		this.setActive(true);
@@ -29,7 +30,6 @@ class Bullet extends Phaser.GameObjects.Sprite {
 		this.lifespan -= delta;
 		this.x += this.incX * (this.speed * delta);
 		this.y += this.incY * (this.speed * delta);
-
 		if (this.lifespan <= 0)
 		{
 			this.setActive(false);
