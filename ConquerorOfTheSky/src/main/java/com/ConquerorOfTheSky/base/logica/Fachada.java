@@ -18,6 +18,11 @@ import com.ConquerorOfTheSky.base.modelo.Equipo;
 import com.ConquerorOfTheSky.base.modelo.Jugador;
 import com.ConquerorOfTheSky.base.modelo.Mapa;
 import com.ConquerorOfTheSky.base.modelo.Partida;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.ConquerorOfTheSky.base.modelo.Configuracion;
 
 import org.slf4j.Logger;
@@ -66,7 +71,7 @@ public class Fachada implements IFachada{
         aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
 
         List<Jugador> jugadores = new LinkedList<>();
-        jugadores.add(new Jugador(nick, sesionUsu, aviones));
+        jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
         
         Set<Artilleria> artillerias = new HashSet<Artilleria>();
         artillerias.add(new Artilleria());
@@ -101,9 +106,7 @@ public class Fachada implements IFachada{
 
         return  partidaNueva.getIdpartida();
     }
-    public String listarPartidas(Long idPartida){
-      return "";
-    }
+
 
     public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd){
        
@@ -121,7 +124,7 @@ public class Fachada implements IFachada{
         aviones.add(new Avion( "Avion", 200,12,200, 400, "Alta", 0, 0));
 
         List<Jugador> jugadores = new LinkedList<>();
-        jugadores.add(new Jugador(nick, sesionUsu, aviones));
+        jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
 
         Set<Artilleria> artillerias = new HashSet<Artilleria>();
         artillerias.add(new Artilleria());
@@ -144,6 +147,16 @@ public class Fachada implements IFachada{
       return bando;   
     }
 
+    public String listarPartidas(){
+
+      Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+      JsonElement jsonElement = gson.toJsonTree(partidas);
+      JsonObject innerObject = new JsonObject();
+      innerObject.addProperty("operacion", "listarPartidas");
+      innerObject.add("partidas", jsonElement);
+      return gson.toJson(innerObject);
+
+    }
 
     public List<WebSocketSession> sincronizarPartida(Long idpartida){
       List<WebSocketSession> sessions = new LinkedList<>();

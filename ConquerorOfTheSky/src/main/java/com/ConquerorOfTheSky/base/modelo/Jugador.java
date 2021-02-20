@@ -31,6 +31,8 @@ public class Jugador {
     @Transient
     private WebSocketSession sesionActual;
     
+    private Boolean esDuenio;
+
     //Genera la relacion entre jugador y sus aviones y los guarda en la tabla aviones_jugador
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "aviones_jugador",
@@ -41,9 +43,10 @@ public class Jugador {
     public Jugador() {
     }
 
-    public Jugador(String nick, WebSocketSession sesionActual, List<Avion> aviones) {
+    public Jugador(String nick, WebSocketSession sesionActual,Boolean duenio, List<Avion> aviones) {
         this.nick = nick;
         this.sesionActual = sesionActual;
+        this.esDuenio = duenio;
         this.aviones = aviones;
     }
 
@@ -77,6 +80,14 @@ public class Jugador {
 
     public void setAviones(List<Avion> aviones) {
         this.aviones = aviones;
+    }
+
+    public Boolean getEsDuenio() {
+        return esDuenio;
+    }
+
+    public void setEsDuenio(Boolean esDuenio) {
+        this.esDuenio = esDuenio;
     }
 
     

@@ -17,15 +17,19 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="partida")
 public class Partida {
     
+    @Expose
     @Id
     @Column(name="id_partida")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idPartida;
-   
+    
+    @Expose
     private boolean publica;
     private String password;
 
@@ -36,11 +40,9 @@ public class Partida {
                 inverseJoinColumns = {@JoinColumn(name = "id_equipo")})
     private List<Equipo> equipos;
     
-    /*//Genera la relacion entre partida y su mapa mediante una foreign key en partida de nombre id_mapa
+    //Genera la relacion entre partida y su mapa mediante una foreign key en partida de nombre id_mapa
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_mapa", referencedColumnName = "id_mapa")*/
-    //PAra que no rompa ahora
-    @Transient
+    @JoinColumn(name = "id_mapa", referencedColumnName = "id_mapa")
     private Mapa mapa;
 
     public Partida(){}

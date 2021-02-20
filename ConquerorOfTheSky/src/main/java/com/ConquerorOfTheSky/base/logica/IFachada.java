@@ -9,9 +9,9 @@ public interface IFachada {
     
     public Long crearPartida(String nick, WebSocketSession sesionUsu, boolean publica, String passwd, String bando);
 
-    public String listarPartidas(Long idPartida);
-
     public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd);
+
+    public String listarPartidas();
     
     public List<WebSocketSession>  sincronizarPartida(Long idpartida);
 

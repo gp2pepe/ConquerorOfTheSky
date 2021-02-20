@@ -90,6 +90,13 @@ public class TWebSocketHandler extends TextWebSocketHandler {
     
             });
 
+        }else if(op.equals(new String("listarPartidas"))){
+
+            LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
+            String respuesta = fachada.listarPartidas();
+            session.sendMessage(new TextMessage(respuesta));
+
+
         }
 
     }
