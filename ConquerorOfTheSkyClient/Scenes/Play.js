@@ -2,9 +2,10 @@ import Avion from '../Objects/Avion.js';
 import Bullet from '../Objects/Bullet.js';
 import { config,game } from '../lib/main.js';
 
-var avion;
 var avion_1;
 var avion_2;
+var avion_3;
+var avion_4;
 var cursors;
 var bullets;
 var circle;
@@ -67,13 +68,7 @@ class Play extends Phaser.Scene {
                 this.posicionAleatoria(opcion6);
 				break;
 	} 
-        
-        avion = new Avion({
-            scene: this,
-            x: 100,
-            y: 100                     
-        });
-        
+            
      
         // Personaje
         avion_1 = new Avion({
@@ -89,6 +84,18 @@ class Play extends Phaser.Scene {
             y: 400            
         }).setInteractive();
 
+        avion_3 = new Avion({
+            scene: this,
+            x: 500,
+            y: 600            
+        }).setInteractive();
+
+        avion_4 = new Avion({
+            scene: this,
+            x: 500,
+            y: 800            
+        }).setInteractive();
+
      /*   if (config.Partida.Bando==1)
             avion_2.setVisible(false);
         else
@@ -97,32 +104,38 @@ class Play extends Phaser.Scene {
             if (evento.key==='1')  
             {    
                 avion_1.focus=true;
-                console.log(avion_1.focus);
                 avion_2.focus=false;
+                avion_3.focus=false;
+                avion_4.focus=false;
             }
             if (evento.key==='2')  
             {    
                 avion_2.focus=true;
-                console.log(avion_2.focus);
                 avion_1.focus=false;
+                avion_3.focus=false;
+                avion_4.focus=false;
             }
             if (evento.key==='3')  
             {    
-               /* avion_1.focus=true;
-                console.log(avion_1.focus);
-                avion_2.focus=false;*/
+                avion_3.focus=true;
+                avion_1.focus=false;
+                avion_2.focus=false;
+                avion_4.focus=false;
             }
             if (evento.key==='4')  
             {    
-               /* avion_2.focus=true;
-                console.log(avion_2.focus);
-                avion_1.focus=false;*/
+                avion_4.focus=true;
+                avion_1.focus=false;
+                avion_2.focus=false;
+                avion_3.focus=false;
             }        
         }); 
 
         cursors = this.input.keyboard.createCursorKeys(); 
-        config.Partida.avion = avion;
-        //config.Partida.avion_1 = avion_1;
+        config.Partida.avion_1 = avion_1;
+        config.Partida.avion_2 = avion_2;
+        config.Partida.avion_3 = avion_3;
+        config.Partida.avion_4 = avion_4;
         this.input.on('pointerdown',this.onObjectClicked);         
         
         
@@ -136,9 +149,12 @@ class Play extends Phaser.Scene {
         this.input.keyboard.on('keydown-SPACE', this.disparar);         
         this.physics.add.collider([avion_1,avion_2,this.wall_floor]);
        
-        this.physics.add.collider([avion_1,bullets], ()=>
+        console.log(bullets);
+        this.physics.add.collider(avion_1,bullets, ()=>
         {
             avion_1.vidaAvion-=10;
+           // this.destroySprite(bullets[1]);
+           bullets.remove(bullets.getLast(true),true);
             console.log(avion_1.vidaAvion);
         });  
     }
@@ -158,6 +174,18 @@ class Play extends Phaser.Scene {
             avion_1.moverAvion({x: pointer.x, y: pointer.y});
             config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
         }   
+         if (avion_3.focus==true)
+        {            
+            config.Partida.idavion=3;
+            avion_3.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        }  
+         if (avion_4.focus==true)
+        {            
+            config.Partida.idavion=4;
+            avion_4.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        }  
     }
     
     disparar()
@@ -189,7 +217,15 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
 	{ 
-       this.circle.setPosition(avion_1.x, avion_1.y);      
+       this.circle.setPosition(avion_1.x, avion_1.y);  
+       if(avion_1.vidaAvion == 0) 
+       avion_1.destroy();  
+       if(avion_2.vidaAvion == 0) 
+       avion_2.destroy();  
+       if(avion_3.vidaAvion == 0) 
+       avion_3.destroy();  
+       if(avion_4.vidaAvion == 0) 
+       avion_4.destroy();   
 	}
 }
 

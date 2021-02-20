@@ -17,8 +17,14 @@ class Partida {
             console.log("Ingrese a partida en bando:") + 
             console.log(msg.bando);
         }else if(msg.operacion == "sincronizarAvion"){          
-            if (msg.idavion ==1)
+            if (msg.idavion == 1)
                 this.avion_1.moverAvion(msg);
+             if (msg.idavion == 2)
+                this.avion_2.moverAvion(msg);
+            if (msg.idavion == 3)
+              this.avion_3.moverAvion(msg);
+            if (msg.idavion == 4)
+              this.avion_4.moverAvion(msg);
         }else if(msg.operacion == "listarPartidas"){  
             console.log("Traje las partidas :" );          
             console.log(msg.partidas);
