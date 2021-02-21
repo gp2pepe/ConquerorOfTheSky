@@ -24,7 +24,8 @@ class Bootloader extends Phaser.Scene {
             'torre',
             'muralla',
             'deposito',
-            'wall',
+            'wall1',
+            'wall2',
             'floor'
         ])
         this.load.on('complete',()=>{
