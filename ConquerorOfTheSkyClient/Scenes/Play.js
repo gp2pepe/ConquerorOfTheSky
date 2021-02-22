@@ -21,7 +21,7 @@ class Play extends Phaser.Scene {
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         var mapa = this.add.image(433, 46, "mapa_2").setOrigin(0).setScale(1); 
         this.wall_floor = this.physics.add.staticGroup();
-
+        this.add.image(18,44,'nubeslateral').setOrigin(0).setScale(1);
         this.wall_floor.create(433, 46, 'wall')
             .setOrigin(0);
         this.wall_floor.create(1878, 46, 'wall')
@@ -35,7 +35,7 @@ class Play extends Phaser.Scene {
 
         //opacidad
         mapa.alpha = 0.4;
-
+        //Cargo base para bando 1
         //Seccion donde se randomizara la posicion de la base y se agregara al mapa
         var opcion1 = [550,160,520,180,520,130,570,150];
         var opcion2 = [550,500,520,520,520,470,570,490];
@@ -67,7 +67,38 @@ class Play extends Phaser.Scene {
                 this.posicionAleatoria(opcion6);
 				break;
 	} 
-        
+    
+    //Cargo base para bando 2
+    opcion1 = [1750,160,1720,180,1720,130,1770,150];
+    opcion2 = [1750,500,1720,520,1720,470,1770,490];
+    opcion3 = [1750,860,1720,880,1720,830,1770,850];
+    opcion4 = [1500,980,1470,1000,1470,950,1520,970];
+    opcion5 = [1500,130,1470,150,1470,100,1520,120];
+    opcion6 = [1500,800,1470,820,1470,770,1520,790];
+
+    numero = Phaser.Math.Between(1,6);
+    switch (numero)
+	{
+		case 1:       
+				this.posicionAleatoria(opcion1);
+				break;
+		case 2:
+                this.posicionAleatoria(opcion2);
+				break; 
+		case 3:
+                this.posicionAleatoria(opcion3);
+				break;
+		case 4: 
+                this.posicionAleatoria(opcion4);
+				break;
+		case 5:
+                this.posicionAleatoria(opcion5);
+				break;
+		case 6:
+                this.posicionAleatoria(opcion6);
+				break;
+	} 
+
         avion = new Avion({
             scene: this,
             x: 100,

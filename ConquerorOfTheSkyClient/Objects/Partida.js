@@ -22,6 +22,8 @@ class Partida {
         }else if(msg.operacion == "listarPartidas"){  
             console.log("Traje las partidas :" );          
             console.log(msg.partidas);
+            console.log(msg);
+            this.listaPartidas = msg.partidas;
         }
     }
     
@@ -44,6 +46,7 @@ class Partida {
 
     listarPartidas(){
         config.WebSocket.ws.send(JSON.stringify({operacion:"listarPartidas"}));
+        console.log("Ando por aca bro");
     }
 
 }
