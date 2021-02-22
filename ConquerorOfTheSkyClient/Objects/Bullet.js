@@ -24,6 +24,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
 		this.setVisible(true);
 		this.lifespan = 1000;		
     }
+	
 
 	update(time,delta)
 	{		

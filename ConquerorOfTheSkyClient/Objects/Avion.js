@@ -13,7 +13,7 @@ class Avion extends Phaser.GameObjects.Sprite {
 		this.body.setMaxSpeed(500);
 		this.body.setCollideWorldBounds(true);
         this.vidaAvion = 100;    
-        this.focus=false;    
+        this.focus=false;   
     }
 
     moverAvion(msg){            
