@@ -39,11 +39,17 @@ class MenuPartidas extends Phaser.Scene
 		while (num < cantPartidasPrueba)
 		{
 			var textoPrueba = this.add.text(ejeX,ejeY,listaPartidas[num].idPartida, { font: '18px Arial', fill: '#0095DD' }).setScale(2.8);
-			var textoPrueba2 = this.add.text(ejeX + 100,ejeY, "NombrePrueba",{ font: '18px Arial', fill: '#0095DD' }).setScale(2.8);
+			var textoPrueba2 = this.add.text(ejeX + 100,ejeY, "NombrePrueba",{ font: '18px Arial', fill: '#0095DD' }).setScale(2.8).setInteractive();
 			ejeY = ejeY + 50;
 			num++;
 			console.log("Estoy en el while");
 		}
+		textoPrueba2.on(Phaser.Input.Events.POINTER_DOWN, () => {
+                    config.Partida.ingresarAPartida();      
+                    config.Partida.listarPartidas(); //Hacer luego un boton refresh
+                    config.Partida.Bando=0;             
+                    this.scene.start('Play');
+            });
 
     }
 

@@ -2,6 +2,8 @@ import Avion from '../Objects/Avion.js';
 import Bullet from '../Objects/Bullet.js';
 import { config,game } from '../lib/main.js';
 
+
+//Variables Globales
 var avion_1;
 var avion_2;
 var avion_3;
@@ -12,47 +14,42 @@ var bullets;
 var distance
 var bullet;
 
+//Inicializo la clase/escena
 class Play extends Phaser.Scene {
 
     constructor(){
+        //le asigno una clave a la escena Play
         super({key: 'Play'});
         this.bullets;
     }
 
     create(){ 
+        //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
+        this.add.image(18,44,'nubeslateral').setOrigin(0).setScale(1);
         var mapa = this.add.image(433, 46, "mapa_2").setOrigin(0).setScale(1); 
+         //opacidad del mapa
+         mapa.alpha = 0.4;
+
+        //Grupo de imagenes estaticas que seran los muros o bordes del juego
         this.wall_floor = this.physics.add.staticGroup();
 
-        this.add.image(18,44,'nubeslateral').setOrigin(0).setScale(1);
-        this.wall_floor.create(433, 46, 'wall')
-
-
-        this.wall_floor.create(433, 40, 'wall1')
-            .setOrigin(0);
-        this.wall_floor.create(1890, 40, 'wall1')
-            .setOrigin(1, 0);
-        
-        this.wall_floor.create(433, 50, 'wall2')
-            .setOrigin(0, 1);
-         this.wall_floor.create(433, 1060, 'wall2')
-            .setOrigin(0, 1);
-
+        this.wall_floor.create(433, 40, 'wall1').setOrigin(0);
+        this.wall_floor.create(1890, 40, 'wall1').setOrigin(1, 0);
+        this.wall_floor.create(433, 50, 'wall2').setOrigin(0, 1);
+        this.wall_floor.create(433, 1060, 'wall2').setOrigin(0, 1);
+        //El refresh es para que cargue bien las zonas de colision de la imagen
         this.wall_floor.refresh();
-
-        //opacidad
-        mapa.alpha = 0.4;
+       
         //Cargo base para bando 1
-        //Seccion donde se randomizara la posicion de la base y se agregara al mapa
+        //Seccion donde se randomizara la posicion de la base y se agregara al mapa, tendra predefinidas ubicaciones y se randomizara entre las mismas
         var opcion1 = [550,160,520,180,520,130,570,150];
         var opcion2 = [550,500,520,520,520,470,570,490];
         var opcion3 = [550,860,520,880,520,830,570,850];
         var opcion4 = [700,980,670,1000,670,950,720,970];
         var opcion5 = [700,130,670,150,670,100,720,120];
         var opcion6 = [800,800,770,820,770,770,820,790];
-        
-
-    var numero = Phaser.Math.Between(1,6);
+        var numero = Phaser.Math.Between(1,6);
 
 	switch (numero)
 	{
@@ -105,132 +102,9 @@ class Play extends Phaser.Scene {
 		case 6:
                 this.posicionAleatoria(opcion6);
 				break;
-	} 
+	}      
 
-        avion = new Avion({
-            scene: this,
-            x: 100,
-            y: 100                     
-        });
-        
-     
-        // Personaje
-        avion_1 = new Avion({
-            scene: this,
-            x: 500,
-            y: 200                             
-        }).setInteractive();
-        this.circle = this.add.circle(avion_1.x, avion_1.y, 100 , 0xffffff, 0.2)  
-
-        var numero = Phaser.Math.Between(1,6);
-
-        switch (numero)
-        {
-            case 1:       
-                    this.posicionAleatoria(opcion1);
-                    break;
-            case 2:
-                    this.posicionAleatoria(opcion2);
-                    break; 
-            case 3:
-                    this.posicionAleatoria(opcion3);
-                    break;
-            case 4: 
-                    this.posicionAleatoria(opcion4);
-                    break;
-            case 5:
-                    this.posicionAleatoria(opcion5);
-                    break;
-            case 6:
-                    this.posicionAleatoria(opcion6);
-                    break;
-        } 
-                
-        
-        this.definicionAviones();
-
-        cursors = this.input.keyboard.createCursorKeys(); 
-        config.Partida.avion_1 = avion_1;
-        config.Partida.avion_2 = avion_2;
-        config.Partida.avion_3 = avion_3;
-        config.Partida.avion_4 = avion_4;
-        this.input.on('pointerdown',this.onObjectClicked);      
-        
-        //Bullets
-        bullets = this.add.group({
-            classType: Bullet,
-            maxSize: 10,
-            runChildUpdate: true
-        });
-       
-        this.input.keyboard.on('keydown-SPACE', this.disparar);         
-        this.physics.add.collider([avion_1,avion_2,this.wall_floor]);       
-        
-        this.physics.add.collider(avion_1,bullets, ()=>
-        {
-            var Hit = Phaser.Math.Between(1,2);
-            if (Hit == 1)
-                avion_1.vidaAvion-=10;           
-            bullets.remove(bullets.getLast(true),true);
-            console.log(avion_1.vidaAvion);
-        });  
-    }
-
-    onObjectClicked(pointer)
-    {  
-        if (avion_2.focus==true)
-        {            
-            config.Partida.idavion=2;
-            avion_2.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
-        } 
-
-        if (avion_1.focus==true)
-        {            
-            config.Partida.idavion=1;
-            avion_1.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
-        }   
-        if (avion_3.focus==true)
-        {            
-            config.Partida.idavion=3;
-            avion_3.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
-        }  
-        if (avion_4.focus==true)
-        {            
-            config.Partida.idavion=4;
-            avion_4.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
-        }  
-    }
     
-    disparar()
-    {   
-        bullet = bullets.get();
-        if (bullet)
-        {
-            if (avion_1.focus==true)
-            {            
-                bullet.fire(avion_1);   
-            } 
-
-            if (avion_2.focus==true)
-            {            
-                bullet.fire(avion_2);      
-            }  
-            if (avion_3.focus==true)
-            {            
-                bullet.fire(avion_3);   
-            } 
-
-            if (avion_4.focus==true)
-            {            
-                bullet.fire(avion_4);      
-            }  
-        }  
-    }
-
     posicionAleatoria (Array)
     {	
 	    this.add.image(Array[0], Array[1], 'muralla').setScale(.65);
@@ -238,10 +112,14 @@ class Play extends Phaser.Scene {
 	    this.add.image(Array[4], Array[5], 'deposito').setScale(.40);
         this.add.image(Array[6], Array[7], 'torre').setScale(.450);
     }
+      //Se llama a funcion que definira los aviones  
+        this.definicionAviones();
+
+        
     
     definicionAviones()
     {	
-        // Personaje
+        //  Se definen los aviones del jugador y del rival y se setea su rango visual
         avion_1 = new Avion({
             scene: this,
             x: 500,
@@ -277,7 +155,7 @@ class Play extends Phaser.Scene {
         }).setInteractive();
         avion_1_Aleman.circle = this.add.circle(avion_1_Aleman.x, avion_1_Aleman.y, 100 , 0xffffff, 0.2) 
         
-
+        //Se escucha que tecla se esta apretando y se programa del 1 al 4 como asignacion de los aviones del jugador
         this.input.keyboard.on('keydown',(evento)=>{
             if (evento.key==='1')  
             {    
@@ -312,13 +190,109 @@ class Play extends Phaser.Scene {
         //if (config.Partida.Bando==1)
          //   avion_1_Aleman.setVisible(false);
     }
+        //Se realiza la asignacion entre los aviones recien definidos con los que maneja la clase Partida
+        config.Partida.avion_1 = avion_1;
+        config.Partida.avion_2 = avion_2;
+        config.Partida.avion_3 = avion_3;
+        config.Partida.avion_4 = avion_4;
+
+        //Evento que escucha cuando se clickea con el mouse y llama al onObjectClicked
+        this.input.on('pointerdown',this.onObjectClicked);      
+        
+        //Bullets, se define el grupo de balas que utilizaran los aviones
+        bullets = this.add.group({
+            classType: Bullet,
+            maxSize: 10,
+            runChildUpdate: true
+        });
+       
+        //Evento que escucha cuando se apreta espacio , de momento se utiliza para disparar
+        this.input.keyboard.on('keydown-SPACE', this.disparar); 
+        
+        //Aniado colision entre los aviones y los muros
+        this.physics.add.collider([avion_1,avion_2,this.wall_floor]);       
+        
+        //Aniado colision entre los aviones y las balas
+        this.physics.add.collider(avion_1,bullets, ()=>
+        {
+            var Hit = Phaser.Math.Between(1,2);
+            if (Hit == 1)
+                avion_1.vidaAvion-=10;           
+            bullets.remove(bullets.getLast(true),true);
+            console.log(avion_1.vidaAvion);
+        });  
+    }
+
+    //Evento llamado al realizar click con el mouse
+    onObjectClicked(pointer)
+    {  
+        //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion
+        if (avion_2.focus==true)
+        {            
+            config.Partida.idavion=2;
+            avion_2.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        } 
+
+        if (avion_1.focus==true)
+        {            
+            config.Partida.idavion=1;
+            avion_1.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        }   
+        if (avion_3.focus==true)
+        {            
+            config.Partida.idavion=3;
+            avion_3.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        }  
+        if (avion_4.focus==true)
+        {            
+            config.Partida.idavion=4;
+            avion_4.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        }  
+    }
+   
+    //Evento  llamado al disparar automaticamente o de momento apretar espacio
+    disparar()
+    {   
+        //Se compara que avion se encuentra en focus para permitirle disparar
+        bullet = bullets.get();
+        if (bullet)
+        {
+            if (avion_1.focus==true)
+            {            
+                bullet.fire(avion_1);   
+            } 
+
+            if (avion_2.focus==true)
+            {            
+                bullet.fire(avion_2);      
+            }  
+            if (avion_3.focus==true)
+            {            
+                bullet.fire(avion_3);   
+            } 
+
+            if (avion_4.focus==true)
+            {            
+                bullet.fire(avion_4);      
+            }  
+        }  
+    }
+
+    
 
     update(time,delta)
 	{ 
+        //Se actualiza posicion del rango visual de los aviones
         avion_1.circle.setPosition(avion_1.x, avion_1.y);  
         avion_2.circle.setPosition(avion_2.x, avion_2.y); 
         avion_3.circle.setPosition(avion_3.x, avion_3.y);  
         avion_4.circle.setPosition(avion_4.x, avion_4.y); 
+
+        //Se prueba evento de destruccion de avion al llegar la vida a 0
         if(avion_1.vidaAvion == 0) 
             avion_1.destroy();  
         if(avion_2.vidaAvion == 0) 
@@ -333,6 +307,7 @@ class Play extends Phaser.Scene {
         var dy = avion_1.circle.y - avion_1_Aleman.y;
         distance = Math.sqrt(dx * dx + dy * dy);   
         
+        //Se setea autodisparo de los aviones al cruzar el raango visual con otro avion
         if (distance < avion_1.circle.radius)      
         {   
             avion_1_Aleman.setVisible(true);   
