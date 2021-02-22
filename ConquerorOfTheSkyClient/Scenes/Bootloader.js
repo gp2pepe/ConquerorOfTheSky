@@ -24,10 +24,16 @@ class Bootloader extends Phaser.Scene {
             'torre',
             'muralla',
             'deposito',
+
             'wall',
             'floor',
              'menupartidas',
-             'nubeslateral'
+             'nubeslateral',
+
+            'wall1',
+            'wall2',
+            'floor'
+
         ])
         this.load.on('complete',()=>{
             this.scene.start('MenuInicial');

@@ -23,14 +23,19 @@ class Play extends Phaser.Scene {
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         var mapa = this.add.image(433, 46, "mapa_2").setOrigin(0).setScale(1); 
         this.wall_floor = this.physics.add.staticGroup();
+
         this.add.image(18,44,'nubeslateral').setOrigin(0).setScale(1);
         this.wall_floor.create(433, 46, 'wall')
+
+
+        this.wall_floor.create(433, 40, 'wall1')
             .setOrigin(0);
-        this.wall_floor.create(1878, 46, 'wall')
-            .setOrigin(1, 0)
-            .setFlipX(true);
+        this.wall_floor.create(1890, 40, 'wall1')
+            .setOrigin(1, 0);
         
-        this.wall_floor.create(433, 1077, 'floor')
+        this.wall_floor.create(433, 50, 'wall2')
+            .setOrigin(0, 1);
+         this.wall_floor.create(433, 1060, 'wall2')
             .setOrigin(0, 1);
 
         this.wall_floor.refresh();
