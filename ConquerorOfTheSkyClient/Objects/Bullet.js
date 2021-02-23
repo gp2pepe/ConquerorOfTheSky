@@ -25,18 +25,18 @@ class Bullet extends Phaser.GameObjects.Sprite {
 		//this.incY = Math.sin(angle);
 		if(msg.x >  this.x){
             this.body.setVelocityX(0);
-            this.body.setVelocityX(120);
+            this.body.setVelocityX(70);
         }else{
             this.body.setVelocityX(0);
-            this.body.setVelocityX(-120);
+            this.body.setVelocityX(-70);
         }
     
         if(msg.y >  this.y){
             this.body.setVelocityY(0);
-            this.body.setVelocityY(120);
+            this.body.setVelocityY(70);
         }else{
             this.body.setVelocityY(0);
-			this.body.setVelocityY(-120);  
+			this.body.setVelocityY(-70);  
         }
 		this.setActive(true);
 		this.setVisible(true);

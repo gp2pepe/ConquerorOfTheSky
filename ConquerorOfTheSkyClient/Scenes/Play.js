@@ -30,7 +30,7 @@ class Play extends Phaser.Scene {
         this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
         var mapa = this.add.image(433, 46, "mapa_2").setOrigin(0).setScale(1); 
          //opacidad del mapa
-         mapa.alpha = 0.4;
+         mapa.alpha = 0.6;
 
         //Grupo de imagenes estaticas que seran los muros o bordes del juego
         this.wall_floor = this.physics.add.staticGroup();
@@ -258,28 +258,28 @@ class Play extends Phaser.Scene {
             x: 500,
             y: 200                             
         }).setInteractive();
-        avion_1.circle = this.add.circle(avion_1.x, avion_1.y, 100 , 0xffffff, 0.2)  
+        avion_1.circle = this.add.circle(avion_1.x, avion_1.y, 100 , 0xffffff, 0.3)  
 
         avion_2 = new Avion({
             scene: this,
             x: 500,
             y: 400            
         }).setInteractive();
-        avion_2.circle = this.add.circle(avion_2.x, avion_2.y, 100 , 0xffffff, 0.2) 
+        avion_2.circle = this.add.circle(avion_2.x, avion_2.y, 100 , 0xffffff, 0.3) 
 
         avion_3 = new Avion({
             scene: this,
             x: 500,
             y: 600            
         }).setInteractive();
-        avion_3.circle = this.add.circle(avion_3.x, avion_3.y, 100 , 0xffffff, 0.2) 
+        avion_3.circle = this.add.circle(avion_3.x, avion_3.y, 100 , 0xffffff, 0.3) 
 
         avion_4 = new Avion({
             scene: this,
             x: 500,
             y: 800            
         }).setInteractive();
-        avion_4.circle = this.add.circle(avion_4.x, avion_4.y, 100 , 0xffffff, 0.2) 
+        avion_4.circle = this.add.circle(avion_4.x, avion_4.y, 100 , 0xffffff, 0.3) 
 
         avion_1_Aleman = new Avion({
             scene: this,
@@ -327,9 +327,9 @@ class Play extends Phaser.Scene {
     posicionAleatoria (Array)
     {	
         this.add.image(Array[0], Array[1], 'muralla').setScale(.65);
-        this.add.image(Array[2], Array[3], 'contenedor').setScale(.40);
-        this.add.image(Array[4], Array[5], 'deposito').setScale(.40);
-        this.add.image(Array[6], Array[7], 'torre').setScale(.450);
+        this.add.image(Array[2], Array[3], 'contenedor').setScale(.09);
+        this.add.image(Array[4], Array[5], 'deposito').setScale(.30);
+        this.add.image(Array[6], Array[7], 'torre').setScale(.07);
     }
 
     update(time,delta)
