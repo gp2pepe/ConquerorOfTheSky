@@ -28,22 +28,13 @@ public class Mapa {
     private int tamanioX;
     private int tamanioY;
 
-   /* @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "campos_mapa",
-                joinColumns = {@JoinColumn(name = "id_mapa")},
-                inverseJoinColumns = {@JoinColumn(name = "id_campo")})*/
-    @Transient
-    private List<Campo> campos;
-
     public Mapa() {
     }
 
-    public Mapa(Long idMapa, String nombre, int tamanioX, int tamanioY, List<Campo> campos) {
-        this.idMapa = idMapa;
+    public Mapa(String nombre, int tamanioX, int tamanioY) {
         this.nombre = nombre;
         this.tamanioX = tamanioX;
         this.tamanioY = tamanioY;
-        this.campos = campos;
     }
     
     public Long getIdMapa() {
@@ -77,14 +68,5 @@ public class Mapa {
     public void setTamanioY(int tamanioY) {
         this.tamanioY = tamanioY;
     }
-
-    public List<Campo> getCampos() {
-        return campos;
-    }
-
-    public void setCampos(List<Campo> campos) {
-        this.campos = campos;
-    }
-
 
 }

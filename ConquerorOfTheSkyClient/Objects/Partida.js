@@ -35,7 +35,7 @@ class Partida {
     
     iniciarPartida(){
         if (config.WebSocket.isConnected()) {        
-            config.WebSocket.ws.send(JSON.stringify({operacion:"iniciarPartida",nick:"pepe",publica:"true",passwd:"0",bando:"Aleman"}));
+            config.WebSocket.ws.send(JSON.stringify({operacion:"iniciarPartida",nick:"pepe",modalidad:"1vs1",nombre:"PartidaDemo",publica:"true",passwd:"0",bando:"Aleman"}));
         //aca el backend registrara una nueva partida y la sesion del usuaria, ademas retornara la sesion del juego.
         }        
     }

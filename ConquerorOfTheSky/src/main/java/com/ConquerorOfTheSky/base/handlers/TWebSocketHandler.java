@@ -63,7 +63,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
         if(op.equals(new String("iniciarPartida"))){
 
             LOGGER.debug("Llego un iniciarPartida: " + map.toString());
-            Long idpartida = fachada.crearPartida((String) map.get("nick"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
+            Long idpartida = fachada.crearPartida((String) map.get("nick"), (String) map.get("modalidad"), (String) map.get("nombre"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
             session.sendMessage(new TextMessage("{ \"operacion\":\"iniciarPartida\",\"idpartida\": \""+idpartida+"\" }"));
 
 

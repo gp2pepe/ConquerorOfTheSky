@@ -36,9 +36,8 @@ public class Base {
     public Base() {
     }
 
-    public Base(Long idBase, int posicionX, int posicionY, DepositoDeExplosivos depositoExplosivos,
+    public Base( int posicionX, int posicionY, DepositoDeExplosivos depositoExplosivos,
             TorreDeControl torreControl, TanqueDeCombustible tanqueCombustible) {
-        this.idBase = idBase;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
         this.depositoExplosivos = depositoExplosivos;

@@ -20,8 +20,7 @@ public class DepositoDeExplosivos {
     public DepositoDeExplosivos() {
     }
 
-    public DepositoDeExplosivos(Long idDeposito, int salud) {
-        this.idDeposito = idDeposito;
+    public DepositoDeExplosivos( int salud) {
         this.salud = salud;
     }
 

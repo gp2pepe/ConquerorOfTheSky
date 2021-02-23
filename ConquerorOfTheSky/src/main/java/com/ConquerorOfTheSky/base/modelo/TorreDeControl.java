@@ -22,8 +22,7 @@ public class TorreDeControl {
     public TorreDeControl() {
 	}
 
-	public TorreDeControl(Long idTorre, int salud, int radioDisparo, int danio) {
-		this.idTorre = idTorre;
+	public TorreDeControl(int salud, int radioDisparo, int danio) {
 		this.salud = salud;
 		this.radioDisparo = radioDisparo;
 		this.danio = danio;

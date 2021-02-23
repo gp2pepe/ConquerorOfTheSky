@@ -27,6 +27,13 @@ public class Partida {
     
     @Expose
     private boolean publica;
+
+    @Expose
+    private String modalidad;
+    
+    @Expose
+    private String nombre;
+
     private String password;
 
     //Genera la relacion entre partida y sus equipos y los guarda en la tabla equipos_partida
@@ -43,8 +50,10 @@ public class Partida {
 
     public Partida(){}
 
-    public Partida(boolean publica, String password, List<Equipo> equipos, Mapa mapa) {
+    public Partida(boolean publica, String modalidad, String nombre, String password, List<Equipo> equipos, Mapa mapa) {
         this.publica = publica;
+        this.modalidad = modalidad;
+        this.nombre = nombre;
         this.password = password;
         this.equipos = equipos;
         this.mapa = mapa;
@@ -88,6 +97,22 @@ public class Partida {
 
     public void setMapa(Mapa mapa) {
         this.mapa = mapa;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     

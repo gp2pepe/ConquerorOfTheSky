@@ -3,6 +3,7 @@ package com.ConquerorOfTheSky.base.logica;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -17,11 +18,14 @@ import com.ConquerorOfTheSky.base.modelo.Equipo;
 import com.ConquerorOfTheSky.base.modelo.Jugador;
 import com.ConquerorOfTheSky.base.modelo.Mapa;
 import com.ConquerorOfTheSky.base.modelo.Partida;
+import com.ConquerorOfTheSky.base.modelo.TanqueDeCombustible;
+import com.ConquerorOfTheSky.base.modelo.TorreDeControl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.ConquerorOfTheSky.base.modelo.Configuracion;
+import com.ConquerorOfTheSky.base.modelo.DepositoDeExplosivos;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,35 +60,74 @@ public class Fachada implements IFachada{
     }
 
     @Transactional
-    public Long crearPartida(String nick, WebSocketSession sesionUsu, boolean publica, String passwd, String bando){
+    public Long crearPartida(String nick, String modalidad, String nombre, WebSocketSession sesionUsu, boolean publica, String passwd, String bando){
 
         Configuracion conf = configuracionR.getOne(1);
-          
+        
+        //Equipo 1
         List<Avion> aviones = new LinkedList<>();
         aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
+        aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
+        aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
+        aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
 
         List<Jugador> jugadores = new LinkedList<>();
         jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
         
         Set<Artilleria> artillerias = new HashSet<Artilleria>();
+        
         artillerias.add(new Artilleria());
+        int maxBaseXY = 800;
+        int minBaseX = 550;
+        int minBaseY = 160;
+        int baseX = (int) (Math.random() * ((maxBaseXY - minBaseX) + 1)) + minBaseX;
+        int baseY = (int) (Math.random() * ((maxBaseXY - minBaseY) + 1)) + minBaseY;
+
+        DepositoDeExplosivos depositoExp = new DepositoDeExplosivos(conf.getDepositoExplosivosSalud());
+        TorreDeControl torre = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
+        TanqueDeCombustible tanque = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
 
         List<Base> bases = new LinkedList<>();
-        Base base1 = new Base();
+        Base base1 = new Base(baseX,baseY,depositoExp,torre,tanque);
         bases.add(base1);
 
-        List<Campo> campos = new LinkedList<>();
         Campo campo1 = new Campo(Long.valueOf(0), conf.getCampoTamanioX(), conf.getCampoTamanioY(), conf.getCampoPosicion(), artillerias, base1);
-        campos.add(campo1);
+        Equipo equipo1 = new Equipo(bando, jugadores,campo1);
+        //Fin equipo1
 
-        Equipo nuevoEquipo = new Equipo(bando, jugadores,campo1);
-        nuevoEquipo.setJugadores(jugadores);
+
+        //Equipo 2
+        Set<Artilleria> artillerias2 = new HashSet<Artilleria>();
+        artillerias2.add(new Artilleria());
+        
+        int maxBase2X = 1750;
+        int minBase2X = 1500;
+        int maxBase2Y = 800;
+        int minBase2Y = 160;
+        int base2X = (int) (Math.random() * ((maxBase2X - minBase2X) + 1)) + minBase2X;
+        int base2Y = (int) (Math.random() * ((maxBase2Y - minBase2Y) + 1)) + minBase2Y;
+
+        DepositoDeExplosivos depositoExp2 = new DepositoDeExplosivos(conf.getDepositoExplosivosSalud());
+        TorreDeControl torre2 = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
+        TanqueDeCombustible tanque2 = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
+
+        Base base2 = new Base(base2X,base2Y,depositoExp2,torre2,tanque2);
+        Campo campo2 = new Campo(Long.valueOf(0), conf.getCampoTamanioX(), conf.getCampoTamanioY(), conf.getCampoPosicion(), artillerias2, base2);
+        String bando2 = "Aleman";
+        if(bando.equals("Aleman"))
+          bando2 = "Frances";
+        List<Jugador> jugadores2 = new LinkedList<>();
+        Equipo equipo2 = new Equipo(bando2, jugadores2,campo2);
+        // Fin equipo 2
+
+        
         List<Equipo> equipos = new LinkedList<>();
-        equipos.add(nuevoEquipo);
+        equipos.add(equipo1);
+        equipos.add(equipo2);
 
-        Mapa nuevoMapa = new Mapa(Long.valueOf(0),"mapa1", 800, 400, campos);
+        Mapa nuevoMapa = new Mapa("mapa", conf.getMapaTamanioX(), conf.getMapaTamanioY());
 
-        Partida partidaNueva = new Partida(publica, passwd, equipos, nuevoMapa);
+        Partida partidaNueva = new Partida(publica, modalidad, nombre, passwd, equipos, nuevoMapa);
 
         Long idpartida ;
         if(partidas.size()>0)
@@ -106,31 +149,25 @@ public class Fachada implements IFachada{
        
       Configuracion conf = configuracionR.getOne(1);
 
+      //Equipo 2
       List<Avion> aviones = new LinkedList<>();
-        aviones.add(new Avion( "Avion", 200,12,200, 400, "Alta", 0, 0));
+      aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
+      aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
+      aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
+      aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
 
-        List<Jugador> jugadores = new LinkedList<>();
-        jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
-
-        Set<Artilleria> artillerias = new HashSet<Artilleria>();
-        artillerias.add(new Artilleria());
-        
-        Base base2 = new Base();
-        String bando = "Aleman";
-        Campo campo2 = new Campo(Long.valueOf(0), conf.getCampoTamanioX(), conf.getCampoTamanioY(), conf.getCampoPosicion(), artillerias, base2);
-        for(Partida par: this.partidas ){
-          if(par.getIdpartida()==idPartida){
-              List<Equipo> equipos = par.getEquipos();
-              if(equipos.get(0).getBando().equals("Aleman"))
-                bando = "Frances";
-
-              Equipo equipo2 = new Equipo(bando, jugadores, campo2);
-              equipo2.setJugadores(jugadores);
-              equipos.add(equipo2);
-              par.setEquipos(equipos);
-          }
+      List<Jugador> jugadores = new LinkedList<>();
+      jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
+      String bando2 ="";
+      for(Partida par: this.partidas ){
+        if(par.getIdpartida()==idPartida){
+            List<Equipo> equipos = par.getEquipos();
+            equipos.get(1).setJugadores(jugadores);
+            bando2 =  equipos.get(1).getBando();
+            par.setEquipos(equipos);
+        }
       }
-      return bando;   
+      return bando2;   
     }
 
     public String listarPartidas(){
@@ -170,7 +207,7 @@ public class Fachada implements IFachada{
 
     }
 
-    public void recuperarPartida(){
+    public void recuperarPartida(Long idPartida){
 
 
     }

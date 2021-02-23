@@ -21,8 +21,7 @@ public class TanqueDeCombustible {
     public TanqueDeCombustible() {
     }
 
-    public TanqueDeCombustible(Long idTanque, int salud) {
-        this.idTanque = idTanque;
+    public TanqueDeCombustible( int salud) {
         this.salud = salud;
     }
 
