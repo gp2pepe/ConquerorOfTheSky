@@ -8,18 +8,36 @@ class Bullet extends Phaser.GameObjects.Sprite {
         super(scene, x, y, 'bullet').setScale(6);	
 		this.incX = 0;
 		this.incY = 0;
-		this.speed = Phaser.Math.GetSpeed(400, 1);
+		this.speed = Phaser.Math.GetSpeed(200, 1);
 		this.scene.physics.world.enable(this);
     }
 
-    fire (avion)
+    fire (avion,msg)
     {		
-		this.rotation = Phaser.Math.DegToRad(avion.body.rotation);
-		this.setPosition(avion.x, avion.y);
-		var angle = Phaser.Math.DegToRad(avion.body.rotation);
+		var distanciaX = Math.abs(msg.x - this.x);
+        var distanciaY = Math.abs(msg.y - this.y);
+	//	this.rotation = Phaser.Math.DegToRad(avion.body.rotation);	
+		this.rotation = Math.atan2(msg.y - avion.body.y,msg.x - avion.body.x);  	
+		this.setPosition(avion.x+10, avion.y+10);
+		//var angle = Phaser.Math.DegToRad(Math.atan2(msg.y - avion.body.y,msg.x - avion.body.x));
 		this.scene.physics.world.enable(this);
-		this.incX = Math.cos(angle);
-		this.incY = Math.sin(angle);
+		//this.incX = Math.cos(angle);
+		//this.incY = Math.sin(angle);
+		if(msg.x >  this.x){
+            this.body.setVelocityX(0);
+            this.body.setVelocityX(120);
+        }else{
+            this.body.setVelocityX(0);
+            this.body.setVelocityX(-120);
+        }
+    
+        if(msg.y >  this.y){
+            this.body.setVelocityY(0);
+            this.body.setVelocityY(120);
+        }else{
+            this.body.setVelocityY(0);
+			this.body.setVelocityY(-120);  
+        }
 		this.setActive(true);
 		this.setVisible(true);
 		this.lifespan = 1000;		
