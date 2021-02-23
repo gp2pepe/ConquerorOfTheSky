@@ -7,7 +7,7 @@ import org.springframework.web.socket.WebSocketSession;
 public interface IFachada {
 
     
-    public Long crearPartida(String nick, String modalidad, String nombre, WebSocketSession sesionUsu, boolean publica, String passwd, String bando);
+    public String crearPartida(String nick, String modalidad, String nombre, WebSocketSession sesionUsu, boolean publica, String passwd, String bando);
 
     public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd);
 

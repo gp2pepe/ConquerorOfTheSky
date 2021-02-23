@@ -63,30 +63,27 @@ public class TWebSocketHandler extends TextWebSocketHandler {
         if(op.equals(new String("iniciarPartida"))){
 
             LOGGER.debug("Llego un iniciarPartida: " + map.toString());
-            Long idpartida = fachada.crearPartida((String) map.get("nick"), (String) map.get("modalidad"), (String) map.get("nombre"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
-            session.sendMessage(new TextMessage("{ \"operacion\":\"iniciarPartida\",\"idpartida\": \""+idpartida+"\" }"));
+            String respuesta = fachada.crearPartida((String) map.get("nick"), (String) map.get("modalidad"), (String) map.get("nombre"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
+            session.sendMessage(new TextMessage(respuesta));
 
 
         }else if(op.equals(new String("ingresarAPartida"))){
 
             LOGGER.debug("Llego un ingresarAPartida: " + map.toString());
-            String bando = fachada.ingresarAPartida(Long.valueOf(((String) map.get("idpartida"))), (String) map.get("nick"), session,(String) map.get("passwd"));
-            session.sendMessage(new TextMessage("{ \"operacion\":\"ingresarAPartida\",\"bando\": \""+bando+"\" }"));
+            String respuesta = fachada.ingresarAPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("nick"), session,(String) map.get("passwd"));
+            session.sendMessage(new TextMessage(respuesta));
 
         }else if(op.equals(new String("sincronizarAvion"))){
 
             LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
-            List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((String) map.get("idpartida"))));
+            List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((Integer) map.get("idpartida"))));
             listaSesiones.forEach(webSocketSession -> {
                 try {
                     if(webSocketSession != session)
                         webSocketSession.sendMessage(message);
                 } catch (IOException e) {
-    
-                    LOGGER.error("Error occurred.", e);
-    
+                    LOGGER.error("Fallo la conexion por websocket");
                 }
-    
             });
 
         }else if(op.equals(new String("listarPartidas"))){

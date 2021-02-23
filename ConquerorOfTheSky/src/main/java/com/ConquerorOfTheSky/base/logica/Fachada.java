@@ -3,11 +3,8 @@ package com.ConquerorOfTheSky.base.logica;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
-
 import javax.transaction.Transactional;
-
 import com.ConquerorOfTheSky.base.dao.ConfiguracionRepo;
 import com.ConquerorOfTheSky.base.dao.PartidaRepo;
 import com.ConquerorOfTheSky.base.modelo.Artilleria;
@@ -27,6 +24,7 @@ import com.google.gson.JsonObject;
 import com.ConquerorOfTheSky.base.modelo.Configuracion;
 import com.ConquerorOfTheSky.base.modelo.DepositoDeExplosivos;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +36,6 @@ public class Fachada implements IFachada{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Fachada.class);
 
-    private static Fachada instancia;
-
     @Autowired
     private PartidaRepo partidaR;
     
@@ -47,29 +43,22 @@ public class Fachada implements IFachada{
     private ConfiguracionRepo configuracionR;
 
     private List<Partida> partidas;
-    
-    public static Fachada getInstancia() throws InstantiationException, IllegalAccessException, ClassNotFoundException
-    {
-      if(instancia == null)
-        instancia = new Fachada();
-      return instancia;
-    }
 
     public Fachada(){
       partidas = new LinkedList<>();
     }
 
     @Transactional
-    public Long crearPartida(String nick, String modalidad, String nombre, WebSocketSession sesionUsu, boolean publica, String passwd, String bando){
+    public String crearPartida(String nick, String modalidad, String nombre, WebSocketSession sesionUsu, boolean publica, String passwd, String bando){
 
-        Configuracion conf = configuracionR.getOne(1);
+        Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
         
         //Equipo 1
         List<Avion> aviones = new LinkedList<>();
-        aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
-        aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
-        aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
-        aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
+        aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+        aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+        aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+        aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
 
         List<Jugador> jugadores = new LinkedList<>();
         jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
@@ -88,7 +77,7 @@ public class Fachada implements IFachada{
         TanqueDeCombustible tanque = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
 
         List<Base> bases = new LinkedList<>();
-        Base base1 = new Base(baseX,baseY,depositoExp,torre,tanque);
+        Base base1 = new Base(Long.valueOf(0),baseX,baseY,depositoExp,torre,tanque);
         bases.add(base1);
 
         Campo campo1 = new Campo(Long.valueOf(0), conf.getCampoTamanioX(), conf.getCampoTamanioY(), conf.getCampoPosicion(), artillerias, base1);
@@ -111,7 +100,7 @@ public class Fachada implements IFachada{
         TorreDeControl torre2 = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
         TanqueDeCombustible tanque2 = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
 
-        Base base2 = new Base(base2X,base2Y,depositoExp2,torre2,tanque2);
+        Base base2 = new Base(Long.valueOf(1),base2X,base2Y,depositoExp2,torre2,tanque2);
         Campo campo2 = new Campo(Long.valueOf(0), conf.getCampoTamanioX(), conf.getCampoTamanioY(), conf.getCampoPosicion(), artillerias2, base2);
         String bando2 = "Aleman";
         if(bando.equals("Aleman"))
@@ -140,34 +129,69 @@ public class Fachada implements IFachada{
         partidaNueva.setIdpartida(idpartida);
         partidas.add(partidaNueva);
 
-        this.guardarPartida(idpartida);
-        return  partidaNueva.getIdpartida();
+        //this.guardarPartida(idpartida);
+
+        //Genero el JSon
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        JsonElement jsonElementConf = gson.toJsonTree(conf);
+        JsonElement jsonElementPartida = gson.toJsonTree(partidaNueva);
+        JsonElement jsonElementBase = gson.toJsonTree(base1);
+        JsonElement jsonElementBaseEnemiga = gson.toJsonTree(base2);
+
+        JsonObject innerObject = new JsonObject();
+        innerObject.addProperty("operacion", "iniciarPartida");
+        innerObject.add("configuraciones", jsonElementConf);
+        innerObject.add("partida", jsonElementPartida);
+        innerObject.add("base", jsonElementBase);
+        innerObject.add("baseEnemiga", jsonElementBaseEnemiga);
+
+        return gson.toJson(innerObject);
+
     }
 
     @Transactional
     public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd){
        
-      Configuracion conf = configuracionR.getOne(1);
+      Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
 
       //Equipo 2
       List<Avion> aviones = new LinkedList<>();
-      aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
-      aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
-      aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
-      aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
+      aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+      aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+      aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+      aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
 
       List<Jugador> jugadores = new LinkedList<>();
       jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
-      String bando2 ="";
+      Partida partida = null;
+      Base base = null;
+      Base baseEnemiga = null;
       for(Partida par: this.partidas ){
         if(par.getIdpartida()==idPartida){
             List<Equipo> equipos = par.getEquipos();
             equipos.get(1).setJugadores(jugadores);
-            bando2 =  equipos.get(1).getBando();
             par.setEquipos(equipos);
+            partida = par;
+            base =  equipos.get(1).getCampo().getBase();
+            baseEnemiga =  equipos.get(0).getCampo().getBase();
+
         }
       }
-      return bando2;   
+      //Genero el JSon
+      Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+      JsonElement jsonElementConf = gson.toJsonTree(conf);
+      JsonElement jsonElementPartida = gson.toJsonTree(partida);
+      JsonElement jsonElementBase = gson.toJsonTree(base);
+      JsonElement jsonElementBaseEnemiga = gson.toJsonTree(baseEnemiga);
+
+      JsonObject innerObject = new JsonObject();
+      innerObject.addProperty("operacion", "ingresarAPartida");
+      innerObject.add("configuraciones", jsonElementConf);
+      innerObject.add("partida", jsonElementPartida);
+      innerObject.add("base", jsonElementBase);
+      innerObject.add("baseEnemiga", jsonElementBaseEnemiga);
+
+      return gson.toJson(innerObject);
     }
 
     public String listarPartidas(){
@@ -193,7 +217,6 @@ public class Fachada implements IFachada{
         }
       }
       return sessions;
-
     }
 
 
@@ -208,8 +231,11 @@ public class Fachada implements IFachada{
     }
 
     public void recuperarPartida(Long idPartida){
+      try{
+        partidas.add(partidaR.getOne(idPartida));
+      }catch (Exception e){
 
-
+      }
     }
 
     public void terminarPartida(){

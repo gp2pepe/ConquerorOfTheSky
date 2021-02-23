@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="configuracion")
 public class Configuracion {
@@ -17,39 +19,59 @@ public class Configuracion {
     private int idConfiguracion;
 
     //Configuraciones Avion
+    @Expose
     private int avionSalud;
+    @Expose
     private int avionDanio;
+    @Expose
     private int avionVelocidad;
+    @Expose
     private int avionCombustible;
+    @Expose
     private int avionRadioVision;
 
     //Configuraciones Mapa
+    @Expose
     private int mapaTamanioX;
+    @Expose
     private int mapaTamanioY;
 
     //Configuraciones Campo
+    @Expose
     private int campoTamanioX;
+    @Expose
     private int campoTamanioY;
+    @Expose
     private int campoPosicion;
 
     //configuraciones Artilleria
+    @Expose
     private int artilleriaSalud;
+    @Expose
     private int artilleriaRadioDisparo;
+    @Expose
     private int artilleriaDanio;
 
     //Configuraciones Bomba
+    @Expose
     private int bombaRadioImpacto;
+    @Expose
     private int bombaDanio;
 
     //Configuraciones Torre de control
+    @Expose
     private int torreSalud;
+    @Expose
     private int torreRadioDisparo;
+    @Expose
     private int torreDanio;
 
     //Configuracion Deposito de Explosivos
+    @Expose
     private int depositoExplosivosSalud;
 
     //Configuraciones Tanque de Combustible
+    @Expose
     private int tanqueCombustibleSalud;
 
     public Configuracion() {

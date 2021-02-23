@@ -9,13 +9,12 @@ class Partida {
 
     procesarMensaje(msg){
         if(msg.operacion == "iniciarPartida"){
-            this.idpartida = msg.idpartida;
-            console.log("Empece partida numero :") + 
-            console.log(msg.idpartida);
+            this.idpartida = msg.partida.idPartida;
+            console.log("Empece partida numero : " + msg.partida.idPartida);
+            console.log(msg.partida.idPartida);
         }else if(msg.operacion == "ingresarAPartida"){            
-            this.bando = msg.bando;
-            console.log("Ingrese a partida en bando:") + 
-            console.log(msg.bando);
+            console.log("Ingrese a partida en bando: " + msg.partida.idPartida) ;
+            this.idpartida = msg.partida.idPartida;
         }else if(msg.operacion == "sincronizarAvion"){          
             if (msg.idavion == 1)
                 this.avion_1.moverAvion(msg);
@@ -40,8 +39,8 @@ class Partida {
         }        
     }
 
-    ingresarAPartida(){
-        config.WebSocket.ws.send(JSON.stringify({operacion:"ingresarAPartida",idpartida:"0",nick:"Juan",passwd:"0"}));
+    ingresarAPartida(idpartida){
+        config.WebSocket.ws.send(JSON.stringify({operacion:"ingresarAPartida",idpartida:idpartida,nick:"Juan",passwd:"0"}));
     }
 
     sincronizarAvion(msg){

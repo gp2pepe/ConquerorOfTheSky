@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="base")
 public class Base {
@@ -17,8 +19,11 @@ public class Base {
     @Id
     @Column(name="id_base")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Expose
     private Long idBase;
+    @Expose
     private int posicionX;
+    @Expose
     private int posicionY;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -36,8 +41,9 @@ public class Base {
     public Base() {
     }
 
-    public Base( int posicionX, int posicionY, DepositoDeExplosivos depositoExplosivos,
+    public Base( Long id, int posicionX, int posicionY, DepositoDeExplosivos depositoExplosivos,
             TorreDeControl torreControl, TanqueDeCombustible tanqueCombustible) {
+        this.idBase = id;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
         this.depositoExplosivos = depositoExplosivos;

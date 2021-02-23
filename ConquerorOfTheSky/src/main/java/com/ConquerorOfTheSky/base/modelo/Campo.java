@@ -91,11 +91,11 @@ public class Campo {
         this.artillerias = artillerias;
     }
 
-    public Base getBases() {
+    public Base getBase() {
         return base;
     }
 
-    public void setBases(Base bases) {
+    public void setBase(Base bases) {
         this.base = bases;
     }
 
