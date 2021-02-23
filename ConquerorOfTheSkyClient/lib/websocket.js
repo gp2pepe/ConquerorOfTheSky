@@ -32,7 +32,9 @@ class Client {
 
     displayError(err) {
         console.log("Hubo un error !!"); 
-        console.log('Websocketerror: ' + err);
+        console.log('Websocketerror: ' );
+        console.log( err);
+
     }
 }
 

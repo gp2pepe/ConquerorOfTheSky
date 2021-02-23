@@ -4,11 +4,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.ToLongBiFunction;
 
-import javax.websocket.Session;
+import javax.transaction.Transactional;
 
-import com.ConquerorOfTheSky.base.dao.AvionRepo;
+import com.ConquerorOfTheSky.base.dao.ConfiguracionRepo;
 import com.ConquerorOfTheSky.base.dao.PartidaRepo;
 import com.ConquerorOfTheSky.base.modelo.Artilleria;
 import com.ConquerorOfTheSky.base.modelo.Avion;
@@ -20,7 +19,6 @@ import com.ConquerorOfTheSky.base.modelo.Mapa;
 import com.ConquerorOfTheSky.base.modelo.Partida;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.ConquerorOfTheSky.base.modelo.Configuracion;
@@ -28,8 +26,10 @@ import com.ConquerorOfTheSky.base.modelo.Configuracion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
+@Component("fachada")
 public class Fachada implements IFachada{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Fachada.class);
@@ -38,9 +38,9 @@ public class Fachada implements IFachada{
 
     @Autowired
     private PartidaRepo partidaR;
-
+    
     @Autowired
-    private AvionRepo avionR;
+    private ConfiguracionRepo configuracionR;
 
     private List<Partida> partidas;
     
@@ -55,18 +55,11 @@ public class Fachada implements IFachada{
       partidas = new LinkedList<>();
     }
 
+    @Transactional
     public Long crearPartida(String nick, WebSocketSession sesionUsu, boolean publica, String passwd, String bando){
 
-        Configuracion conf = new Configuracion(   
-          1, 200, 50, 200, 200,100, //Avion
-          1920, 1080,               //Mapa
-          200, 1080, 0,             //Campo
-          100, 200, 100,            //Artilleria
-          50, 500,                  //Bomba
-          700, 100, 200,            //Torre
-          400,                      //Deposito Explosivo
-          100) ;                    //Campo Combustible
-
+        Configuracion conf = configuracionR.getOne(1);
+          
         List<Avion> aviones = new LinkedList<>();
         aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Alta", 0, 0));
 
@@ -104,21 +97,14 @@ public class Fachada implements IFachada{
         partidaNueva.setIdpartida(idpartida);
         partidas.add(partidaNueva);
 
+        this.guardarPartida(idpartida);
         return  partidaNueva.getIdpartida();
     }
 
-
+    @Transactional
     public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd){
        
-      Configuracion conf = new Configuracion(   
-        1, 200, 50, 200, 200,100, //Avion
-        1920, 1080,               //Mapa
-        200, 1080, 0,             //Campo
-        100, 200, 100,            //Artilleria
-        50, 500,                  //Bomba
-        700, 100, 200,            //Torre
-        400,                      //Deposito Explosivo
-        100) ;                    //Campo Combustible
+      Configuracion conf = configuracionR.getOne(1);
 
       List<Avion> aviones = new LinkedList<>();
         aviones.add(new Avion( "Avion", 200,12,200, 400, "Alta", 0, 0));
@@ -174,8 +160,13 @@ public class Fachada implements IFachada{
     }
 
 
-    public void guardarPArtida(){
-
+    public void guardarPartida(Long idPartida){
+        
+      for(Partida par: this.partidas ){
+        if(par.getIdpartida()==idPartida){
+          partidaR.saveAndFlush(par);
+        }
+      }
 
     }
 
@@ -188,5 +179,23 @@ public class Fachada implements IFachada{
 
 
     }
+
+    public PartidaRepo getPartidaR() {
+      return partidaR;
+    }
+
+    public void setPartidaR(PartidaRepo partidaR) {
+      this.partidaR = partidaR;
+    }
+
+    public List<Partida> getPartidas() {
+      return partidas;
+    }
+
+    public void setPartidas(List<Partida> partidas) {
+      this.partidas = partidas;
+    }
+
+    
 
 }

@@ -15,7 +15,7 @@ public interface IFachada {
     
     public List<WebSocketSession>  sincronizarPartida(Long idpartida);
 
-    public void guardarPArtida();
+    public void guardarPartida(Long idPartida);
 
     public void recuperarPartida();
 

@@ -4,12 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import com.ConquerorOfTheSky.base.logica.Fachada;
 import com.ConquerorOfTheSky.base.logica.IFachada;
-
-import com.mysql.cj.Session;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +22,11 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
     
-    private static IFachada fachada;
+    private IFachada fachada;
+    @Autowired
+    public TWebSocketHandler(IFachada fachada){
+        this.fachada = fachada;
+    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -47,7 +46,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        fachada = (IFachada) Fachada.getInstancia();
+       // fachada = (IFachada) Fachada.getInstancia();
         super.handleTextMessage(session, message);
        
 
@@ -100,6 +99,5 @@ public class TWebSocketHandler extends TextWebSocketHandler {
         }
 
     }
-
 
 }
