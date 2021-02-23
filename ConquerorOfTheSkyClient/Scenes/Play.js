@@ -10,7 +10,6 @@ var avion_2;
 var avion_3;
 var avion_4;
 var avion_1_Aleman;
-var cursors;
 var bullets;
 var distance
 var bullet;
@@ -127,7 +126,7 @@ class Play extends Phaser.Scene {
         //Bullets, se define el grupo de balas que utilizaran los aviones
         bullets = this.add.group({
             classType: Bullet,
-            maxSize: 10,
+            maxSize: 1,
             runChildUpdate: true
         });
     
@@ -172,23 +171,7 @@ class Play extends Phaser.Scene {
                 avion_4.vidaAvion-=10;           
             bullets.remove(bullets.getLast(true),true);
             console.log('avion 4 -'+avion_4.vidaAvion);
-        }); 
-/*
-            if (Hit == 1 && avion_2.focus==false)
-                avion_2.vidaAvion-=10;           
-            bullets.remove(bullets.getLast(true),true);
-            console.log(avion_2.vidaAvion);
-
-            if (Hit == 1 && avion_3.focus==false)
-                avion_3.vidaAvion-=10;           
-            bullets.remove(bullets.getLast(true),true);
-            console.log(avion_3.vidaAvion);
-
-            if (Hit == 1 && avion_4.focus==false)
-                avion_4.vidaAvion-=10;           
-            bullets.remove(bullets.getLast(true),true);
-            console.log(avion_4.vidaAvion);*/
-        
+        });         
 
     }
     //Evento llamado al realizar click con el mouse
@@ -287,7 +270,36 @@ class Play extends Phaser.Scene {
             y: 550           
         }).setInteractive();
         avion_1_Aleman.circle = this.add.circle(avion_1_Aleman.x, avion_1_Aleman.y, 100 , 0xffffff, 0.2) 
-        
+        this.keys = this.input.keyboard.createCursorKeys();
+        this.keys.up.on('down',()=>
+        {            
+            if (avion_1.focus==true)
+                avion_1.altitud='Alta'
+
+            if (avion_2.focus==true)
+                avion_2.altitud='Alta'
+
+            if (avion_3.focus==true)
+                avion_3.altitud='Alta'
+
+            if (avion_4.focus==true)
+                avion_4.altitud='Alta'        
+        });
+
+        this.keys.down.on('down',()=>
+        {            
+            if (avion_1.focus==true)
+                avion_1.altitud='Baja'
+                
+            if (avion_2.focus==true)
+                avion_2.altitud='Baja'
+
+            if (avion_3.focus==true)
+                avion_3.altitud='Baja'
+
+            if (avion_4.focus==true)
+                avion_4.altitud='Baja'        
+        });
 
         this.input.keyboard.on('keydown',(evento)=>{
             if (evento.key==='1')  
@@ -356,13 +368,10 @@ class Play extends Phaser.Scene {
         distance = Math.sqrt(dx * dx + dy * dy);   
         
         //Se setea autodisparo de los aviones al cruzar el raango visual con otro avion
-        if (distance < avion_1.circle.radius)      
+        if (distance < avion_1.circle.radius && avion_1_Aleman.altitud == avion_1.altitud)      
         {   
-            avion_1_Aleman.setVisible(true); 
-            //avion_1.moverAvion(avion_1_Aleman);
-           // avion_1.rotation = Math.atan2(avion_1_Aleman.y - avion_1.y, avion_1_Aleman.x - avion_1.x);  
-            
-            this.disparar(avion_1_Aleman)  
+            avion_1_Aleman.setVisible(true);
+            this.disparar(avion_1_Aleman)
         }           
         else
             avion_1_Aleman.setVisible(false);
