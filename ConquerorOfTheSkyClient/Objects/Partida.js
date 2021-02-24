@@ -13,7 +13,7 @@ class Partida {
             console.log("Empece partida numero : " + msg.partida.idPartida);
             console.log(msg.partida.idPartida);
         }else if(msg.operacion == "ingresarAPartida"){            
-            console.log("Ingrese a partida en bando: " + msg.partida.idPartida) ;
+            console.log("Ingrese a partida numero: " + msg.partida.idPartida) ;
             this.idpartida = msg.partida.idPartida;
         }else if(msg.operacion == "sincronizarAvion"){          
             if (msg.idavion == 1)
