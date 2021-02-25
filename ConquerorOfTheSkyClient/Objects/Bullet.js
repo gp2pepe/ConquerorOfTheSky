@@ -9,7 +9,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
 		this.incX = 0;
 		this.incY = 0;
 		this.speed = Phaser.Math.GetSpeed(400, 1);
-		this.scene.physics.world.enable(this);
+		this.scene.physics.world.enable(this);		
     }
 
     fire (avion,msg)

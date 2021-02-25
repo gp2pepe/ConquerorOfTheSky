@@ -4,7 +4,7 @@ import { config,game } from '../lib/main.js';
 
 
 //Variables Globales
-var avion;
+var lastFired = 0;
 var avion_1;
 var avion_2;
 var avion_3;
@@ -104,12 +104,6 @@ class Play extends Phaser.Scene {
                     this.posicionAleatoria(opcion6);
                     break;
         }      
-        //Avion definido para que ande bullets, hay que ver otra manera de hacerlo andar
-           avion = new Avion({
-            scene: this,
-            x: 100,
-            y: 100                     
-        });
 
       //Se llama a funcion que definira los aviones  
         this.definicionAviones();
@@ -119,7 +113,7 @@ class Play extends Phaser.Scene {
         config.Partida.avion_2 = avion_2;
         config.Partida.avion_3 = avion_3;
         config.Partida.avion_4 = avion_4;
-
+        config.Partida.avion_1_aleman = avion_1_Aleman;
         //Evento que escucha cuando se clickea con el mouse y llama al onObjectClicked
         this.input.on('pointerdown',this.onObjectClicked);      
         
@@ -143,7 +137,7 @@ class Play extends Phaser.Scene {
             if (Hit == 1 )
                 avion_1.vidaAvion-=10;           
             bullets.remove(bullets.getLast(true),true);
-            console.log('avion 1 -'+avion_1.vidaAvion);
+            console.log('avion 1 :'+avion_1.vidaAvion);
         }); 
 
         this.physics.add.collider(avion_2,bullets, ()=>
@@ -152,7 +146,7 @@ class Play extends Phaser.Scene {
             if (Hit == 1)
                 avion_2.vidaAvion-=10;           
             bullets.remove(bullets.getLast(true),true);
-            console.log('avion 2 -'+avion_2.vidaAvion);
+            console.log('avion 2 :'+avion_2.vidaAvion);
         }); 
 
         this.physics.add.collider(avion_3,bullets, ()=>
@@ -161,7 +155,7 @@ class Play extends Phaser.Scene {
             if (Hit == 1)
                 avion_3.vidaAvion-=10;           
             bullets.remove(bullets.getLast(true),true);
-            console.log('avion 3 -'+avion_3.vidaAvion);
+            console.log('avion 3 :'+avion_3.vidaAvion);
         }); 
 
         this.physics.add.collider(avion_4,bullets, ()=>
@@ -170,8 +164,18 @@ class Play extends Phaser.Scene {
             if (Hit == 1 )
                 avion_4.vidaAvion-=10;           
             bullets.remove(bullets.getLast(true),true);
-            console.log('avion 4 -'+avion_4.vidaAvion);
-        });         
+            console.log('avion 4 :'+avion_4.vidaAvion);
+        });     
+        
+        this.physics.add.overlap(avion_1_Aleman,bullets, ()=>
+        {
+            var Hit = Phaser.Math.Between(1,2);
+            if (Hit == 1 )
+                avion_1_Aleman.vidaAvion-=10;                                
+            bullets.remove(bullets.getLast(true),true);
+            console.log('avion aleman :'+avion_1_Aleman.vidaAvion);
+        }); 
+
 
     }
     //Evento llamado al realizar click con el mouse
@@ -190,51 +194,45 @@ class Play extends Phaser.Scene {
             config.Partida.idavion=1;
             avion_1.moverAvion({x: pointer.x, y: pointer.y});
             config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
-        }   
+        }  
+
         if (avion_3.focus==true)
         {            
             config.Partida.idavion=3;
             avion_3.moverAvion({x: pointer.x, y: pointer.y});
             config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
         }  
+
         if (avion_4.focus==true)
         {            
             config.Partida.idavion=4;
             avion_4.moverAvion({x: pointer.x, y: pointer.y});
             config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
-        }  
+        } 
+
+        if (avion_1_Aleman.focus==true)
+        {
+            console.log('entre');
+            config.Partida.idavion=5;
+            avion_1_Aleman.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        }
     }
 
     //Evento  llamado al disparar automaticamente o de momento apretar espacio
-    disparar(avion_A_pegar)
-    {   
-        //Se compara que avion se encuentra en focus para permitirle disparar
+    disparar(avion_focus,avion_A_pegar)
+    {           
+        //Se pasa el avion que esta en focus 
         bullet = bullets.get();
         if (bullet)
         {
-            if (avion_1.focus==true)
-            {            
-                bullet.fire(avion_1,{x: avion_A_pegar.x, y: avion_A_pegar.y});   
-            } 
-
-            if (avion_2.focus==true)
-            {            
-                bullet.fire(avion_2,{x: avion_A_pegar.x, y: avion_A_pegar.y});      
-            }  
-            if (avion_3.focus==true)
-            {            
-                bullet.fire(avion_3,{x: avion_A_pegar.x, y: avion_A_pegar.y});   
-            } 
-
-            if (avion_4.focus==true)
-            {            
-                bullet.fire(avion_4,{x: avion_A_pegar.x, y: avion_A_pegar.y});      
-            }  
+            bullet.fire(avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
         }  
     }
 
     definicionAviones()
     {	
+        console.log(config);
                 // Personaje
         avion_1 = new Avion({
             scene: this,
@@ -302,34 +300,46 @@ class Play extends Phaser.Scene {
         });
 
         this.input.keyboard.on('keydown',(evento)=>{
-            if (evento.key==='1')  
-            {    
-                avion_1.focus=true;
-                avion_2.focus=false;
-                avion_3.focus=false;
-                avion_4.focus=false;
+            if (config.Partida.Bando==1)
+            {
+                
+                if (evento.key==='1' )  
+                {    
+                    avion_1.focus=true;
+                    avion_2.focus=false;
+                    avion_3.focus=false;
+                    avion_4.focus=false;
+                }
+                if (evento.key==='2')  
+                {    
+                    avion_2.focus=true;
+                    avion_1.focus=false;
+                    avion_3.focus=false;
+                    avion_4.focus=false;
+                }
+                if (evento.key==='3')  
+                {    
+                    avion_3.focus=true;
+                    avion_1.focus=false;
+                    avion_2.focus=false;
+                    avion_4.focus=false;
+                }
+                if (evento.key==='4')  
+                {    
+                    avion_4.focus=true;
+                    avion_1.focus=false;
+                    avion_2.focus=false;
+                    avion_3.focus=false;
+                }                        
+            } 
+            else
+            { 
+                console.log('Bando 0');
+                if (evento.key==='1')  
+                {    
+                    avion_1_Aleman.focus=true;                    
+                }
             }
-            if (evento.key==='2')  
-            {    
-                avion_2.focus=true;
-                avion_1.focus=false;
-                avion_3.focus=false;
-                avion_4.focus=false;
-            }
-            if (evento.key==='3')  
-            {    
-                avion_3.focus=true;
-                avion_1.focus=false;
-                avion_2.focus=false;
-                avion_4.focus=false;
-            }
-            if (evento.key==='4')  
-            {    
-                avion_4.focus=true;
-                avion_1.focus=false;
-                avion_2.focus=false;
-                avion_3.focus=false;
-            }        
         });
 
         //if (config.Partida.Bando==1)
@@ -361,6 +371,8 @@ class Play extends Phaser.Scene {
             avion_3.destroy();  
         if(avion_4.vidaAvion == 0) 
             avion_4.destroy();   
+        if(avion_1_Aleman.vidaAvion == 0) 
+            avion_1_Aleman.destroy(); 
 
         
         var dx = avion_1.circle.x - avion_1_Aleman.x;
@@ -371,10 +383,17 @@ class Play extends Phaser.Scene {
         if (distance < avion_1.circle.radius && avion_1_Aleman.altitud == avion_1.altitud)      
         {   
             avion_1_Aleman.setVisible(true);
-            this.disparar(avion_1_Aleman)
+            if (time > lastFired)
+            { 
+                this.disparar(avion_1,avion_1_Aleman)  
+                lastFired = time + 500;               
+            }   
         }           
         else
-            avion_1_Aleman.setVisible(false);
+            if (config.Partida.Bando==1)
+                avion_1_Aleman.setVisible(false);
+            else
+            avion_1_Aleman.setVisible(true);
     }
 }
 

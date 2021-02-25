@@ -10,20 +10,25 @@ class Partida {
     procesarMensaje(msg){
         if(msg.operacion == "iniciarPartida"){
             this.idpartida = msg.partida.idPartida;
+            console.log(msg);
             console.log("Empece partida numero : " + msg.partida.idPartida);
             console.log(msg.partida.idPartida);
         }else if(msg.operacion == "ingresarAPartida"){            
             console.log("Ingrese a partida numero: " + msg.partida.idPartida) ;
             this.idpartida = msg.partida.idPartida;
-        }else if(msg.operacion == "sincronizarAvion"){          
+        }else if(msg.operacion == "sincronizarAvion"){         
+
             if (msg.idavion == 1)
                 this.avion_1.moverAvion(msg);
-             if (msg.idavion == 2)
+            if (msg.idavion == 2)
                 this.avion_2.moverAvion(msg);
             if (msg.idavion == 3)
-              this.avion_3.moverAvion(msg);
+                this.avion_3.moverAvion(msg);
             if (msg.idavion == 4)
-              this.avion_4.moverAvion(msg);
+                this.avion_4.moverAvion(msg);
+            if (msg.idavion == 5)
+                this.avion_1_aleman.moverAvion(msg);
+
         }else if(msg.operacion == "listarPartidas"){  
             console.log("Traje las partidas :" );          
             console.log(msg.partidas);
