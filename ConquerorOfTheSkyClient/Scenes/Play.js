@@ -26,10 +26,60 @@ class Play extends Phaser.Scene {
     create(){ 
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
-        this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
-        var mapa = this.add.image(433, 46, "mapa_2").setOrigin(0).setScale(1); 
+        this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
+        this.avionVistaLateral = this.add.image(100,140,'albatros').setOrigin(0).setScale(.3);
+        this.mapa = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
          //opacidad del mapa
-         mapa.alpha = 0.6;
+        // this.mapa.alpha = 0.8;+
+        this.boton_1 = this.add.image(1650, 1000, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
+        this.boton_2 = this.add.image(1700, 1000, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
+        this.boton_3 = this.add.image(1750, 1000, "boton_3").setOrigin(0).setScale(.1).setInteractive(); 
+        this.boton_4 = this.add.image(1800, 1000, "boton_4").setOrigin(0).setScale(.1).setInteractive(); 
+        this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
+        this.boton_6 = this.add.image(340, 425, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
+
+        this.boton_1.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.mapa = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
+            this.boton_1.depth=100;
+            this.boton_2.depth=100;
+            this.boton_3.depth=100;
+            this.boton_4.depth=100;
+        });
+        this.boton_2.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.mapa = this.add.image(433, 46, "mapa_4").setOrigin(0).setScale(1); 
+            this.boton_1.depth=100;
+            this.boton_2.depth=100;
+            this.boton_3.depth=100;
+            this.boton_4.depth=100;
+        });
+        this.boton_3.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.mapa = this.add.image(433, 46, "mapa_5").setOrigin(0).setScale(1); 
+            this.boton_1.depth=100;
+            this.boton_2.depth=100;
+            this.boton_3.depth=100;
+            this.boton_4.depth=100;
+        });
+        this.boton_4.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.mapa = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1); 
+            this.boton_1.depth=100;
+            this.boton_2.depth=100;
+            this.boton_3.depth=100;
+            this.boton_4.depth=100;
+        });
+        this.boton_5.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
+            this.boton_5.depth=100;
+            this.boton_6.depth=100;
+            this.avionVistaLateral.depth=100;
+   
+        });
+        this.boton_6.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
+            this.boton_5.depth=100;
+            this.boton_6.depth=100;
+            this.avionVistaLateral.depth=100;
+
+        });
 
         //Grupo de imagenes estaticas que seran los muros o bordes del juego
         this.wall_floor = this.physics.add.staticGroup();
@@ -181,6 +231,8 @@ class Play extends Phaser.Scene {
     //Evento llamado al realizar click con el mouse
     onObjectClicked(pointer)
     {  
+        console.log(pointer.x);
+        console.log(pointer.y);
         //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion
         if (avion_2.focus==true)
         {            
@@ -271,37 +323,47 @@ class Play extends Phaser.Scene {
         this.keys = this.input.keyboard.createCursorKeys();
         this.keys.up.on('down',()=>
         {            
-            if (avion_1.focus==true)
+            if (avion_1.focus==true){
                 avion_1.altitud='Alta'
-
-            if (avion_2.focus==true)
+                avion_1.setScale(0.09);
+            }
+            if (avion_2.focus==true){
                 avion_2.altitud='Alta'
-
-            if (avion_3.focus==true)
+                avion_2.setScale(0.09);
+            }
+            if (avion_3.focus==true){
                 avion_3.altitud='Alta'
-
-            if (avion_4.focus==true)
-                avion_4.altitud='Alta'        
+                avion_3.setScale(0.09);
+            }
+            if (avion_4.focus==true){
+                avion_4.altitud='Alta'  
+                avion_4.setScale(0.09); 
+            }     
         });
 
         this.keys.down.on('down',()=>
         {            
-            if (avion_1.focus==true)
+            if (avion_1.focus==true){
                 avion_1.altitud='Baja'
-                
-            if (avion_2.focus==true)
-                avion_2.altitud='Baja'
-
-            if (avion_3.focus==true)
-                avion_3.altitud='Baja'
-
-            if (avion_4.focus==true)
-                avion_4.altitud='Baja'        
+                avion_1.setScale(0.07);
+            }
+            if (avion_2.focus==true){
+                avion_1.altitud='Baja'
+                avion_1.setScale(0.07);
+            }
+            if (avion_3.focus==true){
+                avion_1.altitud='Baja'
+                avion_1.setScale(0.07);
+            }
+            if (avion_4.focus==true){
+                avion_1.altitud='Baja'
+                avion_1.setScale(0.07);
+            }    
         });
 
         this.input.keyboard.on('keydown',(evento)=>{
-            if (config.Partida.Bando==1)
-            {
+           // if (config.Partida.Bando==0)
+        //    {
                 
                 if (evento.key==='1' )  
                 {    
@@ -331,7 +393,7 @@ class Play extends Phaser.Scene {
                     avion_2.focus=false;
                     avion_3.focus=false;
                 }                        
-            } 
+           /* } 
             else
             { 
                 console.log('Bando 0');
@@ -339,7 +401,7 @@ class Play extends Phaser.Scene {
                 {    
                     avion_1_Aleman.focus=true;                    
                 }
-            }
+            }*/
         });
 
         //if (config.Partida.Bando==1)
@@ -348,9 +410,9 @@ class Play extends Phaser.Scene {
 
     posicionAleatoria (Array)
     {	
-        this.add.image(Array[0], Array[1], 'muralla').setScale(.65);
-        this.add.image(Array[2], Array[3], 'contenedor').setScale(.09);
-        this.add.image(Array[4], Array[5], 'deposito').setScale(.30);
+        this.add.image(Array[0], Array[1], 'pisoBase').setScale(.20);
+        this.add.image(Array[2], Array[3], 'contenedor_2').setScale(.15);
+        this.add.image(Array[4], Array[5], 'depositoCombustible').setScale(.10);
         this.add.image(Array[6], Array[7], 'torre').setScale(.07);
     }
 
