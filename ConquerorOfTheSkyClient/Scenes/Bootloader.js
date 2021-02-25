@@ -30,7 +30,8 @@ class Bootloader extends Phaser.Scene {
              'nubeslateral',
 
             'wall1',
-            'wall2'
+            'wall2',
+            'seleccioncarac'
 
         ])
         this.load.on('complete',()=>{

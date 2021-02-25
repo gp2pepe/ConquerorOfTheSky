@@ -25,7 +25,6 @@ class MenuInicial extends Phaser.Scene {
         //Carga boton de nueva partida y dirije a la escena nueva partida
         this.add.image(0, 0, "fondoMenu").setOrigin(0);
         this.add.image(900, 100, "titulo").setOrigin(0);
-
         //Se carga imagen interactiva de Nueva Partida
         this.nuevaPartida = this.add.image(1050,300,'nuevaPartida'
         ).setOrigin(0).setScale(0.8).setInteractive();
@@ -37,10 +36,11 @@ class MenuInicial extends Phaser.Scene {
                 x:1300,
                 duration: 1000,
                 onComplete: () => {
-                    console.log('Entre iniciando partida');
+                    /*console.log('Entre iniciando partida');
                     config.Partida.iniciarPartida();
-                    config.Partida.Bando=1;
-                    this.scene.start('Play');
+                    config.Partida.Bando=1;*/
+                    this.scene.start('MenuBando');
+                    //this.scene.start('Play');
                 }
             });
 

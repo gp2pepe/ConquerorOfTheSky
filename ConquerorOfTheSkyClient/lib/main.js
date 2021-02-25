@@ -4,6 +4,7 @@ import MenuInicial from '../Scenes/MenuInicial.js';
 import Client from './websocket.js';
 import Partida from '../Objects/Partida.js';
 import MenuPartidas from '../Scenes/MenuPartidas.js';
+import MenuBando from '../Scenes/MenuBando.js';
 
 var config = {
     type: Phaser.AUTO,
@@ -21,7 +22,7 @@ var config = {
             debug: true
         }
     },
-    scene: [Bootloader, Play,MenuInicial,,MenuPartidas],
+    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando],
     WebSocket: new Client(),
     Partida: new Partida(),   
     
