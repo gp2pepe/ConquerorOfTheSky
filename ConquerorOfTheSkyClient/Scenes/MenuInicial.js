@@ -85,8 +85,8 @@ class MenuInicial extends Phaser.Scene {
                 ease: 'Bounce.easeIn',
                 x:1300,
                 duration: 1000,
-                onComplete: () => {   
-                    config.Partida.ingresarAPartida();
+                onComplete: () => {                       
+                    config.Partida.ingresarAPartida(0);
                     config.Partida.listarPartidas(); //Hacer luego un boton refresh
                     config.Partida.Bando=0;
                     this.scene.start('Play');
@@ -100,8 +100,7 @@ class MenuInicial extends Phaser.Scene {
             });
         });
     }
-    update(){
-       
+    update(){     
 
     }
 }

@@ -113,7 +113,7 @@ class Play extends Phaser.Scene {
         config.Partida.avion_2 = avion_2;
         config.Partida.avion_3 = avion_3;
         config.Partida.avion_4 = avion_4;
-
+        config.Partida.avion_1_aleman = avion_1_Aleman;
         //Evento que escucha cuando se clickea con el mouse y llama al onObjectClicked
         this.input.on('pointerdown',this.onObjectClicked);      
         
@@ -194,19 +194,29 @@ class Play extends Phaser.Scene {
             config.Partida.idavion=1;
             avion_1.moverAvion({x: pointer.x, y: pointer.y});
             config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
-        }   
+        }  
+
         if (avion_3.focus==true)
         {            
             config.Partida.idavion=3;
             avion_3.moverAvion({x: pointer.x, y: pointer.y});
             config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
         }  
+
         if (avion_4.focus==true)
         {            
             config.Partida.idavion=4;
             avion_4.moverAvion({x: pointer.x, y: pointer.y});
             config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
-        }  
+        } 
+
+        if (avion_1_Aleman.focus==true)
+        {
+            console.log('entre');
+            config.Partida.idavion=5;
+            avion_1_Aleman.moverAvion({x: pointer.x, y: pointer.y});
+            config.Partida.sincronizarAvion({x: pointer.x, y: pointer.y});
+        }
     }
 
     //Evento  llamado al disparar automaticamente o de momento apretar espacio
@@ -222,6 +232,7 @@ class Play extends Phaser.Scene {
 
     definicionAviones()
     {	
+        console.log(config);
                 // Personaje
         avion_1 = new Avion({
             scene: this,
@@ -289,34 +300,46 @@ class Play extends Phaser.Scene {
         });
 
         this.input.keyboard.on('keydown',(evento)=>{
-            if (evento.key==='1')  
-            {    
-                avion_1.focus=true;
-                avion_2.focus=false;
-                avion_3.focus=false;
-                avion_4.focus=false;
+            if (config.Partida.Bando==1)
+            {
+                
+                if (evento.key==='1' )  
+                {    
+                    avion_1.focus=true;
+                    avion_2.focus=false;
+                    avion_3.focus=false;
+                    avion_4.focus=false;
+                }
+                if (evento.key==='2')  
+                {    
+                    avion_2.focus=true;
+                    avion_1.focus=false;
+                    avion_3.focus=false;
+                    avion_4.focus=false;
+                }
+                if (evento.key==='3')  
+                {    
+                    avion_3.focus=true;
+                    avion_1.focus=false;
+                    avion_2.focus=false;
+                    avion_4.focus=false;
+                }
+                if (evento.key==='4')  
+                {    
+                    avion_4.focus=true;
+                    avion_1.focus=false;
+                    avion_2.focus=false;
+                    avion_3.focus=false;
+                }                        
+            } 
+            else
+            { 
+                console.log('Bando 0');
+                if (evento.key==='1')  
+                {    
+                    avion_1_Aleman.focus=true;                    
+                }
             }
-            if (evento.key==='2')  
-            {    
-                avion_2.focus=true;
-                avion_1.focus=false;
-                avion_3.focus=false;
-                avion_4.focus=false;
-            }
-            if (evento.key==='3')  
-            {    
-                avion_3.focus=true;
-                avion_1.focus=false;
-                avion_2.focus=false;
-                avion_4.focus=false;
-            }
-            if (evento.key==='4')  
-            {    
-                avion_4.focus=true;
-                avion_1.focus=false;
-                avion_2.focus=false;
-                avion_3.focus=false;
-            }        
         });
 
         //if (config.Partida.Bando==1)
@@ -367,7 +390,10 @@ class Play extends Phaser.Scene {
             }   
         }           
         else
-            avion_1_Aleman.setVisible(false);
+            if (config.Partida.Bando==1)
+                avion_1_Aleman.setVisible(false);
+            else
+            avion_1_Aleman.setVisible(true);
     }
 }
 
