@@ -54,7 +54,7 @@ class MenuInicial extends Phaser.Scene {
         //Se carga imagen interactiva de Buscar Partida
         this.buscarPartida = this.add.image(1050,600,'buscarPartida'
         ).setOrigin(0).setScale(0.8).setInteractive();
-        
+        config.Partida.listarPartidas();
         this.buscarPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.buscarPartida,

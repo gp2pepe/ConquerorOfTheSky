@@ -138,10 +138,12 @@ public class Fachada implements IFachada{
         JsonElement jsonElementBase = gson.toJsonTree(base1);
         JsonElement jsonElementBaseEnemiga = gson.toJsonTree(base2);
 
+
         JsonObject innerObject = new JsonObject();
         innerObject.addProperty("operacion", "iniciarPartida");
         innerObject.add("configuraciones", jsonElementConf);
         innerObject.add("partida", jsonElementPartida);
+        innerObject.addProperty("bando", bando);
         innerObject.add("base", jsonElementBase);
         innerObject.add("baseEnemiga", jsonElementBaseEnemiga);
 
@@ -166,6 +168,7 @@ public class Fachada implements IFachada{
       Partida partida = null;
       Base base = null;
       Base baseEnemiga = null;
+      String bando = "";
       for(Partida par: this.partidas ){
         if(par.getIdpartida()==idPartida){
             List<Equipo> equipos = par.getEquipos();
@@ -173,6 +176,7 @@ public class Fachada implements IFachada{
             par.setEquipos(equipos);
             partida = par;
             base =  equipos.get(1).getCampo().getBase();
+            bando = equipos.get(1).getBando();
             baseEnemiga =  equipos.get(0).getCampo().getBase();
 
         }
@@ -188,6 +192,7 @@ public class Fachada implements IFachada{
       innerObject.addProperty("operacion", "ingresarAPartida");
       innerObject.add("configuraciones", jsonElementConf);
       innerObject.add("partida", jsonElementPartida);
+      innerObject.addProperty("bando", bando);
       innerObject.add("base", jsonElementBase);
       innerObject.add("baseEnemiga", jsonElementBaseEnemiga);
 
