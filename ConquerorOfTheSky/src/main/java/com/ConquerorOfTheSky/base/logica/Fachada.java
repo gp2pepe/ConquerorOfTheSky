@@ -63,45 +63,90 @@ public class Fachada implements IFachada{
         List<Jugador> jugadores = new LinkedList<>();
         jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
         
-        Set<Artilleria> artillerias = new HashSet<Artilleria>();
-        
-        artillerias.add(new Artilleria());
-        int maxBaseXY = 800;
-        int minBaseX = 550;
-        int minBaseY = 160;
-        int baseX = (int) (Math.random() * ((maxBaseXY - minBaseX) + 1)) + minBaseX;
-        int baseY = (int) (Math.random() * ((maxBaseXY - minBaseY) + 1)) + minBaseY;
-
         DepositoDeExplosivos depositoExp = new DepositoDeExplosivos(conf.getDepositoExplosivosSalud());
         TorreDeControl torre = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
         TanqueDeCombustible tanque = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
+
+        //Randomizo la posición de el campo 1
+        int posicionCampoX = (int) (Math.random() * ((150) + 1)) ;
+        int posicionCampoY = (int) (Math.random() * ((600) + 1)) ;
+
+        //Randomizo la posición de la base 1
+        int baseX = (int) (Math.random() * (((posicionCampoX + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampoX) + 1)) + posicionCampoX;
+        int baseY = (int) (Math.random() * (((posicionCampoY + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampoY) + 1)) + posicionCampoY;
 
         List<Base> bases = new LinkedList<>();
         Base base1 = new Base(Long.valueOf(0),baseX,baseY,depositoExp,torre,tanque);
         bases.add(base1);
 
-        Campo campo1 = new Campo(Long.valueOf(0), conf.getCampoTamanioX(), conf.getCampoTamanioY(), conf.getCampoPosicion(), artillerias, base1);
+        //Seteo la artilleria para el campo 1
+        Set<Artilleria> artillerias = new HashSet<Artilleria>();
+        for(int i = 1; i< 13; i++){
+          int posicionX = (int) (Math.random() * (((posicionCampoX + conf.getCampoTamanioX()) - posicionCampoX) + 1)) + posicionCampoX;
+          if(posicionX>=baseX && posicionX<=(baseX+conf.getBaseTamanioX())){
+            int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
+            if(random==2)
+              posicionX = (int) (Math.random() * ((baseX - posicionCampoX) + 1)) + posicionCampoX;
+            else
+              posicionX = (int) (Math.random() * (((baseX+conf.getBaseTamanioX()) - (baseX+conf.getBaseTamanioX())) + 1)) + (baseX+conf.getBaseTamanioX());
+          }
+
+          int posicionY = (int) (Math.random() * (((posicionCampoY + conf.getCampoTamanioY()) - posicionCampoY) + 1)) + posicionCampoY;
+          if(posicionY>=baseY && posicionY<=(baseY+conf.getBaseTamanioY())){
+            int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
+            if(random==2)
+              posicionY = (int) (Math.random() * ((baseY - posicionCampoY) + 1)) + posicionCampoY;
+            else
+              posicionY = (int) (Math.random() * (((baseY+conf.getBaseTamanioY()) - (baseY+conf.getBaseTamanioY())) + 1)) + (baseY+conf.getBaseTamanioY());
+          }
+          artillerias.add(new Artilleria( Long.valueOf(i), posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() ));
+        }
+
+        Campo campo1 = new Campo(Long.valueOf(0), posicionCampoX, posicionCampoY, artillerias, base1);
         Equipo equipo1 = new Equipo(bando, jugadores,campo1);
         //Fin equipo1
 
 
         //Equipo 2
-        Set<Artilleria> artillerias2 = new HashSet<Artilleria>();
-        artillerias2.add(new Artilleria());
-        
-        int maxBase2X = 1750;
-        int minBase2X = 1500;
-        int maxBase2Y = 800;
-        int minBase2Y = 160;
-        int base2X = (int) (Math.random() * ((maxBase2X - minBase2X) + 1)) + minBase2X;
-        int base2Y = (int) (Math.random() * ((maxBase2Y - minBase2Y) + 1)) + minBase2Y;
-
         DepositoDeExplosivos depositoExp2 = new DepositoDeExplosivos(conf.getDepositoExplosivosSalud());
         TorreDeControl torre2 = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
         TanqueDeCombustible tanque2 = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
 
+        //Randomizo la posición de el campo 2
+        int posicionCampo2X = (int) (Math.random() * (((conf.getMapaTamanioX()-conf.getCampoTamanioX()) - (conf.getMapaTamanioX()-conf.getCampoTamanioX()-150)) + 1)) + (conf.getMapaTamanioX()-conf.getCampoTamanioX()-150);
+        int posicionCampo2Y = (int) (Math.random() * ((600) + 1)) ;
+
+        //Randomizo la posición de la base 2
+        int base2X = (int) (Math.random() * (((posicionCampo2X + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampo2X) + 1)) + posicionCampo2X;
+        int base2Y = (int) (Math.random() * (((posicionCampo2Y + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampo2Y) + 1)) + posicionCampo2Y;
+
         Base base2 = new Base(Long.valueOf(1),base2X,base2Y,depositoExp2,torre2,tanque2);
-        Campo campo2 = new Campo(Long.valueOf(0), conf.getCampoTamanioX(), conf.getCampoTamanioY(), conf.getCampoPosicion(), artillerias2, base2);
+
+        //Seteo la artilleria para el campo 2
+        Set<Artilleria> artillerias2 = new HashSet<Artilleria>();
+        for(int i = 12; i< 25; i++){
+          int posicionX = (int) (Math.random() * (((posicionCampo2X + conf.getCampoTamanioX()) - posicionCampo2X) + 1)) + posicionCampo2X;
+          if(posicionX>=base2X && posicionX<=(base2X+conf.getBaseTamanioX())){
+            int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
+            if(random==2)
+              posicionX = (int) (Math.random() * ((base2X - posicionCampo2X) + 1)) + posicionCampo2X;
+            else
+              posicionX = (int) (Math.random() * (((base2X+conf.getBaseTamanioX()) - (base2X+conf.getBaseTamanioX())) + 1)) + (base2X+conf.getBaseTamanioX());
+          }
+
+          int posicionY = (int) (Math.random() * (((posicionCampo2Y + conf.getCampoTamanioY()) - posicionCampo2Y) + 1)) + posicionCampo2Y;
+          if(posicionY>=base2Y && posicionY<=(base2Y+conf.getBaseTamanioY())){
+            int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
+            if(random==2)
+              posicionY = (int) (Math.random() * ((base2Y - posicionCampo2Y) + 1)) + posicionCampo2Y;
+            else
+              posicionY = (int) (Math.random() * (((base2Y+conf.getBaseTamanioY()) - (base2Y+conf.getBaseTamanioY())) + 1)) + (base2Y+conf.getBaseTamanioY());
+          }
+          artillerias2.add(new Artilleria( Long.valueOf(i), posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() ));
+        }
+
+
+        Campo campo2 = new Campo(Long.valueOf(0), posicionCampo2X, posicionCampo2Y, artillerias2, base2);
         String bando2 = "Aleman";
         if(bando.equals("Aleman"))
           bando2 = "Frances";
@@ -135,8 +180,8 @@ public class Fachada implements IFachada{
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonElement jsonElementConf = gson.toJsonTree(conf);
         JsonElement jsonElementPartida = gson.toJsonTree(partidaNueva);
-        JsonElement jsonElementBase = gson.toJsonTree(base1);
-        JsonElement jsonElementBaseEnemiga = gson.toJsonTree(base2);
+        JsonElement jsonElementCampo = gson.toJsonTree(campo1);
+        JsonElement jsonElementCampoEnemigo = gson.toJsonTree(campo2);
 
 
         JsonObject innerObject = new JsonObject();
@@ -144,8 +189,8 @@ public class Fachada implements IFachada{
         innerObject.add("configuraciones", jsonElementConf);
         innerObject.add("partida", jsonElementPartida);
         innerObject.addProperty("bando", bando);
-        innerObject.add("base", jsonElementBase);
-        innerObject.add("baseEnemiga", jsonElementBaseEnemiga);
+        innerObject.add("campo", jsonElementCampo);
+        innerObject.add("campoEnemigo", jsonElementCampoEnemigo);
 
         return gson.toJson(innerObject);
 
@@ -166,8 +211,8 @@ public class Fachada implements IFachada{
       List<Jugador> jugadores = new LinkedList<>();
       jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
       Partida partida = null;
-      Base base = null;
-      Base baseEnemiga = null;
+      Campo campo1  = null;
+      Campo campo2 = null;
       String bando = "";
       for(Partida par: this.partidas ){
         if(par.getIdpartida()==idPartida){
@@ -175,9 +220,9 @@ public class Fachada implements IFachada{
             equipos.get(1).setJugadores(jugadores);
             par.setEquipos(equipos);
             partida = par;
-            base =  equipos.get(1).getCampo().getBase();
+            campo1 =  equipos.get(1).getCampo();
             bando = equipos.get(1).getBando();
-            baseEnemiga =  equipos.get(0).getCampo().getBase();
+            campo2 =  equipos.get(0).getCampo();
 
         }
       }
@@ -185,16 +230,16 @@ public class Fachada implements IFachada{
       Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
       JsonElement jsonElementConf = gson.toJsonTree(conf);
       JsonElement jsonElementPartida = gson.toJsonTree(partida);
-      JsonElement jsonElementBase = gson.toJsonTree(base);
-      JsonElement jsonElementBaseEnemiga = gson.toJsonTree(baseEnemiga);
+      JsonElement jsonElementCampo = gson.toJsonTree(campo1);
+      JsonElement jsonElementCampoEnemigo = gson.toJsonTree(campo2);
 
       JsonObject innerObject = new JsonObject();
       innerObject.addProperty("operacion", "ingresarAPartida");
       innerObject.add("configuraciones", jsonElementConf);
       innerObject.add("partida", jsonElementPartida);
       innerObject.addProperty("bando", bando);
-      innerObject.add("base", jsonElementBase);
-      innerObject.add("baseEnemiga", jsonElementBaseEnemiga);
+      innerObject.add("campo", jsonElementCampo);
+      innerObject.add("campoEnemigo", jsonElementCampoEnemigo);
 
       return gson.toJson(innerObject);
     }
