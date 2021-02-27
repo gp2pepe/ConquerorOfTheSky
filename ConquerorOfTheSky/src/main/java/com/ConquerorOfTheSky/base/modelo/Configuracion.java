@@ -41,8 +41,12 @@ public class Configuracion {
     private int campoTamanioX;
     @Expose
     private int campoTamanioY;
+
+    //Configuraciones Base
     @Expose
-    private int campoPosicion;
+    private int baseTamanioX;
+    @Expose
+    private int baseTamanioY;
 
     //configuraciones Artilleria
     @Expose
@@ -78,7 +82,7 @@ public class Configuracion {
     }
 
     public Configuracion(int idConfiguracion, int avionSalud, int avionDanio, int avionVelocidad, int avionCombustible,
-    int avionRadioVision, int mapaTamanioX, int mapaTamanioY, int campoTamanioX, int campoTamanioY,
+    int avionRadioVision, int mapaTamanioX, int mapaTamanioY, int campoTamanioX, int campoTamanioY, int baseTamanioX, int baseTamanioY,
     int campoPosicion, int artilleriaSalud, int artilleriaRadioDisparo, int artilleriaDanio,
     int bombaRadioImpacto, int bombaDanio, int torreSalud, int torreRadioDisparo, int torreDanio,
     int depositoExplosivosSalud, int tanqueCombustibleSalud) {
@@ -92,7 +96,8 @@ public class Configuracion {
         this.mapaTamanioY = mapaTamanioY;
         this.campoTamanioX = campoTamanioX;
         this.campoTamanioY = campoTamanioY;
-        this.campoPosicion = campoPosicion;
+        this.baseTamanioX = baseTamanioX;
+        this.baseTamanioY = baseTamanioY;
         this.artilleriaSalud = artilleriaSalud;
         this.artilleriaRadioDisparo = artilleriaRadioDisparo;
         this.artilleriaDanio = artilleriaDanio;
@@ -185,14 +190,6 @@ public class Configuracion {
         this.campoTamanioY = campoTamanioY;
     }
 
-    public int getCampoPosicion() {
-        return campoPosicion;
-    }
-
-    public void setCampoPosicion(int campoPosicion) {
-        this.campoPosicion = campoPosicion;
-    }
-
     public int getArtilleriaSalud() {
         return artilleriaSalud;
     }
@@ -272,6 +269,22 @@ public class Configuracion {
     public void setTanqueCombustibleSalud(int tanqueCombustibleSalud) {
         this.tanqueCombustibleSalud = tanqueCombustibleSalud;
     }
+
+	public int getBaseTamanioX() {
+		return baseTamanioX;
+	}
+
+	public void setBaseTamanioX(int baseTamanioX) {
+		this.baseTamanioX = baseTamanioX;
+	}
+
+	public int getBaseTamanioY() {
+		return baseTamanioY;
+	}
+
+	public void setBaseTamanioY(int baseTamanioY) {
+		this.baseTamanioY = baseTamanioY;
+	}
 
 
 }

@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
@@ -19,21 +22,26 @@ import javax.persistence.CascadeType;
 @Table(name="campo")
 public class Campo {
     
+    @Expose
     @Id
     @Column(name="id_campo")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idCampo;
 
-    private int tamanioX;
-    private int tamanioY;
-    private int posicion;
+    @Expose
+    private int posicionX;
 
+    @Expose
+    private int posicionY;
+
+    @Expose
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "artillerias_campo",
                 joinColumns = {@JoinColumn(name = "id_campo")},
                 inverseJoinColumns = {@JoinColumn(name = "id_artilleria")})
     private Set<Artilleria> artillerias;
 
+    @Expose
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_base", referencedColumnName = "id_base")
     private Base base;
@@ -41,12 +49,11 @@ public class Campo {
     public Campo() {
     }
 
-    public Campo(Long idCampo, int tamanioX, int tamanioY, int posicion, Set<Artilleria> artillerias,
+    public Campo(Long idCampo, int posicionX, int posicionY, Set<Artilleria> artillerias,
             Base base) {
         this.idCampo = idCampo;
-        this.tamanioX = tamanioX;
-        this.tamanioY = tamanioY;
-        this.posicion = posicion;
+        this.posicionX = posicionX;
+        this.posicionY = posicionY;
         this.artillerias = artillerias;
         this.base = base;
     }
@@ -57,30 +64,6 @@ public class Campo {
 
     public void setIdCampo(Long idCampo) {
         this.idCampo = idCampo;
-    }
-
-    public int getTamanioX() {
-        return tamanioX;
-    }
-
-    public void setTamanioX(int tamanioX) {
-        this.tamanioX = tamanioX;
-    }
-
-    public int getTamanioY() {
-        return tamanioY;
-    }
-
-    public void setTamanioY(int tamanioY) {
-        this.tamanioY = tamanioY;
-    }
-
-    public int getPosicion() {
-        return posicion;
-    }
-
-    public void setPosicion(int posicion) {
-        this.posicion = posicion;
     }
 
     public Set<Artilleria> getArtillerias() {
@@ -99,7 +82,20 @@ public class Campo {
         this.base = bases;
     }
 
-    
+    public int getPosicionX() {
+        return posicionX;
+    }
 
+    public void setPosicionX(int posicionX) {
+        this.posicionX = posicionX;
+    }
+
+    public int getPosicionY() {
+        return posicionY;
+    }
+
+    public void setPosicionY(int posicionY) {
+        this.posicionY = posicionY;
+    }
 
 }

@@ -7,19 +7,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 
 @Entity
 @Table(name="artilleria")
 public class Artilleria {
     
+    @Expose
     @Id
     @Column(name="id_artilleria")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idArtilleria;
+
+    @Expose
     private int posicionX;
+    
+    @Expose
     private int posicionY;
+    
+    @Expose
     private int salud;
+    
+    @Expose    
     private int radioDisparo;
+
+    @Expose
     private int danio;
 
 	public Artilleria() {
