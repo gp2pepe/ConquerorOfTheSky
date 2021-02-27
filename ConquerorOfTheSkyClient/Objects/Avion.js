@@ -15,6 +15,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.vidaAvion = 100;    
         this.focus=false;   
         this.altitud='Baja';
+        
     }
 
     moverAvion(msg){            

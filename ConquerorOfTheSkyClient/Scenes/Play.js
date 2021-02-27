@@ -16,6 +16,7 @@ var avion_4_Aliados;
 var bullets;
 var distance
 var bullet;
+var preProcessCallback;
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -160,7 +161,7 @@ class Play extends Phaser.Scene {
 
         
 
-      //Se llama a funcion que definira los aviones  
+        //Se llama a funcion que definira los aviones  
         this.definicionAviones();
         
         //Se realiza la asignacion entre los aviones recien definidos con los que maneja la clase Partida
@@ -182,10 +183,11 @@ class Play extends Phaser.Scene {
             maxSize: 1,
             runChildUpdate: true
         });
-    
-        //Evento que escucha cuando se apreta espacio , de momento se utiliza para disparar
-      //  this.input.keyboard.on('keydown-SPACE', this.disparar); 
-        
+        this.colisiones();     
+    }
+
+    colisiones()
+    { 
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados,this.wall_floor]);       
         
@@ -261,17 +263,25 @@ class Play extends Phaser.Scene {
             bullets.remove(bullets.getLast(true),true);
             console.log('avion Aliado :'+avion_4_Aliados.vidaAvion);
         }); 
+        
+        this.physics.add.overlap(this.circulo_1,avion_1_Aliados, ()=>
+        {   
+            avion_1_Aliados.setVisible(true);
+            if (this.time > lastFired)
+            { 
+                this.disparar(avion_1,avion_1_Aliados)  
+                lastFired = this.time + 500;               
+            } 
+        });
+        
 
     }
+    //----------------//
     //Evento llamado al realizar click con el mouse
     onObjectClicked(pointer)
     {  
-        console.log(pointer.x);
-        console.log(pointer.y);
-  
-        //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion
-        console.log(config.Partida.Bando);
-        if (config.Partida.Bando=='Aleman')
+        //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion       
+        if (config.Partida.Bando==0)
     {
         if (avion_2.focus==true)
         {            
@@ -342,16 +352,25 @@ class Play extends Phaser.Scene {
     }
 
     definicionAviones()
-    {	
-        console.log(config);
+    {	        
                 // Personaje
         avion_1 = new Avion({
             scene: this,
             x: 500,
             y: 200                             
-        }).setInteractive();
-        avion_1.circle = this.add.circle(avion_1.x, avion_1.y, 100 , 0xffffff, 0.3)  
+        }).setInteractive();        
+        //avion_1.circle = this.add.circle(avion_1.x, avion_1.y, 100 , 0xffffff, 0.3) ;
+        this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(2);
+        this.physics.world.enable(this.circulo_1);
+        this.circulo_1.body.setCircle(40);
+        this.circulo_1.body.setOffset(10,12);
+        this.circulo_1 = new Phaser.Geom.Circle(avion_1.x-50, avion_1.y-50, 40);
 
+        
+
+       // this.wall_floor.refresh();
+        //this.scene.physics.world.enable(this);
+        
         avion_2 = new Avion({
             scene: this,
             x: 500,
@@ -443,7 +462,7 @@ class Play extends Phaser.Scene {
         });
 
         this.input.keyboard.on('keydown',(evento)=>{
-            if (config.Partida.Bando=='Aleman')
+            if (config.Partida.Bando==0)
             {
                 
                 if (evento.key==='1' )  
@@ -507,23 +526,19 @@ class Play extends Phaser.Scene {
                 }   
             }
         });
-        if (config.Partida.Bando=='Aleman')
+        if (config.Partida.Bando==0)
         {
             avion_1_Aliados.setVisible(false);
             avion_2_Aliados.setVisible(false);
             avion_3_Aliados.setVisible(false);
-            avion_4_Aliados.setVisible(false);
-            
-            
-            
+            avion_4_Aliados.setVisible(false);            
         }
         else
         {
             avion_1.setVisible(false);
             avion_2.setVisible(false);
             avion_3.setVisible(false);
-            avion_4.setVisible(false);
-            
+            avion_4.setVisible(false);            
         }
            
     }
@@ -536,10 +551,100 @@ class Play extends Phaser.Scene {
         this.add.image(Array[6], Array[7], 'torre').setScale(.07);
     }
 
+    MostrarOcultarAvion(avion_Focus,avion_enemigo,idavion,time)
+    { 
+        var dx = avion_Focus.circle.x - avion_enemigo.x;
+        var dy = avion_Focus.circle.y - avion_enemigo.y;
+        distance = Math.sqrt(dx * dx + dy * dy);  
+        
+        //Se setea autodisparo de los aviones al cruzar el raango visual con otro avion
+        if (distance < avion_Focus.circle.radius && avion_enemigo.altitud == avion_Focus.altitud)      
+        {   
+            if (config.Partida.Bando==0)
+            {
+                switch (idavion)
+                {
+                    case 1:       
+                            avion_1_Aliados.setVisible(true);
+                            break;
+                    case 2:
+                            avion_2_Aliados.setVisible(true);
+                            break; 
+                    case 3:
+                            avion_3_Aliados.setVisible(true);
+                            break;
+                    case 4: 
+                            avion_4_Aliados.setVisible(true);
+                            break;
+                }                  
+
+            }    
+            if (time > lastFired)
+            { 
+                this.disparar(avion_Focus,avion_enemigo)  
+                lastFired = time + 500;               
+            }   
+        }           
+        else            
+            if (config.Partida.Bando==0)
+            {
+                switch (idavion)
+                {
+                    case 1:       
+                            avion_1_Aliados.setVisible(false);
+                            break;
+                    case 2:
+                            avion_2_Aliados.setVisible(false);
+                            break; 
+                    case 3:
+                            avion_3_Aliados.setVisible(false);
+                            break;
+                    case 4: 
+                            avion_4_Aliados.setVisible(false);
+                            break;
+                }  
+            }
+            else
+                {
+                    switch (idavion)
+                    {
+                        case 1:       
+                                avion_1_Aliados.setVisible(true);
+                                break;
+                        case 2:
+                                avion_2_Aliados.setVisible(true);
+                                break; 
+                        case 3:
+                                avion_3_Aliados.setVisible(true);
+                                break;
+                        case 4: 
+                                avion_4_Aliados.setVisible(true);
+                                break;
+                    }  
+                    
+
+                }
+    }
+
+    checkOverlap(spriteA, spriteB) {
+        var boundsA = spriteA.getBounds();
+        var boundsB = spriteB.getBounds();
+    
+        return Phaser.Geom.Intersects.CircleToRectangle(boundsA, boundsB);
+    }
+
     update(time,delta)
     { 
+        this.time = time;
+      /*  //graphics.clear();
+        if (Phaser.Geom.Intersects.CircleToRectangle(this.circulo_1, avion_1_Aliados))
+            console.log("colider");
+        else
+            console.log(" no colider");
         //Se actualiza posicion del rango visual de los aviones
-        avion_1.circle.setPosition(avion_1.x, avion_1.y);  
+        this.circulo_1.setPosition(avion_1.x, avion_1.y);*/
+
+        //avion_1.circle.setPosition(avion_1.x, avion_1.y);  
         avion_2.circle.setPosition(avion_2.x, avion_2.y); 
         avion_3.circle.setPosition(avion_3.x, avion_3.y);  
         avion_4.circle.setPosition(avion_4.x, avion_4.y);
@@ -566,25 +671,13 @@ class Play extends Phaser.Scene {
         if(avion_4_Aliados.vidaAvion == 0) 
             avion_4_Aliados.destroy(); 
 
-        var dx = avion_1.circle.x - avion_1_Aliados.x;
-        var dy = avion_1.circle.y - avion_1_Aliados.y;
-        distance = Math.sqrt(dx * dx + dy * dy);   
-        
-        //Se setea autodisparo de los aviones al cruzar el raango visual con otro avion
-        if (distance < avion_1.circle.radius && avion_1_Aliados.altitud == avion_1.altitud)      
-        {   
-            avion_1_Aliados.setVisible(true);
-            if (time > lastFired)
-            { 
-                this.disparar(avion_1,avion_1_Aliados)  
-                lastFired = time + 500;               
-            }   
-        }           
-        else
-            if (config.Partida.Bando==1)
-                avion_1_Aliados.setVisible(false);
-            else
-            avion_1_Aliados.setVisible(true);
+        if (config.Partida.Bando==0)
+        {                    
+            /*    this.MostrarOcultarAvion(avion_1,avion_1_Aliados,1,time);
+                this.MostrarOcultarAvion(avion_1,avion_2_Aliados,2,time);
+                this.MostrarOcultarAvion(avion_1,avion_3_Aliados,3,time);
+                this.MostrarOcultarAvion(avion_1,avion_4_Aliados,4,time);*/       
+        }
     }
 }
 

@@ -38,6 +38,7 @@ class Bootloader extends Phaser.Scene {
             'albatros',
             'pisoBase',
             'depositoCombustible',
+            'circuloAvion',
 
 
             'boton_1',
