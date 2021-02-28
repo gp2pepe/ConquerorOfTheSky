@@ -24,6 +24,7 @@ class Bootloader extends Phaser.Scene {
             'nuevaPartida',
             'buscarPartida',
             'cargarPartida',
+            'confirmarNuevaPartida',
             'titulo',
             'contenedor',
             'contenedor_2',

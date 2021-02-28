@@ -25,14 +25,12 @@ class Play extends Phaser.Scene {
         super({key: 'Play'});
         this.bullets;
     }
-
+/*
     preload(){
         if(config.Partida.tipoPartida = "NuevaPartida")
             config.Partida.iniciarPartida();
-        else if(config.Partida.tipoPartida = "IngresarAPartida")
-          config.Partida.ingresarAPartida(partida);
     }
-    
+    */
     create(){ 
         this.scene.remove('MenuInicial');
         this.scene.remove('ElegirBando');

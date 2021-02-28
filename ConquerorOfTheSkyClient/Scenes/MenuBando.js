@@ -90,8 +90,9 @@ class MenuBando extends Phaser.Scene
         config.Partida.Bando = bandoElegido;
         config.Partida.Nombre = textEntry.text;
         config.Partida.tipoPartida = "NuevaPartida";
+        config.Partida.iniciarPartida();
         //console.log(config.Partida);
-        this.scene.start('Play');
+        this.scene.launch('confirmarNuevaPartida');
     });
 
 }
