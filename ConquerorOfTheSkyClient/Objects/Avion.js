@@ -1,3 +1,5 @@
+import Play from '../Scenes/Play.js';
+
 class Avion extends Phaser.GameObjects.Sprite {
 	
 	/**
@@ -15,7 +17,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.vidaAvion = 100;    
         this.focus=false;   
         this.altitud='Baja';
-        
+        this.lastFired=0;
     }
 
     moverAvion(msg){            
