@@ -27,7 +27,12 @@ class Play extends Phaser.Scene {
         this.bullets;
         
     }
-
+    preload(){
+        if(config.Partida.tipoPartida = "NuevaPartida")
+            config.Partida.iniciarPartida();
+        else if(config.Partida.tipoPartida = "IngresarAPartida")
+          config.Partida.ingresarAPartida(partida);
+    }
     create(){ 
        //Remuevo escenas de Menu ya utilizadas
         this.scene.remove('MenuInicial');

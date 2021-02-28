@@ -4,7 +4,7 @@ import { config } from '../lib/main.js';
 class Partida {
     
     constructor() {
-
+        this.tipoPartida = null;
     }
 
     procesarMensaje(msg){
