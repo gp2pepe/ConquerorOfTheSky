@@ -25,51 +25,39 @@ class Play extends Phaser.Scene {
         //le asigno una clave a la escena Play
         super({key: 'Play'});
         this.bullets;
+        
     }
 
     create(){ 
+       //Remuevo escenas de Menu ya utilizadas
+        this.scene.remove('MenuInicial');
+        this.scene.remove('ElegirBando');
+        console.log(config.Partida);
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
         this.avionVistaLateral = this.add.image(100,140,'albatros').setOrigin(0).setScale(.3);
         this.mapa = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
+
+        //esto es para mejorar el efecto spotlight de descubrir las areas no visibles
+        /*const plc = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
+        const spotlight = this.make.sprite({
+            x: 500,
+            y: 500,
+            key: 'nubeslateral',
+            add: false
+        });
+        plc.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
+
+        this.input.on('pointermove', function(pointer) {
+            spotlight.x = pointer.x;
+            spotlight.y = pointer.y;
+        });*/
          //opacidad del mapa
-        // this.mapa.alpha = 0.8;+
-        this.boton_1 = this.add.image(1650, 1000, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
-        this.boton_2 = this.add.image(1700, 1000, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
-        this.boton_3 = this.add.image(1750, 1000, "boton_3").setOrigin(0).setScale(.1).setInteractive(); 
-        this.boton_4 = this.add.image(1800, 1000, "boton_4").setOrigin(0).setScale(.1).setInteractive(); 
-        this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
+        //this.mapa.alpha = 0.4;
+      this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
         this.boton_6 = this.add.image(340, 425, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
 
-        this.boton_1.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            this.mapa = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
-            this.boton_1.depth=100;
-            this.boton_2.depth=100;
-            this.boton_3.depth=100;
-            this.boton_4.depth=100;
-        });
-        this.boton_2.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            this.mapa = this.add.image(433, 46, "mapa_4").setOrigin(0).setScale(1); 
-            this.boton_1.depth=100;
-            this.boton_2.depth=100;
-            this.boton_3.depth=100;
-            this.boton_4.depth=100;
-        });
-        this.boton_3.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            this.mapa = this.add.image(433, 46, "mapa_5").setOrigin(0).setScale(1); 
-            this.boton_1.depth=100;
-            this.boton_2.depth=100;
-            this.boton_3.depth=100;
-            this.boton_4.depth=100;
-        });
-        this.boton_4.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            this.mapa = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1); 
-            this.boton_1.depth=100;
-            this.boton_2.depth=100;
-            this.boton_3.depth=100;
-            this.boton_4.depth=100;
-        });
         this.boton_5.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
             this.boton_5.depth=100;
@@ -94,6 +82,8 @@ class Play extends Phaser.Scene {
         this.wall_floor.create(433, 1060, 'wall2').setOrigin(0, 1);
         //El refresh es para que cargue bien las zonas de colision de la imagen
         this.wall_floor.refresh();
+
+        this.campo = this.add.image(433, 46, "campo").setOrigin(0).setScale(1); 
        
         //Cargo base para bando 1
         //Seccion donde se randomizara la posicion de la base y se agregara al mapa, tendra predefinidas ubicaciones y se randomizara entre las mismas
@@ -283,6 +273,7 @@ class Play extends Phaser.Scene {
     //Evento llamado al realizar click con el mouse
     onObjectClicked(pointer)
     {  
+        
         //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion       
         if (config.Partida.Bando==0)
     {
@@ -547,6 +538,7 @@ class Play extends Phaser.Scene {
         this.add.image(Array[2], Array[3], 'contenedor_2').setScale(.15);
         this.add.image(Array[4], Array[5], 'depositoCombustible').setScale(.10);
         this.add.image(Array[6], Array[7], 'torre').setScale(.07);
+        this.add.image(Array[6] +30, Array[7] + 30, 'artilleria_5').setScale(.1);
     }
 
     MostrarOcultarAvion(avion,avion_enemigo)
@@ -562,12 +554,6 @@ class Play extends Phaser.Scene {
         return mostrarAvion;
     }
 
-    checkOverlap(spriteA, spriteB) {
-        var boundsA = spriteA.getBounds();
-        var boundsB = spriteB.getBounds();
-    
-        return Phaser.Geom.Intersects.CircleToRectangle(boundsA, boundsB);
-    }
 
     update(time,delta)
     {      

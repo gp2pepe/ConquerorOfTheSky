@@ -39,7 +39,7 @@ class MenuInicial extends Phaser.Scene {
                     /*console.log('Entre iniciando partida');
                     config.Partida.iniciarPartida();
                     config.Partida.Bando=1;*/
-                    this.scene.start('MenuBando');
+                    this.scene.launch('MenuBando');
                     //this.scene.start('Play');
                 }
             });

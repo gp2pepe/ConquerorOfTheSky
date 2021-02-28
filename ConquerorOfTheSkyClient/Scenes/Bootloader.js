@@ -11,7 +11,6 @@ class Bootloader extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.image([
             'Nieuport_28C1',
-            'Nieuport_28C1_2',
             'fondoMapa',
             'mapa_1',
             'mapa_2',
@@ -19,6 +18,7 @@ class Bootloader extends Phaser.Scene {
             'mapa_4',
             'mapa_5',
             'mapa_6',
+            'campo',
             'bullet',
             'fondoMenu',
             'nuevaPartida',

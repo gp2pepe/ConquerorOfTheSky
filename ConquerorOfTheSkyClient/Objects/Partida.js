@@ -11,6 +11,7 @@ class Partida {
         if(msg.operacion == "iniciarPartida"){
             this.idpartida = msg.partida.idPartida;
             this.Bando = msg.bando;
+            this.campo = msg.campo;
         }else if(msg.operacion == "ingresarAPartida"){            
             console.log("Ingrese a partida numero: " + msg.partida.idPartida) ;
             this.idpartida = msg.partida.idPartida;
