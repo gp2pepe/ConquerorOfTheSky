@@ -53,7 +53,7 @@ class MenuBando extends Phaser.Scene
                 x:1300,
                 duration: 1000,
                 onComplete: () => {
-                    bandoElegido = 0;
+                    bandoElegido = "Aleman";
                 }
             });
 
@@ -72,7 +72,7 @@ class MenuBando extends Phaser.Scene
                 x:1300,
                 duration: 1000,
                 onComplete: () => {
-                    bandoElegido = 1;
+                    bandoElegido = "Frances";
                 }
             });
 
