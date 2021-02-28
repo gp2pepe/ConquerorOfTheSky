@@ -266,12 +266,15 @@ class Play extends Phaser.Scene {
         
         this.physics.add.overlap(this.circulo_1,avion_1_Aliados, ()=>
         {   
-            avion_1_Aliados.setVisible(true);
-            if (this.time > lastFired)
-            { 
-                this.disparar(avion_1,avion_1_Aliados)  
-                lastFired = this.time + 500;               
-            } 
+            if (avion_1.altitud == avion_1_Aliados.altitud)
+            {
+                avion_1_Aliados.setVisible(true);
+                if (this.time > lastFired)
+                { 
+                    this.disparar(avion_1,avion_1_Aliados)  
+                    lastFired = this.time + 500;               
+                } 
+            }
         });
         
 
@@ -363,13 +366,8 @@ class Play extends Phaser.Scene {
         this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(2);
         this.physics.world.enable(this.circulo_1);
         this.circulo_1.body.setCircle(40);
-        this.circulo_1.body.setOffset(10,12);
-        this.circulo_1 = new Phaser.Geom.Circle(avion_1.x-50, avion_1.y-50, 40);
+        this.circulo_1.body.setOffset(10,12);     
 
-        
-
-       // this.wall_floor.refresh();
-        //this.scene.physics.world.enable(this);
         
         avion_2 = new Avion({
             scene: this,
@@ -551,79 +549,17 @@ class Play extends Phaser.Scene {
         this.add.image(Array[6], Array[7], 'torre').setScale(.07);
     }
 
-    MostrarOcultarAvion(avion_Focus,avion_enemigo,idavion,time)
+    MostrarOcultarAvion(avion,avion_enemigo)
     { 
-        var dx = avion_Focus.circle.x - avion_enemigo.x;
-        var dy = avion_Focus.circle.y - avion_enemigo.y;
-        distance = Math.sqrt(dx * dx + dy * dy);  
-        
-        //Se setea autodisparo de los aviones al cruzar el raango visual con otro avion
-        if (distance < avion_Focus.circle.radius && avion_enemigo.altitud == avion_Focus.altitud)      
+        var mostrarAvion = false;
+        var dx = avion.x - avion_enemigo.x;
+        var dy = avion.y - avion_enemigo.y;
+        distance = Math.sqrt(dx * dx + dy * dy);         
+        if (distance < 100)      
         {   
-            if (config.Partida.Bando==0)
-            {
-                switch (idavion)
-                {
-                    case 1:       
-                            avion_1_Aliados.setVisible(true);
-                            break;
-                    case 2:
-                            avion_2_Aliados.setVisible(true);
-                            break; 
-                    case 3:
-                            avion_3_Aliados.setVisible(true);
-                            break;
-                    case 4: 
-                            avion_4_Aliados.setVisible(true);
-                            break;
-                }                  
-
-            }    
-            if (time > lastFired)
-            { 
-                this.disparar(avion_Focus,avion_enemigo)  
-                lastFired = time + 500;               
-            }   
-        }           
-        else            
-            if (config.Partida.Bando==0)
-            {
-                switch (idavion)
-                {
-                    case 1:       
-                            avion_1_Aliados.setVisible(false);
-                            break;
-                    case 2:
-                            avion_2_Aliados.setVisible(false);
-                            break; 
-                    case 3:
-                            avion_3_Aliados.setVisible(false);
-                            break;
-                    case 4: 
-                            avion_4_Aliados.setVisible(false);
-                            break;
-                }  
-            }
-            else
-                {
-                    switch (idavion)
-                    {
-                        case 1:       
-                                avion_1_Aliados.setVisible(true);
-                                break;
-                        case 2:
-                                avion_2_Aliados.setVisible(true);
-                                break; 
-                        case 3:
-                                avion_3_Aliados.setVisible(true);
-                                break;
-                        case 4: 
-                                avion_4_Aliados.setVisible(true);
-                                break;
-                    }  
-                    
-
-                }
+            mostrarAvion = true;            
+        }        
+        return mostrarAvion;
     }
 
     checkOverlap(spriteA, spriteB) {
@@ -634,15 +570,12 @@ class Play extends Phaser.Scene {
     }
 
     update(time,delta)
-    { 
+    {      
+        //Tiempo que se usa para las balas  
         this.time = time;
-      /*  //graphics.clear();
-        if (Phaser.Geom.Intersects.CircleToRectangle(this.circulo_1, avion_1_Aliados))
-            console.log("colider");
-        else
-            console.log(" no colider");
-        //Se actualiza posicion del rango visual de los aviones
-        this.circulo_1.setPosition(avion_1.x, avion_1.y);*/
+        this.circulo_1.setPosition(avion_1.x, avion_1.y);         
+        if (!this.MostrarOcultarAvion(avion_1,avion_1_Aliados))
+            avion_1_Aliados.setVisible(false);   
 
         //avion_1.circle.setPosition(avion_1.x, avion_1.y);  
         avion_2.circle.setPosition(avion_2.x, avion_2.y); 
