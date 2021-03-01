@@ -24,7 +24,12 @@ class Bootloader extends Phaser.Scene {
             'nuevaPartida',
             'buscarPartida',
             'cargarPartida',
+            'crearPartida',
             'confirmarNuevaPartida',
+            'desenfocar',
+            'textBox',
+            'Aliados',
+            'potenciasCentrales',
             'titulo',
             'contenedor',
             'contenedor_2',
@@ -40,12 +45,14 @@ class Bootloader extends Phaser.Scene {
             'pisoBase',
             'depositoCombustible',
             'circuloAvion',
+            'Nieuport_28C1Lateral',
 
 
             'boton_1',
             'boton_2',
             'boton_3',
             'boton_4',
+            'cargarBomba',
             
              'menupartidas',
              'nubeslateral',

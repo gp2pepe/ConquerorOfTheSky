@@ -25,19 +25,13 @@ class Play extends Phaser.Scene {
         super({key: 'Play'});
         this.bullets;
     }
-/*
-    preload(){
-        if(config.Partida.tipoPartida = "NuevaPartida")
-            config.Partida.iniciarPartida();
-    }
-    */
     create(){ 
         this.scene.remove('MenuInicial');
         this.scene.remove('ElegirBando');
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
-        this.avionVistaLateral = this.add.image(100,140,'albatros').setOrigin(0).setScale(.3);
+        this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
         this.mapa = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
 
         //esto es para mejorar el efecto spotlight de descubrir las areas no visibles
@@ -58,6 +52,7 @@ class Play extends Phaser.Scene {
         //this.mapa.alpha = 0.4;
         this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
         this.boton_6 = this.add.image(340, 425, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
+        this.cargarBomba = this.add.image(45, 700, "cargarBomba").setOrigin(0).setScale(.3).setInteractive(); 
 
         this.boton_5.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
@@ -104,11 +99,14 @@ class Play extends Phaser.Scene {
         campo.base.posicionY+= inicioMapaY;
 
         //Seteo la base y sus elementos
-        this.add.image(campo.base.posicionX, campo.base.posicionY, 'pisoBase').setScale(.20);
+        this.add.image(campo.base.posicionX + 50, campo.base.posicionY + 50, 'pisoBase').setScale(.25);
         this.add.image(campo.base.posicionX+10, campo.base.posicionY + 10, 'contenedor_2').setScale(.15);
         this.add.image(campo.base.posicionX + 70, campo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.add.image(campo.base.posicionX +40, campo.base.posicionY + 70, 'torre').setScale(.07);
-      
+
+        //aca se agregaria la artilleria
+        this.add.image(campo.base.posicionX +200, campo.base.posicionY + 150, 'artilleria_5').setScale(.07);
+
         //Cargo base para bando 2
         var campoEnemigo = config.Partida.campoEnemigo;
         campoEnemigo.posicionX+= inicioMapaX;
@@ -121,7 +119,7 @@ class Play extends Phaser.Scene {
         campoEnemigo.base.posicionY+= inicioMapaY;
 
         //Seteo la base enemiga y sus elementos
-        this.add.image(campoEnemigo.base.posicionX, campoEnemigo.base.posicionY, 'pisoBase').setScale(.20);
+        this.add.image(campoEnemigo.base.posicionX + 50, campoEnemigo.base.posicionY + 50, 'pisoBase').setScale(.25);
         this.add.image(campoEnemigo.base.posicionX+10, campoEnemigo.base.posicionY + 10, 'contenedor_2').setScale(.15);
         this.add.image(campoEnemigo.base.posicionX + 70, campoEnemigo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.add.image(campoEnemigo.base.posicionX +40, campoEnemigo.base.posicionY + 70, 'torre').setScale(.07);
@@ -812,18 +810,34 @@ class Play extends Phaser.Scene {
             if (avion_1.focus==true){
                 avion_1.altitud='Alta'
                 avion_1.setScale(0.09);
+                this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
+                this.boton_5.depth=100;
+                this.boton_6.depth=100;
+                this.avionVistaLateral.depth=100;
             }
             if (avion_2.focus==true){
                 avion_2.altitud='Alta'
                 avion_2.setScale(0.09);
+                this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
+                this.boton_5.depth=100;
+                this.boton_6.depth=100;
+                this.avionVistaLateral.depth=100;
             }
             if (avion_3.focus==true){
                 avion_3.altitud='Alta'
                 avion_3.setScale(0.09);
+                this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
+                this.boton_5.depth=100;
+                this.boton_6.depth=100;
+                this.avionVistaLateral.depth=100;
             }
             if (avion_4.focus==true){
                 avion_4.altitud='Alta'  
                 avion_4.setScale(0.09); 
+                this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
+                this.boton_5.depth=100;
+                this.boton_6.depth=100;
+                this.avionVistaLateral.depth=100;
             }     
         });
 
@@ -832,18 +846,34 @@ class Play extends Phaser.Scene {
             if (avion_1.focus==true){
                 avion_1.altitud='Baja'
                 avion_1.setScale(0.07);
+                this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
+                this.boton_5.depth=100;
+                this.boton_6.depth=100;
+                this.avionVistaLateral.depth=100;
             }
             if (avion_2.focus==true){
                 avion_2.altitud='Baja'
                 avion_2.setScale(0.07);
+                this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
+                this.boton_5.depth=100;
+                this.boton_6.depth=100;
+                this.avionVistaLateral.depth=100;
             }
             if (avion_3.focus==true){
                 avion_3.altitud='Baja'
                 avion_3.setScale(0.07);
+                this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
+                this.boton_5.depth=100;
+                this.boton_6.depth=100;
+                this.avionVistaLateral.depth=100;
             }
             if (avion_4.focus==true){
                 avion_4.altitud='Baja'
                 avion_4.setScale(0.07);
+                this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
+                this.boton_5.depth=100;
+                this.boton_6.depth=100;
+                this.avionVistaLateral.depth=100;
             }    
         });
 

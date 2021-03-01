@@ -25,15 +25,16 @@ class MenuInicial extends Phaser.Scene {
         //Carga boton de nueva partida y dirije a la escena nueva partida
         this.add.image(0, 0, "fondoMenu").setOrigin(0);
         this.add.image(900, 100, "titulo").setOrigin(0);
+
         //Se carga imagen interactiva de Nueva Partida
         this.nuevaPartida = this.add.image(1050,300,'nuevaPartida'
         ).setOrigin(0).setScale(0.8).setInteractive();
-        
+        //Evento de la imagen Nueva Partida
         this.nuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.nuevaPartida,
                 ease: 'Bounce.easeIn',
-                x:1300,
+                x:1070,
                 duration: 1000,
                 onComplete: () => {
                     /*console.log('Entre iniciando partida');
