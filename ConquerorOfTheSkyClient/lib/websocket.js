@@ -6,6 +6,8 @@ class Client {
     constructor() {
     }
     openConnection() {
+        //var url = 'ws://localhost:8082/web-socket    ';
+
         var url = 'ws://34.123.123.107:8082/web-socket    ';
 
         this.ws = new WebSocket(url);

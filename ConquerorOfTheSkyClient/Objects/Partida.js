@@ -12,10 +12,15 @@ class Partida {
             this.idpartida = msg.partida.idPartida;
             this.Bando = msg.bando;
             this.campo = msg.campo;
+            this.campoEnemigo = msg.campoEnemigo;
+
         }else if(msg.operacion == "ingresarAPartida"){            
             console.log("Ingrese a partida numero: " + msg.partida.idPartida) ;
             this.idpartida = msg.partida.idPartida;
-        }else if(msg.operacion == "sincronizarAvion"){ 
+            this.Bando = msg.bando;
+            this.campo = msg.campo;
+            this.campoEnemigo = msg.campoEnemigo;
+        }else if(msg.operacion == "sincronizar"){ 
             if (msg.idavion == 1)
                 this.avion_1.moverAvion(msg);
             if (msg.idavion == 2)
@@ -40,7 +45,7 @@ class Partida {
     
     iniciarPartida(){
         if (config.WebSocket.isConnected()) {        
-            config.WebSocket.ws.send(JSON.stringify({operacion:"iniciarPartida",nick:"pepe",modalidad:"1vs1",nombre:"PartidaDemo",publica:"true",passwd:"0",bando:config.Partida.Bando}));
+            config.WebSocket.ws.send(JSON.stringify({operacion:"iniciarPartida",nick:"pepe",modalidad:"1vs1",nombre:this.Nombre,publica:"true",passwd:"0",bando:this.Bando}));
         //aca el backend registrara una nueva partida y la sesion del usuaria, ademas retornara la sesion del juego.
         }        
     }
@@ -49,9 +54,9 @@ class Partida {
         config.WebSocket.ws.send(JSON.stringify({operacion:"ingresarAPartida",idpartida:idpartida,nick:"Juan",passwd:"0"}));
     }
 
-    sincronizarAvion(msg){
+    sincronizar(msg){
         if (config.WebSocket.isConnected()) {        
-            config.WebSocket.ws.send(JSON.stringify({operacion:"sincronizarAvion",idpartida:this.idpartida,idavion:this.idavion,x: msg.x, y: msg.y}));
+            config.WebSocket.ws.send(JSON.stringify({operacion:"sincronizar",idpartida:this.idpartida,idavion:this.idavion,x: msg.x, y: msg.y}));
         }
     }
 

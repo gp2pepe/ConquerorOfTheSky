@@ -1,6 +1,7 @@
 package com.ConquerorOfTheSky.base.handlers;
 
 import java.io.IOException;
+import java.net.http.WebSocketHandshakeException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -46,55 +47,65 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-       // fachada = (IFachada) Fachada.getInstancia();
-        super.handleTextMessage(session, message);
-       
 
+        super.handleTextMessage(session, message);
         JsonParser springParser = JsonParserFactory.getJsonParser();
         Map<String, Object> map = springParser.parseMap(message.getPayload());
 
-        /*int i = 0;
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-                System.out.println(entry.getKey() + " = " + entry.getValue());
-                i++;
-        }*/
-
-        String op = (String) map.get("operacion");
-        if(op.equals(new String("iniciarPartida"))){
-
-            LOGGER.debug("Llego un iniciarPartida: " + map.toString());
-            String respuesta = fachada.crearPartida((String) map.get("nick"), (String) map.get("modalidad"), (String) map.get("nombre"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
-            session.sendMessage(new TextMessage(respuesta));
-
-
-        }else if(op.equals(new String("ingresarAPartida"))){
-
-            LOGGER.debug("Llego un ingresarAPartida: " + map.toString());
-            String respuesta = fachada.ingresarAPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("nick"), session,(String) map.get("passwd"));
-            session.sendMessage(new TextMessage(respuesta));
-
-        }else if(op.equals(new String("sincronizarAvion"))){
-
-            LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
-            List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((Integer) map.get("idpartida"))));
-            listaSesiones.forEach(webSocketSession -> {
+        try{
+            String op = (String) map.get("operacion");
+            //Proceso el mensaje de iniciarPartida y devuelvo datos de partida nueva
+            if(op.equals(new String("iniciarPartida"))){
                 try {
-                    if(webSocketSession != session)
-                        webSocketSession.sendMessage(message);
-                } catch (IOException e) {
-                    LOGGER.error("Fallo la conexion por websocket");
+                    LOGGER.debug("Llego un iniciarPartida: " + map.toString());
+                    String respuesta = fachada.crearPartida((String) map.get("nick"), (String) map.get("modalidad"), (String) map.get("nombre"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
+                    session.sendMessage(new TextMessage(respuesta));
+                } catch (Exception e) {
+                    LOGGER.error("Fallo iniciarPartida");
+                    session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"iniciarPartida\" }"));
                 }
-            });
 
-        }else if(op.equals(new String("listarPartidas"))){
+            //Proceso el mensaje de ingresarAPartida y devuelvo datos de la partida al usuario
+            }else if(op.equals(new String("ingresarAPartida"))){
+                try{
+                    LOGGER.debug("Llego un ingresarAPartida: " + map.toString());
+                    String respuesta = fachada.ingresarAPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("nick"), session,(String) map.get("passwd"));
+                    session.sendMessage(new TextMessage(respuesta));
+                } catch (Exception e) {
+                    LOGGER.error("Fallo ingresarAPartida");
+                    session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"ingresarAPartida\" }"));
+                }
 
-            LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
-            String respuesta = fachada.listarPartidas();
-            session.sendMessage(new TextMessage(respuesta));
+            //Reenvío los mensajes que envía el frontend a los usuarios de la partida
+            }else if(op.equals(new String("sincronizar"))){
 
+                try{
+                    LOGGER.debug("Llego un sincronizar: " + map.toString());
+                    List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((Integer) map.get("idpartida"))));
+                    listaSesiones.forEach(webSocketSession -> {
+                        try {
+                            if(webSocketSession != session)
+                                webSocketSession.sendMessage(message);
+                        } catch (IOException e) {
+                            LOGGER.error("Fallo la conexion por websocket");
+                        }
+                    });
+                } catch (Exception e) {
+                    LOGGER.error("Fallo sincronizar");
+                    session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"sincronizar\" }"));
+                }
+
+            //Proceso el mensaje de listarPartidas y devuelvo una lista con todas las partidas
+            }else if(op.equals(new String("listarPartidas"))){
+
+                LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
+                String respuesta = fachada.listarPartidas();
+                session.sendMessage(new TextMessage(respuesta));
+            }
+        }catch(WebSocketHandshakeException e1){
+            LOGGER.error("Fallo al procesar mensaje");
 
         }
-
     }
 
 }
