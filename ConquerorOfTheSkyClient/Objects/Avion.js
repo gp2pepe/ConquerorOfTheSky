@@ -18,6 +18,8 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.focus=false;   
         this.altitud='Baja';
         this.lastFired=0;
+        this.combustible = 2000;
+        
     }
 
     moverAvion(msg){            
@@ -39,6 +41,16 @@ class Avion extends Phaser.GameObjects.Sprite {
         }else{
             this.body.setVelocityY(0);
 			this.body.setVelocityY(-distanciaY);  
+        }
+    }
+
+    combustibleMenos1()
+    {
+        this.combustible-=1;
+        console.log(this.combustible);
+        if (avion_1.combustible === 0)
+        {
+            timedEvent.remove(false);
         }
     }
 }
