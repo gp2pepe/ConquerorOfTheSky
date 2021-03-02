@@ -60,11 +60,11 @@ class MenuInicial extends Phaser.Scene {
             this.add.tween({
                 targets: this.buscarPartida,
                 ease: 'Bounce.easeIn',
-                x:1300,
+                x:1070,
                 duration: 1000,
                 onComplete: () => {   
                     config.Partida.listarPartidas(); //Hacer luego un boton refresh            
-                    this.scene.start('MenuPartidas');
+                    this.scene.launch('MenuPartidas');
                 }
             });
 

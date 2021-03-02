@@ -55,6 +55,7 @@ class Bootloader extends Phaser.Scene {
             'cargarBomba',
             
              'menupartidas',
+             'menupartidas_2',
              'nubeslateral',
              'vistaLateralBaja',
 
