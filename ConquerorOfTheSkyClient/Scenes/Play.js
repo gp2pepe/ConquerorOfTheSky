@@ -110,7 +110,7 @@ class Play extends Phaser.Scene {
 
         var artillerias = new Array();
         //aca se agregaria la artilleria
-        for(var i = 0; i<12; i++){
+        for(var i = 0; i<8; i++){
             artillerias[i] = this.add.image(campo.artillerias[i].posicionX + inicioMapaX, campo.artillerias[i].posicionY + inicioMapaY, 'artilleria').setScale(.1);
         }
 
