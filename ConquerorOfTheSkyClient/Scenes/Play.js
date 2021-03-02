@@ -78,8 +78,6 @@ class Play extends Phaser.Scene {
         this.wall_floor.create(433, 1060, 'wall2').setOrigin(0, 1);
         //El refresh es para que cargue bien las zonas de colision de la imagen
         this.wall_floor.refresh();
-
-
         
         console.log("Before Change", JSON.parse(JSON.stringify(config.Partida)));
 
@@ -104,8 +102,11 @@ class Play extends Phaser.Scene {
         this.add.image(campo.base.posicionX + 70, campo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.add.image(campo.base.posicionX +40, campo.base.posicionY + 70, 'torre').setScale(.07);
 
+        var artillerias = new Array();
         //aca se agregaria la artilleria
-        this.add.image(campo.base.posicionX +200, campo.base.posicionY + 150, 'artilleria_5').setScale(.07);
+        for(var i = 0; i<12; i++){
+            artillerias[i] = this.add.image(campo.artillerias[i].posicionX + inicioMapaX, campo.artillerias[i].posicionY + inicioMapaY, 'artilleria_5').setScale(.07);
+        }
 
         //Cargo base para bando 2
         var campoEnemigo = config.Partida.campoEnemigo;
