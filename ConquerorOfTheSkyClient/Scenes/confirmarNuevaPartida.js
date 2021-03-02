@@ -23,7 +23,9 @@ class confirmarNuevaPartida extends Phaser.Scene
 
     create() 
     {   
-    this.crearNuevaPartida = this.add.image(800,700, "confirmarNuevaPartida").setOrigin(0).setScale(0.5).setInteractive(); 
+
+	this.add.image(0,0, 'desenfocar').setOrigin(0);
+    this.crearNuevaPartida = this.add.image(670,500, "confirmarNuevaPartida").setOrigin(0).setScale(0.9).setInteractive(); 
     this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
         this.scene.remove('MenuInicial');
         this.scene.remove('MenuBando');
