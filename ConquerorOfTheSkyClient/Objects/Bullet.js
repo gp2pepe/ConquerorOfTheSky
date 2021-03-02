@@ -5,36 +5,22 @@ class Bullet extends Phaser.GameObjects.Sprite {
 	 */
 	constructor (scene, x, y)
     {		
-        super(scene, x, y, 'bullet').setScale(6);	
+        super(scene, x, y, 'bullet').setScale(2);	
 		this.incX = 0;
 		this.incY = 0;
-		this.speed = Phaser.Math.GetSpeed(400, 1);
+		this.speed = Phaser.Math.GetSpeed(250, 1);
 		this.scene.physics.world.enable(this);		
     }
 
     fire (avion,msg)
     {		
-		this.rotation = Math.atan2(msg.y - avion.body.y,msg.x - avion.body.x);  	
-		this.setPosition(avion.x+10, avion.y+10);		
-		this.scene.physics.world.enable(this);
-		if(msg.x >  this.x){
-            this.body.setVelocityX(0);
-            this.body.setVelocityX(250);
-        }else{
-            this.body.setVelocityX(0);
-            this.body.setVelocityX(-250);
-        }
-    
-        if(msg.y >  this.y){
-            this.body.setVelocityY(0);
-            this.body.setVelocityY(250);
-        }else{
-            this.body.setVelocityY(0);
-			this.body.setVelocityY(-250);  
-        }
+		this.setPosition(avion.x, avion.y);	
+		var angle = Phaser.Math.Angle.BetweenPoints(this, msg);
+        	this.rotation = angle;	
+		this.scene.physics.velocityFromRotation(angle, 250, this.body.velocity);
 		this.setActive(true);
 		this.setVisible(true);
-		this.lifespan = 600;		
+		this.lifespan = 100;		
     }
 	
 
