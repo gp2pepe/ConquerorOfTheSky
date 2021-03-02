@@ -97,7 +97,7 @@ class Play extends Phaser.Scene {
         campo.posicionY+= inicioMapaY;
  
         //Seteo el campo 
-        this.campo = this.add.image(campo.posicionX, campo.posicionY, "campo").setOrigin(0).setScale(1.2); 
+        this.campo = this.add.image(campo.posicionX, campo.posicionY, "campo").setOrigin(0).setScale(1); 
 
         campo.base.posicionX+= inicioMapaX;
         campo.base.posicionY+= inicioMapaY;
