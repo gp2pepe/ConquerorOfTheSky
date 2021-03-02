@@ -22,6 +22,8 @@ var difY;
 var timedEvent;
 var timeNafta = 0;
 var contadorPrueba = 0;
+var avionXInicial;
+var avionYInicial;
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -109,6 +111,12 @@ class Play extends Phaser.Scene {
         this.add.image(campo.base.posicionX+10, campo.base.posicionY + 10, 'contenedor_2').setScale(.15);
         this.add.image(campo.base.posicionX + 70, campo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.add.image(campo.base.posicionX +40, campo.base.posicionY + 70, 'torre').setScale(.07);
+        avionXInicial = campo.base.posicionX ; 
+      
+        if(campo.posicionY > 540)
+            avionYInicial = campo.base.posicionY -120;
+         else
+          avionYInicial  = campo.base.posicionY + 120;
 
         var artillerias = new Array();
         //aca se agregaria la artilleria
@@ -132,6 +140,7 @@ class Play extends Phaser.Scene {
         this.add.image(campoEnemigo.base.posicionX+10, campoEnemigo.base.posicionY + 10, 'contenedor_2').setScale(.15);
         this.add.image(campoEnemigo.base.posicionX + 70, campoEnemigo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.add.image(campoEnemigo.base.posicionX +40, campoEnemigo.base.posicionY + 70, 'torre').setScale(.07);
+    
 
         //Se llama a funcion que definira los aviones  
         console.log(config.Partida.Bando);
@@ -753,16 +762,16 @@ class Play extends Phaser.Scene {
                 // Personaje
         avion_1 = new Avion({
             scene: this,
-            x: 500,
-            y: 200,
-            xInicial: 500,
-            yInicial: 200,
+            x: avionXInicial,
+            y: avionYInicial,
+            xInicial: avionXInicial,
+            yInicial: avionYInicial,
             estoyEnBase: true                             
         }).setInteractive();      
-        this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(2);
+        this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_1);
-        this.circulo_1.body.setCircle(40);
-        this.circulo_1.body.setOffset(10,12);     
+        this.circulo_1.body.setCircle(35);
+        this.circulo_1.body.setOffset(15,16);     
 
         
         avion_2 = new Avion({
@@ -771,10 +780,10 @@ class Play extends Phaser.Scene {
             y: 400,
             estoyEnBase : false            
         }).setInteractive();        
-        this.circulo_2 = this.add.image(avion_2.x-50,avion_2.y-50,'circuloAvion').setScale(2);
+        this.circulo_2 = this.add.image(avion_2.x-50,avion_2.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_2);
-        this.circulo_2.body.setCircle(40);
-        this.circulo_2.body.setOffset(10,12);
+        this.circulo_2.body.setCircle(35);
+        this.circulo_2.body.setOffset(15,16);
 
         avion_3 = new Avion({
             scene: this,
@@ -782,10 +791,10 @@ class Play extends Phaser.Scene {
             y: 600,
             estoyEnBase : false         
         }).setInteractive();        
-        this.circulo_3 = this.add.image(avion_3.x-50,avion_3.y-50,'circuloAvion').setScale(2);
+        this.circulo_3 = this.add.image(avion_3.x-50,avion_3.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_3);
-        this.circulo_3.body.setCircle(40);
-        this.circulo_3.body.setOffset(10,12);
+        this.circulo_3.body.setCircle(35);
+        this.circulo_3.body.setOffset(15,16);
 
         avion_4 = new Avion({
             scene: this,
@@ -793,50 +802,50 @@ class Play extends Phaser.Scene {
             y: 800,
             estoyEnBase: false           
         }).setInteractive();        
-        this.circulo_4 = this.add.image(avion_4.x-50,avion_4.y-50,'circuloAvion').setScale(2);
+        this.circulo_4 = this.add.image(avion_4.x-50,avion_4.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_4);
-        this.circulo_4.body.setCircle(40);
-        this.circulo_4.body.setOffset(10,12);
+        this.circulo_4.body.setCircle(35);
+        this.circulo_4.body.setOffset(15,16);
 
         avion_1_Aliados = new Avion({
             scene: this,
             x: 1500,
             y: 200          
         }).setInteractive();       
-        this.circulo_5 = this.add.image(avion_1_Aliados.x-50,avion_1_Aliados.y-50,'circuloAvion').setScale(2);
+        this.circulo_5 = this.add.image(avion_1_Aliados.x-50,avion_1_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_5);
-        this.circulo_5.body.setCircle(40);
-        this.circulo_5.body.setOffset(10,12); 
+        this.circulo_5.body.setCircle(35);
+        this.circulo_5.body.setOffset(15,16); 
 
         avion_2_Aliados = new Avion({
             scene: this,
             x: 1500,
             y: 400           
         }).setInteractive();       
-        this.circulo_6 = this.add.image(avion_2_Aliados.x-50,avion_2_Aliados.y-50,'circuloAvion').setScale(2);
+        this.circulo_6 = this.add.image(avion_2_Aliados.x-50,avion_2_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_6);
-        this.circulo_6.body.setCircle(40);
-        this.circulo_6.body.setOffset(10,12);
+        this.circulo_6.body.setCircle(35);
+        this.circulo_6.body.setOffset(15,16);
 
         avion_3_Aliados = new Avion({
             scene: this,
             x: 1500,
             y: 600           
         }).setInteractive();        
-        this.circulo_7 = this.add.image(avion_3_Aliados.x-50,avion_3_Aliados.y-50,'circuloAvion').setScale(2);
+        this.circulo_7 = this.add.image(avion_3_Aliados.x-50,avion_3_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_7);
-        this.circulo_7.body.setCircle(40);
-        this.circulo_7.body.setOffset(10,12);
+        this.circulo_7.body.setCircle(35);
+        this.circulo_7.body.setOffset(15,16);
 
         avion_4_Aliados = new Avion({
             scene: this,
             x: 1500,
             y: 800           
         }).setInteractive();        
-        this.circulo_8 = this.add.image(avion_4_Aliados.x-50,avion_4_Aliados.y-50,'circuloAvion').setScale(2);
+        this.circulo_8 = this.add.image(avion_4_Aliados.x-50,avion_4_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_8);
-        this.circulo_8.body.setCircle(40);
-        this.circulo_8.body.setOffset(10,12);
+        this.circulo_8.body.setCircle(35);
+        this.circulo_8.body.setOffset(15,16);
         
         this.keys = this.input.keyboard.createCursorKeys();
         this.keys.up.on('down',()=>
@@ -993,14 +1002,6 @@ class Play extends Phaser.Scene {
            
     }
 
-
-    posicionAleatoria (Array)
-    {	
-        this.add.image(Array[0], Array[1], 'pisoBase').setScale(.20);
-        this.add.image(Array[2], Array[3], 'contenedor_2').setScale(.15);
-        this.add.image(Array[4], Array[5], 'depositoCombustible').setScale(.10);
-        this.add.image(Array[6], Array[7], 'torre').setScale(.07);
-    }
 
     EstaMoviendose(avion)
     {
