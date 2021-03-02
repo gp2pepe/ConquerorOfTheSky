@@ -19,10 +19,14 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.altitud='Baja';
         this.lastFired=0;
         this.combustible = 2000;
-        
+        this.xInicial = config.x;
+        this.yInicial = config.y;
+        this.cargarbomba=false;
+        this.cargarCombustible=false; 
     }
 
-    moverAvion(msg){            
+    moverAvion(msg){     
+           
         var distanciaX = Math.abs(msg.x - this.x);
         var distanciaY = Math.abs(msg.y - this.y);
         this.rotation = Math.atan2(msg.y - this.y, msg.x - this.x);  
