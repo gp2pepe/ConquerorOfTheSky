@@ -17,8 +17,10 @@ var avion_4_Aliados;
 var bullets;
 var distance
 var bullet;
+var difX; 
+var difY;
 var timedEvent;
-var prueba = 0;
+var timeNafta = 0;
 var contadorPrueba = 0;
 
 //Inicializo la clase/escena
@@ -755,7 +757,7 @@ class Play extends Phaser.Scene {
             y: 200,
             xInicial: 500,
             yInicial: 200,
-            estoyEnBase: false                             
+            estoyEnBase: true                             
         }).setInteractive();      
         this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(2);
         this.physics.world.enable(this.circulo_1);
@@ -1000,21 +1002,19 @@ class Play extends Phaser.Scene {
         this.add.image(Array[6], Array[7], 'torre').setScale(.07);
     }
 
-    EstaMoviendose()
+    EstaMoviendose(avion)
     {
-        var difX; 
-        var difY;
         //console.log(avion_1.x);
         //console.log(avion_1.xInicial);
-        difX= Math.abs(avion_1.x - 500); 
-        difY= Math.abs(avion_1.y - 200);
+        difX= Math.abs(avion.x - 500); 
+        difY= Math.abs(avion.y - 200);
         //console.log(difY);
-        if (difX > 0 || difY > 0 || difX < 0 || difY < 0)
+        if (difX < 1 && difY < 1)
         {
-            return true;
+            return false;
         }
         else
-            return false;
+            return true;           
     }
 
     MostrarOcultarAvion(avion)
@@ -1101,17 +1101,17 @@ class Play extends Phaser.Scene {
         this.time = time;
         if (config.Partida.Bando=='Aleman')
         {
-        if (!avion_1.estoyEnBase)
-        {   
-            if (avion_1.focus == true)
+            if (this.EstaMoviendose(avion_1) && time>timeNafta)
+            {                
                 if(avion_1.combustible!=0)
                 {   
+                    timeNafta =timeNafta+1000;
                     //prueba = this.time;
                     console.log(avion_1.combustible);
                     avion_1.combustible--;
                 }
-        }
-        if (!avion_2.estoyEnBase)
+            }
+     /*   if (!avion_2.estoyEnBase)
         {   
             if (avion_2.focus == true)
                 if(avion_2.combustible!=0)
@@ -1183,7 +1183,7 @@ class Play extends Phaser.Scene {
                     //prueba = this.time;
                     avion_4_Aliados.combustible--;
                 }
-        }
+        }*/
     }
         this.circulo_1.setPosition(avion_1.x, avion_1.y);  
         this.circulo_2.setPosition(avion_2.x, avion_2.y);
