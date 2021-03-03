@@ -19,6 +19,7 @@ import com.ConquerorOfTheSky.base.modelo.TanqueDeCombustible;
 import com.ConquerorOfTheSky.base.modelo.TorreDeControl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.ConquerorOfTheSky.base.modelo.Configuracion;
@@ -144,7 +145,6 @@ public class Fachada implements IFachada{
           artillerias2.add(new Artilleria( Long.valueOf(i), posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() ));
         }
 
-
         Campo campo2 = new Campo(Long.valueOf(0), posicionCampo2X, posicionCampo2Y, artillerias2, base2);
         String bando2 = "Potencias";
         if(bando.equals("Potencias"))
@@ -247,24 +247,26 @@ public class Fachada implements IFachada{
 
     public String listarPartidas(){
 
-      /*Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+      Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
       JsonObject innerObject = new JsonObject();
+      JsonArray innerObjectLista = new JsonArray();
       for(Partida par : this.partidas){
-        //JsonElement jsonElement = gson.toJsonTree(par);
+        JsonObject innerObjectPartida = new JsonObject();
+        innerObjectPartida.addProperty("idPartida", par.getIdpartida());
+        innerObjectPartida.addProperty("publica", par.isPublica());
+        innerObjectPartida.addProperty("modalidad", par.getModalidad());
+        innerObjectPartida.addProperty("nombre", par.getNombre());
+        List<Equipo> equipos = par.getEquipos();
+        int jugConectados = 0;
+        for(Equipo eq : equipos)
+          jugConectados += eq.getJugadores().size();
 
-
+        innerObjectPartida.addProperty("jugConectados", jugConectados);
+        innerObjectLista.add(innerObjectPartida);
       }
 
-      
+      innerObject.add("partidas", innerObjectLista);
       innerObject.addProperty("operacion", "listarPartidas");
-      //innerObject.add("partidas", jsonElement);
-      return gson.toJson(innerObject);*/
-
-      Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-      JsonElement jsonElement = gson.toJsonTree(partidas);
-      JsonObject innerObject = new JsonObject();
-      innerObject.addProperty("operacion", "listarPartidas");
-      innerObject.add("partidas", jsonElement);
       return gson.toJson(innerObject);
 
     }
