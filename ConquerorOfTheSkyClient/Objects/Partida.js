@@ -11,15 +11,15 @@ class Partida {
         if(msg.operacion == "iniciarPartida"){
             this.idpartida = msg.partida.idPartida;
             this.Bando = msg.bando;
-            this.campo = msg.campo;
-            this.campoEnemigo = msg.campoEnemigo;
+            this.campoPotencias = msg.campoPotencias;
+            this.campoAliados = msg.campoAliados;
 
         }else if(msg.operacion == "ingresarAPartida"){            
             console.log("Ingrese a partida numero: " + msg.partida.idPartida) ;
             this.idpartida = msg.partida.idPartida;
             this.Bando = msg.bando;
-            this.campo = msg.campo;
-            this.campoEnemigo = msg.campoEnemigo;
+            this.campoPotencias = msg.campoPotencias;
+            this.campoAliados = msg.campoAliados;
         }else if(msg.operacion == "sincronizar"){ 
             if (msg.idavion == 1)
                 this.avion_1.moverAvion(msg);

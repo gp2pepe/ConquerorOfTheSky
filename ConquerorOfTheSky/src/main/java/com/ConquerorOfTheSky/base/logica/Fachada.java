@@ -53,6 +53,20 @@ public class Fachada implements IFachada{
 
         Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
         
+        int posicionCampoX = 0 , posicionCampoY = 0 ,posicionCampo2X = 0 , posicionCampo2Y = 0 ;
+        //Randomizo las posiciones de los campos dependiendo del bando
+        if(bando.equals("Potencias")){
+          posicionCampoX = (int) (Math.random() * ((150) + 1)) ;
+          posicionCampoY = (int) (Math.random() * ((600) + 1)) ;
+          posicionCampo2X = (int) (Math.random() * (((conf.getMapaTamanioX()-conf.getCampoTamanioX()) - (conf.getMapaTamanioX()-conf.getCampoTamanioX()-150)) + 1)) + (conf.getMapaTamanioX()-conf.getCampoTamanioX()-150);
+          posicionCampo2Y = (int) (Math.random() * ((600) + 1)) ;
+        }else{
+          posicionCampoX = (int) (Math.random() * (((conf.getMapaTamanioX()-conf.getCampoTamanioX()) - (conf.getMapaTamanioX()-conf.getCampoTamanioX()-150)) + 1)) + (conf.getMapaTamanioX()-conf.getCampoTamanioX()-150);
+          posicionCampoY = (int) (Math.random() * ((600) + 1)) ;
+          posicionCampo2X = (int) (Math.random() * ((150) + 1)) ;
+          posicionCampo2Y = (int) (Math.random() * ((600) + 1)) ;
+        }
+
         //Equipo 1
         List<Avion> aviones = new LinkedList<>();
         aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
@@ -67,9 +81,6 @@ public class Fachada implements IFachada{
         TorreDeControl torre = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
         TanqueDeCombustible tanque = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
 
-        //Randomizo la posición de el campo 1
-        int posicionCampoX = (int) (Math.random() * ((150) + 1)) ;
-        int posicionCampoY = (int) (Math.random() * ((600) + 1)) ;
 
         //Randomizo la posición de la base 1
         int baseX = (int) (Math.random() * (((posicionCampoX + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampoX) + 1)) + posicionCampoX;
@@ -81,23 +92,19 @@ public class Fachada implements IFachada{
 
         //Seteo la artilleria para el campo 1
         Set<Artilleria> artillerias = new HashSet<Artilleria>();
-        for(int i = 1; i< 13; i++){
-          int posicionX = (int) (Math.random() * (((posicionCampoX + conf.getCampoTamanioX()) - posicionCampoX) + 1)) + posicionCampoX;
-          if(posicionX>=baseX && posicionX<=(baseX+conf.getBaseTamanioX())){
-            int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
-            if(random==2)
-              posicionX = (int) (Math.random() * ((baseX - posicionCampoX) + 1)) + posicionCampoX;
-            else
-              posicionX = (int) (Math.random() * (((baseX+conf.getBaseTamanioX()) - (baseX+conf.getBaseTamanioX())) + 1)) + (baseX+conf.getBaseTamanioX());
-          }
-
-          int posicionY = (int) (Math.random() * (((posicionCampoY + conf.getCampoTamanioY()) - posicionCampoY) + 1)) + posicionCampoY;
+        for(int i = 1; i< (conf.getArtilleriaCantidad()+1); i++){
+          int posicionY = posicionCampoY + (conf.getCampoTamanioY()/conf.getArtilleriaCantidad()-5)*i;
+          int posicionX = (int) (Math.random() * ((((posicionCampoX + conf.getCampoTamanioX())-20) - (posicionCampoX+20)) + 1)) + posicionCampoX+20;
+          //Si coincide la posicionY con la posicion de la base
           if(posicionY>=baseY && posicionY<=(baseY+conf.getBaseTamanioY())){
-            int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
-            if(random==2)
-              posicionY = (int) (Math.random() * ((baseY - posicionCampoY) + 1)) + posicionCampoY;
-            else
-              posicionY = (int) (Math.random() * (((baseY+conf.getBaseTamanioY()) - (baseY+conf.getBaseTamanioY())) + 1)) + (baseY+conf.getBaseTamanioY());
+            //Si coincide la posicionX con la posicion de la base
+            if(posicionX>=baseX && posicionX<=(baseX+conf.getBaseTamanioX())){
+              int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
+              if(random==2)
+                posicionX = (int) (Math.random() * (((baseX-20) - (posicionCampoX+20)) + 1)) + posicionCampoX+20;
+              else
+                posicionX = (int) (Math.random() * ((((baseX+conf.getBaseTamanioX())-20) - (baseX+conf.getBaseTamanioX())+20) + 1)) + (baseX+conf.getBaseTamanioX()+20);
+            }
           }
           artillerias.add(new Artilleria( Long.valueOf(i), posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() ));
         }
@@ -110,11 +117,7 @@ public class Fachada implements IFachada{
         //Equipo 2
         DepositoDeExplosivos depositoExp2 = new DepositoDeExplosivos(conf.getDepositoExplosivosSalud());
         TorreDeControl torre2 = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
-        TanqueDeCombustible tanque2 = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
-
-        //Randomizo la posición de el campo 2
-        int posicionCampo2X = (int) (Math.random() * (((conf.getMapaTamanioX()-conf.getCampoTamanioX()) - (conf.getMapaTamanioX()-conf.getCampoTamanioX()-150)) + 1)) + (conf.getMapaTamanioX()-conf.getCampoTamanioX()-150);
-        int posicionCampo2Y = (int) (Math.random() * ((600) + 1)) ;
+        TanqueDeCombustible tanque2 = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());       
 
         //Randomizo la posición de la base 2
         int base2X = (int) (Math.random() * (((posicionCampo2X + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampo2X) + 1)) + posicionCampo2X;
@@ -124,32 +127,28 @@ public class Fachada implements IFachada{
 
         //Seteo la artilleria para el campo 2
         Set<Artilleria> artillerias2 = new HashSet<Artilleria>();
-        for(int i = 12; i< 25; i++){
-          int posicionX = (int) (Math.random() * (((posicionCampo2X + conf.getCampoTamanioX()) - posicionCampo2X) + 1)) + posicionCampo2X;
-          if(posicionX>=base2X && posicionX<=(base2X+conf.getBaseTamanioX())){
-            int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
-            if(random==2)
-              posicionX = (int) (Math.random() * ((base2X - posicionCampo2X) + 1)) + posicionCampo2X;
-            else
-              posicionX = (int) (Math.random() * (((base2X+conf.getBaseTamanioX()) - (base2X+conf.getBaseTamanioX())) + 1)) + (base2X+conf.getBaseTamanioX());
-          }
-
-          int posicionY = (int) (Math.random() * (((posicionCampo2Y + conf.getCampoTamanioY()) - posicionCampo2Y) + 1)) + posicionCampo2Y;
+        for(int i = 1; i< (conf.getArtilleriaCantidad()+1); i++){
+          int posicionY = posicionCampo2Y + (conf.getCampoTamanioY()/conf.getArtilleriaCantidad()-5)*i;
+          int posicionX = (int) (Math.random() * ((((posicionCampo2X + conf.getCampoTamanioX())-20) - (posicionCampo2X+20)) + 1)) + posicionCampo2X+20;
+          //Si coincide la posicionY con la posicion de la base
           if(posicionY>=base2Y && posicionY<=(base2Y+conf.getBaseTamanioY())){
-            int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
-            if(random==2)
-              posicionY = (int) (Math.random() * ((base2Y - posicionCampo2Y) + 1)) + posicionCampo2Y;
-            else
-              posicionY = (int) (Math.random() * (((base2Y+conf.getBaseTamanioY()) - (base2Y+conf.getBaseTamanioY())) + 1)) + (base2Y+conf.getBaseTamanioY());
+            //Si coincide la posicionX con la posicion de la base
+            if(posicionX>=base2X && posicionX<=(base2X+conf.getBaseTamanioX())){
+              int random = (int) (Math.random() * (((2 - 1 )) + 1)) + 1;
+              if(random==2)
+                posicionX = (int) (Math.random() * (((base2X-20) - (posicionCampo2X+20)) + 1)) + posicionCampo2X+20;
+              else
+                posicionX = (int) (Math.random() * ((((base2X+conf.getBaseTamanioX())-20) - (base2X+conf.getBaseTamanioX())+20) + 1)) + (base2X+conf.getBaseTamanioX()+20);
+            }
           }
           artillerias2.add(new Artilleria( Long.valueOf(i), posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() ));
         }
 
 
         Campo campo2 = new Campo(Long.valueOf(0), posicionCampo2X, posicionCampo2Y, artillerias2, base2);
-        String bando2 = "Aleman";
-        if(bando.equals("Aleman"))
-          bando2 = "Frances";
+        String bando2 = "Potencias";
+        if(bando.equals("Potencias"))
+          bando2 = "Aliados";
         List<Jugador> jugadores2 = new LinkedList<>();
         Equipo equipo2 = new Equipo(bando2, jugadores2,campo2);
         // Fin equipo 2
@@ -181,7 +180,7 @@ public class Fachada implements IFachada{
         JsonElement jsonElementConf = gson.toJsonTree(conf);
         JsonElement jsonElementPartida = gson.toJsonTree(partidaNueva);
         JsonElement jsonElementCampo = gson.toJsonTree(campo1);
-        JsonElement jsonElementCampoEnemigo = gson.toJsonTree(campo2);
+        JsonElement jsonElementCampo2 = gson.toJsonTree(campo2);
 
 
         JsonObject innerObject = new JsonObject();
@@ -189,8 +188,8 @@ public class Fachada implements IFachada{
         innerObject.add("configuraciones", jsonElementConf);
         innerObject.add("partida", jsonElementPartida);
         innerObject.addProperty("bando", bando);
-        innerObject.add("campo", jsonElementCampo);
-        innerObject.add("campoEnemigo", jsonElementCampoEnemigo);
+        innerObject.add("campo"+bando, jsonElementCampo);
+        innerObject.add("campo"+bando2, jsonElementCampo2);
 
         return gson.toJson(innerObject);
 
@@ -211,40 +210,55 @@ public class Fachada implements IFachada{
       List<Jugador> jugadores = new LinkedList<>();
       jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
       Partida partida = null;
-      Campo campo1  = null;
-      Campo campo2 = null;
+      Campo campo  = null;
+      Campo campoContrario = null;
       String bando = "";
+      String bandoContrario = "";
+
       for(Partida par: this.partidas ){
         if(par.getIdpartida()==idPartida){
             List<Equipo> equipos = par.getEquipos();
             equipos.get(1).setJugadores(jugadores);
             par.setEquipos(equipos);
             partida = par;
-            campo1 =  equipos.get(1).getCampo();
+            campo =  equipos.get(1).getCampo();
             bando = equipos.get(1).getBando();
-            campo2 =  equipos.get(0).getCampo();
-
+            campoContrario =  equipos.get(0).getCampo();
+            bandoContrario =  equipos.get(0).getBando();
         }
       }
       //Genero el JSon
       Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
       JsonElement jsonElementConf = gson.toJsonTree(conf);
       JsonElement jsonElementPartida = gson.toJsonTree(partida);
-      JsonElement jsonElementCampo = gson.toJsonTree(campo1);
-      JsonElement jsonElementCampoEnemigo = gson.toJsonTree(campo2);
+      JsonElement jsonElementCampo = gson.toJsonTree(campo);
+      JsonElement jsonElementCampoContrario = gson.toJsonTree(campoContrario);
 
       JsonObject innerObject = new JsonObject();
       innerObject.addProperty("operacion", "ingresarAPartida");
       innerObject.add("configuraciones", jsonElementConf);
       innerObject.add("partida", jsonElementPartida);
       innerObject.addProperty("bando", bando);
-      innerObject.add("campo", jsonElementCampo);
-      innerObject.add("campoEnemigo", jsonElementCampoEnemigo);
+      innerObject.add("campo"+bando, jsonElementCampo);
+      innerObject.add("campo"+bandoContrario, jsonElementCampoContrario);
 
       return gson.toJson(innerObject);
     }
 
     public String listarPartidas(){
+
+      /*Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+      JsonObject innerObject = new JsonObject();
+      for(Partida par : this.partidas){
+        //JsonElement jsonElement = gson.toJsonTree(par);
+
+
+      }
+
+      
+      innerObject.addProperty("operacion", "listarPartidas");
+      //innerObject.add("partidas", jsonElement);
+      return gson.toJson(innerObject);*/
 
       Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
       JsonElement jsonElement = gson.toJsonTree(partidas);

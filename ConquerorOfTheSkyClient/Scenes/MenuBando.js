@@ -77,7 +77,7 @@ class MenuBando extends Phaser.Scene
                 x:620,
                 duration: 1000,
                 onComplete: () => {
-                    bandoElegido = "Aleman";
+                    bandoElegido = "Potencias";
                 }
             });
 
@@ -96,7 +96,7 @@ class MenuBando extends Phaser.Scene
                 x:940,
                 duration: 1000,
                 onComplete: () => {
-                    bandoElegido = "Frances";
+                    bandoElegido = "Aliados";
                 }
             });
 

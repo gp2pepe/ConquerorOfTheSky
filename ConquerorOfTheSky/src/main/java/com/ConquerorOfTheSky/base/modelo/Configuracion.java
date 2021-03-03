@@ -50,6 +50,8 @@ public class Configuracion {
 
     //configuraciones Artilleria
     @Expose
+    private int artilleriaCantidad;
+    @Expose
     private int artilleriaSalud;
     @Expose
     private int artilleriaRadioDisparo;
@@ -285,6 +287,14 @@ public class Configuracion {
 	public void setBaseTamanioY(int baseTamanioY) {
 		this.baseTamanioY = baseTamanioY;
 	}
+
+    public int getArtilleriaCantidad() {
+        return artilleriaCantidad;
+    }
+
+    public void setArtilleriaCantidad(int artilleriaCantidad) {
+        this.artilleriaCantidad = artilleriaCantidad;
+    }
 
 
 }

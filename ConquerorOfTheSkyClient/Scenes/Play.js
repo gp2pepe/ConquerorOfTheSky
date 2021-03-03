@@ -95,7 +95,7 @@ class Play extends Phaser.Scene {
         var inicioMapaY=40;
 
         //Cargo campo y base para bando 1
-        var campo = config.Partida.campo;
+        var campo = config.Partida.campoPotencias;
         campo.posicionX+= inicioMapaX;
         campo.posicionY+= inicioMapaY;
  
@@ -124,21 +124,27 @@ class Play extends Phaser.Scene {
         }
 
         //Cargo base para bando 2
-        var campoEnemigo = config.Partida.campoEnemigo;
-        campoEnemigo.posicionX+= inicioMapaX;
-        campoEnemigo.posicionY+= inicioMapaY;
+        var campoAliados = config.Partida.campoAliados;
+        campoAliados.posicionX+= inicioMapaX;
+        campoAliados.posicionY+= inicioMapaY;
 
-        //Seteo el campoEnemigo 
-        this.campoEnemigo = this.add.image(campoEnemigo.posicionX, campoEnemigo.posicionY, "campo").setOrigin(0).setScale(1); 
+        //Seteo el campoAliados 
+        this.campoAliados = this.add.image(campoAliados.posicionX, campoAliados.posicionY, "campo").setOrigin(0).setScale(1); 
 
-        campoEnemigo.base.posicionX+= inicioMapaX;
-        campoEnemigo.base.posicionY+= inicioMapaY;
+        campoAliados.base.posicionX+= inicioMapaX;
+        campoAliados.base.posicionY+= inicioMapaY;
 
         //Seteo la base enemiga y sus elementos
-        this.add.image(campoEnemigo.base.posicionX + 50, campoEnemigo.base.posicionY + 50, 'pisoBase').setScale(.25);
-        this.add.image(campoEnemigo.base.posicionX+10, campoEnemigo.base.posicionY + 10, 'contenedor_2').setScale(.15);
-        this.add.image(campoEnemigo.base.posicionX + 70, campoEnemigo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
-        this.add.image(campoEnemigo.base.posicionX +40, campoEnemigo.base.posicionY + 70, 'torre').setScale(.07);    
+        this.add.image(campoAliados.base.posicionX + 50, campoAliados.base.posicionY + 50, 'pisoBase').setScale(.25);
+        this.add.image(campoAliados.base.posicionX+10, campoAliados.base.posicionY + 10, 'contenedor_2').setScale(.15);
+        this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
+        this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
+    
+        var artillerias = new Array();
+        //aca se agregaria la artilleria
+        for(var i = 0; i<8; i++){
+            artillerias[i] = this.add.image(campoAliados.artillerias[i].posicionX + inicioMapaX, campoAliados.artillerias[i].posicionY + inicioMapaY, 'artilleria').setScale(.1);
+        }
 
         //Se llama a funcion que definira los aviones          
         this.definicionAviones(); 
@@ -311,7 +317,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor);       
         
         
-        if (config.Partida.Bando=='Aleman')
+        if (config.Partida.Bando=='Potencias')
         { 
             this.physics.add.overlap(this.circulo_1,avion_1_Aliados, ()=>
             {   
@@ -808,7 +814,7 @@ class Play extends Phaser.Scene {
     onObjectClicked(pointer)
     {  
         //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion       
-    if (config.Partida.Bando=='Aleman')
+    if (config.Partida.Bando=='Potencias')
     {
         if (avion_2.focus==true)
         {            
@@ -1046,7 +1052,7 @@ class Play extends Phaser.Scene {
         });
 
         this.input.keyboard.on('keydown',(evento)=>{
-            if (config.Partida.Bando=='Aleman')
+            if (config.Partida.Bando=='Potencias')
             {
                 
                 if (evento.key==='1' )  
@@ -1110,7 +1116,7 @@ class Play extends Phaser.Scene {
                 }   
             }
         });
-        if (config.Partida.Bando=='Aleman')
+        if (config.Partida.Bando=='Potencias')
         {
             avion_1_Aliados.setVisible(false);
             avion_2_Aliados.setVisible(false);
@@ -1158,7 +1164,7 @@ class Play extends Phaser.Scene {
     {        
         var dx;
         var dy;        
-        if (config.Partida.Bando=='Frances')
+        if (config.Partida.Bando=='Aliados')
         { 
             dx = avion.x - avion_1_Aliados.x;
             dy = avion.y - avion_1_Aliados.y;
@@ -1236,7 +1242,7 @@ class Play extends Phaser.Scene {
         
         //Tiempo que se usa para las balas 
         this.time = time;
-        if (config.Partida.Bando=='Aleman')
+        if (config.Partida.Bando=='Potencias')
         {
             if (this.EstaMoviendose(avion_1) && time>timeNafta)
             {                
@@ -1324,7 +1330,7 @@ class Play extends Phaser.Scene {
         this.circulo_7.setPosition(avion_3_Aliados.x, avion_3_Aliados.y);
         this.circulo_8.setPosition(avion_4_Aliados.x, avion_4_Aliados.y); 
      
-        if (config.Partida.Bando=='Frances')
+        if (config.Partida.Bando=='Aliados')
         {           
             if (!this.MostrarOcultarAvion(avion_1)) 
                 avion_1.setVisible(false);  
