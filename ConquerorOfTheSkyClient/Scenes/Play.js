@@ -212,21 +212,21 @@ class Play extends Phaser.Scene {
                     if (avion_2.focus==true)
                     {      
                         avion_2.cargarbomba=true;       
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=2;
                         avion_2.moverAvion({x: avion_2.xInicial, y: avion_2.yInicial});
                         config.Partida.sincronizar({x: avion_2.xInicial, y: avion_2.yInicial});
                     } 
                     if (avion_3.focus==true)
                     {     
                         avion_3.cargarbomba=true;        
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=3;
                         avion_3.moverAvion({x: avion_3.xInicial, y: avion_3.yInicial});
                         config.Partida.sincronizar({x: avion_3.xInicial, y: avion_3.yInicial});
                     }  
                     if (avion_4.focus==true)
                     {    
                         avion_4.cargarbomba=true;         
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=4;
                         avion_4.moverAvion({x: avion_4.xInicial, y: avion_4.yInicial});
                         config.Partida.sincronizar({x: avion_4.xInicial, y: avion_4.yInicial});
                     } 
@@ -279,21 +279,21 @@ class Play extends Phaser.Scene {
                     if (avion_2.focus==true)
                     {     
                         avion_2.cargarCombustible=true;       
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=2;
                         avion_2.moverAvion({x: avion_2.xInicial, y: avion_2.yInicial});
                         config.Partida.sincronizar({x: avion_2.xInicial, y: avion_2.yInicial});
                     } 
                     if (avion_3.focus==true)
                     {  
                         avion_3.cargarCombustible=true;           
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=3;
                         avion_3.moverAvion({x: avion_3.xInicial, y: avion_3.yInicial});
                         config.Partida.sincronizar({x: avion_3.xInicial, y: avion_3.yInicial});
                     }  
                     if (avion_4.focus==true)
                     {       
                         avion_4.cargarCombustible=true;      
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=4;
                         avion_4.moverAvion({x: avion_4.xInicial, y: avion_4.yInicial});
                         config.Partida.sincronizar({x: avion_4.xInicial, y: avion_4.yInicial});
                     } 
