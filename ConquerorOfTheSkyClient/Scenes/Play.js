@@ -116,13 +116,28 @@ class Play extends Phaser.Scene {
             avionYInicial = campo.base.posicionY -120;
          else
           avionYInicial  = campo.base.posicionY + 120;
+       
+          this.artillerias = this.physics.add.group();
 
-        var artillerias = new Array();
-        //aca se agregaria la artilleria
-        for(var i = 0; i<8; i++){
-            artillerias[i] = this.add.image(campo.artillerias[i].posicionX + inicioMapaX, campo.artillerias[i].posicionY + inicioMapaY, 'artilleria').setScale(.1);
+       for(var i = 0; i<8; i++){
+           // artillerias[i] = this.add.image(campoAliados.artillerias[i].posicionX + inicioMapaX, campoAliados.artillerias[i].posicionY + inicioMapaY, 'artilleria').setScale(.1);
+            this.artillerias.create(campo.artillerias[i].posicionX + inicioMapaX, campo.artillerias[i].posicionY + inicioMapaY, 'artilleria').setOrigin(0).setScale(.1);
+        
         }
-
+       /* for (var i = 0; i < 8; i++)
+        {
+            var item = this.artillerias.get();
+            console.log(this.artillerias.get());
+            this.physics.world.enable(item);
+            item.body.setCircle(35);
+            console.log(item);
+        }  */
+        console.log(this.artillerias);     
+        //this.arti = this.artillerias.get();
+        //this.physics.world.enable(this.arti);
+        //this.arti.body.setCircle(35);
+       // this.arti.body.setOffset(15,16);
+       
         //Cargo base para bando 2
         var campoAliados = config.Partida.campoAliados;
         campoAliados.posicionX+= inicioMapaX;
@@ -140,11 +155,14 @@ class Play extends Phaser.Scene {
         this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
     
-        var artillerias = new Array();
+
+
+ 
+       /* var artillerias = new Array();
         //aca se agregaria la artilleria
         for(var i = 0; i<8; i++){
             artillerias[i] = this.add.image(campoAliados.artillerias[i].posicionX + inicioMapaX, campoAliados.artillerias[i].posicionY + inicioMapaY, 'artilleria').setScale(.1);
-        }
+        }*/
 
         //Se llama a funcion que definira los aviones          
         this.definicionAviones(); 
