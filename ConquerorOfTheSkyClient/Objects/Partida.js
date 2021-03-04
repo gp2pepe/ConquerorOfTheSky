@@ -13,6 +13,7 @@ class Partida {
             this.Bando = msg.bando;
             this.campoPotencias = msg.campoPotencias;
             this.campoAliados = msg.campoAliados;
+            this.configuraciones = msg.configuraciones;
 
         }else if(msg.operacion == "ingresarAPartida"){            
             console.log("Ingrese a partida numero: " + msg.partida.idPartida) ;
@@ -20,6 +21,8 @@ class Partida {
             this.Bando = msg.bando;
             this.campoPotencias = msg.campoPotencias;
             this.campoAliados = msg.campoAliados;
+            this.configuraciones = msg.configuraciones;
+
         }else if(msg.operacion == "sincronizar"){ 
             if (msg.idavion == 1)
                 this.avion_1.moverAvion(msg);
