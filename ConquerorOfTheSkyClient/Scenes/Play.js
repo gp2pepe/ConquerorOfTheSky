@@ -36,7 +36,6 @@ class Play extends Phaser.Scene {
         this.bullets;
     }
     create(){ 
-//prueba Nacho
 
         this.scene.remove('MenuInicial');
         this.scene.remove('ElegirBando');
@@ -110,6 +109,16 @@ class Play extends Phaser.Scene {
         campoPotencias.base.posicionY+= inicioMapaY;
 
         //Seteo la base y sus elementos
+
+        this.add.image(campo.base.posicionX + 50, campo.base.posicionY + 50, 'pisoBase').setScale(.25);
+        this.add.image(campo.base.posicionX+10, campo.base.posicionY + 10, 'contenedor_2').setScale(.15);
+        this.add.image(campo.base.posicionX + 70, campo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
+        this.add.image(campo.base.posicionX +40, campo.base.posicionY + 70, 'torre').setScale(.07);
+        avionXInicial = campo.base.posicionX ; 
+
+        if(campo.posicionY > 540)
+            avionYInicial = campo.base.posicionY -120;
+
         this.add.image(campoPotencias.base.posicionX + 50, campoPotencias.base.posicionY + 50, 'pisoBase').setScale(.25);
         this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
         this.add.image(campoPotencias.base.posicionX + 70, campoPotencias.base.posicionY + 10, 'depositoCombustible').setScale(.10);
@@ -118,6 +127,7 @@ class Play extends Phaser.Scene {
       
         if(campoPotencias.posicionY > 540)
             avionYInicial = campoPotencias.base.posicionY -120;
+
          else
           avionYInicial  = campoPotencias.base.posicionY + 120;
         
@@ -212,21 +222,21 @@ class Play extends Phaser.Scene {
                     if (avion_2.focus==true)
                     {      
                         avion_2.cargarbomba=true;       
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=2;
                         avion_2.moverAvion({x: avion_2.xInicial, y: avion_2.yInicial});
                         config.Partida.sincronizar({x: avion_2.xInicial, y: avion_2.yInicial});
                     } 
                     if (avion_3.focus==true)
                     {     
                         avion_3.cargarbomba=true;        
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=3;
                         avion_3.moverAvion({x: avion_3.xInicial, y: avion_3.yInicial});
                         config.Partida.sincronizar({x: avion_3.xInicial, y: avion_3.yInicial});
                     }  
                     if (avion_4.focus==true)
                     {    
                         avion_4.cargarbomba=true;         
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=4;
                         avion_4.moverAvion({x: avion_4.xInicial, y: avion_4.yInicial});
                         config.Partida.sincronizar({x: avion_4.xInicial, y: avion_4.yInicial});
                     } 
@@ -279,21 +289,21 @@ class Play extends Phaser.Scene {
                     if (avion_2.focus==true)
                     {     
                         avion_2.cargarCombustible=true;       
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=2;
                         avion_2.moverAvion({x: avion_2.xInicial, y: avion_2.yInicial});
                         config.Partida.sincronizar({x: avion_2.xInicial, y: avion_2.yInicial});
                     } 
                     if (avion_3.focus==true)
                     {  
                         avion_3.cargarCombustible=true;           
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=3;
                         avion_3.moverAvion({x: avion_3.xInicial, y: avion_3.yInicial});
                         config.Partida.sincronizar({x: avion_3.xInicial, y: avion_3.yInicial});
                     }  
                     if (avion_4.focus==true)
                     {       
                         avion_4.cargarCombustible=true;      
-                        config.Partida.idavion=1;
+                        config.Partida.idavion=4;
                         avion_4.moverAvion({x: avion_4.xInicial, y: avion_4.yInicial});
                         config.Partida.sincronizar({x: avion_4.xInicial, y: avion_4.yInicial});
                     } 
@@ -1297,7 +1307,6 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
-        
         //Tiempo que se usa para las balas 
         this.time = time;
         if (config.Partida.Bando=='Potencias')
@@ -1307,7 +1316,7 @@ class Play extends Phaser.Scene {
                 if(avion_1.combustible!=0)
                 {   
                     timeNafta =timeNafta+1000;                    
-                    console.log(avion_1.combustible);
+                    //console.log(avion_1.combustible);
                     avion_1.combustible--;
                 }
             }
@@ -1346,7 +1355,7 @@ class Play extends Phaser.Scene {
                 if(avion_1_Aliados.combustible!=0)
                 {   
                     timeNafta =timeNafta+1000;                    
-                    console.log(avion_1_Aliados.combustible);
+                    //console.log(avion_1_Aliados.combustible);
                     avion_1_Aliados.combustible--;
                 }
             }
@@ -1434,7 +1443,35 @@ class Play extends Phaser.Scene {
             avion_3_Aliados.destroy(); 
         if(avion_4_Aliados.vidaAvion == 0) 
             avion_4_Aliados.destroy(); 
-            
+        
+        if(avion_1.vidaAvion == 0 && avion_2.vidaAvion == 0 && avion_3.vidaAvion == 0 && avion_4.vidaAvion == 0) 
+        {
+            if (config.Partida.Bando=='Potencias')
+            {
+                this.scene.pause();
+                this.scene.launch('GameOver');
+            }
+            else
+            {
+                this.scene.pause();
+                this.scene.launch('Win');
+            }
+                
+        }
+
+        if(avion_1_Aliados.vidaAvion == 0 && avion_2_Aliados.vidaAvion == 0 && avion_3_Aliados.vidaAvion == 0 && avion_4_Aliados.vidaAvion == 0)
+        {
+            if (config.Partida.Bando=='Potencias')
+            {
+                this.scene.pause();
+                this.scene.launch('Win');
+            }
+            else
+            {
+                this.scene.pause();
+                this.scene.launch('GameOver');
+            }
+        }
     }
 
 
