@@ -22,6 +22,10 @@ var difY;
 var timeNafta = 0;
 var avionXInicial;
 var avionYInicial;
+var campoPotencias;
+var campoAliados;
+var artilleriasPotencias;
+var artilleriasAliados;
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -94,37 +98,43 @@ class Play extends Phaser.Scene {
         var inicioMapaX=433;
         var inicioMapaY=40;
 
-        //Cargo campo y base para bando 1
-        var campo = config.Partida.campoPotencias;
-        campo.posicionX+= inicioMapaX;
-        campo.posicionY+= inicioMapaY;
+        //Cargo campo y base para bando 1 - Potencias
+        campoPotencias = config.Partida.campoPotencias;
+        campoPotencias.posicionX+= inicioMapaX;
+        campoPotencias.posicionY+= inicioMapaY;
  
         //Seteo el campo 
-        this.campo = this.add.image(campo.posicionX, campo.posicionY, "campo").setOrigin(0).setScale(1); 
+        this.imgCampoPotencias = this.add.image(campoPotencias.posicionX, campoPotencias.posicionY, "campo").setOrigin(0).setScale(1); 
 
-        campo.base.posicionX+= inicioMapaX;
-        campo.base.posicionY+= inicioMapaY;
+        campoPotencias.base.posicionX+= inicioMapaX;
+        campoPotencias.base.posicionY+= inicioMapaY;
 
         //Seteo la base y sus elementos
-        this.add.image(campo.base.posicionX + 50, campo.base.posicionY + 50, 'pisoBase').setScale(.25);
-        this.add.image(campo.base.posicionX+10, campo.base.posicionY + 10, 'contenedor_2').setScale(.15);
-        this.add.image(campo.base.posicionX + 70, campo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
-        this.add.image(campo.base.posicionX +40, campo.base.posicionY + 70, 'torre').setScale(.07);
-        avionXInicial = campo.base.posicionX ; 
+        this.add.image(campoPotencias.base.posicionX + 50, campoPotencias.base.posicionY + 50, 'pisoBase').setScale(.25);
+        this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
+        this.add.image(campoPotencias.base.posicionX + 70, campoPotencias.base.posicionY + 10, 'depositoCombustible').setScale(.10);
+        this.add.image(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 'torre').setScale(.07);
+        avionXInicial = campoPotencias.base.posicionX ; 
       
-        if(campo.posicionY > 540)
-            avionYInicial = campo.base.posicionY -120;
+        if(campoPotencias.posicionY > 540)
+            avionYInicial = campoPotencias.base.posicionY -120;
          else
-          avionYInicial  = campo.base.posicionY + 120;
+          avionYInicial  = campoPotencias.base.posicionY + 120;
+        
+        //Defino las artillerias de las Potencias
+        artilleriasPotencias = this.physics.add.group({
+            key: 'artilleria',
+            repeat: config.Partida.configuraciones.artilleriaCantidad-1
+        });
+        for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
+            artilleriasPotencias.getChildren()[i].setX(campoPotencias.artillerias[i].posicionX + inicioMapaX);
+            artilleriasPotencias.getChildren()[i].setY(campoPotencias.artillerias[i].posicionY + inicioMapaY);
+            artilleriasPotencias.getChildren()[i].setScale(0.1);
 
-        var artillerias = new Array();
-        //aca se agregaria la artilleria
-        for(var i = 0; i<8; i++){
-            artillerias[i] = this.add.image(campo.artillerias[i].posicionX + inicioMapaX, campo.artillerias[i].posicionY + inicioMapaY, 'artilleria').setScale(.1);
         }
 
-        //Cargo base para bando 2
-        var campoAliados = config.Partida.campoAliados;
+        //Cargo base para bando 2 - Aliados
+        campoAliados = config.Partida.campoAliados;
         campoAliados.posicionX+= inicioMapaX;
         campoAliados.posicionY+= inicioMapaY;
 
@@ -140,10 +150,16 @@ class Play extends Phaser.Scene {
         this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
     
-        var artillerias = new Array();
-        //aca se agregaria la artilleria
-        for(var i = 0; i<8; i++){
-            artillerias[i] = this.add.image(campoAliados.artillerias[i].posicionX + inicioMapaX, campoAliados.artillerias[i].posicionY + inicioMapaY, 'artilleria').setScale(.1);
+        //Defino las artillerias de los Aliados
+        artilleriasAliados = this.physics.add.group({
+            key: 'artilleria',
+            repeat: config.Partida.configuraciones.artilleriaCantidad-1
+        });
+
+        for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
+            artilleriasAliados.getChildren()[i].setX(campoAliados.artillerias[i].posicionX + inicioMapaX);
+            artilleriasAliados.getChildren()[i].setY(campoAliados.artillerias[i].posicionY + inicioMapaY);
+            artilleriasAliados.getChildren()[i].setScale(0.1);
         }
 
         //Se llama a funcion que definira los aviones          
@@ -888,7 +904,8 @@ class Play extends Phaser.Scene {
  
     
     definicionAviones()
-    {	        
+    {	
+        var velAvion = config.Partida.configuraciones.avionVelocidad;        
                 // Personaje
         avion_1 = new Avion({
             scene: this,
@@ -897,8 +914,10 @@ class Play extends Phaser.Scene {
             xInicial: avionXInicial,
             yInicial: avionYInicial,*/
             x: 500,
-            y: 200,                          
+            y: 200,
+            estoyEnBase : false                              
         }).setInteractive();      
+        avion_1.velocidad = velAvion;
         this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_1);
         this.circulo_1.body.setCircle(35);
@@ -910,7 +929,8 @@ class Play extends Phaser.Scene {
             x: 500,
             y: 400,
             estoyEnBase : false            
-        }).setInteractive();        
+        }).setInteractive();      
+        avion_2.velocidad = velAvion;  
         this.circulo_2 = this.add.image(avion_2.x-50,avion_2.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_2);
         this.circulo_2.body.setCircle(35);
@@ -921,7 +941,8 @@ class Play extends Phaser.Scene {
             x: 500,
             y: 600,
             estoyEnBase : false         
-        }).setInteractive();        
+        }).setInteractive(); 
+        avion_3.velocidad = velAvion;       
         this.circulo_3 = this.add.image(avion_3.x-50,avion_3.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_3);
         this.circulo_3.body.setCircle(35);
@@ -932,7 +953,8 @@ class Play extends Phaser.Scene {
             x: 500,
             y: 800,
             estoyEnBase: false           
-        }).setInteractive();        
+        }).setInteractive();  
+        avion_4.velocidad = velAvion;      
         this.circulo_4 = this.add.image(avion_4.x-50,avion_4.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_4);
         this.circulo_4.body.setCircle(35);
@@ -941,8 +963,9 @@ class Play extends Phaser.Scene {
         avion_1_Aliados = new Avion({
             scene: this,
             x: 1500,
-            y: 200          
-        }).setInteractive();       
+            y: 200,
+        }).setInteractive();      
+        avion_1_Aliados.velocidad = velAvion; 
         this.circulo_5 = this.add.image(avion_1_Aliados.x-50,avion_1_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_5);
         this.circulo_5.body.setCircle(35);
@@ -951,8 +974,9 @@ class Play extends Phaser.Scene {
         avion_2_Aliados = new Avion({
             scene: this,
             x: 1500,
-            y: 400           
+            y: 400,
         }).setInteractive();       
+        avion_2_Aliados.velocidad = velAvion; 
         this.circulo_6 = this.add.image(avion_2_Aliados.x-50,avion_2_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_6);
         this.circulo_6.body.setCircle(35);
@@ -961,8 +985,9 @@ class Play extends Phaser.Scene {
         avion_3_Aliados = new Avion({
             scene: this,
             x: 1500,
-            y: 600           
-        }).setInteractive();        
+            y: 600,
+        }).setInteractive();   
+        avion_3_Aliados.velocidad = velAvion;      
         this.circulo_7 = this.add.image(avion_3_Aliados.x-50,avion_3_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_7);
         this.circulo_7.body.setCircle(35);
@@ -971,8 +996,9 @@ class Play extends Phaser.Scene {
         avion_4_Aliados = new Avion({
             scene: this,
             x: 1500,
-            y: 800           
-        }).setInteractive();        
+            y: 800,
+        }).setInteractive();       
+        avion_4_Aliados.velocidad = velAvion;  
         this.circulo_8 = this.add.image(avion_4_Aliados.x-50,avion_4_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_8);
         this.circulo_8.body.setCircle(35);

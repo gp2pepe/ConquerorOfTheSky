@@ -16,7 +16,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
     {		
 		this.setPosition(avion.x, avion.y);	
 		var angle = Phaser.Math.Angle.BetweenPoints(this, msg);
-        	this.rotation = angle;	
+        this.rotation = angle;	
 		this.scene.physics.velocityFromRotation(angle, 250, this.body.velocity);
 		this.setActive(true);
 		this.setVisible(true);
