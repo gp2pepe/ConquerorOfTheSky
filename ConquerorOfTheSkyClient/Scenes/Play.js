@@ -130,7 +130,8 @@ class Play extends Phaser.Scene {
             artilleriasPotencias.getChildren()[i].setX(campoPotencias.artillerias[i].posicionX + inicioMapaX);
             artilleriasPotencias.getChildren()[i].setY(campoPotencias.artillerias[i].posicionY + inicioMapaY);
             artilleriasPotencias.getChildren()[i].setScale(0.1);
-
+            artilleriasPotencias.getChildren()[i].setCircle(450);
+            artilleriasPotencias.getChildren()[i].setOffset(-250,-250);   
         }
 
         //Cargo base para bando 2 - Aliados
@@ -160,6 +161,9 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].setX(campoAliados.artillerias[i].posicionX + inicioMapaX);
             artilleriasAliados.getChildren()[i].setY(campoAliados.artillerias[i].posicionY + inicioMapaY);
             artilleriasAliados.getChildren()[i].setScale(0.1);
+            artilleriasAliados.getChildren()[i].setCircle(450);
+            artilleriasAliados.getChildren()[i].setOffset(-250,-250);     
+
         }
 
         //Se llama a funcion que definira los aviones          
