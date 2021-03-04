@@ -165,7 +165,7 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].setOffset(-250,-250);     
 
         }
-
+       
         //Se llama a funcion que definira los aviones          
         this.definicionAviones(); 
         
@@ -333,6 +333,23 @@ class Play extends Phaser.Scene {
 
     colisiones()
     { 
+      
+            //si intento hacer que la artilleria dispare pero hay que ver como sacar la que hizo colision
+        this.physics.add.overlap(avion_1,artilleriasAliados, ()=>
+        {   
+            console.log('estoy acaac');
+            if (avion_1.altitud == 'Baja')
+                {
+                 
+                    if (this.time > lastFired)
+                    { 
+                        this.dispararArtilleria(artilleriasAliados.getChildren(),avion_1)  
+                        lastFired = this.time + 500;               
+                    } 
+                }
+        });
+
+      
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor);       
         
@@ -894,7 +911,7 @@ class Play extends Phaser.Scene {
     }
 
 
-    //Evento  llamado al disparar automaticamente o de momento apretar espacio
+    //Evento  llamado al disparar automaticamente 
     disparar(avion_focus,avion_A_pegar)
     {           
         //Se pasa el avion que esta en focus 
@@ -904,6 +921,17 @@ class Play extends Phaser.Scene {
             bullet.fire(avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
         }  
     }
+     //Evento  llamado al disparar automaticamente artilleria
+     dispararArtilleria(artilleria_focus,avion_A_pegar)
+     {           
+         //Se pasa el avion que esta en focus 
+         bullet = bullets.get();
+         if (bullet)
+         {
+             bullet.fireArtilleria(artilleria_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
+         }  
+     }
+ 
 
  
     

@@ -32,6 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.ConquerorOfTheSky.base.excepciones.PartidaLlenaException;
+import com.ConquerorOfTheSky.base.excepciones.PartidaNoExisteException;
+
 @Component("fachada")
 public class Fachada implements IFachada{
 
@@ -196,35 +199,41 @@ public class Fachada implements IFachada{
     }
 
     @Transactional
-    public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd){
+    public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd)
+        throws PartidaLlenaException {
        
       Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
 
-      //Equipo 2
-      List<Avion> aviones = new LinkedList<>();
-      aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-      aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-      aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-      aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-
       List<Jugador> jugadores = new LinkedList<>();
-      jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
       Partida partida = null;
       Campo campo  = null;
       Campo campoContrario = null;
       String bando = "";
       String bandoContrario = "";
-
       for(Partida par: this.partidas ){
         if(par.getIdpartida()==idPartida){
-            List<Equipo> equipos = par.getEquipos();
-            equipos.get(1).setJugadores(jugadores);
-            par.setEquipos(equipos);
-            partida = par;
-            campo =  equipos.get(1).getCampo();
-            bando = equipos.get(1).getBando();
-            campoContrario =  equipos.get(0).getCampo();
-            bandoContrario =  equipos.get(0).getBando();
+            //Reviso si la partida esta llena
+            if(par.getModalidad().equals("1vs1") && par.getEquipos().get(1).getJugadores().size()>0){
+              throw new PartidaLlenaException("ingresarAPartida","La partida esta llena");
+
+            }else if(par.getModalidad().equals("1vs1")){
+              
+              //Equipo 2
+              List<Avion> aviones = new LinkedList<>();
+              aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+              aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+              aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+              aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+              jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
+              List<Equipo> equipos = par.getEquipos();
+              equipos.get(1).setJugadores(jugadores);
+              par.setEquipos(equipos);
+              partida = par;
+              campo =  equipos.get(1).getCampo();
+              bando = equipos.get(1).getBando();
+              campoContrario =  equipos.get(0).getCampo();
+              bandoContrario =  equipos.get(0).getBando();
+            }
         }
       }
       //Genero el JSon
@@ -296,15 +305,40 @@ public class Fachada implements IFachada{
 
     }
 
-    public void recuperarPartida(Long idPartida){
+    public String recuperarPartida(Long idPartida) throws PartidaNoExisteException {
       try{
-        partidas.add(partidaR.getOne(idPartida));
-      }catch (Exception e){
 
+        Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
+
+        Partida partida = partidaR.getOne(idPartida);
+        partidas.add(partida);
+
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        JsonElement jsonElementConf = gson.toJsonTree(conf);
+        JsonElement jsonElementPartida = gson.toJsonTree(partida);
+        JsonElement jsonElementCampo = gson.toJsonTree(partida.getEquipos().get(0).getCampo());
+        JsonElement jsonElementCampo2 = gson.toJsonTree(partida.getEquipos().get(1).getCampo());
+
+        String bando = partida.getEquipos().get(0).getBando();
+        String bando2 = partida.getEquipos().get(1).getBando();
+
+
+        JsonObject innerObject = new JsonObject();
+        innerObject.addProperty("operacion", "iniciarPartida");
+        innerObject.add("configuraciones", jsonElementConf);
+        innerObject.add("partida", jsonElementPartida);
+        innerObject.addProperty("bando", bando);
+        innerObject.add("campo"+bando, jsonElementCampo);
+        innerObject.add("campo"+bando2, jsonElementCampo2);
+
+        return gson.toJson(innerObject);
+
+      }catch (Exception e){
+        throw new PartidaNoExisteException("recuperarPartida", "No existe la partida : " + idPartida);
       }
     }
 
-    public void terminarPartida(){
+    public void terminarPartida(Long idPartida){
 
 
     }

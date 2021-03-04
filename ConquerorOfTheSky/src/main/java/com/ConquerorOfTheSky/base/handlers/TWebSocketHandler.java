@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import com.ConquerorOfTheSky.base.logica.IFachada;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.ConquerorOfTheSky.base.excepciones.JugadorDesconectadoException;
 
 
 public class TWebSocketHandler extends TextWebSocketHandler {
@@ -49,6 +54,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
         super.handleTextMessage(session, message);
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonParser springParser = JsonParserFactory.getJsonParser();
         Map<String, Object> map = springParser.parseMap(message.getPayload());
 
@@ -61,8 +67,12 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     String respuesta = fachada.crearPartida((String) map.get("nick"), (String) map.get("modalidad"), (String) map.get("nombre"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
                     session.sendMessage(new TextMessage(respuesta));
                 } catch (Exception e) {
-                    LOGGER.error("Fallo iniciarPartida");
-                    session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"iniciarPartida\" }"));
+                    try{
+                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"iniciarPartida\" }"));
+                    } catch (IOException e1) {
+                        LOGGER.debug("Se perdio conexión con el Jugador");
+
+                    }
                 }
 
             //Proceso el mensaje de ingresarAPartida y devuelvo datos de la partida al usuario
@@ -72,8 +82,11 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     String respuesta = fachada.ingresarAPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("nick"), session,(String) map.get("passwd"));
                     session.sendMessage(new TextMessage(respuesta));
                 } catch (Exception e) {
-                    LOGGER.error("Fallo ingresarAPartida");
-                    session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"ingresarAPartida\" }"));
+                    try { 
+                        session.sendMessage(new TextMessage(gson.toJson(e)));
+                    } catch (IOException e1) {
+                        LOGGER.debug("Se perdio conexión con el Jugador");
+                    }
                 }
 
             //Reenvío los mensajes que envía el frontend a los usuarios de la partida
@@ -84,10 +97,21 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((Integer) map.get("idpartida"))));
                     listaSesiones.forEach(webSocketSession -> {
                         try {
-                            if(webSocketSession != session)
-                                webSocketSession.sendMessage(message);
-                        } catch (IOException e) {
-                            LOGGER.error("Fallo la conexion por websocket");
+                            if(webSocketSession != session){
+                                if(webSocketSession.isOpen())
+                                    webSocketSession.sendMessage(message);
+                                else
+                                    throw new JugadorDesconectadoException("sincronizar", "Se desconecto un jugador");
+                            }
+
+                        } catch (Exception e) {
+                            try {                            
+                                LOGGER.debug("Se desconecto un jugador de una partida");
+                                session.sendMessage(new TextMessage(gson.toJson(e)));
+                            } catch (IOException e1) {
+                                LOGGER.debug("Se perdio conexión con el Jugador");
+
+                            }
                         }
                     });
                 } catch (Exception e) {
@@ -97,10 +121,17 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
             //Proceso el mensaje de listarPartidas y devuelvo una lista con todas las partidas
             }else if(op.equals(new String("listarPartidas"))){
-
-                LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
-                String respuesta = fachada.listarPartidas();
-                session.sendMessage(new TextMessage(respuesta));
+                try{
+                    LOGGER.debug("Llego un sincronizarAvion: " + map.toString());
+                    String respuesta = fachada.listarPartidas();
+                    session.sendMessage(new TextMessage(respuesta));
+                }catch(Exception e){
+                    try{
+                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"listarPartidas\" }"));
+                    } catch (IOException e1) {
+                        LOGGER.debug("Se perdio conexión con el Jugador");
+                    }
+                }
             }
         }catch(WebSocketHandshakeException e1){
             LOGGER.error("Fallo al procesar mensaje");

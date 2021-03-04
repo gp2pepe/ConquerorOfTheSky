@@ -5,6 +5,8 @@ class Partida {
     
     constructor() {
         this.tipoPartida = null;
+        this.partidaCargada = false;
+
     }
 
     procesarMensaje(msg){
@@ -14,6 +16,7 @@ class Partida {
             this.campoPotencias = msg.campoPotencias;
             this.campoAliados = msg.campoAliados;
             this.configuraciones = msg.configuraciones;
+            this.partidaCargada = true;
 
         }else if(msg.operacion == "ingresarAPartida"){            
             console.log("Ingrese a partida numero: " + msg.partida.idPartida) ;
@@ -22,6 +25,7 @@ class Partida {
             this.campoPotencias = msg.campoPotencias;
             this.campoAliados = msg.campoAliados;
             this.configuraciones = msg.configuraciones;
+            this.partidaCargada = true;
 
         }else if(msg.operacion == "sincronizar"){ 
             if (msg.idavion == 1)

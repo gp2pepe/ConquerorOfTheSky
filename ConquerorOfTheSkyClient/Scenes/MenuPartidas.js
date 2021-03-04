@@ -52,7 +52,6 @@ class MenuPartidas extends Phaser.Scene
             textoPrueba.on(Phaser.Input.Events.POINTER_DOWN, () => {
                 config.Partida.ingresarAPartida(partida);
                 //config.Partida.listarPartidas(); //Hacer luego un boton refresh
-                this.scene.launch('confirmarIngresarPartida');
                 table.cell.setContainer(textoPrueba);
                
             });
@@ -64,8 +63,13 @@ class MenuPartidas extends Phaser.Scene
 
     }
     
-    update()
-    {
+    update(){
+        if(config.Partida.partidaCargada){
+            this.scene.remove('MenuInicial');
+            this.scene.remove('MenuPartidas');
+            this.scene.start('Play');
+        }
+
     }
 
 }

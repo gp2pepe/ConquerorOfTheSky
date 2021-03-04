@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.web.socket.WebSocketSession;
 
+import com.ConquerorOfTheSky.base.excepciones.PartidaLlenaException;
+import com.ConquerorOfTheSky.base.excepciones.PartidaNoExisteException;
+
 public interface IFachada {
 
     
     public String crearPartida(String nick, String modalidad, String nombre, WebSocketSession sesionUsu, boolean publica, String passwd, String bando);
 
-    public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd);
+    public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd) throws PartidaLlenaException;
 
     public String listarPartidas();
     
@@ -17,8 +20,8 @@ public interface IFachada {
 
     public void guardarPartida(Long idPartida);
 
-    public void recuperarPartida(Long idPartida);
+    public String recuperarPartida(Long idPartida) throws PartidaNoExisteException;
 
-    public void terminarPartida();
+    public void terminarPartida(Long idPartida);
 
 }

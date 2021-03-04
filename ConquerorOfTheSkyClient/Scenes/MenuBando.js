@@ -12,7 +12,7 @@ class MenuBando extends Phaser.Scene
 		super({key: 'MenuBando'});        
 	}
 
-/**
+    /**
 	 * Pre-carga de recursos.
 	 */
 	preload() {
@@ -49,28 +49,28 @@ class MenuBando extends Phaser.Scene
             });
         });
 
-    var textEntry = this.add.text(760, 160, '', { font: '48px Courier', fill: '#474747' });
-    
-    this.input.keyboard.on('keydown', function (event) {
-        if(ingresoTexto == true){
-            if (event.keyCode === 8 && textEntry.text.length > 0)
-            {
-                textEntry.text = textEntry.text.substr(0, textEntry.text.length - 1);
+        var textEntry = this.add.text(760, 160, '', { font: '48px Courier', fill: '#474747' });
+        
+        this.input.keyboard.on('keydown', function (event) {
+            if(ingresoTexto == true){
+                if (event.keyCode === 8 && textEntry.text.length > 0)
+                {
+                    textEntry.text = textEntry.text.substr(0, textEntry.text.length - 1);
+                }
+                else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
+                {
+                    textEntry.text += event.key;
+                }
             }
-            else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
-            {
-                textEntry.text += event.key;
-            }
-        }
-    });
-    
-    //this.add.text(690, 520, 'Potencias Centrales', { font: '18px Arial', fill: '#0095DD' }).setScale(1.5).setInteractive();
-    this.textoPotencias = this.add.image(600, 520, 'potenciasCentrales').setOrigin(0).setScale(0.5).setInteractive();
-    this.textoAliados = this.add.image(920, 520, 'Aliados').setOrigin(0).setScale(0.5).setInteractive();
-    var bandoElegido ; 
+        });
+        
+        //this.add.text(690, 520, 'Potencias Centrales', { font: '18px Arial', fill: '#0095DD' }).setScale(1.5).setInteractive();
+        this.textoPotencias = this.add.image(600, 520, 'potenciasCentrales').setOrigin(0).setScale(0.5).setInteractive();
+        this.textoAliados = this.add.image(920, 520, 'Aliados').setOrigin(0).setScale(0.5).setInteractive();
+        var bandoElegido ; 
 
-    // Cuando hace click en Potencias Centrales
-    this.textoPotencias.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        // Cuando hace click en Potencias Centrales
+        this.textoPotencias.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.textoPotencias,
                 ease: 'Bounce.easeIn',
@@ -87,7 +87,7 @@ class MenuBando extends Phaser.Scene
                 duration: 1000
             });
         });
- // Cuando hace click en Aliados
+        // Cuando hace click en Aliados
 
         this.textoAliados.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
@@ -106,26 +106,33 @@ class MenuBando extends Phaser.Scene
                 duration: 1000
             });
         });
-    var alerta = this.add.text(700, 900, '', { font: 'bold 48px Courier', fill: '#080808' });
-    this.crearNuevaPartida = this.add.image(780, 950, 'crearPartida').setOrigin(0).setScale(0.5).setInteractive();
-    this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
-        if(bandoElegido == null){
-            alerta.setText('Seleccione un Bando'); 
-        }else{
-        //Creo la partida con el bando y el nombre seleccionado
-        console.log('Entre iniciando partida en Menu Bando');
-        config.Partida.Bando = bandoElegido;
-        config.Partida.Nombre = textEntry.text;
-        config.Partida.tipoPartida = "NuevaPartida";
-        config.Partida.iniciarPartida();
-        //console.log(config.Partida);
-        this.scene.launch('confirmarNuevaPartida');
+        var alerta = this.add.text(700, 900, '', { font: 'bold 48px Courier', fill: '#080808' });
+        this.crearNuevaPartida = this.add.image(780, 950, 'crearPartida').setOrigin(0).setScale(0.5).setInteractive();
+        this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            if(bandoElegido == null){
+                alerta.setText('Seleccione un Bando'); 
+            }else{
+            //Creo la partida con el bando y el nombre seleccionado
+            console.log('Entre iniciando partida en Menu Bando');
+            config.Partida.Bando = bandoElegido;
+            config.Partida.Nombre = textEntry.text;
+            config.Partida.tipoPartida = "NuevaPartida";
+            config.Partida.iniciarPartida();
+            //console.log(config.Partida);
+            //this.scene.launch('confirmarNuevaPartida');
+        }
+        });
+
     }
-    });
 
-}
+    update(){
+        if(config.Partida.partidaCargada){
+            this.scene.remove('MenuInicial');
+            this.scene.remove('MenuBando');
+            this.scene.start('Play');
+        }
 
-
+    }
 
 
 }
