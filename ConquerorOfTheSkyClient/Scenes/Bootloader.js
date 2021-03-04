@@ -62,7 +62,9 @@ class Bootloader extends Phaser.Scene {
 
             'wall1',
             'wall2',
-            'seleccioncarac'
+            'seleccioncarac',
+            'fondoendgame',
+            'pruebaEndGame'
 
         ])
         this.load.on('complete',()=>{

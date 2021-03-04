@@ -32,7 +32,6 @@ class Play extends Phaser.Scene {
         this.bullets;
     }
     create(){ 
-//prueba Nacho
 
         this.scene.remove('MenuInicial');
         this.scene.remove('ElegirBando');
@@ -111,7 +110,7 @@ class Play extends Phaser.Scene {
         this.add.image(campo.base.posicionX + 70, campo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.add.image(campo.base.posicionX +40, campo.base.posicionY + 70, 'torre').setScale(.07);
         avionXInicial = campo.base.posicionX ; 
-      
+
         if(campo.posicionY > 540)
             avionYInicial = campo.base.posicionY -120;
          else
@@ -1239,7 +1238,6 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
-        
         //Tiempo que se usa para las balas 
         this.time = time;
         if (config.Partida.Bando=='Potencias')
@@ -1249,7 +1247,7 @@ class Play extends Phaser.Scene {
                 if(avion_1.combustible!=0)
                 {   
                     timeNafta =timeNafta+1000;                    
-                    console.log(avion_1.combustible);
+                    //console.log(avion_1.combustible);
                     avion_1.combustible--;
                 }
             }
@@ -1288,7 +1286,7 @@ class Play extends Phaser.Scene {
                 if(avion_1_Aliados.combustible!=0)
                 {   
                     timeNafta =timeNafta+1000;                    
-                    console.log(avion_1_Aliados.combustible);
+                    //console.log(avion_1_Aliados.combustible);
                     avion_1_Aliados.combustible--;
                 }
             }
@@ -1376,7 +1374,35 @@ class Play extends Phaser.Scene {
             avion_3_Aliados.destroy(); 
         if(avion_4_Aliados.vidaAvion == 0) 
             avion_4_Aliados.destroy(); 
-            
+        
+        if(avion_1.vidaAvion == 0 && avion_2.vidaAvion == 0 && avion_3.vidaAvion == 0 && avion_4.vidaAvion == 0) 
+        {
+            if (config.Partida.Bando=='Potencias')
+            {
+                this.scene.pause();
+                this.scene.launch('GameOver');
+            }
+            else
+            {
+                this.scene.pause();
+                this.scene.launch('Win');
+            }
+                
+        }
+
+        if(avion_1_Aliados.vidaAvion == 0 && avion_2_Aliados.vidaAvion == 0 && avion_3_Aliados.vidaAvion == 0 && avion_4_Aliados.vidaAvion == 0)
+        {
+            if (config.Partida.Bando=='Potencias')
+            {
+                this.scene.pause();
+                this.scene.launch('Win');
+            }
+            else
+            {
+                this.scene.pause();
+                this.scene.launch('GameOver');
+            }
+        }
     }
 
 
