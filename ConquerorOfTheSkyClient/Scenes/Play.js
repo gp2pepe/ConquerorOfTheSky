@@ -26,6 +26,8 @@ var campoPotencias;
 var campoAliados;
 var artilleriasPotencias;
 var artilleriasAliados;
+var aviones;
+var aviones_aliados;
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -165,10 +167,31 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].setOffset(-250,-250);     
 
         }
-       
+        
+
         //Se llama a funcion que definira los aviones          
         this.definicionAviones(); 
+
+        aviones = this.physics.add.group({
+            key: 'avion',
+            repeat: 4
+        });
+
+        aviones_aliados = this.physics.add.group({
+            key: 'avion',
+            repeat: 4
+        });
         
+        aviones.getChildren()[0]=avion_1;
+        aviones.getChildren()[1]=avion_2;
+        aviones.getChildren()[2]=avion_3;
+        aviones.getChildren()[3]=avion_4;
+
+        aviones_aliados.getChildren()[0]=avion_1_Aliados;
+        aviones_aliados.getChildren()[1]=avion_2_Aliados;
+        aviones_aliados.getChildren()[2]=avion_3_Aliados;
+        aviones_aliados.getChildren()[3]=avion_4_Aliados;
+
         //Se realiza la asignacion entre los aviones recien definidos con los que maneja la clase Partida
         config.Partida.avion_1 = avion_1;
         config.Partida.avion_2 = avion_2;
@@ -331,38 +354,24 @@ class Play extends Phaser.Scene {
         });
     }
 
-    collectStar (avion_1, artilleria)
-    {
-        console.log(artilleria);
-        if (avion_1.altitud == 'Baja')
+    Colision_Artillerias_aviones(avion, artilleria)
+    {        
+        if (avion.altitud == 'Baja')
             {
                 
                 if (this.time > lastFired)
                 { 
-                    this.dispararArtilleria(artilleria,avion_1)  
+                    this.dispararArtilleria(artilleria,avion)  
                     lastFired = this.time + 500;               
                 } 
             }
     }
 
+
     colisiones()
     { 
-        this.physics.add.overlap(avion_1, artilleriasAliados, this.collectStar, null, this);
-            //si intento hacer que la artilleria dispare pero hay que ver como sacar la que hizo colision
-       /* this.physics.add.overlap(avion_1,artilleriasAliados, ()=>
-        {   
-            console.log('estoy acaac');
-            if (avion_1.altitud == 'Baja')
-                {
-                 
-                    if (this.time > lastFired)
-                    { 
-                        this.dispararArtilleria(artilleriasAliados.getChildren(),avion_1)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-        });*/
-
+        this.physics.add.overlap(aviones, artilleriasAliados, this.Colision_Artillerias_aviones, null, this);
+        this.physics.add.overlap(aviones_aliados, artilleriasPotencias, this.Colision_Artillerias_aviones, null, this);
       
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor);       
@@ -967,9 +976,8 @@ class Play extends Phaser.Scene {
         this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_1);
         this.circulo_1.body.setCircle(35);
-        this.circulo_1.body.setOffset(15,16);     
+        this.circulo_1.body.setOffset(15,16); 
 
-        
         avion_2 = new Avion({
             scene: this,
             x: 500,
