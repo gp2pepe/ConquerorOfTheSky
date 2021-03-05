@@ -53,6 +53,7 @@ class Bootloader extends Phaser.Scene {
             'boton_3',
             'boton_4',
             'cargarBomba',
+            'cargarCombustible',
             
              'menupartidas',
              'menupartidas_2',
