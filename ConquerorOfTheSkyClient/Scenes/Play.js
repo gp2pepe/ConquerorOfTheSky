@@ -109,16 +109,6 @@ class Play extends Phaser.Scene {
         campoPotencias.base.posicionY+= inicioMapaY;
 
         //Seteo la base y sus elementos
-
-        this.add.image(campo.base.posicionX + 50, campo.base.posicionY + 50, 'pisoBase').setScale(.25);
-        this.add.image(campo.base.posicionX+10, campo.base.posicionY + 10, 'contenedor_2').setScale(.15);
-        this.add.image(campo.base.posicionX + 70, campo.base.posicionY + 10, 'depositoCombustible').setScale(.10);
-        this.add.image(campo.base.posicionX +40, campo.base.posicionY + 70, 'torre').setScale(.07);
-        avionXInicial = campo.base.posicionX ; 
-
-        if(campo.posicionY > 540)
-            avionYInicial = campo.base.posicionY -120;
-
         this.add.image(campoPotencias.base.posicionX + 50, campoPotencias.base.posicionY + 50, 'pisoBase').setScale(.25);
         this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
         this.add.image(campoPotencias.base.posicionX + 70, campoPotencias.base.posicionY + 10, 'depositoCombustible').setScale(.10);
