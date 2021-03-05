@@ -123,9 +123,8 @@ class scroll extends Phaser.Scene {
                 this.print.text += 'click ' + cellIndex + ': ' + cellContainer.text + '\n';
                 var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
                 var partida =cellContainer.text.split(' ');
-                config.Partida.ingresarAPartida(partida[0]);
-                console.log(partida[0]);
-                console.log(config.Partida.partidaCargada);
+                const partida1 = listaPartidas[partida[0]].idPartida;
+                config.Partida.ingresarAPartida(partida1);
                 var nextCellIndex = cellIndex + 1;
                 var nextItem = gridTable.items[nextCellIndex];
                 if (!nextItem) {
