@@ -55,7 +55,6 @@ class MenuInicial extends Phaser.Scene {
         //Se carga imagen interactiva de Buscar Partida
         this.buscarPartida = this.add.image(1050,600,'buscarPartida'
         ).setOrigin(0).setScale(0.8).setInteractive();
-        config.Partida.listarPartidas();
         this.buscarPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.buscarPartida,
@@ -64,7 +63,7 @@ class MenuInicial extends Phaser.Scene {
                 duration: 1000,
                 onComplete: () => {   
                     config.Partida.listarPartidas(); //Hacer luego un boton refresh            
-                    this.scene.launch('MenuPartidas');
+                   // this.scene.launch('MenuPartidas');
                 }
             });
 
@@ -85,11 +84,8 @@ class MenuInicial extends Phaser.Scene {
                 ease: 'Bounce.easeIn',
                 x:1300,
                 duration: 1000,
-                onComplete: () => {                       
-                    config.Partida.ingresarAPartida(0);
-                    config.Partida.listarPartidas(); //Hacer luego un boton refresh
-                    config.Partida.Bando=0;
-                    this.scene.start('Play');
+                onComplete: () => {    
+                    config.Partida.listarPartidas(); //Hacer luego un boton refresh              
                 }
             });
 
@@ -101,7 +97,8 @@ class MenuInicial extends Phaser.Scene {
         });
     }
     update(){     
-
+        if(config.Partida.listaCargada)
+         this.scene.start('scroll');
     }
 }
 export  default MenuInicial;

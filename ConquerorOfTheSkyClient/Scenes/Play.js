@@ -26,6 +26,10 @@ var campoPotencias;
 var campoAliados;
 var artilleriasPotencias;
 var artilleriasAliados;
+var aviones;
+var aviones_aliados;
+var ciruclo_aviones_aliados;
+var ciruclo_aviones;
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -165,10 +169,55 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].setOffset(-250,-250);     
 
         }
-       
+        
+
         //Se llama a funcion que definira los aviones          
         this.definicionAviones(); 
+
+        aviones = this.physics.add.group({
+            key: 'avion',
+            repeat: 4
+        });
+
+        ciruclo_aviones = this.physics.add.group({
+            key: 'circulo',
+            repeat: 4
+        });
+
+        aviones_aliados = this.physics.add.group({
+            key: 'avion',
+            repeat: 4
+        });
+
+        ciruclo_aviones_aliados = this.physics.add.group({
+            key: 'circulo',
+            repeat: 4
+        });
         
+        aviones.getChildren()[0]=avion_1;
+        aviones.getChildren()[1]=avion_2;
+        aviones.getChildren()[2]=avion_3;
+        aviones.getChildren()[3]=avion_4;
+
+        ciruclo_aviones.getChildren()[0]=this.circulo_1;
+        ciruclo_aviones.getChildren()[1]=this.circulo_2;
+        ciruclo_aviones.getChildren()[2]=this.circulo_3;
+        ciruclo_aviones.getChildren()[3]=this.circulo_4;        
+
+        console.log('Circulo de aviones'+ciruclo_aviones.getChildren()[0].idAvion);
+        console.log('Circulo de aviones'+ciruclo_aviones.getChildren()[1].idAvion);
+        console.log('Circulo de aviones'+ciruclo_aviones.getChildren()[2].idAvion);
+        console.log('Circulo de aviones'+ciruclo_aviones.getChildren()[3].idAvion);
+        aviones_aliados.getChildren()[0]=avion_1_Aliados;
+        aviones_aliados.getChildren()[1]=avion_2_Aliados;
+        aviones_aliados.getChildren()[2]=avion_3_Aliados;
+        aviones_aliados.getChildren()[3]=avion_4_Aliados;
+
+        ciruclo_aviones_aliados.getChildren()[0]=this.circulo_5;
+        ciruclo_aviones_aliados.getChildren()[1]=this.circulo_6;
+        ciruclo_aviones_aliados.getChildren()[2]=this.circulo_7;
+        ciruclo_aviones_aliados.getChildren()[3]=this.circulo_8;  
+
         //Se realiza la asignacion entre los aviones recien definidos con los que maneja la clase Partida
         config.Partida.avion_1 = avion_1;
         config.Partida.avion_2 = avion_2;
@@ -331,250 +380,115 @@ class Play extends Phaser.Scene {
         });
     }
 
-    collectStar (avion_1, artilleria)
-    {
-        console.log(artilleria);
-        if (avion_1.altitud == 'Baja')
+    Colision_Artillerias_aviones(avion, artilleria)
+    {        
+        if (avion.altitud == 'Baja')
             {
                 
                 if (this.time > lastFired)
                 { 
-                    this.dispararArtilleria(artilleria,avion_1)  
+                    this.dispararArtilleria(artilleria,avion)  
                     lastFired = this.time + 500;               
                 } 
             }
     }
 
+    Colision_Aviones(circulo, avion)
+    {   
+        
+        if (this.time > lastFired)
+        { 
+            if (circulo==this.circulo_1)
+            {                
+                if (avion_1.altitud == avion.altitud)
+                {               
+                    this.disparar(avion_1,avion)   
+                    lastFired = this.time + 500; 
+                }
+            }
+            if (circulo==this.circulo_2)
+            {                 
+                if (avion_2.altitud == avion.altitud)
+                {               
+                    this.disparar(avion_2,avion)   
+                    lastFired = this.time + 500; 
+                }
+            }
+            if (circulo==this.circulo_3)
+            {                 
+                if (avion_3.altitud == avion.altitud)
+                {               
+                    this.disparar(avion_3,avion)   
+                    lastFired = this.time + 500; 
+                }
+            }
+            if (circulo==this.circulo_4)
+            {                 
+                if (avion_4.altitud == avion.altitud)
+                {               
+                    this.disparar(avion_4,avion)   
+                    lastFired = this.time + 500; 
+                }
+            }
+            //------Aliados-/// 
+            if (circulo==this.circulo_5)
+            {                
+                if (avion_1_Aliados.altitud == avion.altitud)
+                {               
+                    this.disparar(avion_1_Aliados,avion)   
+                    lastFired = this.time + 500; 
+                }
+            }
+            if (circulo==this.circulo_6)
+            {                 
+                if (avion_2_Aliados.altitud == avion.altitud)
+                {               
+                    this.disparar(avion_2_Aliados,avion)   
+                    lastFired = this.time + 500; 
+                }
+            }
+            if (circulo==this.circulo_7)
+            {                 
+                if (avion_3_Aliados.altitud == avion.altitud)
+                {               
+                    this.disparar(avion_3_Aliados,avion)   
+                    lastFired = this.time + 500; 
+                }
+            }
+            if (circulo==this.circulo_8)
+            {                 
+                if (avion_4_Aliados.altitud == avion.altitud)
+                {               
+                    this.disparar(avion_4_Aliados,avion)   
+                    lastFired = this.time + 500; 
+                }
+            }
+        }        
+    }
+
+    colision_bala_avion(avion,Bullet)
+    { 
+        var Hit = Phaser.Math.Between(1,2);
+        if (Hit == 1 )
+            avion.vidaAvion-=10;    
+        console.log('avion :'+avion.vidaAvion);
+    }
+    
     colisiones()
     { 
-        this.physics.add.overlap(avion_1, artilleriasAliados, this.collectStar, null, this);
-            //si intento hacer que la artilleria dispare pero hay que ver como sacar la que hizo colision
-       /* this.physics.add.overlap(avion_1,artilleriasAliados, ()=>
-        {   
-            console.log('estoy acaac');
-            if (avion_1.altitud == 'Baja')
-                {
-                 
-                    if (this.time > lastFired)
-                    { 
-                        this.dispararArtilleria(artilleriasAliados.getChildren(),avion_1)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-        });*/
-
+        this.physics.add.overlap(aviones, artilleriasAliados, this.Colision_Artillerias_aviones, null, this);
+        this.physics.add.overlap(aviones_aliados, artilleriasPotencias, this.Colision_Artillerias_aviones, null, this);
       
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor);       
         
-        
         if (config.Partida.Bando=='Potencias')
         { 
-            this.physics.add.overlap(this.circulo_1,avion_1_Aliados, ()=>
-            {   
-                if (avion_1.altitud == avion_1_Aliados.altitud)
-                {
-                    avion_1_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_1,avion_1_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            this.physics.add.overlap(this.circulo_1,avion_2_Aliados, ()=>
-            {   
-                if (avion_1.altitud == avion_2_Aliados.altitud)
-                {
-                    avion_2_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_1,avion_2_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            this.physics.add.overlap(this.circulo_1,avion_3_Aliados, ()=>
-            {   
-                if (avion_1.altitud == avion_3_Aliados.altitud)
-                {
-                    avion_3_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_1,avion_3_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
+            this.physics.add.overlap(ciruclo_aviones, aviones_aliados, this.Colision_Aviones, null, this);
 
-            this.physics.add.overlap(this.circulo_1,avion_4_Aliados, ()=>
-            {   
-                if (avion_1.altitud == avion_4_Aliados.altitud)
-                {
-                    avion_4_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_1,avion_4_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            //avion 2
-            this.physics.add.overlap(this.circulo_2,avion_1_Aliados, ()=>
-            {   
-                if (avion_2.altitud == avion_1_Aliados.altitud)
-                {
-                    avion_1_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_2,avion_1_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            this.physics.add.overlap(this.circulo_2,avion_2_Aliados, ()=>
-            {   
-                if (avion_2.altitud == avion_2_Aliados.altitud)
-                {
-                    avion_2_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_2,avion_2_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            this.physics.add.overlap(this.circulo_2,avion_3_Aliados, ()=>
-            {   
-                if (avion_2.altitud == avion_3_Aliados.altitud)
-                {
-                    avion_3_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_2,avion_3_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_2,avion_4_Aliados, ()=>
-            {   
-                if (avion_2.altitud == avion_4_Aliados.altitud)
-                {
-                    avion_4_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_2,avion_4_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            //Avion 3
-            this.physics.add.overlap(this.circulo_3,avion_1_Aliados, ()=>
-            {   
-                if (avion_3.altitud == avion_1_Aliados.altitud)
-                {
-                    avion_1_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3,avion_1_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            this.physics.add.overlap(this.circulo_3,avion_2_Aliados, ()=>
-            {   
-                if (avion_3.altitud == avion_2_Aliados.altitud)
-                {
-                    avion_2_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3,avion_2_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            this.physics.add.overlap(this.circulo_3,avion_3_Aliados, ()=>
-            {   
-                if (avion_3.altitud == avion_3_Aliados.altitud)
-                {
-                    avion_3_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3,avion_3_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_3,avion_4_Aliados, ()=>
-            {   
-                if (avion_3.altitud == avion_4_Aliados.altitud)
-                {
-                    avion_4_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3,avion_4_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            //Avion 4
-            this.physics.add.overlap(this.circulo_4,avion_1_Aliados, ()=>
-            {   
-                if (avion_4.altitud == avion_1_Aliados.altitud)
-                {
-                    avion_1_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_4,avion_1_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            this.physics.add.overlap(this.circulo_4,avion_2_Aliados, ()=>
-            {   
-                if (avion_4.altitud == avion_2_Aliados.altitud)
-                {
-                    avion_2_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_4,avion_2_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            this.physics.add.overlap(this.circulo_4,avion_3_Aliados, ()=>
-            {   
-                if (avion_4.altitud == avion_3_Aliados.altitud)
-                {
-                    avion_3_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_4,avion_3_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_4,avion_4_Aliados, ()=>
-            {   
-                if (avion_4.altitud == avion_4_Aliados.altitud)
-                {
-                    avion_4_Aliados.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_4,avion_4_Aliados)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-
-            //////////// balas
-            this.physics.add.overlap(avion_1_Aliados,bullets, ()=>
+            this.physics.add.overlap(aviones_aliados, bullets, this.colision_bala_avion, null, this);
+            //////////// balas por si quieren ver como se hacia antes
+          /*  this.physics.add.overlap(avion_1_Aliados,bullets, ()=>
             {
                 var Hit = Phaser.Math.Between(1,2);
                 if (Hit == 1 )
@@ -582,281 +496,15 @@ class Play extends Phaser.Scene {
                 bullets.remove(bullets.getLast(true),true);
                 console.log('avion Aliado :'+avion_1_Aliados.vidaAvion);
             }); 
-
-            this.physics.add.overlap(avion_2_Aliados,bullets, ()=>
-            {
-                var Hit = Phaser.Math.Between(1,2);
-                if (Hit == 1 )
-                    avion_2_Aliados.vidaAvion-=10;                                
-                bullets.remove(bullets.getLast(true),true);
-                console.log('avion Aliado 2 :'+avion_2_Aliados.vidaAvion);
-            }); 
-
-            this.physics.add.overlap(avion_3_Aliados,bullets, ()=>
-            {
-                var Hit = Phaser.Math.Between(1,2);
-                if (Hit == 1 )
-                    avion_3_Aliados.vidaAvion-=10;                                
-                bullets.remove(bullets.getLast(true),true);
-                console.log('avion Aliado 3 :'+avion_3_Aliados.vidaAvion);
-            }); 
-
-            this.physics.add.overlap(avion_4_Aliados,bullets, ()=>
-            {
-                var Hit = Phaser.Math.Between(1,2);
-                if (Hit == 1 )
-                    avion_4_Aliados.vidaAvion-=10;                                
-                bullets.remove(bullets.getLast(true),true);
-                console.log('avion Aliado 4 :'+avion_4_Aliados.vidaAvion);
-            }); 
+            */
         }
         else
         {    
             ////////Colisiones avion_1_Aliado
-            this.physics.add.overlap(this.circulo_5,avion_1, ()=>
-            {   
-                if (avion_1.altitud == avion_1_Aliados.altitud)
-                {
-                    avion_1.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_1_Aliados,avion_1)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_5,avion_2, ()=>
-            {   
-                if (avion_2.altitud == avion_1_Aliados.altitud)
-                {
-                    avion_2.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_1_Aliados,avion_2)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_5,avion_3, ()=>
-            {   
-                if (avion_3.altitud == avion_1_Aliados.altitud)
-                {
-                    avion_3.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_1_Aliados,avion_3)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_5,avion_4, ()=>
-            {   
-                if (avion_4.altitud == avion_1_Aliados.altitud)
-                {
-                    avion_4.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_1_Aliados,avion_4)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            ////////Colisiones avion_2_Aliado
-            this.physics.add.overlap(this.circulo_6,avion_1, ()=>
-            {   
-                if (avion_1.altitud == avion_2_Aliados.altitud)
-                {
-                    avion_1.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_2_Aliados,avion_1)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_6,avion_2, ()=>
-            {   
-                if (avion_2.altitud == avion_2_Aliados.altitud)
-                {
-                    avion_2.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_2_Aliados,avion_2)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_6,avion_3, ()=>
-            {   
-                if (avion_3.altitud == avion_2_Aliados.altitud)
-                {
-                    avion_3.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_2_Aliados,avion_3)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_6,avion_4, ()=>
-            {   
-                if (avion_4.altitud == avion_2_Aliados.altitud)
-                {
-                    avion_4.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_2_Aliados,avion_4)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-            ////////Colisiones avion_3_Aliado
-            this.physics.add.overlap(this.circulo_7,avion_1, ()=>
-            {   
-                if (avion_1.altitud == avion_3_Aliados.altitud)
-                {
-                    avion_1.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3_Aliados,avion_1)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_7,avion_2, ()=>
-            {   
-                if (avion_2.altitud == avion_3_Aliados.altitud)
-                {
-                    avion_2.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3_Aliados,avion_2)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_7,avion_3, ()=>
-            {   
-                if (avion_3.altitud == avion_3_Aliados.altitud)
-                {
-                    avion_3.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3_Aliados,avion_3)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_7,avion_4, ()=>
-            {   
-                if (avion_4.altitud == avion_3_Aliados.altitud)
-                {
-                    avion_4.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3_Aliados,avion_4)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            ////////Colisiones avion_3_Aliado
-            this.physics.add.overlap(this.circulo_7,avion_1, ()=>
-            {   
-                if (avion_1.altitud == avion_4_Aliados.altitud)
-                {
-                    avion_1.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_4_Aliados,avion_1)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_8,avion_2, ()=>
-            {   
-                if (avion_2.altitud == avion_4_Aliados.altitud)
-                {
-                    avion_2.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_3_Aliados,avion_2)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_8,avion_3, ()=>
-            {   
-                if (avion_3.altitud == avion_4_Aliados.altitud)
-                {
-                    avion_3.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_4_Aliados,avion_3)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
-
-            this.physics.add.overlap(this.circulo_8,avion_4, ()=>
-            {   
-                if (avion_4.altitud == avion_4_Aliados.altitud)
-                {
-                    avion_4.setVisible(true);
-                    if (this.time > lastFired)
-                    { 
-                        this.disparar(avion_4_Aliados,avion_4)  
-                        lastFired = this.time + 500;               
-                    } 
-                }
-            });
+            this.physics.add.overlap(ciruclo_aviones_aliados, aviones, this.Colision_Aviones, null, this);            
+         
             /// Bala con aviones con bando 1
-            this.physics.add.overlap(avion_1,bullets, ()=>
-            {
-                var Hit = Phaser.Math.Between(1,2);
-                if (Hit == 1 )
-                    avion_1.vidaAvion-=10;           
-                bullets.remove(bullets.getLast(true),true);
-                console.log('avion 1 :'+avion_1.vidaAvion);
-            }); 
-
-            this.physics.add.overlap(avion_2,bullets, ()=>
-            {
-                var Hit = Phaser.Math.Between(1,2);
-                if (Hit == 1)
-                    avion_2.vidaAvion-=10;           
-                bullets.remove(bullets.getLast(true),true);
-                console.log('avion 2 :'+avion_2.vidaAvion);
-            }); 
-
-            this.physics.add.overlap(avion_3,bullets, ()=>
-            {
-                var Hit = Phaser.Math.Between(1,2);
-                if (Hit == 1)
-                    avion_3.vidaAvion-=10;           
-                bullets.remove(bullets.getLast(true),true);
-                console.log('avion 3 :'+avion_3.vidaAvion);
-            }); 
-
-            this.physics.add.overlap(avion_4,bullets, ()=>
-            {
-                var Hit = Phaser.Math.Between(1,2);
-                if (Hit == 1 )
-                    avion_4.vidaAvion-=10;           
-                bullets.remove(bullets.getLast(true),true);
-                console.log('avion 4 :'+avion_4.vidaAvion);
-            });
+            this.physics.add.overlap(aviones, bullets, this.colision_bala_avion, null, this);       
         }
     }
     //----------------//
@@ -967,9 +615,9 @@ class Play extends Phaser.Scene {
         this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_1);
         this.circulo_1.body.setCircle(35);
-        this.circulo_1.body.setOffset(15,16);     
+        this.circulo_1.body.setOffset(15,16); 
+        this.circulo_1.idAvion=1;
 
-        
         avion_2 = new Avion({
             scene: this,
             x: 500,
@@ -981,6 +629,7 @@ class Play extends Phaser.Scene {
         this.physics.world.enable(this.circulo_2);
         this.circulo_2.body.setCircle(35);
         this.circulo_2.body.setOffset(15,16);
+        this.circulo_2.idAvion=2;
 
         avion_3 = new Avion({
             scene: this,
@@ -993,6 +642,7 @@ class Play extends Phaser.Scene {
         this.physics.world.enable(this.circulo_3);
         this.circulo_3.body.setCircle(35);
         this.circulo_3.body.setOffset(15,16);
+        this.circulo_2.idAvion=3;
 
         avion_4 = new Avion({
             scene: this,
@@ -1005,6 +655,7 @@ class Play extends Phaser.Scene {
         this.physics.world.enable(this.circulo_4);
         this.circulo_4.body.setCircle(35);
         this.circulo_4.body.setOffset(15,16);
+        this.circulo_4.idAvion=4;
 
         avion_1_Aliados = new Avion({
             scene: this,

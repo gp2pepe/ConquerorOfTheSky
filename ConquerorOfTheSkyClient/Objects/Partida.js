@@ -6,6 +6,9 @@ class Partida {
     constructor() {
         this.tipoPartida = null;
         this.partidaCargada = false;
+        this.listaCargada = false;
+        this.hayError = false;
+        this.mensajeError = "";
 
     }
 
@@ -19,7 +22,7 @@ class Partida {
             this.partidaCargada = true;
 
         }else if(msg.operacion == "ingresarAPartida"){            
-            console.log("Ingrese a partida numero: " + msg.partida.idPartida) ;
+
             this.idpartida = msg.partida.idPartida;
             this.Bando = msg.bando;
             this.campoPotencias = msg.campoPotencias;
@@ -47,6 +50,24 @@ class Partida {
 
         }else if(msg.operacion == "listarPartidas"){ 
             this.listaPartidas = msg.partidas;
+            this.listaCargada = true;
+
+        }else if(msg.operacion == "errorServidor"){ 
+
+            if(msg.metodo == "iniciarPartida"){
+                this.hayError = true;
+                this.mensajeError = msg.mensaje;
+            }else if(msg.metodo == "ingresarAPartida"){
+                this.hayError = true;
+                this.mensajeError = msg.mensaje;
+            }else if(msg.metodo == "sincronizar"){
+                this.hayError = true;
+                this.mensajeError = msg.mensaje;
+            }else if(msg.metodo == "listarPartidas"){
+                this.hayError = true;
+                this.mensajeError = msg.mensaje;
+            } 
+    
         }
     }
     

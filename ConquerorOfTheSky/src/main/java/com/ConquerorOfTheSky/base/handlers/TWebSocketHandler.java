@@ -68,7 +68,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     session.sendMessage(new TextMessage(respuesta));
                 } catch (Exception e) {
                     try{
-                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"iniciarPartida\" }"));
+                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"iniciarPartida\",\"mensaje\": \"Error al iniciar partida\"  }"));
                     } catch (IOException e1) {
                         LOGGER.debug("Se perdio conexión con el Jugador");
 
@@ -127,7 +127,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     session.sendMessage(new TextMessage(respuesta));
                 }catch(Exception e){
                     try{
-                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"listarPartidas\" }"));
+                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"listarPartidas\",\"mensaje\": \"Hubo un error al buscar las partidas\" }"));
                     } catch (IOException e1) {
                         LOGGER.debug("Se perdio conexión con el Jugador");
                     }

@@ -25,7 +25,7 @@ class Bootloader extends Phaser.Scene {
             'buscarPartida',
             'cargarPartida',
             'crearPartida',
-            'confirmarNuevaPartida',
+            'partidaLlena',
             'desenfocar',
             'textBox',
             'Aliados',
