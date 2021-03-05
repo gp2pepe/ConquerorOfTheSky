@@ -331,11 +331,25 @@ class Play extends Phaser.Scene {
         });
     }
 
+    collectStar (avion_1, artilleria)
+    {
+        console.log(artilleria);
+        if (avion_1.altitud == 'Baja')
+            {
+                
+                if (this.time > lastFired)
+                { 
+                    this.dispararArtilleria(artilleria,avion_1)  
+                    lastFired = this.time + 500;               
+                } 
+            }
+    }
+
     colisiones()
     { 
-      
+        this.physics.add.overlap(avion_1, artilleriasAliados, this.collectStar, null, this);
             //si intento hacer que la artilleria dispare pero hay que ver como sacar la que hizo colision
-        this.physics.add.overlap(avion_1,artilleriasAliados, ()=>
+       /* this.physics.add.overlap(avion_1,artilleriasAliados, ()=>
         {   
             console.log('estoy acaac');
             if (avion_1.altitud == 'Baja')
@@ -347,7 +361,7 @@ class Play extends Phaser.Scene {
                         lastFired = this.time + 500;               
                     } 
                 }
-        });
+        });*/
 
       
         //Aniado colision entre los aviones y los muros
