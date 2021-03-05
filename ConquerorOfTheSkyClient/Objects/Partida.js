@@ -60,6 +60,7 @@ class Partida {
     }
 
     ingresarAPartida(idpartida){
+        console.log(idpartida);
         config.WebSocket.ws.send(JSON.stringify({operacion:"ingresarAPartida",idpartida:idpartida,nick:"Juan",passwd:"0"}));
     }
 

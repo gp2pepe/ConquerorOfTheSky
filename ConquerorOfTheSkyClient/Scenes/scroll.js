@@ -1,9 +1,9 @@
 import { config } from '../lib/main.js';
 const Random = Phaser.Math.Between;
 
-const COLOR_PRIMARY = 0x4e342e;
-const COLOR_LIGHT = 0x7b5e57;
-const COLOR_DARK = 0x260e04;
+const COLOR_PRIMARY = 0x99b8c3 ;
+const COLOR_LIGHT = 0x5E7B57;
+const COLOR_DARK = 0x040B26;
 
 class scroll extends Phaser.Scene {
     constructor() {
@@ -21,12 +21,15 @@ class scroll extends Phaser.Scene {
     }
 
     create() {
+        this.add.image(0, 0, "fondoMenu").setOrigin(0);
+        this.add.image(0,0, 'desenfocar').setOrigin(0);
+        this.add.image(150, 150, "menupartidas_2").setOrigin(0).setScale(0.8);
         var scrollMode = 0; // 0:vertical, 1:horizontal
         var gridTable = this.rexUI.add.gridTable({
-            x: 700,
-            y: 500,
-            width: (scrollMode === 0) ? 800 : 1800,
-            height: (scrollMode === 0) ? 600 : 1600,
+            x: 800,
+            y: 600,
+            width: (scrollMode === 0) ? 1000 : 1800,
+            height: (scrollMode === 0) ? 550 : 1000,
 
             scrollMode: scrollMode,
 
@@ -50,14 +53,6 @@ class scroll extends Phaser.Scene {
                 thumb: this.rexUI.add.roundRectangle(0, 0, 0, 0, 13, COLOR_LIGHT),
             },
 
-            header: this.rexUI.add.label({
-                width: (scrollMode === 0) ? undefined : 30,
-                height: (scrollMode === 0) ? 30 : undefined,
-
-                orientation: scrollMode,
-                background: this.rexUI.add.roundRectangle(0, 0, 20, 20, 0, COLOR_DARK),
-                text: this.add.text(0, 0, 'Header'),
-            }),
 
             footer: GetFooterSizer(this, scrollMode),
 
@@ -85,8 +80,8 @@ class scroll extends Phaser.Scene {
 
                         orientation: scrollMode,
                         background: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 0).setStrokeStyle(2, COLOR_DARK),
-                        icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10, 0x0),
-                        text: scene.add.text(0, 0, ''),
+                        //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10, 0x0),
+                        text: scene.add.text(0, 0, '', { font: '22px Sportlight Stencil', fill: '#080808' }),
 
                         space: {
                             icon: 10,
@@ -102,7 +97,7 @@ class scroll extends Phaser.Scene {
                 // Set properties from item value
                 cellContainer.setMinSize(width, height); // Size might changed in this demo
                 cellContainer.getElement('text').setText(item.id); // Set text of text object
-                cellContainer.getElement('icon').setFillStyle(item.color); // Set fill color of round rectangle object
+              //  cellContainer.getElement('icon').setFillStyle(item.color); // Set fill color of round rectangle object
                 cellContainer.getElement('background').setStrokeStyle(2, COLOR_DARK).setDepth(0);
                 return cellContainer;
             },
@@ -126,7 +121,11 @@ class scroll extends Phaser.Scene {
             }, this)
             .on('cell.click', function (cellContainer, cellIndex, pointer) {
                 this.print.text += 'click ' + cellIndex + ': ' + cellContainer.text + '\n';
-                console.log(cellContainer);
+                var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
+                var partida =cellContainer.text.split(' ');
+                config.Partida.ingresarAPartida(partida[0]);
+                console.log(partida[0]);
+                console.log(config.Partida.partidaCargada);
                 var nextCellIndex = cellIndex + 1;
                 var nextItem = gridTable.items[nextCellIndex];
                 if (!nextItem) {
@@ -136,31 +135,28 @@ class scroll extends Phaser.Scene {
                 gridTable.updateVisibleCell(nextCellIndex);
           
             }, this)    
-      
-        this.add.text(800, 600, 'Reset item')
-            .setOrigin(1, 1)
-            .setInteractive()
-            .on('pointerdown', function () {
-                var itemCount = Random(10, 50);
-                gridTable
-                    .setItems(CreateItems(itemCount))
-                    .scrollToBottom()
-                console.log(`Create ${itemCount} items`)
-            })      
+         
     }
 
-    update() { }
+    update() {
+        if(config.Partida.partidaCargada){
+            this.scene.remove('MenuInicial');
+            this.scene.remove('scroll');
+            this.scene.start('Play');
+        }
+     }
 }
 
 var CreateItems = function (count) {
-    var data = [];   
+    var data = [];  
      var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
     var cantPartidas = listaPartidas.length;
     console.log(listaPartidas);
     console.log(data);
     for (var i = 0; i < cantPartidas; i++) {
         data.push({
-            id: listaPartidas[i].idPartida + '        '  +listaPartidas[i].nombre  + listaPartidas[i].modalidad,
+            id: +listaPartidas[i].idPartida + '                                                 '  +listaPartidas[i].nombre + '                                                           '  + listaPartidas[i].modalidad,
+            gold:listaPartidas[i].idPartida ,
         });
         console.log(listaPartidas);
     }
@@ -172,16 +168,7 @@ var GetFooterSizer = function (scene, orientation) {
     return scene.rexUI.add.sizer({
         orientation: orientation
     })
-        .add(
-            CreateFooterButton(scene, 'Reset', orientation),   // child
-            1,         // proportion
-            'center'   // align
-        )
-        .add(
-            CreateFooterButton(scene, 'Exit', orientation),    // child
-            1,         // proportion
-            'center'   // align
-        )
+        
 }
 
 var CreateFooterButton = function (scene, text, orientation) {
