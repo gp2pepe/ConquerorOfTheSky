@@ -9,6 +9,7 @@ import confirmarNuevaPartida from '../Scenes/confirmarNuevaPartida.js';
 import confirmarIngresarPartida from '../Scenes/confirmarIngresarPartida.js';
 import GameOver from '../Scenes/GameOver.js'
 import Win from '../Scenes/Win.js'
+import scroll from '../Scenes/scroll.js'
 
 var config = {
     type: Phaser.AUTO,
@@ -26,7 +27,7 @@ var config = {
             debug: true
         }
     },
-    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,confirmarIngresarPartida,GameOver,Win],
+    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,confirmarIngresarPartida,GameOver,Win,scroll],
     WebSocket: new Client(),
     Partida: new Partida(),   
     

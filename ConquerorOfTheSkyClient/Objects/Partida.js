@@ -6,6 +6,7 @@ class Partida {
     constructor() {
         this.tipoPartida = null;
         this.partidaCargada = false;
+        this.listaCargada = false;
 
     }
 
@@ -47,6 +48,7 @@ class Partida {
 
         }else if(msg.operacion == "listarPartidas"){ 
             this.listaPartidas = msg.partidas;
+            this.listaCargada = true;
         }
     }
     
