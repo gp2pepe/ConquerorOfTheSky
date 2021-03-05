@@ -27,11 +27,7 @@ var config = {
             debug: true
         }
     },
-<<<<<<< HEAD
     scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,PartidaLlena,GameOver,Win,scroll],
-=======
-    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,confirmarIngresarPartida,GameOver,Win,scroll],
->>>>>>> 1e5b983e38c1f28cf2aa4f37c46b29d8e145b817
     WebSocket: new Client(),
     Partida: new Partida(),   
     

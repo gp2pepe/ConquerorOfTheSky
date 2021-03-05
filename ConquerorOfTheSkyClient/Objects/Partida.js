@@ -7,11 +7,8 @@ class Partida {
         this.tipoPartida = null;
         this.partidaCargada = false;
         this.listaCargada = false;
-<<<<<<< HEAD
         this.hayError = false;
         this.mensajeError = "";
-=======
->>>>>>> 1e5b983e38c1f28cf2aa4f37c46b29d8e145b817
 
     }
 
@@ -54,7 +51,6 @@ class Partida {
         }else if(msg.operacion == "listarPartidas"){ 
             this.listaPartidas = msg.partidas;
             this.listaCargada = true;
-<<<<<<< HEAD
 
         }else if(msg.operacion == "errorServidor"){ 
 
@@ -72,8 +68,6 @@ class Partida {
                 this.mensajeError = msg.mensaje;
             } 
     
-=======
->>>>>>> 1e5b983e38c1f28cf2aa4f37c46b29d8e145b817
         }
     }
     

@@ -141,7 +141,6 @@ class scroll extends Phaser.Scene {
         if(config.Partida.partidaCargada){
             this.scene.remove('MenuInicial');
             this.scene.remove('scroll');
-<<<<<<< HEAD
             this.scene.remove('PartidaLlena');
             this.scene.start('Play');
         }else if(config.Partida.hayError){
@@ -153,9 +152,6 @@ class scroll extends Phaser.Scene {
                 this.scene.setVisible(true, this.currentScene);
             }
             
-=======
-            this.scene.start('Play');
->>>>>>> 1e5b983e38c1f28cf2aa4f37c46b29d8e145b817
         }
      }
 }
