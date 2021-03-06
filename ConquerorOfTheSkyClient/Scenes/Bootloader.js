@@ -64,7 +64,12 @@ class Bootloader extends Phaser.Scene {
             'wall2',
             'seleccioncarac',
             'fondoendgame',
-            'pruebaEndGame'
+            'pruebaEndGame',
+            'imagenWinGame2estrellas',
+            'imagenWinGame1estrellas',
+            'imagenWinGame3estrellas',
+             'imagenDerrota',
+             'mask'
 
         ])
         this.load.on('complete',()=>{

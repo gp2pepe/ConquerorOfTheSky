@@ -30,6 +30,7 @@ var aviones;
 var aviones_aliados;
 var ciruclo_aviones_aliados;
 var ciruclo_aviones;
+var spotlight
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -47,22 +48,12 @@ class Play extends Phaser.Scene {
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
         this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-        this.mapa = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1); 
+        //this.mapa = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1); 
 
-        //esto es para mejorar el efecto spotlight de descubrir las areas no visibles
-        /*const plc = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
-        const spotlight = this.make.sprite({
-            x: 500,
-            y: 500,
-            key: 'nubeslateral',
-            add: false
-        });
-        plc.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
 
-        this.input.on('pointermove', function(pointer) {
-            spotlight.x = pointer.x;
-            spotlight.y = pointer.y;
-        });*/
+
+
+
         //opacidad del mapa
         //this.mapa.alpha = 0.4;
         this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
@@ -170,9 +161,28 @@ class Play extends Phaser.Scene {
 
         }
         
+        //Declaracion de la máscara que van a utilizar los aviones
+        /*const plc = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
+        spotlight = this.make.sprite({
+            x: 500,
+            y: 500,
+            key: 'mask',
+            add: false
+        });
+        plc.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);*/
 
         //Se llama a funcion que definira los aviones          
         this.definicionAviones(); 
+        
+        
+        
+        /*this.input.on('pointermove', function(pointer) {
+            spotlight.x = pointer.x; //avion_1.x
+            spotlight.y = pointer.y; //avion_1.x
+        });*/
+        
+
+        
 
         aviones = this.physics.add.group({
             key: 'avion',
@@ -232,6 +242,9 @@ class Play extends Phaser.Scene {
         
         //Evento que escucha cuando se clickea con el mouse y llama al onObjectClicked
         this.input.on('pointerdown',this.onObjectClicked);   
+
+       
+
         
         //Bullets, se define el grupo de balas que utilizaran los aviones
         bullets = this.add.group({
@@ -526,6 +539,7 @@ class Play extends Phaser.Scene {
         {            
             config.Partida.idavion=1;
             avion_1.moverAvion({x: pointer.x, y: pointer.y});
+            console.log('tendria que mostrar la mascara');
             config.Partida.sincronizar({x: pointer.x, y: pointer.y});
         }  
 
@@ -856,6 +870,62 @@ class Play extends Phaser.Scene {
            
     }
 
+    // Funcion que recibe por parametro el Sprite usado para la máscara, que va a seguir al avion
+    // dependiendo de si se está moviendo y ademas está enfocado.
+    /*maskAvion(Sprite)
+    {   
+        if (config.Partida.Bando=='Potencias')
+        {
+            if (avion_1.focus == true && this.EstaMoviendose(avion_1))
+            {
+                console.log('mask de avion1');
+                Sprite.x = avion_1.x;
+                Sprite.y = avion_1.y;
+            }
+            if (avion_2.focus == true && this.EstaMoviendose(avion_2))
+            {
+                console.log('mask de avion2');
+                Sprite.x = avion_2.x; 
+                Sprite.y = avion_2.y; 
+            }
+            if (avion_3.focus == true && this.EstaMoviendose(avion_3))
+            {
+                console.log('mask de avion3');
+                Sprite.x = avion_3.x; 
+                Sprite.y = avion_3.y; 
+            }
+            if (avion_4.focus == true && this.EstaMoviendose(avion_2))
+            {
+                console.log('mask de avion4');
+                Sprite.x = avion_4.x; 
+                Sprite.y = avion_4.y; 
+            }
+        }
+        else
+        {
+            if (avion_1_Aliados.focus == true && this.EstaMoviendose(avion_1_Aliados))
+            {
+                Sprite.x = avion_1_Aliados.x;
+                Sprite.y = avion_1_Aliados.y;
+            }
+            if (avion_2_Aliados.focus == true && this.EstaMoviendose(avion_2_Aliados))
+            {
+                Sprite.x = avion_2_Aliados.x;
+                Sprite.y = avion_2_Aliados.y;
+            }
+            if (avion_3_Aliados.focus == true && this.EstaMoviendose(avion_3_Aliados))
+            {
+                Sprite.x = avion_3_Aliados.x;
+                Sprite.y = avion_3_Aliados.y;
+            }
+            if (avion_4_Aliados.focus == true && this.EstaMoviendose(avion_4_Aliados))
+            {
+                Sprite.x = avion_4_Aliados.x;
+                Sprite.y = avion_4_Aliados.y;
+            }
+        }
+
+    }*/
 
     EstaMoviendose(avion)
     {
@@ -962,6 +1032,7 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
+        //this.maskAvion(spotlight); Llamado de la funcion de la máscara del avion
         //Tiempo que se usa para las balas 
         this.time = time;
         if (config.Partida.Bando=='Potencias')
@@ -1051,7 +1122,7 @@ class Play extends Phaser.Scene {
         this.circulo_6.setPosition(avion_2_Aliados.x, avion_2_Aliados.y);
         this.circulo_7.setPosition(avion_3_Aliados.x, avion_3_Aliados.y);
         this.circulo_8.setPosition(avion_4_Aliados.x, avion_4_Aliados.y); 
-     
+
         if (config.Partida.Bando=='Aliados')
         {           
             if (!this.MostrarOcultarAvion(avion_1)) 

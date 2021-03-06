@@ -20,8 +20,9 @@ class GameOver extends Phaser.Scene
     create()
     {
         this.add.image(0,0, 'desenfocar').setOrigin(0);
-        this.add.image(1200, 550, "fondoendgame");
-        this.pruebaEndGame = this.add.image(700,830, 'pruebaEndGame').setScale(0.3).setInteractive();
+        this.add.image(900, 550, "imagenDerrota").setScale(1);
+        this.pruebaEndGame = this.add.image(1150,830, 'pruebaEndGame').setScale(0.4).setInteractive();
+        this.pruebaEndGame.setVisible(false);
 
         this.pruebaEndGame.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
@@ -31,7 +32,7 @@ class GameOver extends Phaser.Scene
                 duration: 1000,
                 onComplete: () => {
                     console.log('Entre luego de hacer click');
-                    this.scene.remove('Play');
+                    //this.scene.remove('Play');
                     this.scene.start('MenuInicial');
                 }
             });
