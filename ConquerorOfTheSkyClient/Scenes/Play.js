@@ -50,10 +50,6 @@ class Play extends Phaser.Scene {
         this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
         this.mapa = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1); 
 
-
-
-
-
         //opacidad del mapa
         //this.mapa.alpha = 0.4;
         this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
@@ -216,10 +212,6 @@ class Play extends Phaser.Scene {
         circulo_aviones.getChildren()[2]=this.circulo_3;
         circulo_aviones.getChildren()[3]=this.circulo_4;        
 
-        console.log('Circulo de aviones'+circulo_aviones.getChildren()[0].idAvion);
-        console.log('Circulo de aviones'+circulo_aviones.getChildren()[1].idAvion);
-        console.log('Circulo de aviones'+circulo_aviones.getChildren()[2].idAvion);
-        console.log('Circulo de aviones'+circulo_aviones.getChildren()[3].idAvion);
         aviones_aliados.getChildren()[0]=avion_1_Aliados;
         aviones_aliados.getChildren()[1]=avion_2_Aliados;
         aviones_aliados.getChildren()[2]=avion_3_Aliados;
@@ -395,52 +387,101 @@ class Play extends Phaser.Scene {
     Colision_Aviones(circulo, avion)
     {   
         
-        if (this.time > lastFired)
-        { 
-            if (circulo==this.circulo_1)
-            {                
-                if (avion_1.altitud == avion.altitud)             
-                    this.disparar(avion_1,avion)   
+        if (circulo==this.circulo_1)
+        {                                
+            if (avion_1.altitud == avion.altitud && this.time > avion_1.lastFired)  
+            {     
+                console.log('entre una vez');
+                console.log(avion_1.lastFired);
+                avion.setVisible(true);           
+                this.disparar(avion_1,avion)   
+                avion_1.lastFired = this.time + 500;
             }
-            if (circulo==this.circulo_2)
-            {                 
-                if (avion_2.altitud == avion.altitud)              
-                    this.disparar(avion_2,avion) 
+        }
+        if (circulo==this.circulo_2 )
+        {                 
+            if (avion_2.altitud == avion.altitud && this.time > avion_2.lastFired)  
+            { 
+                avion.setVisible(true);             
+                this.disparar(avion_2,avion) 
+                avion_2.lastFired = this.time + 500;
             }
-            if (circulo==this.circulo_3)
-            {                 
-                if (avion_3.altitud == avion.altitud)            
-                    this.disparar(avion_3,avion)   
+        }
+        if (circulo==this.circulo_3)
+        {                 
+            if (avion_3.altitud == avion.altitud && this.time > avion_3.lastFired)            
+            { 
+                avion.setVisible(true);             
+                this.disparar(avion_3,avion) 
+                avion_3.lastFired = this.time + 500;
+            }  
 
+        }
+        if (circulo==this.circulo_4)
+        {                 
+            if (avion_4.altitud == avion.altitud && this.time > avion_4.lastFired)
+            { 
+                avion.setVisible(true);             
+                this.disparar(avion_4,avion) 
+                avion_4.lastFired = this.time + 500;
             }
-            if (circulo==this.circulo_4)
-            {                 
-                if (avion_4.altitud == avion.altitud)
-                    this.disparar(avion_4,avion)
+        }
+        //------Aliados-/// 
+        if (circulo==this.circulo_5)
+        {                
+            if (avion_1_Aliados.altitud == avion.altitud && this.time > avion_1_Aliados.lastFired )            
+            { 
+                avion.setVisible(true);             
+                this.disparar(avion_1_Aliados,avion) 
+                avion_1_Aliados.lastFired = this.time + 500;
             }
-            //------Aliados-/// 
-            if (circulo==this.circulo_5)
-            {                
-                if (avion_1_Aliados.altitud == avion.altitud)            
-                    this.disparar(avion_1_Aliados,avion) 
+        }
+        if (circulo==this.circulo_6)
+        {                 
+            if (avion_2_Aliados.altitud == avion.altitud && this.time > avion_2_Aliados.lastFired)             
+            { 
+                avion.setVisible(true);             
+                this.disparar(avion_2_Aliados,avion) 
+                avion_2_Aliados.lastFired = this.time + 500;
             }
-            if (circulo==this.circulo_6)
-            {                 
-                if (avion_2_Aliados.altitud == avion.altitud)             
-                    this.disparar(avion_2_Aliados,avion)
-            }
-            if (circulo==this.circulo_7)
-            {                 
-                if (avion_3_Aliados.altitud == avion.altitud)            
-                    this.disparar(avion_3_Aliados,avion)   
+        }
+        if (circulo==this.circulo_7)
+        {                 
+            if (avion_3_Aliados.altitud == avion.altitud && this.time > avion_3_Aliados.lastFired)            
+            { 
+                avion.setVisible(true);             
+                this.disparar(avion_3_Aliados,avion) 
+                avion_3_Aliados.lastFired = this.time + 500;
+            }  
 
+        }
+        if (circulo==this.circulo_8)
+        {                 
+            if (avion_4_Aliados.altitud == avion.altitud && this.time > avion_4_Aliados.lastFired)              
+            { 
+                avion.setVisible(true);             
+                this.disparar(avion_4_Aliados,avion) 
+                avion_4_Aliados.lastFired = this.time + 500;
             }
-            if (circulo==this.circulo_8)
-            {                 
-                if (avion_4_Aliados.altitud == avion.altitud)              
-                    this.disparar(avion_4_Aliados,avion)
-            }
-        }        
+        }      
+    }
+
+    colision_bala_avion(Bullet,avion)
+    { 
+        var Hit = Phaser.Math.Between(1,2);
+        if (Hit == 1 ){
+            avion.vidaAvion-=10;  
+            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion.idavion, vida:avion.vidaAvion});
+        }  
+        console.log('avion :'+avion.vidaAvion);
+    }
+
+    //Evento  llamado al disparar automaticamente 
+    disparar(avion_focus,avion_A_pegar)
+    {           
+        //Se pasa el avion que esta en focus 
+        bullet = bullets.get();     
+        bullet.fire( avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y}); 
     }
     
     colisiones()
@@ -452,16 +493,113 @@ class Play extends Phaser.Scene {
 
         if (config.Partida.Bando=='Potencias')
         { 
-            this.physics.add.overlap(circulo_aviones, aviones_aliados, this.Colision_Aviones, null, this);      
+            this.physics.add.overlap(circulo_aviones, aviones_aliados, this.Colision_Aviones, null, this);  
+            //   this.physics.add.overlap(bullets, aviones_aliados, this.colision_bala_avion, null, this);   
+            this.physics.add.overlap(avion_1_Aliados,bullets, ()=>
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                    if (Hit == 1 )
+                    {
+                        avion_1_Aliados.vidaAvion-=10; 
+                        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_1_Aliados.idavion, vida:avion_1_Aliados.vidaAvion});
+                    }                               
+                bullets.remove(bullets.getLast(true),true);
+                console.log('avion Aliado :'+avion_1_Aliados.vidaAvion);
+                
+            });  
+    
+            this.physics.add.overlap(avion_2_Aliados,bullets, ()=>
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                    if (Hit == 1 )
+                    {
+                        avion_2_Aliados.vidaAvion-=10; 
+                        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_2_Aliados.idavion, vida:avion_2_Aliados.vidaAvion});
+                    }                               
+                bullets.remove(bullets.getLast(true),true);
+                console.log('avion Aliado :'+avion_2_Aliados.vidaAvion);
+                
+            });  
+            this.physics.add.overlap(avion_3_Aliados,bullets, ()=>
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                    if (Hit == 1 )
+                    {
+                        avion_3_Aliados.vidaAvion-=10; 
+                        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_3_Aliados.idavion, vida:avion_3_Aliados.vidaAvion});
+                    }                               
+                bullets.remove(bullets.getLast(true),true);
+                console.log('avion Aliado :'+avion_3_Aliados.vidaAvion);
+                
+            });  
+    
+            this.physics.add.overlap(avion_4_Aliados,bullets, ()=>
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                    if (Hit == 1 )
+                    {
+                        avion_4_Aliados.vidaAvion-=10; 
+                        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_4_Aliados.idavion, vida:avion_4_Aliados.vidaAvion});
+                    }                               
+                bullets.remove(bullets.getLast(true),true);
+                console.log('avion Aliado :'+avion_4_Aliados.vidaAvion);                
+            }); 
 
            // this.physics.add.overlap(aviones_aliados, aviones, this.disparar, null, this);
         }else{    
             ////////Colisiones avion_1_Aliado
-            this.physics.add.overlap(circulo_aviones_aliados, aviones, this.Colision_Aviones, null, this); 
-           
-         
-            /// Bala con aviones con bando 1
-           // this.physics.add.overlap(aviones, aviones_aliados, this.disparar, null, this);       
+            this.physics.add.overlap(circulo_aviones_aliados, aviones, this.Colision_Aviones, null, this);         
+
+            this.physics.add.overlap(avion_1_Aliados,bullets, ()=>
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                    if (Hit == 1 )
+                    {
+                        avion_1_Aliados.vidaAvion-=10; 
+                        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_1.idavion, vida:avion_1.vidaAvion});
+                    }                               
+                bullets.remove(bullets.getLast(true),true);
+                console.log('avion Aliado :'+avion_1.vidaAvion);
+                
+            });  
+
+            this.physics.add.overlap(avion_2,bullets, ()=>
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                    if (Hit == 1 )
+                    {
+                        avion_2.vidaAvion-=10; 
+                        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_2.idavion, vida:avion_2.vidaAvion});
+                    }                               
+                bullets.remove(bullets.getLast(true),true);
+                console.log('avion Aliado :'+avion_2.vidaAvion);
+                
+            });  
+            this.physics.add.overlap(avion_3,bullets, ()=>
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                    if (Hit == 1 )
+                    {
+                        avion_3.vidaAvion-=10; 
+                        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_3.idavion, vida:avion_3.vidaAvion});
+                    }                               
+                bullets.remove(bullets.getLast(true),true);
+                console.log('avion Aliado :'+avion_3.vidaAvion);
+                
+            });  
+
+            this.physics.add.overlap(avion_4,bullets, ()=>
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                    if (Hit == 1 )
+                    {
+                        avion_4.vidaAvion-=10; 
+                        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_4.idavion, vida:avion_4.vidaAvion});
+                    }                               
+                bullets.remove(bullets.getLast(true),true);
+                console.log('avion Aliado :'+avion_4.vidaAvion);
+                
+            });
         }
     }
     //----------------//
@@ -530,31 +668,7 @@ class Play extends Phaser.Scene {
     }
     }
 
-    colision_bala_avion(Bullet,avion_A_pegar)
-    { 
-        var Hit = Phaser.Math.Between(1,2);
-        if (Hit == 1 ){
-            avion_A_pegar.vidaAvion-=10;  
-            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_A_pegar.idavion, vida:avion_A_pegar.vidaAvion});
-        }  
-        console.log('avion :'+avion_A_pegar.vidaAvion);
 
-    }
-    //Evento  llamado al disparar automaticamente 
-    disparar(avion,avion_A_pegar)
-    {           
-        //Se pasa el avion que esta en focus 
-        bullet = bullets.get();
-        if (bullet)
-        {
-            if (this.time > avion.lastFired)
-            { 
-                bullet.fire( avion,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
-                this.physics.add.overlap(bullet, avion_A_pegar, this.colision_bala_avion, null, this); 
-                avion.lastFired  = this.time + 500; 
-            }
-        }  
-    }
 
 
     colision_Artillerias_aviones(Bullet, avion)
