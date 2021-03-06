@@ -23,6 +23,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.yInicial = config.y;
         this.cargarbomba=false;
         this.cargarCombustible=false; 
+        this.lastFired = 0;
     }
 
     moverAvion(msg){     

@@ -31,22 +31,25 @@ class Partida {
             this.partidaCargada = true;
 
         }else if(msg.operacion == "sincronizar"){ 
-            if (msg.idavion == 1)
-                this.avion_1.moverAvion(msg);
-            if (msg.idavion == 2)
-                this.avion_2.moverAvion(msg);
-            if (msg.idavion == 3)
-                this.avion_3.moverAvion(msg);
-            if (msg.idavion == 4)
-                this.avion_4.moverAvion(msg);
-            if (msg.idavion == 5)
-                this.avion_1_Aliados.moverAvion(msg);
-            if (msg.idavion == 6)
-                this.avion_2_Aliados.moverAvion(msg);
-            if (msg.idavion == 7)
-                this.avion_3_Aliados.moverAvion(msg); 
-            if (msg.idavion == 8)
-                this.avion_4_Aliados.moverAvion(msg);   
+            
+            if(msg.carga.tipoOp == "sincronizarAvion") {
+                if (msg.carga.idavion == 1)
+                    this.avion_1.moverAvion(msg.carga);
+                if (msg.carga.idavion == 2)
+                    this.avion_2.moverAvion(msg.carga);
+                if (msg.carga.idavion == 3)
+                    this.avion_3.moverAvion(msg.carga);
+                if (msg.carga.idavion == 4)
+                    this.avion_4.moverAvion(msg.carga);
+                if (msg.carga.idavion == 5)
+                    this.avion_1_Aliados.moverAvion(msg.carga);
+                if (msg.carga.idavion == 6)
+                    this.avion_2_Aliados.moverAvion(msg.carga);
+                if (msg.carga.idavion == 7)
+                    this.avion_3_Aliados.moverAvion(msg.carga); 
+                if (msg.carga.idavion == 8)
+                    this.avion_4_Aliados.moverAvion(msg.carga);
+            }   
 
         }else if(msg.operacion == "listarPartidas"){ 
             this.listaPartidas = msg.partidas;
@@ -83,9 +86,9 @@ class Partida {
         config.WebSocket.ws.send(JSON.stringify({operacion:"ingresarAPartida",idpartida:idpartida,nick:"Juan",passwd:"0"}));
     }
 
-    sincronizar(msg){
+    sincronizar(carga){
         if (config.WebSocket.isConnected()) {        
-            config.WebSocket.ws.send(JSON.stringify({operacion:"sincronizar",idpartida:this.idpartida,idavion:this.idavion,x: msg.x, y: msg.y}));
+            config.WebSocket.ws.send(JSON.stringify({operacion:"sincronizar",idpartida:this.idpartida,carga}));
         }
     }
 
