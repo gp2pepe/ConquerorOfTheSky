@@ -59,7 +59,7 @@ class Play extends Phaser.Scene {
         this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
         this.boton_6 = this.add.image(340, 425, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
         this.cargarBomba = this.add.image(45, 700, "cargarBomba").setOrigin(0).setScale(.3).setInteractive(); 
-        this.volverBase = this.add.image(45, 800, "cargarBomba").setOrigin(0).setScale(.3).setInteractive();
+        this.volverBase = this.add.image(45, 800, "cargarCombustible").setOrigin(0).setScale(.3).setInteractive();
 
         this.boton_5.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);

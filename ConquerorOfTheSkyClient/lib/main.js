@@ -6,7 +6,7 @@ import Partida from '../Objects/Partida.js';
 import MenuPartidas from '../Scenes/MenuPartidas.js';
 import MenuBando from '../Scenes/MenuBando.js';
 import confirmarNuevaPartida from '../Scenes/confirmarNuevaPartida.js';
-import confirmarIngresarPartida from '../Scenes/confirmarIngresarPartida.js';
+import PartidaLlena from '../Scenes/PartidaLlena.js';
 import GameOver from '../Scenes/GameOver.js'
 import Win from '../Scenes/Win.js'
 import scroll from '../Scenes/scroll.js'
@@ -27,7 +27,7 @@ var config = {
             debug: true
         }
     },
-    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,confirmarIngresarPartida,GameOver,Win,scroll],
+    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,PartidaLlena,GameOver,Win,scroll],
     WebSocket: new Client(),
     Partida: new Partida(),   
     

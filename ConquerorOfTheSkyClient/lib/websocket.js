@@ -28,7 +28,8 @@ class Client {
 
     onMessage(message) {
         var msg = JSON.parse(message.data);
-        console.log("Recibí el mensaje : " + msg);
+        console.log("Recibí el mensaje : " );
+        console.log(msg);
         config.Partida.procesarMensaje(msg);
     }
 
