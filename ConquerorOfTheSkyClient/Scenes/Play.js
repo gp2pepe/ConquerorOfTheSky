@@ -48,7 +48,7 @@ class Play extends Phaser.Scene {
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
         this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-        //this.mapa = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1); 
+        this.mapa = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1); 
 
 
 
