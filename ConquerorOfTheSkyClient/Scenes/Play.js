@@ -30,7 +30,9 @@ var aviones;
 var aviones_aliados;
 var circulo_aviones_aliados;
 var circulo_aviones;
-var spotligh;
+var spotlight;
+var containerAliados;
+var containerPotencias;
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -48,8 +50,8 @@ class Play extends Phaser.Scene {
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
         this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-        this.mapa = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1); 
-
+        this.mapa = this.add.image(433, 46, "mapa_6Claro").setOrigin(0).setScale(1);
+        this.mapaMask = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1);
         //opacidad del mapa
         //this.mapa.alpha = 0.4;
         this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
@@ -100,12 +102,12 @@ class Play extends Phaser.Scene {
         campoPotencias.base.posicionY+= inicioMapaY;
 
         //Seteo la base y sus elementos
-        this.add.image(campoPotencias.base.posicionX + 50, campoPotencias.base.posicionY + 50, 'pisoBase').setScale(.25);
-        this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
-        this.add.image(campoPotencias.base.posicionX + 70, campoPotencias.base.posicionY + 10, 'depositoCombustible').setScale(.10);
-        this.add.image(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 'torre').setScale(.07);
+        this.pisoBasePotencias = this.add.image(campoPotencias.base.posicionX + 50, campoPotencias.base.posicionY + 50, 'pisoBase').setScale(.25);
+        this.contenedorPotencias = this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
+        this.depositoPotencias = this.add.image(campoPotencias.base.posicionX + 70, campoPotencias.base.posicionY + 10, 'depositoCombustible').setScale(.10);
+        this.torrePotencias = this.add.image(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 'torre').setScale(.07);
         avionXInicial = campoPotencias.base.posicionX ; 
-      
+        
         if(campoPotencias.posicionY > 540)
             avionYInicial = campoPotencias.base.posicionY -120;
 
@@ -137,10 +139,10 @@ class Play extends Phaser.Scene {
         campoAliados.base.posicionY+= inicioMapaY;
 
         //Seteo la base enemiga y sus elementos
-        this.add.image(campoAliados.base.posicionX + 50, campoAliados.base.posicionY + 50, 'pisoBase').setScale(.25);
-        this.add.image(campoAliados.base.posicionX+10, campoAliados.base.posicionY + 10, 'contenedor_2').setScale(.15);
-        this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
-        this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
+        this.pisoBaseAliados = this.add.image(campoAliados.base.posicionX + 50, campoAliados.base.posicionY + 50, 'pisoBase').setScale(.25);
+        this.contenedorAliados = this.add.image(campoAliados.base.posicionX+10, campoAliados.base.posicionY + 10, 'contenedor_2').setScale(.15);
+        this.depositoAliados = this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
+        this.torreAliados = this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
     
         //Defino las artillerias de los Aliados
         artilleriasAliados = this.physics.add.group({
@@ -158,17 +160,56 @@ class Play extends Phaser.Scene {
  
 
         }
-        
+        //const plc = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1);
+        containerPotencias = this.add.container(0,0);
+        containerAliados = this.add.container (0,0);
+
+    // Creo la mascara con su contenedor dependiendo del bando
+    if (config.Partida.Bando=='Potencias')
+    {
+            containerPotencias.add([
+                this.mapa,
+                this.pisoBaseAliados,
+                this.depositoAliados,
+                this.torreAliados,
+                this.contenedorAliados
+            ]);
+
+            //containerPotencias.add (this.artilleriasAliados);
+            console.log('No me la conteiner');
+
+            //Declaracion de la máscara que van a utilizar los aviones
+         
+            spotlight = this.make.sprite({
+                x: 500,
+                y: 500,
+                key: 'mask',
+                add: false
+            });
+            containerPotencias.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
+    }
+    else
+    {
+        containerAliados.add([
+            this.pisoBasePotencias,
+            this.depositoPotencias,
+            this.torrePotencias,
+            this.contenedorPotencias
+        ]);
+        console.log(containerAliados);
+        //containerPotencias.add (this.artilleriasPotencias);
+        console.log('No me la conteiner');
+
         //Declaracion de la máscara que van a utilizar los aviones
-        /*const plc = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1); 
+     
         spotlight = this.make.sprite({
             x: 500,
             y: 500,
             key: 'mask',
             add: false
         });
-        plc.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);*/
-
+        containerAliados.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
+    }
         //Se llama a funcion que definira los aviones          
         this.definicionAviones(); 
         
@@ -991,7 +1032,7 @@ class Play extends Phaser.Scene {
 
     // Funcion que recibe por parametro el Sprite usado para la máscara, que va a seguir al avion
     // dependiendo de si se está moviendo y ademas está enfocado.
-    /*maskAvion(Sprite)
+    maskAvion(Sprite)
     {   
         if (config.Partida.Bando=='Potencias')
         {
@@ -1044,7 +1085,7 @@ class Play extends Phaser.Scene {
             }
         }
 
-    }*/
+    }
 
     EstaMoviendose(avion)
     {
@@ -1151,7 +1192,7 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
-        //this.maskAvion(spotlight); Llamado de la funcion de la máscara del avion
+        this.maskAvion(spotlight); //Llamado de la funcion de la máscara del avion
         //Tiempo que se usa para las balas 
         this.time = time;
         if (config.Partida.Bando=='Potencias')

@@ -70,7 +70,9 @@ class Bootloader extends Phaser.Scene {
             'imagenWinGame1estrellas',
             'imagenWinGame3estrellas',
              'imagenDerrota',
-             'mask'
+             'mask',
+             'mitadMapa',
+             'mapa_6Claro'
 
         ])
         this.load.on('complete',()=>{
