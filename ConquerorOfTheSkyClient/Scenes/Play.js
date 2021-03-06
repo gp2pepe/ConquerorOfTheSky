@@ -244,9 +244,6 @@ class Play extends Phaser.Scene {
         
         //Evento que escucha cuando se clickea con el mouse y llama al onObjectClicked
         this.input.on('pointerdown',this.onObjectClicked);   
-
-       
-
         
         //Bullets, se define el grupo de balas que utilizaran los aviones
         bullets = this.add.group({
@@ -395,20 +392,6 @@ class Play extends Phaser.Scene {
         });
     }
 
-    Colision_Artillerias_aviones(Bullet, avion)
-    {        
-        console.log("Colision_Artillerias_aviones");
-        console.log(avion);
-
-        if (avion.altitud == 'Baja')
-            {
-                var Hit = Phaser.Math.Between(1,2);
-                if (Hit == 1 )
-                    avion.vidaAvion-=10;   
-          
-            }
-    }
-
     Colision_Aviones(circulo, avion)
     {   
         
@@ -464,17 +447,18 @@ class Play extends Phaser.Scene {
     { 
         this.physics.add.overlap(artilleriasAliados,aviones, this.dispararArtilleria, null, this);
         this.physics.add.overlap(artilleriasPotencias, aviones_aliados, this.dispararArtilleria, null, this);
-      
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor);       
-        
+
         if (config.Partida.Bando=='Potencias')
         { 
-            this.physics.add.overlap(circulo_aviones, aviones_aliados, this.Colision_Aviones, null, this);
+            this.physics.add.overlap(circulo_aviones, aviones_aliados, this.Colision_Aviones, null, this);      
+
            // this.physics.add.overlap(aviones_aliados, aviones, this.disparar, null, this);
         }else{    
             ////////Colisiones avion_1_Aliado
-            this.physics.add.overlap(circulo_aviones_aliados, aviones, this.Colision_Aviones, null, this);            
+            this.physics.add.overlap(circulo_aviones_aliados, aviones, this.Colision_Aviones, null, this); 
+           
          
             /// Bala con aviones con bando 1
            // this.physics.add.overlap(aviones, aviones_aliados, this.disparar, null, this);       
@@ -546,11 +530,13 @@ class Play extends Phaser.Scene {
     }
     }
 
-    colision_bala_avion(avion,avion_A_pegar)
+    colision_bala_avion(Bullet,avion_A_pegar)
     { 
         var Hit = Phaser.Math.Between(1,2);
-        if (Hit == 1 )
-            avion_A_pegar.vidaAvion-=10;    
+        if (Hit == 1 ){
+            avion_A_pegar.vidaAvion-=10;  
+            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_A_pegar.idavion, vida:avion_A_pegar.vidaAvion});
+        }  
         console.log('avion :'+avion_A_pegar.vidaAvion);
 
     }
@@ -569,6 +555,23 @@ class Play extends Phaser.Scene {
             }
         }  
     }
+
+
+    colision_Artillerias_aviones(Bullet, avion)
+    {        
+
+        if (avion.altitud == 'Baja')
+            {
+                var Hit = Phaser.Math.Between(1,2);
+                if (Hit == 1 ){
+                    avion.vidaAvion-=10; 
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion.idavion, vida:avion.vidaAvion});
+
+                }  
+          
+            }
+    }
+
      //Evento  llamado al disparar automaticamente artilleria
      dispararArtilleria(artilleria_focus,avion_A_pegar)
      {           
@@ -579,7 +582,7 @@ class Play extends Phaser.Scene {
             if (this.time > artilleria_focus.lastFired)
             { 
              bullet.fireArtilleria(artilleria_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
-             this.physics.add.overlap(bullet, avion_A_pegar, this.colision_bala_avion, null, this);   
+             this.physics.add.overlap(bullet, avion_A_pegar, this.colision_Artillerias_aviones, null, this);   
              artilleria_focus.lastFired  = this.time + 2000; 
     
             }
@@ -600,9 +603,10 @@ class Play extends Phaser.Scene {
             yInicial: avionYInicial,*/
             x: 500,
             y: 200,
-            estoyEnBase : false,
-            vidaAvion : config.Partida.configuraciones.avionSalud                         
-        }).setInteractive();      
+            estoyEnBase : false
+        }).setInteractive();    
+        avion_1.idavion = 1;  
+        avion_1.vidaAvion = config.Partida.configuraciones.avionSalud;
         avion_1.velocidad = velAvion;
         this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_1);
@@ -614,9 +618,10 @@ class Play extends Phaser.Scene {
             scene: this,
             x: 500,
             y: 400,
-            estoyEnBase : false,
-            vidaAvion : config.Partida.configuraciones.avionSalud                                    
-        }).setInteractive();      
+            estoyEnBase : false                               
+        }).setInteractive(); 
+        avion_2.idavion = 2;  
+        avion_2.vidaAvion = config.Partida.configuraciones.avionSalud;     
         avion_2.velocidad = velAvion;  
         this.circulo_2 = this.add.image(avion_2.x-50,avion_2.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_2);
@@ -628,9 +633,10 @@ class Play extends Phaser.Scene {
             scene: this,
             x: 500,
             y: 600,
-            estoyEnBase : false,
-            vidaAvion : config.Partida.configuraciones.avionSalud         
+            estoyEnBase : false      
         }).setInteractive(); 
+        avion_3.idavion = 3;  
+        avion_3.vidaAvion = config.Partida.configuraciones.avionSalud;
         avion_3.velocidad = velAvion;       
         this.circulo_3 = this.add.image(avion_3.x-50,avion_3.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_3);
@@ -642,9 +648,10 @@ class Play extends Phaser.Scene {
             scene: this,
             x: 500,
             y: 800,
-            estoyEnBase: false,
-            vidaAvion : config.Partida.configuraciones.avionSalud           
+            estoyEnBase: false        
         }).setInteractive();  
+        avion_4.idavion = 4;  
+        avion_4.vidaAvion = config.Partida.configuraciones.avionSalud;
         avion_4.velocidad = velAvion;      
         this.circulo_4 = this.add.image(avion_4.x-50,avion_4.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_4);
@@ -655,9 +662,10 @@ class Play extends Phaser.Scene {
         avion_1_Aliados = new Avion({
             scene: this,
             x: 1500,
-            y: 200,
-            vidaAvion : config.Partida.configuraciones.avionSalud
-        }).setInteractive();      
+            y: 200
+        }).setInteractive();    
+        avion_1_Aliados.idavion = 5;  
+        avion_1_Aliados.vidaAvion = config.Partida.configuraciones.avionSalud;  
         avion_1_Aliados.velocidad = velAvion; 
         this.circulo_5 = this.add.image(avion_1_Aliados.x-50,avion_1_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_5);
@@ -669,9 +677,10 @@ class Play extends Phaser.Scene {
         avion_2_Aliados = new Avion({
             scene: this,
             x: 1500,
-            y: 400,
-            vidaAvion : config.Partida.configuraciones.avionSalud
+            y: 400
         }).setInteractive();       
+        avion_2_Aliados.idavion = 6;  
+        avion_2_Aliados.vidaAvion = config.Partida.configuraciones.avionSalud; 
         avion_2_Aliados.velocidad = velAvion; 
         this.circulo_6 = this.add.image(avion_2_Aliados.x-50,avion_2_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_6);
@@ -683,9 +692,10 @@ class Play extends Phaser.Scene {
         avion_3_Aliados = new Avion({
             scene: this,
             x: 1500,
-            y: 600,
-            vidaAvion : config.Partida.configuraciones.avionSalud
+            y: 600
         }).setInteractive();   
+        avion_3_Aliados.idavion = 7;  
+        avion_3_Aliados.vidaAvion = config.Partida.configuraciones.avionSalud; 
         avion_3_Aliados.velocidad = velAvion;      
         this.circulo_7 = this.add.image(avion_3_Aliados.x-50,avion_3_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_7);
@@ -697,9 +707,10 @@ class Play extends Phaser.Scene {
         avion_4_Aliados = new Avion({
             scene: this,
             x: 1500,
-            y: 800,
-            vidaAvion : config.Partida.configuraciones.avionSalud
-        }).setInteractive();       
+            y: 800
+        }).setInteractive(); 
+        avion_4_Aliados.idavion = 8;  
+        avion_4_Aliados.vidaAvion = config.Partida.configuraciones.avionSalud;       
         avion_4_Aliados.velocidad = velAvion;  
         this.circulo_8 = this.add.image(avion_4_Aliados.x-50,avion_4_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_8);

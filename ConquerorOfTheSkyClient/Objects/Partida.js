@@ -49,7 +49,25 @@ class Partida {
                     this.avion_3_Aliados.moverAvion(msg.carga); 
                 if (msg.carga.idavion == 8)
                     this.avion_4_Aliados.moverAvion(msg.carga);
-            }   
+
+            }else if(msg.carga.tipoOp == "sincronizarVidaAvion"){
+                if (msg.carga.idavion == 1)
+                    this.avion_1.vidaAvion=msg.carga.vida;
+                if (msg.carga.idavion == 2)
+                    this.avion_2.vidaAvion=msg.carga.vida;
+                if (msg.carga.idavion == 3)
+                    this.avion_3.vidaAvion=msg.carga.vida;
+                if (msg.carga.idavion == 4)
+                    this.avion_4.vidaAvion=msg.carga.vida;
+                if (msg.carga.idavion == 5)
+                    this.avion_1_Aliados.vidaAvion=msg.carga.vida;
+                if (msg.carga.idavion == 6)
+                    this.avion_2_Aliados.vidaAvion=msg.carga.vida;
+                if (msg.carga.idavion == 7)
+                    this.avion_3_Aliados.vidaAvion=msg.carga.vida; 
+                if (msg.carga.idavion == 8)
+                    this.avion_4_Aliados.vidaAvion=msg.carga.vida;
+            }  
 
         }else if(msg.operacion == "listarPartidas"){ 
             this.listaPartidas = msg.partidas;
