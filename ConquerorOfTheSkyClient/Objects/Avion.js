@@ -16,7 +16,7 @@ class Avion extends Phaser.GameObjects.Sprite {
 		this.body.setCollideWorldBounds(true);
         this.vidaAvion = 100;    
         this.focus=false;   
-        this.altitud='En base';
+        this.altitud='Baja';
         this.lastFired=0;
         this.combustible = 2000;
         this.xInicial = config.x;
@@ -24,6 +24,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.cargarbomba=false;
         this.cargarCombustible=false; 
         this.lastFired = 0;
+        this.activarColision=0;
     }
 
     moverAvion(msg){     
