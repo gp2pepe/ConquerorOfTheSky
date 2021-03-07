@@ -25,10 +25,11 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.cargarCombustible=false; 
         this.lastFired = 0;
         this.activarColision=0;
+        this.tengobomba=false;
     }
 
-    moverAvion(msg){     
-        
+    moverAvion(msg)
+    {             
 		var angle = Phaser.Math.Angle.BetweenPoints(this, msg);
         this.rotation = angle;	
 		this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
@@ -36,14 +37,18 @@ class Avion extends Phaser.GameObjects.Sprite {
 		this.setVisible(true);
     }
 
-    combustibleMenos1()
+    calcularVelocidad(velocidad)
     {
-        this.combustible-=1;
-        console.log(this.combustible);
-        if (avion_1.combustible === 0)
-        {
-            timedEvent.remove(false);
-        }
+        if (this.altitud == "Baja")
+            if (this.tengobomba)
+                return velocidad/2;
+            else
+                return velocidad
+        if (this.altitud == "Alta")
+            if (this.tengobomba)
+                return velocidad/4;
+            else
+                return velocidad/2;
     }
 }
 
