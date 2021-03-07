@@ -166,15 +166,14 @@ public class Fachada implements IFachada{
         Partida partidaNueva = new Partida(publica, modalidad, nombre, passwd, equipos, nuevoMapa);
 
         Long idpartida ;
-        if(partidas.size()>0)
-          idpartida = partidas.get(partidas.size()-1).getIdpartida() + 1;
-        else
-          idpartida = Long.valueOf(0);
-        
+        synchronized(this) {
+          idpartida = Long.valueOf(partidas.size());
+          partidaNueva.setIdpartida(idpartida);
+          partidas.add(partidaNueva);
+        }
 
         LOGGER.debug("Tamaño de la lista de partidas: " + partidas.size());
-        partidaNueva.setIdpartida(idpartida);
-        partidas.add(partidaNueva);
+        
 
         //this.guardarPartida(idpartida);
 
@@ -200,7 +199,7 @@ public class Fachada implements IFachada{
 
     @Transactional
     public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd)
-        throws PartidaLlenaException {
+        throws PartidaLlenaException, PartidaNoExisteException {
        
       Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
 
@@ -210,32 +209,41 @@ public class Fachada implements IFachada{
       Campo campoContrario = null;
       String bando = "";
       String bandoContrario = "";
-      for(Partida par: this.partidas ){
-        if(par.getIdpartida()==idPartida){
-            //Reviso si la partida esta llena
-            if(par.getModalidad().equals("1vs1") && par.getEquipos().get(1).getJugadores().size()>0){
-              throw new PartidaLlenaException("ingresarAPartida","La partida esta llena");
+      int i = 0;
+      boolean encontre = false;
+      while(i<partidas.size() && encontre == false){
+        partida = partidas.get(i);
+        if(partida.getIdpartida().equals(idPartida)){
+          //Reviso si la partida esta llena
+          if(partida.getModalidad().equals("1vs1") && partida.getEquipos().get(1).getJugadores().size()>0){
+            throw new PartidaLlenaException("ingresarAPartida","La partida esta llena");
 
-            }else if(par.getModalidad().equals("1vs1")){
-              
-              //Equipo 2
-              List<Avion> aviones = new LinkedList<>();
-              aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-              aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-              aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-              aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-              jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
-              List<Equipo> equipos = par.getEquipos();
-              equipos.get(1).setJugadores(jugadores);
-              par.setEquipos(equipos);
-              partida = par;
-              campo =  equipos.get(1).getCampo();
-              bando = equipos.get(1).getBando();
-              campoContrario =  equipos.get(0).getCampo();
-              bandoContrario =  equipos.get(0).getBando();
-            }
+          }else if(partida.getModalidad().equals("1vs1")){
+            LOGGER.debug("Voy a armar la partida para Ingresar: " + idPartida);
+            //Equipo 2
+            List<Avion> aviones = new LinkedList<>();
+            aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+            aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+            aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+            aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+            jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
+            List<Equipo> equipos = partida.getEquipos();
+            equipos.get(1).setJugadores(jugadores);
+            partida.setEquipos(equipos);
+            campo =  equipos.get(1).getCampo();
+            bando = equipos.get(1).getBando();
+            campoContrario =  equipos.get(0).getCampo();
+            bandoContrario =  equipos.get(0).getBando();
+          }
+          encontre = true;
         }
+        i++;
       }
+      if(!encontre){
+        //LOGGER.debug("estado partidas: " + partidas);
+        throw new PartidaNoExisteException("recuperarPartida", "No existe la partida : " + idPartida);
+      }
+
       //Genero el JSon
       Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
       JsonElement jsonElementConf = gson.toJsonTree(conf);
@@ -250,6 +258,7 @@ public class Fachada implements IFachada{
       innerObject.addProperty("bando", bando);
       innerObject.add("campo"+bando, jsonElementCampo);
       innerObject.add("campo"+bandoContrario, jsonElementCampoContrario);
+      LOGGER.debug("Devolvi la partida: " + innerObject);
 
       return gson.toJson(innerObject);
     }
@@ -280,27 +289,42 @@ public class Fachada implements IFachada{
 
     }
 
-    public List<WebSocketSession> sincronizarPartida(Long idpartida){
+    public List<WebSocketSession> sincronizarPartida(Long idPartida) throws PartidaNoExisteException{
       List<WebSocketSession> sessions = new LinkedList<>();
-      for(Partida par: this.partidas ){
-        if(par.getIdpartida()==idpartida){
+      int i = 0;
+      boolean encontre = false;
+      while(i<partidas.size() && encontre == false){
+        Partida par = partidas.get(i);
+        if(par.getIdpartida().equals(idPartida)){
           for(Equipo eq : par.getEquipos()){
             for(Jugador ju : eq.getJugadores()){
                 sessions.add(ju.getSesionActual());
             }
           }
+          encontre = true;
         }
+        i++;
+      }
+      if(!encontre){
+        throw new PartidaNoExisteException("recuperarPartida", "La partida ya no esta disponible : " + idPartida);
       }
       return sessions;
     }
 
 
-    public void guardarPartida(Long idPartida){
-        
-      for(Partida par: this.partidas ){
-        if(par.getIdpartida()==idPartida){
+    public void guardarPartida(Long idPartida) throws PartidaNoExisteException{
+      int i = 0;
+      boolean encontre = false;
+      while(i<partidas.size() && encontre == false){
+        Partida par = partidas.get(i);
+        if(par.getIdpartida().equals(idPartida)){
           partidaR.saveAndFlush(par);
+          encontre = true;
         }
+        i++;
+      }
+      if(!encontre){
+        throw new PartidaNoExisteException("recuperarPartida", "La partida ya no esta disponible : " + idPartida);
       }
 
     }
@@ -311,7 +335,12 @@ public class Fachada implements IFachada{
         Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
 
         Partida partida = partidaR.getOne(idPartida);
-        partidas.add(partida);
+        Long idpartida ;
+        synchronized(this) {
+          idpartida = Long.valueOf(partidas.size());
+          partida.setIdpartida(idpartida);
+          partidas.add(partida);
+        }
 
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonElement jsonElementConf = gson.toJsonTree(conf);
@@ -341,22 +370,6 @@ public class Fachada implements IFachada{
     public void terminarPartida(Long idPartida){
 
 
-    }
-
-    public PartidaRepo getPartidaR() {
-      return partidaR;
-    }
-
-    public void setPartidaR(PartidaRepo partidaR) {
-      this.partidaR = partidaR;
-    }
-
-    public List<Partida> getPartidas() {
-      return partidas;
-    }
-
-    public void setPartidas(List<Partida> partidas) {
-      this.partidas = partidas;
     }
 
     

@@ -115,7 +115,13 @@ public class Partida {
         this.nombre = nombre;
     }
 
+    @Override
+    public String toString() {
+        return "Partida [equipos=" + equipos + ", idPartida=" + idPartida + ", mapa=" + mapa + ", modalidad="
+                + modalidad + ", nombre=" + nombre + ", password=" + password + ", publica=" + publica + "]";
+    }
 
+    
 
     
 
