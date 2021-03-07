@@ -14,6 +14,11 @@ var avion_2_Aliados;
 var avion_3_Aliados;
 var avion_4_Aliados;
 var bullets;
+var bulletsPotencias;
+var bulletsAliados;
+var bulletsArtilleriaPotencia;
+var bulletsArtilleriaAliados;
+var bulletsTorre;
 var distance
 var bullet;
 var difX; 
@@ -42,17 +47,16 @@ class Play extends Phaser.Scene {
         this.bullets;
     }
     create(){ 
-
+        //Se remueven escenas de menus anteriores
         this.scene.remove('MenuInicial');
         this.scene.remove('ElegirBando');
+
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
         this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
         this.mapa = this.add.image(433, 46, "mapa_6Claro").setOrigin(0).setScale(1);
-        this.mapaMask = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1);
-        //opacidad del mapa
-        //this.mapa.alpha = 0.4;
+        //this.mapaMask = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1);
         this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
         this.boton_6 = this.add.image(340, 425, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
         this.cargarBomba = this.add.image(45, 700, "cargarBomba").setOrigin(0).setScale(.3).setInteractive(); 
@@ -157,7 +161,9 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].setOffset(-250,-250);    
             artilleriasAliados.getChildren()[i].lastFired = 0; 
         }
-        //const plc = this.add.image(433, 46, "mapa_3").setOrigin(0).setScale(1);
+
+        /*
+        //Containers para los elementos que no podra ver el jugador y seran descubiertos al pasar por la mascara
         containerPotencias = this.add.container(0,0);
         containerAliados = this.add.container (0,0);
 
@@ -172,11 +178,8 @@ class Play extends Phaser.Scene {
                 this.contenedorAliados
             ]);
 
-            //containerPotencias.add (this.artilleriasAliados);
-            console.log('No me la conteiner');
-
             //Declaracion de la máscara que van a utilizar los aviones
-         
+            //Hay que crear una mascara por cada avion
             spotlight = this.make.sprite({
                 x: 500,
                 y: 500,
@@ -194,11 +197,9 @@ class Play extends Phaser.Scene {
             this.contenedorPotencias
         ]);
         console.log(containerAliados);
-        //containerPotencias.add (this.artilleriasPotencias);
-        console.log('No me la conteiner');
 
         //Declaracion de la máscara que van a utilizar los aviones
-     
+        //Hay que crear una mascara por cada avion
         spotlight = this.make.sprite({
             x: 500,
             y: 500,
@@ -207,39 +208,35 @@ class Play extends Phaser.Scene {
         });
         containerAliados.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
     }
+    */
         //Se llama a funcion que definira los aviones          
-        this.definicionAviones(); 
-        
-        
-        
-        /*this.input.on('pointermove', function(pointer) {
-            spotlight.x = pointer.x; //avion_1.x
-            spotlight.y = pointer.y; //avion_1.x
-        });*/
-        
+        this.definicionAviones();     
 
-        
-
+        //Se define el grupo de aviones Potencias para darle fisica y eventos 
         aviones = this.physics.add.group({
             key: 'avion',
             repeat: 4
         });
 
+        //Se define el grupo de circulos para aviones Potencias para darle fisica y eventos 
         circulo_aviones = this.physics.add.group({
             key: 'circulo',
             repeat: 4
         });
 
+         //Se define el grupo de aviones Aliados para darle fisica y eventos
         aviones_aliados = this.physics.add.group({
             key: 'avion',
             repeat: 4
         });
 
+        //Se define el grupo de circulos para aviones Aliados para darle fisica y eventos 
         circulo_aviones_aliados = this.physics.add.group({
             key: 'circulo',
             repeat: 4
         });
         
+        //Aniado a los grupos los aviones y circulos ya definidos
         aviones.getChildren()[0]=avion_1;
         aviones.getChildren()[1]=avion_2;
         aviones.getChildren()[2]=avion_3;
@@ -261,6 +258,7 @@ class Play extends Phaser.Scene {
         circulo_aviones_aliados.getChildren()[3]=this.circulo_8;  
 
         //Se realiza la asignacion entre los aviones recien definidos con los que maneja la clase Partida
+        //Esto necesario para el sincronizar
         config.Partida.avion_1 = avion_1;
         config.Partida.avion_2 = avion_2;
         config.Partida.avion_3 = avion_3;
@@ -281,9 +279,34 @@ class Play extends Phaser.Scene {
             maxSize: 1,
             runChildUpdate: true
         });
+        //bulletsPotencias, se define el grupo de balas que utilizaran los aviones Potencias
+        bulletsPotencias = this.add.group({
+            classType: Bullet,
+            maxSize: 1,
+            runChildUpdate: true
+        });
+        //bulletsAliados, se define el grupo de balas que utilizaran los aviones Aliados
+        bulletsAliados = this.add.group({
+            classType: Bullet,
+            maxSize: 1,
+            runChildUpdate: true
+        });
+         //bulletsArtilleria, se define el grupo de balas que utilizaran las artillerias Potencias
+        bulletsArtilleriaPotencia = this.add.group({
+            classType: Bullet,
+            maxSize: 1,
+            runChildUpdate: true
+        });
+         //bulletsArtilleriaAliados, se define el grupo de balas que utilizaran las artillerias Aliados
+         bulletsArtilleriaAliados = this.add.group({
+            classType: Bullet,
+            maxSize: 1,
+            runChildUpdate: true
+        });
         this.colisiones();     
     }
 
+    //funcion que carga las funcionalidades del tablero
     BotonesLaterales()
     {
         
@@ -432,6 +455,7 @@ class Play extends Phaser.Scene {
                 avion.setVisible(true);           
                 this.disparar(avion_1,avion)   
                 avion_1.lastFired = this.time + 500;
+                console.log('dsadasaaa');
             }
         }
         if (circulo==this.circulo_2 )
@@ -743,8 +767,7 @@ class Play extends Phaser.Scene {
     
     definicionAviones()
     {	
-        var velAvion = config.Partida.configuraciones.avionVelocidad;        
-                // Personaje
+        var velAvion = config.Partida.configuraciones.avionVelocidad;  
         avion_1 = new Avion({
             scene: this,
      /*       x: avionXInicial,
@@ -874,7 +897,7 @@ class Play extends Phaser.Scene {
         {            
             if (avion_1.focus==true){
                 avion_1.altitud='Alta'
-                avion_1.setScale(0.09);
+                avion_1.setScale(0.08);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -883,7 +906,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_2.focus==true){
                 avion_2.altitud='Alta'
-                avion_2.setScale(0.09);
+                avion_2.setScale(0.08);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -892,7 +915,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_3.focus==true){
                 avion_3.altitud='Alta'
-                avion_3.setScale(0.09);
+                avion_3.setScale(0.08);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -901,7 +924,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_4.focus==true){
                 avion_4.altitud='Alta'  
-                avion_4.setScale(0.09); 
+                avion_4.setScale(0.08); 
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -910,7 +933,7 @@ class Play extends Phaser.Scene {
             }   
             if (avion_1_Aliados.focus==true){
                 avion_1_Aliados.altitud='Alta'
-                avion_1_Aliados.setScale(0.09);
+                avion_1_Aliados.setScale(0.08);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -919,7 +942,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_2_Aliados.focus==true){
                 avion_2_Aliados.altitud='Alta'
-                avion_2_Aliados.setScale(0.09);
+                avion_2_Aliados.setScale(0.08);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -928,7 +951,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_3_Aliados.focus==true){
                 avion_3_Aliados.altitud='Alta'
-                avion_3_Aliados.setScale(0.09);
+                avion_3_Aliados.setScale(0.08);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -937,7 +960,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_4_Aliados.focus==true){
                 avion_4_Aliados.altitud='Alta'  
-                avion_4_Aliados.setScale(0.09); 
+                avion_4_Aliados.setScale(0.08); 
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -950,7 +973,7 @@ class Play extends Phaser.Scene {
         {            
             if (avion_1.focus==true){
                 avion_1.altitud='Baja'
-                avion_1.setScale(0.07);
+                avion_1.setScale(0.05);
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -959,7 +982,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_2.focus==true){
                 avion_2.altitud='Baja'
-                avion_2.setScale(0.07);
+                avion_2.setScale(0.05);
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -968,7 +991,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_3.focus==true){
                 avion_3.altitud='Baja'
-                avion_3.setScale(0.07);
+                avion_3.setScale(0.05);
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -977,7 +1000,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_4.focus==true){
                 avion_4.altitud='Baja'
-                avion_4.setScale(0.07);
+                avion_4.setScale(0.05);
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -986,7 +1009,7 @@ class Play extends Phaser.Scene {
             } 
             if (avion_1_Aliados.focus==true){
                 avion_1_Aliados.altitud='Baja'
-                avion_1_Aliados.setScale(0.07);
+                avion_1_Aliados.setScale(0.05);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -995,7 +1018,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_2_Aliados.focus==true){
                 avion_2_Aliados.altitud='Baja'
-                avion_2_Aliados.setScale(0.07);
+                avion_2_Aliados.setScale(0.05);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -1004,7 +1027,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_3_Aliados.focus==true){
                 avion_3_Aliados.altitud='Baja'
-                avion_3_Aliados.setScale(0.07);
+                avion_3_Aliados.setScale(0.05);
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -1013,7 +1036,7 @@ class Play extends Phaser.Scene {
             }
             if (avion_4_Aliados.focus==true){
                 avion_4_Aliados.altitud='Baja'  
-                avion_4_Aliados.setScale(0.07); 
+                avion_4_Aliados.setScale(0.05); 
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.boton_5.depth=100;
                 this.boton_6.depth=100;
@@ -1270,7 +1293,7 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
-        this.maskAvion(spotlight); //Llamado de la funcion de la máscara del avion
+       // this.maskAvion(spotlight); //Llamado de la funcion de la máscara del avion
         //Tiempo que se usa para las balas 
         this.time = time;
         if (config.Partida.Bando=='Potencias')
