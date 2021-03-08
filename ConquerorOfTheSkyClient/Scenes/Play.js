@@ -253,15 +253,6 @@ class Play extends Phaser.Scene {
         config.Partida.aviones[5] = avion_2_Aliados;
         config.Partida.aviones[6] = avion_3_Aliados;
         config.Partida.aviones[7] = avion_4_Aliados;
-
-       /* config.Partida.avion_1 = avion_1;
-        config.Partida.avion_2 = avion_2;
-        config.Partida.avion_3 = avion_3;
-        config.Partida.avion_4 = avion_4;
-        config.Partida.avion_1_Aliados = avion_1_Aliados;
-        config.Partida.avion_2_Aliados = avion_2_Aliados;
-        config.Partida.avion_3_Aliados = avion_3_Aliados;
-        config.Partida.avion_4_Aliados = avion_4_Aliados;*/
         
         this.BotonesLaterales();
         
@@ -310,15 +301,14 @@ class Play extends Phaser.Scene {
                 targets: this.cargarBomba1,
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
-                    
+                     
                     if (avion_1.focus==true)
                     {    
-                        avion_1.cargarBomba1=true;      
-                        this.cargarBomba1 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();                        
+                        avion_1.cargarbomba=true;      
+                        this.cargarBomba1 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();         
                         config.Partida.idavion=1;
                         avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: avion_1.xInicial, y: avion_1.yInicial});
-
                     }  
                     if (avion_2.focus==true)
                     {      
@@ -393,7 +383,7 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=1;
                         avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: avion_1.xInicial, y: avion_1.yInicial});
-                       this.volverBase1 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        this.volverBase1 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
                     }  
                     if (avion_2.focus==true)
                     {     
@@ -1280,10 +1270,10 @@ class Play extends Phaser.Scene {
         difY= Math.abs(avion.y - avion.yInicial);
 
         if (difX < 1.5 && difY < 1.5)
-        {      
-            avion.combustible = 2000;      
+        {   
+            avion.combustible = 2000;             
             if (avion.cargarbomba==true)
-            {
+            {               
                 avion.body.setVelocityY(0);
                 avion.body.setVelocityX(0);
                 avion.altitud='En base';
@@ -1291,7 +1281,7 @@ class Play extends Phaser.Scene {
                 avion.cargarbomba=false;
                 avion.tengobomba=true; 
                 avion.velocidad=avion.calcularVelocidad(velAvion);
-                this.cargarBomba = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
+                this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
             }
             if (avion.cargarCombustible==true)
             {
@@ -1299,9 +1289,8 @@ class Play extends Phaser.Scene {
                 avion.setScale(.05);
                 avion.body.setVelocityY(0);
                 avion.body.setVelocityX(0);
-                avion.cargarCombustible=false;
-                
-               this.volverBase = this.add.image(220, 545, "botonCombustible").setOrigin(0).setScale(.3).setInteractive();
+                avion.cargarCombustible=false;                
+                this.volverBase = this.add.image(220, 545, "botonCombustible").setOrigin(0).setScale(.3).setInteractive();
             }            
             return false;
         }
@@ -1389,6 +1378,7 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
+
         //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
         this.lightAvion();
         //Tiempo que se usa para las balas 
