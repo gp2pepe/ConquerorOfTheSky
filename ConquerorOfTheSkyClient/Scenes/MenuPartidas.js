@@ -31,7 +31,6 @@ class MenuPartidas extends Phaser.Scene
         var ejeX = 450;
         var ejeY = 300;
         this.add.image(150, 150, "menupartidas_2").setOrigin(0).setScale(0.3);
-
        
         console.log('Aca abajo tendría que estar todo');
         //config.Partida.listarPartidas();

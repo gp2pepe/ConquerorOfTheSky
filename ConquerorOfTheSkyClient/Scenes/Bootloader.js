@@ -65,7 +65,9 @@ class Bootloader extends Phaser.Scene {
             'panelAvion3Rojo',
             'panelAvion4Rojo',
             'panelBase',
-            
+            'mostrarRango',
+            'nick',
+
              'menupartidas',
              'menupartidas_2',
              'nubeslateral',
@@ -75,6 +77,7 @@ class Bootloader extends Phaser.Scene {
             'wall1',
             'wall2',
             'seleccioncarac',
+            'seleccionBando',
             'fondoendgame',
             'pruebaEndGame',
             'imagenWinGame2estrellas',

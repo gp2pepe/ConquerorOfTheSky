@@ -30,6 +30,8 @@ class MenuBando extends Phaser.Scene
         this.add.image(650,50, 'seleccioncarac').setOrigin(0);
         this.textBox = this.add.image(750,140, 'textBox').setOrigin(0).setScale(0.5);
         this.text = this.add.text(800, 160, 'Click para ingresar nombre', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
+        
+    
         this.text.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.text,
@@ -64,12 +66,80 @@ class MenuBando extends Phaser.Scene
             }
         });
         
-        //this.add.text(690, 520, 'Potencias Centrales', { font: '18px Arial', fill: '#0095DD' }).setScale(1.5).setInteractive();
-        this.textoPotencias = this.add.image(600, 520, 'potenciasCentrales').setOrigin(0).setScale(0.5).setInteractive();
+       this.textoPotencias = this.add.image(600, 520, 'potenciasCentrales').setOrigin(0).setScale(0.5).setInteractive();
         this.textoAliados = this.add.image(920, 520, 'Aliados').setOrigin(0).setScale(0.5).setInteractive();
         var bandoElegido ; 
 
-        // Cuando hace click en Potencias Centrales
+       this.selecBando = this.add.image(670, 330, "seleccionBando").setOrigin(0).setScale(0.85).setInteractive();
+       this.selecBando.inputEnabled = true;
+       this.selecBando.alpha = 0.1;
+       this.selecBando.on(Phaser.Input.Events.POINTER_OVER, () => {
+        this.add.tween({
+            targets: this.selecBando,
+            ease: 'Bounce.easeIn',
+            onComplete: () => {
+                this.selecBando.alpha = 0.8;
+                this.textoPotencias.depth = 100;
+            }
+        });
+
+        this.add.tween({
+            targets: [ this.pointsText, this.bestPointsText ],                
+            y: 400,
+            duration: 1000
+        });
+    });
+    this.selecBando.on(Phaser.Input.Events.POINTER_OUT, () => {
+        this.add.tween({
+            targets: this.selecBando,
+            ease: 'Bounce.easeIn',
+            onComplete: () => {
+                this.selecBando.alpha = 0.1;
+            }
+        });
+
+        this.add.tween({
+            targets: [ this.pointsText, this.bestPointsText ],                
+            y: 400,
+            duration: 1000
+        });
+    });
+    this.selecBando2 = this.add.image(945, 290, "seleccionBando").setOrigin(0).setScale(1.05).setInteractive();
+       this.selecBando2.inputEnabled = true;
+       this.selecBando2.alpha = 0.1;
+       this.selecBando2.on(Phaser.Input.Events.POINTER_OVER, () => {
+        this.add.tween({
+            targets: this.selecBando2,
+            ease: 'Bounce.easeIn',
+            onComplete: () => {
+                this.selecBando2.alpha = 0.8;
+                this.textoAliados.depth = 100;
+            }
+        });
+
+        this.add.tween({
+            targets: [ this.pointsText, this.bestPointsText ],                
+            y: 400,
+            duration: 1000
+        });
+    });
+    this.selecBando2.on(Phaser.Input.Events.POINTER_OUT, () => {
+        this.add.tween({
+            targets: this.selecBando2,
+            ease: 'Bounce.easeIn',
+            onComplete: () => {
+                this.selecBando2.alpha = 0.1;
+            }
+        });
+
+        this.add.tween({
+            targets: [ this.pointsText, this.bestPointsText ],                
+            y: 400,
+            duration: 1000
+        });
+    });
+       
+       // Cuando hace click en Potencias Centrales
         this.textoPotencias.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.textoPotencias,
@@ -78,6 +148,21 @@ class MenuBando extends Phaser.Scene
                 duration: 1000,
                 onComplete: () => {
                     bandoElegido = "Potencias";
+                }
+            });
+
+            this.add.tween({
+                targets: [ this.pointsText, this.bestPointsText ],                
+                y: 400,
+                duration: 1000
+            });
+        });
+        this.textoPotencias.on(Phaser.Input.Events.POINTER_OVER, () => {
+            this.add.tween({
+                targets: this.textoPotencias,
+                ease: 'Bounce.easeIn',
+                onComplete: () => {
+                    this.selecBando.alpha = 0.8;
                 }
             });
 
@@ -106,6 +191,23 @@ class MenuBando extends Phaser.Scene
                 duration: 1000
             });
         });
+        
+        this.textoAliados.on(Phaser.Input.Events.POINTER_OVER, () => {
+            this.add.tween({
+                targets: this.textoAliados,
+                ease: 'Bounce.easeIn',
+                onComplete: () => {
+                    this.selecBando2.alpha = 0.8;
+                }
+            });
+
+            this.add.tween({
+                targets: [ this.pointsText, this.bestPointsText ],                
+                y: 400,
+                duration: 1000
+            });
+        });
+
         var alerta = this.add.text(700, 900, '', { font: 'bold 48px Courier', fill: '#080808' });
         this.crearNuevaPartida = this.add.image(780, 950, 'crearPartida').setOrigin(0).setScale(0.5).setInteractive();
         this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
@@ -132,7 +234,8 @@ class MenuBando extends Phaser.Scene
             this.scene.start('Play');
         }
 
-    }
+
+        }
 
 
 }
