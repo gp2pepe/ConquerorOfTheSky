@@ -60,8 +60,15 @@ class Play extends Phaser.Scene {
         //this.mapaMask = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1);
         this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
         this.boton_6 = this.add.image(340, 425, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
-        this.cargarBomba = this.add.image(45, 700, "cargarBomba").setOrigin(0).setScale(.3).setInteractive(); 
-        this.volverBase = this.add.image(45, 800, "cargarCombustible").setOrigin(0).setScale(.3).setInteractive();
+        this.panelAvion1 = this.add.image(45, 500, "panelAvion1").setOrigin(0).setScale(.3).setInteractive();
+        this.panelAvion2 = this.add.image(45, 595, "panelAvion2").setOrigin(0).setScale(.3).setInteractive();
+        this.panelAvion3 = this.add.image(45, 690, "panelAvion3").setOrigin(0).setScale(.3).setInteractive();
+        this.panelAvion4 = this.add.image(45, 785, "panelAvion4").setOrigin(0).setScale(.3).setInteractive();
+        this.panelBase = this.add.image(45, 890, "panelBase").setOrigin(0).setScale(.3).setInteractive();
+
+        
+        this.cargarBomba = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
+        this.volverBase = this.add.image(220, 545, "botonCombustible").setOrigin(0).setScale(.3).setInteractive();
 
         this.boton_5.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
@@ -330,7 +337,8 @@ class Play extends Phaser.Scene {
                     
                     if (avion_1.focus==true)
                     {    
-                        avion_1.cargarbomba=true;                             
+                        avion_1.cargarbomba=true;      
+                        this.cargarBomba = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();                        
                         config.Partida.idavion=1;
                         avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: avion_1.xInicial, y: avion_1.yInicial});
@@ -409,6 +417,7 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=1;
                         avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: avion_1.xInicial, y: avion_1.yInicial});
+                       this.volverBase = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
                     }  
                     if (avion_2.focus==true)
                     {     
@@ -1055,6 +1064,13 @@ class Play extends Phaser.Scene {
                     avion_2.focus=false;
                     avion_3.focus=false;
                     avion_4.focus=false;
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvion1Rojo").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvion2").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvion3").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvion4").setOrigin(0).setScale(.3).setInteractive();
+                     this.cargarBomba.depth=100; 
+                    this.volverBase.depth=100;
+
                 }
                 if (evento.key==='2')  
                 {    
@@ -1062,6 +1078,12 @@ class Play extends Phaser.Scene {
                     avion_1.focus=false;
                     avion_3.focus=false;
                     avion_4.focus=false;
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvion1").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvion2Rojo").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvion3").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvion4").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba.depth=100; 
+                    this.volverBase.depth=100;
                 }
                 if (evento.key==='3')  
                 {    
@@ -1069,6 +1091,12 @@ class Play extends Phaser.Scene {
                     avion_1.focus=false;
                     avion_2.focus=false;
                     avion_4.focus=false;
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvion1").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvion2").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvion3Rojo").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvion4").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba.depth=100; 
+                    this.volverBase.depth=100;
                 }
                 if (evento.key==='4')  
                 {    
@@ -1076,6 +1104,12 @@ class Play extends Phaser.Scene {
                     avion_1.focus=false;
                     avion_2.focus=false;
                     avion_3.focus=false;
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvion1").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvion2").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvion3").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvion4Rojo").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba.depth=100; 
+                    this.volverBase.depth=100;
                 }                        
             } 
             else
@@ -1086,6 +1120,12 @@ class Play extends Phaser.Scene {
                     avion_2_Aliados.focus=false;
                     avion_3_Aliados.focus=false;
                     avion_4_Aliados.focus=false;
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvion1Rojo").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvion2").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvion3").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvion4").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba.depth=100; 
+                    this.volverBase.depth=100;
                 }
                 if (evento.key==='2')  
                 {    
@@ -1093,13 +1133,26 @@ class Play extends Phaser.Scene {
                     avion_2_Aliados.focus=true;
                     avion_3_Aliados.focus=false;
                     avion_4_Aliados.focus=false;
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvion1").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvion2Rojo").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvion3").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvion4").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba.depth=100; 
+                    this.volverBase.depth=100;
                 }
                 if (evento.key==='3')  
                 {    
                     avion_1_Aliados.focus=false;
                     avion_2_Aliados.focus=false;
                     avion_3_Aliados.focus=true;
-                    avion_4_Aliados.focus=false;
+                    avion_4_Aliados.focus=false; 
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvion1").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvion2").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvion3Rojo").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvion4").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba.depth=100; 
+                    this.volverBase.depth=100;
+                    
                 }
                 if (evento.key==='4')  
                 {    
@@ -1107,6 +1160,12 @@ class Play extends Phaser.Scene {
                     avion_2_Aliados.focus=false;
                     avion_3_Aliados.focus=false;
                     avion_4_Aliados.focus=true;
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvion1").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvion2").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvion3").setOrigin(0).setScale(.3).setInteractive();
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvion4Rojo").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba.depth=100; 
+                    this.volverBase.depth=100;
                 }   
             }
         });
@@ -1201,6 +1260,7 @@ class Play extends Phaser.Scene {
                 avion.cargarbomba=false;
                 avion.tengobomba=true; 
                 avion.velocidad=avion.calcularVelocidad(velAvion);
+                this.cargarBomba = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
             }
             if (avion.cargarCombustible==true)
             {
@@ -1209,6 +1269,8 @@ class Play extends Phaser.Scene {
                 avion.body.setVelocityY(0);
                 avion.body.setVelocityX(0);
                 avion.cargarCombustible=false;
+                
+               this.volverBase = this.add.image(220, 545, "botonCombustible").setOrigin(0).setScale(.3).setInteractive();
             }            
             return false;
         }
