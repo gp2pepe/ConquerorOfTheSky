@@ -35,9 +35,16 @@ var aviones_aliados;
 var circulo_aviones_aliados;
 var circulo_aviones;
 var spotlight;
+var spotlight2;
 var containerAliados;
 var containerPotencias;
+var containerPotencias2;
 var velAvion;
+var pruebaMascara;
+var light1;
+var light2;
+var light3;
+var light4;
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -56,8 +63,12 @@ class Play extends Phaser.Scene {
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
         this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
         this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-        this.mapa = this.add.image(433, 46, "mapa_6Claro").setOrigin(0).setScale(1);
-        //this.mapaMask = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1);
+        //this.mapa = this.add.image(433, 46, "mapa_6Claro").setOrigin(0).setScale(1);
+       
+        this.mapaMask = this.add.image(433, 46, "mapa_6").setOrigin(0).setScale(1);
+        
+
+
         this.boton_5 = this.add.image(290, 425, "boton_1").setOrigin(0).setScale(.1).setInteractive(); 
         this.boton_6 = this.add.image(340, 425, "boton_2").setOrigin(0).setScale(.1).setInteractive(); 
         this.cargarBomba = this.add.image(45, 700, "cargarBomba").setOrigin(0).setScale(.3).setInteractive(); 
@@ -164,13 +175,15 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].lastFired = 0; 
         }
 
-        /*
-        //Containers para los elementos que no podra ver el jugador y seran descubiertos al pasar por la mascara
-        containerPotencias = this.add.container(0,0);
-        containerAliados = this.add.container (0,0);
+        
 
+        //Containers para los elementos que no podra ver el jugador y seran descubiertos al pasar por la mascara
+        //containerPotencias = this.add.container(0,0);
+        //containerPotencias2 = this.add.container(0,0);
+        //containerAliados = this.add.container (0,0);
+        
     // Creo la mascara con su contenedor dependiendo del bando
-    if (config.Partida.Bando=='Potencias')
+    /*if (config.Partida.Bando=='Potencias')
     {
             containerPotencias.add([
                 this.mapa,
@@ -182,13 +195,30 @@ class Play extends Phaser.Scene {
 
             //Declaracion de la máscara que van a utilizar los aviones
             //Hay que crear una mascara por cada avion
-            spotlight = this.make.sprite({
+            spotlight= this.make.sprite({
                 x: 500,
-                y: 500,
+                y: 200,
                 key: 'mask',
                 add: false
             });
+
+
+
+            spotlight2 = this.make.sprite({
+                x: 500,
+                y: 400,
+                key: 'mask2',
+                add: false
+            }); 
+
+           
+            pruebaMascara = new Phaser.Display.Masks.BitmapMask(this, spotlight);
+            containerPotencias.mask = pruebaMascara;
             containerPotencias.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
+            //containerPotencias.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight2);
+            
+            
+            
     }
     else
     {
@@ -209,11 +239,29 @@ class Play extends Phaser.Scene {
             add: false
         });
         containerAliados.mask = new Phaser.Display.Masks.BitmapMask(this, spotlight);
-    }
-    */
+    }*/
+    
         //Se llama a funcion que definira los aviones          
-        this.definicionAviones();     
-
+        this.definicionAviones();   
+        this.mapaMask.setPipeline('Light2D');
+        if (config.Partida.Bando == 'Potencias')
+        {
+            light1 = this.lights.addLight(500, 200, 100).setIntensity(10);
+            light2 = this.lights.addLight(500, 400, 100).setIntensity(10);
+            light3 = this.lights.addLight(500, 600, 100).setIntensity(10);
+            light4 = this.lights.addLight(500, 800, 100).setIntensity(10);
+            this.lights.enable();
+            this.lights.setAmbientColor(0xF3F3F3);  
+        }
+        else
+        {
+            light1 = this.lights.addLight(1500, 200, 100).setIntensity(10);
+            light2 = this.lights.addLight(1500, 400, 100).setIntensity(10);
+            light3 = this.lights.addLight(1500, 600, 100).setIntensity(10);
+            light4 = this.lights.addLight(1500, 800, 100).setIntensity(10);
+            this.lights.enable();
+            this.lights.setAmbientColor(0xF3F3F3);  
+        }
         //Se define el grupo de aviones Potencias para darle fisica y eventos 
         aviones = this.physics.add.group({
             key: 'avion',
@@ -1119,59 +1167,96 @@ class Play extends Phaser.Scene {
 
     // Funcion que recibe por parametro el Sprite usado para la máscara, que va a seguir al avion
     // dependiendo de si se está moviendo y ademas está enfocado.
-    maskAvion(Sprite)
+    lightAvion()
+    {
+        if (config.Partida.Bando=='Potencias')
+        {
+            if (this.EstaMoviendose(avion_1))
+            {
+                light1.x = avion_1.x;
+                light1.y = avion_1.y;
+            } 
+            if (this.EstaMoviendose(avion_2))
+            {
+                light2.x = avion_2.x;
+                light2.y = avion_2.y;
+            }  
+            if (this.EstaMoviendose(avion_3))
+            {
+                light3.x = avion_3.x;
+                light3.y = avion_3.y;
+            } 
+            if (this.EstaMoviendose(avion_4))
+            {
+                light4.x = avion_4.x;
+                light4.y = avion_4.y;
+            }            
+        }
+        else
+        {
+            if (this.EstaMoviendose(avion_1_Aliados))
+            {
+                light1.x = avion_1_Aliados.x;
+                light1.y = avion_1_Aliados.y;
+            } 
+            if (this.EstaMoviendose(avion_2_Aliados))
+            {
+                light2.x = avion_2_Aliados.x;
+                light2.y = avion_2_Aliados.y;
+            } 
+            if (this.EstaMoviendose(avion_3_Aliados))
+            {
+                light3.x = avion_3_Aliados.x;
+                light3.y = avion_3_Aliados.y;
+            }
+            if (this.EstaMoviendose(avion_4_Aliados))
+            {
+                light4.x = avion_4_Aliados.x;
+                light4.y = avion_4_Aliados.y;
+            }  
+        }
+    }
+
+    maskAvion1(Sprite)
     {   
         if (config.Partida.Bando=='Potencias')
         {
-            if (avion_1.focus == true && this.EstaMoviendose(avion_1))
+            if (this.EstaMoviendose(avion_1))
             {
                 console.log('mask de avion1');
                 Sprite.x = avion_1.x;
                 Sprite.y = avion_1.y;
-            }
-            if (avion_2.focus == true && this.EstaMoviendose(avion_2))
-            {
-                console.log('mask de avion2');
-                Sprite.x = avion_2.x; 
-                Sprite.y = avion_2.y; 
-            }
-            if (avion_3.focus == true && this.EstaMoviendose(avion_3))
-            {
-                console.log('mask de avion3');
-                Sprite.x = avion_3.x; 
-                Sprite.y = avion_3.y; 
-            }
-            if (avion_4.focus == true && this.EstaMoviendose(avion_2))
-            {
-                console.log('mask de avion4');
-                Sprite.x = avion_4.x; 
-                Sprite.y = avion_4.y; 
-            }
+            }       
         }
         else
         {
-            if (avion_1_Aliados.focus == true && this.EstaMoviendose(avion_1_Aliados))
+            if (this.EstaMoviendose(avion_1_Aliados))
             {
                 Sprite.x = avion_1_Aliados.x;
                 Sprite.y = avion_1_Aliados.y;
             }
-            if (avion_2_Aliados.focus == true && this.EstaMoviendose(avion_2_Aliados))
+        }    
+    }
+
+    maskAvion2(Sprite)
+    {   
+        if (config.Partida.Bando=='Potencias')
+        {
+            if (this.EstaMoviendose(avion_2))
+            {
+                console.log('mask de avion1');
+                Sprite.x = avion_2.x;
+                Sprite.y = avion_2.y;
+            }       
+        }
+        else
+        {
+            if (this.EstaMoviendose(avion_2_Aliados))
             {
                 Sprite.x = avion_2_Aliados.x;
                 Sprite.y = avion_2_Aliados.y;
             }
-            if (avion_3_Aliados.focus == true && this.EstaMoviendose(avion_3_Aliados))
-            {
-                Sprite.x = avion_3_Aliados.x;
-                Sprite.y = avion_3_Aliados.y;
-            }
-            if (avion_4_Aliados.focus == true && this.EstaMoviendose(avion_4_Aliados))
-            {
-                Sprite.x = avion_4_Aliados.x;
-                Sprite.y = avion_4_Aliados.y;
-            }
-        }
-
+        }    
     }
 
     EstaMoviendose(avion)
@@ -1285,7 +1370,10 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
-       // this.maskAvion(spotlight); //Llamado de la funcion de la máscara del avion
+        this.lightAvion();
+        //light.x = avion_2.x;
+        //light.y = avion_2.y;
+        //this.maskAvion1(spotlight); //Llamado de la funcion de la máscara del avion
         //Tiempo que se usa para las balas 
         this.time = time;
         if (config.Partida.Bando=='Potencias')
