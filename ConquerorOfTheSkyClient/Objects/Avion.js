@@ -1,4 +1,5 @@
 import Play from '../Scenes/Play.js';
+import { config } from '../lib/main.js';
 
 class Avion extends Phaser.GameObjects.Sprite {
 	
@@ -37,8 +38,25 @@ class Avion extends Phaser.GameObjects.Sprite {
 		this.setVisible(true);
     }
 
-    calcularVelocidad(velocidad)
+    cambiarAltitud(altitud){
+        this.altitud=altitud
+        if(altitud=='Alta'){
+            this.setScale(0.08);
+            this.velocidad = this.calcularVelocidad();
+            var angle = this.rotation;	
+            this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);        
+        }else{
+            this.setScale(0.05);
+            this.velocidad = this.calcularVelocidad();
+            var angle = this.rotation;	
+            this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+        }
+    }
+
+
+    calcularVelocidad()
     {
+        var velocidad = config.Partida.configuraciones.avionVelocidad
         if (this.altitud == "Baja")
             if (this.tengobomba)
                 return velocidad/2;
