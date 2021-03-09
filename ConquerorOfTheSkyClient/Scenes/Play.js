@@ -131,6 +131,13 @@ class Play extends Phaser.Scene {
         this.physics.world.enable(this.torrePotencias);        
 		this.torrePotencias.body.setCollideWorldBounds(true);
         this.torrePotencias.body.setSize(300,900);
+        this.torrePotencias.lastFired=0;
+
+        this.circulo_torrePotencias = this.add.image(this.torrePotencias.x,this.torrePotencias.y,'circuloAvion').setScale(1.5);
+        this.circulo_torrePotencias.setVisible(false);
+        this.physics.world.enable(this.circulo_torrePotencias);
+        this.circulo_torrePotencias.body.setCircle(50); 
+               
 
         this.depositoPotencias.vida= config.Partida.configuraciones.depositoExplosivosSalud;
         this.physics.world.enable(this.depositoPotencias);        
@@ -143,7 +150,7 @@ class Play extends Phaser.Scene {
         if(campoPotencias.posicionY > 540)
             avionYInicial = campoPotencias.base.posicionY -120;
          else
-          avionYInicial  = campoPotencias.base.posicionY + 120;
+            avionYInicial  = campoPotencias.base.posicionY + 120;
         
         //Defino las artillerias de las Potencias
         artilleriasPotencias = this.physics.add.group({
@@ -180,6 +187,12 @@ class Play extends Phaser.Scene {
         this.physics.world.enable(this.torreAliados);        
 		this.torreAliados.body.setCollideWorldBounds(true);
         this.torreAliados.body.setSize(300,900);
+        this.torreAliados.lastFired=0;
+        
+        this.circulo_torreAliados = this.add.image(this.torreAliados.x,this.torreAliados.y,'circuloAvion').setScale(1.5);
+        this.circulo_torreAliados.setVisible(false);
+        this.physics.world.enable(this.circulo_torreAliados);
+        this.circulo_torreAliados.body.setCircle(50); 
 
         this.depositoAliados.vida= config.Partida.configuraciones.depositoExplosivosSalud;
         this.physics.world.enable(this.depositoAliados);        
@@ -726,12 +739,62 @@ class Play extends Phaser.Scene {
         bullet = bullets.get();     
         bullet.fire( avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});         
     }
+
+    colision_torre_aviones(Bullet, avion_A_pegar)
+    {                
+        //Colisiones entre la torre y avion que colisiono con el rango visible
+        if (avion_A_pegar.activarColision==1)
+        {            
+            var Hit = Phaser.Math.Between(1,2);
+            if (Hit == 1 ){
+                energyBar.x-=1;
+                avion_A_pegar.vidaAvion-=10; 
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_A_pegar.idavion, vida:avion_A_pegar.vidaAvion});                    
+            }  
+            avion_A_pegar.activarColision=0; 
+            console.log("vida avion: "+avion_A_pegar.vidaAvion);               
+        }
+    }
+
+     //Evento  llamado al disparar automaticamente artilleria
+     colision_torre_avion(circulo,avion_A_pegar)
+     {                 
+        //Se pasa el avion que esta en focus 
+        bullet = bullets.get();
+        if (bullet)
+        {                
+            if (config.Partida.Bando=='Potencias')
+            { 
+                if (this.time > this.torreAliados.lastFired)
+                {  
+                    avion_A_pegar.activarColision=1;
+                    bullet.fireArtilleria(this.torreAliados,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
+                    this.physics.add.overlap(bullet, avion_A_pegar, this.colision_torre_aviones, null, this);   
+                    this.torreAliados.lastFired  = this.time + 2000;     
+                }
+            }  
+            else   
+            {
+                
+                if (this.time > this.torrePotencias.lastFired)
+                {     
+                         
+                    avion_A_pegar.activarColision=1;
+                    bullet.fireArtilleria(this.torrePotencias,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
+                    this.physics.add.overlap(bullet, avion_A_pegar, this.colision_torre_aviones, null, this);   
+                    this.torrePotencias.lastFired  = this.time + 2000;     
+                }
+            }  
+        }         
+     }
     
     colisiones()
     { 
         //Colisiones generales, artilleria, torre de control , balas y aviones
         this.physics.add.overlap(artilleriasAliados,aviones, this.dispararArtilleria, null, this);
         this.physics.add.overlap(artilleriasPotencias, aviones_aliados, this.dispararArtilleria, null, this);
+        this.physics.add.overlap(this.circulo_torreAliados, aviones, this.colision_torre_avion, null, this); 
+        this.physics.add.overlap(this.circulo_torrePotencias, aviones_aliados, this.colision_torre_avion, null, this); 
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor);       
 
@@ -739,6 +802,7 @@ class Play extends Phaser.Scene {
         { 
             this.physics.add.overlap(circulo_aviones, aviones_aliados, this.Colision_Aviones, null, this);  
             this.physics.add.overlap(bullets, aviones_aliados, this.colision_bala_avion, null, this); 
+            
             //deposito
             this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_chico, ()=>
             {   
