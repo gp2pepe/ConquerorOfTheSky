@@ -787,12 +787,16 @@ class Play extends Phaser.Scene {
             }  
         }         
      }
+     
     choqueAviones(avion_potencia,avion_aliado)
     {
-        avion_potencia.vidaAvion= 0;
-        avion_aliado.vidaAvion= 0;
-        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:avion_potencia.vidaAvion});                    
-        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:avion_aliado.vidaAvion});  
+        if (avion_potencia.altitud = avion_aliado.altitud)
+        {
+            avion_potencia.vidaAvion= 0;
+            avion_aliado.vidaAvion= 0;
+            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:avion_potencia.vidaAvion});                    
+            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:avion_aliado.vidaAvion});
+        }     
     }
 
     colisiones()
