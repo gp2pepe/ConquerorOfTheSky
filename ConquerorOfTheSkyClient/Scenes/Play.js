@@ -324,7 +324,7 @@ class Play extends Phaser.Scene {
         //Bullets, se define el grupo de balas que utilizaran los aviones
         bullets = this.add.group({
             classType: Bullet,
-            maxSize: 4,
+            maxSize: 10,
             runChildUpdate: true
         });
         //bulletsPotencias, se define el grupo de balas que utilizaran los aviones Potencias
@@ -807,19 +807,20 @@ class Play extends Phaser.Scene {
                     avion_A_pegar.activarColision=1;
                     bullet.fireArtilleria(this.torreAliados,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
                     this.physics.add.overlap(bullet, avion_A_pegar, this.colision_torre_aviones, null, this);   
-                    this.torreAliados.lastFired  = this.time + 2000;     
+                    this.torreAliados.lastFired  = this.time + 2000;   
+                    this.torreAliados.setVisible(true);
                 }
             }  
             else   
-            {
-                
+            {                
                 if (this.time > this.torrePotencias.lastFired)
                 {     
                          
                     avion_A_pegar.activarColision=1;
                     bullet.fireArtilleria(this.torrePotencias,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
                     this.physics.add.overlap(bullet, avion_A_pegar, this.colision_torre_aviones, null, this);   
-                    this.torrePotencias.lastFired  = this.time + 2000;     
+                    this.torrePotencias.lastFired  = this.time + 2000;  
+                    this.torrePotencias.setVisible(true);   
                 }
             }  
         }         
@@ -836,6 +837,31 @@ class Play extends Phaser.Scene {
         }     
     }
 
+    colision_aviones_deposito(circulo,objeto)
+    {        
+        if (config.Partida.Bando=='Potencias')
+        { 
+            this.depositoAliados.setVisible(true);
+        }  
+        else   
+        {                
+            this.depositoPotencias.setVisible(true);
+        } 
+    }
+
+    colision_aviones_contenedor(circulo,objeto)
+    {        
+        if (config.Partida.Bando=='Potencias')
+        { 
+            this.contenedorAliados.setVisible(true);
+        }  
+        else   
+        {                
+            this.contenedorPotencias.setVisible(true);
+        } 
+    }
+
+
     colisiones()
     { 
         //Colisiones generales, artilleria, torre de control , balas y aviones
@@ -843,9 +869,18 @@ class Play extends Phaser.Scene {
         this.physics.add.overlap(artilleriasPotencias, aviones_aliados, this.dispararArtilleria, null, this);
         this.physics.add.overlap(this.circulo_torreAliados, aviones, this.colision_torre_avion, null, this); 
         this.physics.add.overlap(this.circulo_torrePotencias, aviones_aliados, this.colision_torre_avion, null, this); 
-        this.physics.add.overlap(aviones, aviones_aliados, this.choqueAviones, null, this); 
+        
+        this.physics.add.overlap(aviones, aviones_aliados, this.choqueAviones, null, this);
+        
+        this.physics.add.overlap(circulo_aviones, this.depositoAliados, this.colision_aviones_deposito, null, this); 
+        this.physics.add.overlap(circulo_aviones_aliados, this.depositoPotencias, this.colision_aviones_deposito, null, this); 
+
+        this.physics.add.overlap(circulo_aviones, this.contenedorAliados, this.colision_aviones_contenedor, null, this); 
+        this.physics.add.overlap(circulo_aviones_aliados, this.contenedorPotencias, this.colision_aviones_contenedor, null, this); 
+        
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor);       
+
 
         if (config.Partida.Bando=='Potencias')
         { 
@@ -855,11 +890,14 @@ class Play extends Phaser.Scene {
             //deposito
             this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_chico, ()=>
             {   
-                this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_chico.danio;
-                this.circulo_bomba_chico.setPosition(1, 1);
-                console.log('chica:'+this.depositoAliados.vida);
-                if (this.depositoAliados.vida < 0)
-                    console.log('sin deposito ');
+                if (config.Partida.Bando=='Potencias')
+                { 
+                    this.depositoAliados.setVisible(true);
+                }  
+                else   
+                {                
+                    this.depositoPotencias.setVisible(true);
+                } 
             });
 
             this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_grande, ()=>
@@ -949,7 +987,7 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(this.contenedorPotencias,this.circulo_bomba_chico, ()=>
             {   
                 this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_chico.danio;
-                this.circulo_bomba_chico.setPosition(1, 1);
+                this.circulo_bomba_chico.setPosition(1, 1);                
                 console.log('contendor - chica:'+this.contenedorPotencias.vida);
                 if (this.contenedorPotencias.vida < 0)
                     console.log('sin contenedor');
@@ -1056,7 +1094,8 @@ class Play extends Phaser.Scene {
          //Se pasa el avion que esta en focus 
          bullet = bulletsArtilleriaAliados.get();
          if (bullet)
-         {            
+         {           
+            artilleria_focus.setVisible(true);
             if (this.time > artilleria_focus.lastFired)
             {                 
                 avion_A_pegar.activarColision=1;
@@ -1883,14 +1922,34 @@ class Play extends Phaser.Scene {
             avion_1_Aliados.setVisible(false);
             avion_2_Aliados.setVisible(false);
             avion_3_Aliados.setVisible(false);
-            avion_4_Aliados.setVisible(false);            
+            avion_4_Aliados.setVisible(false);     
+            this.torreAliados.setVisible(false);  
+            this.contenedorAliados.setVisible(false); 
+            this.depositoAliados.setVisible(false); 
+            this.circulo_5.setVisible(false);   
+            this.circulo_6.setVisible(false);  
+            this.circulo_7.setVisible(false);  
+            this.circulo_8.setVisible(false);   
+            for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
+                artilleriasAliados.getChildren()[i].setVisible(false);
+            }            
         }
         else
         {
+            for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
+                artilleriasPotencias.getChildren()[i].setVisible(false);
+            }
             avion_1.setVisible(false);
             avion_2.setVisible(false);
             avion_3.setVisible(false);
-            avion_4.setVisible(false);            
+            avion_4.setVisible(false); 
+            this.torrePotencias.setVisible(false);  
+            this.contenedorPotencias.setVisible(false); 
+            this.depositoPotencias.setVisible(false); 
+            this.circulo_1.setVisible(false);   
+            this.circulo_2.setVisible(false);  
+            this.circulo_3.setVisible(false);  
+            this.circulo_4.setVisible(false);         
         }
            
     }
@@ -2105,7 +2164,7 @@ class Play extends Phaser.Scene {
     }
 
     //Funcion para controlar la visibilidad de los aviones cuando entran en el rango visible de otro avion
-    MostrarOcultarAvion(avion)
+    MostrarOcultar(avion)
     {        
         var dx;
         var dy;        
@@ -2188,8 +2247,7 @@ class Play extends Phaser.Scene {
         this.lightAvionSinBomba(); // Cambio de color al avion sin bomba
         this.lightAvionConBomba(); // cambio de color al avion con bomba
         //Tiempo que se usa para las balas 
-        this.time = time;
-        console.log(avion_1.altitud);
+        this.time = time;        
         if (this.EstaMoviendose(avion_1) && time>timeNafta)
         {                
             if(avion_1.combustible!=0)
@@ -2278,31 +2336,59 @@ class Play extends Phaser.Scene {
         //Dependiendo el bando del jugaddor controla la visibilidad de los aviones enemigos al entrar en el campo visual de algun avion del jugador
         if (config.Partida.Bando=='Aliados')
         {           
-            if (!this.MostrarOcultarAvion(avion_1)) 
+            if (!this.MostrarOcultar(avion_1)) 
                 avion_1.setVisible(false);  
 
-            if (!this.MostrarOcultarAvion(avion_2)) 
+            if (!this.MostrarOcultar(avion_2)) 
                 avion_2.setVisible(false); 
 
-            if (!this.MostrarOcultarAvion(avion_3)) 
+            if (!this.MostrarOcultar(avion_3)) 
                 avion_3.setVisible(false);  
 
-            if (!this.MostrarOcultarAvion(avion_4)) 
+            if (!this.MostrarOcultar(avion_4)) 
                 avion_4.setVisible(false);
+
+            if (!this.MostrarOcultar(this.torrePotencias)) 
+                this.torrePotencias.setVisible(false);
+
+            if (!this.MostrarOcultar(this.contenedorPotencias)) 
+                this.contenedorPotencias.setVisible(false);
+
+            if (!this.MostrarOcultar(this.depositoPotencias)) 
+                this.depositoPotencias.setVisible(false);
+
+            for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
+                if (!this.MostrarOcultar(artilleriasPotencias.getChildren()[i])) 
+                    artilleriasPotencias.getChildren()[i].setVisible(false);  
+            }
         }
         else
         {            
-            if (!this.MostrarOcultarAvion(avion_1_Aliados)) 
+            if (!this.MostrarOcultar(avion_1_Aliados)) 
                 avion_1_Aliados.setVisible(false);  
 
-            if (!this.MostrarOcultarAvion(avion_2_Aliados)) 
+            if (!this.MostrarOcultar(avion_2_Aliados)) 
                 avion_2_Aliados.setVisible(false); 
 
-            if (!this.MostrarOcultarAvion(avion_3_Aliados)) 
+            if (!this.MostrarOcultar(avion_3_Aliados)) 
                 avion_3_Aliados.setVisible(false);  
 
-            if (!this.MostrarOcultarAvion(avion_4_Aliados)) 
+            if (!this.MostrarOcultar(avion_4_Aliados)) 
                 avion_4_Aliados.setVisible(false);
+
+            if (!this.MostrarOcultar(this.torreAliados)) 
+                this.torreAliados.setVisible(false);
+
+            if (!this.MostrarOcultar(this.contenedorAliados)) 
+                this.contenedorAliados.setVisible(false);
+
+            if (!this.MostrarOcultar(this.depositoAliados)) 
+                this.depositoAliados.setVisible(false);
+
+            for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
+                if (!this.MostrarOcultar(artilleriasAliados.getChildren()[i])) 
+                    artilleriasAliados.getChildren()[i].setVisible(false);  
+            }
         }
 
         //Se prueba evento de destruccion de avion al llegar la vida a 0
