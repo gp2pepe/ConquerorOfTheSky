@@ -787,7 +787,14 @@ class Play extends Phaser.Scene {
             }  
         }         
      }
-    
+    choqueAviones(avion_potencia,avion_aliado)
+    {
+        avion_potencia.vidaAvion= 0;
+        avion_aliado.vidaAvion= 0;
+        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:avion_potencia.vidaAvion});                    
+        config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:avion_aliado.vidaAvion});  
+    }
+
     colisiones()
     { 
         //Colisiones generales, artilleria, torre de control , balas y aviones
@@ -795,6 +802,7 @@ class Play extends Phaser.Scene {
         this.physics.add.overlap(artilleriasPotencias, aviones_aliados, this.dispararArtilleria, null, this);
         this.physics.add.overlap(this.circulo_torreAliados, aviones, this.colision_torre_avion, null, this); 
         this.physics.add.overlap(this.circulo_torrePotencias, aviones_aliados, this.colision_torre_avion, null, this); 
+        this.physics.add.overlap(aviones, aviones_aliados, this.choqueAviones, null, this); 
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor);       
 
