@@ -2182,84 +2182,80 @@ class Play extends Phaser.Scene {
         this.lightAvionConBomba(); // cambio de color al avion con bomba
         //Tiempo que se usa para las balas 
         this.time = time;
-        //Dependiendo de que bando sea el jugador controlara el movimiento y combustible de los aviones
-        if (config.Partida.Bando=='Potencias')
-        {
-            if (this.EstaMoviendose(avion_1) && time>timeNafta)
-            {                
-                if(avion_1.combustible!=0)
-                {   
-                    timeNafta =timeNafta+1000;            
-                    avion_1.combustible--;
-                }
+
+        if (this.EstaMoviendose(avion_1) && time>timeNafta)
+        {                
+            if(avion_1.combustible!=0)
+            {   
+                timeNafta =timeNafta+1000;            
+                avion_1.combustible--;
             }
-            if (this.EstaMoviendose(avion_2) && time>timeNafta)
-            {                
-                if(avion_2.combustible!=0)
-                {   
-                    timeNafta =timeNafta+1000;                    
-                    console.log(avion_2.combustible);
-                    avion_2.combustible--;
-                }
+        }
+        if (this.EstaMoviendose(avion_2) && time>timeNafta)
+        {                
+            if(avion_2.combustible!=0)
+            {   
+                timeNafta =timeNafta+1000;                    
+                console.log(avion_2.combustible);
+                avion_2.combustible--;
             }
-            if (this.EstaMoviendose(avion_3) && time>timeNafta)
-            {                
-                if(avion_3.combustible!=0)
-                {   
-                    timeNafta =timeNafta+1000;                    
-                    console.log(avion_3.combustible);
-                    avion_3.combustible--;
-                }
-            }            
-            if (this.EstaMoviendose(avion_4) && time>timeNafta)
-            {                
-                if(avion_4.combustible!=0)
-                {   
-                    timeNafta =timeNafta+1000;                    
-                    console.log(avion_4.combustible);
-                    avion_4.combustible--;
-                }
+        }
+        if (this.EstaMoviendose(avion_3) && time>timeNafta)
+        {                
+            if(avion_3.combustible!=0)
+            {   
+                timeNafta =timeNafta+1000;                    
+                console.log(avion_3.combustible);
+                avion_3.combustible--;
             }
-    }
-    else
-    {
-            if (this.EstaMoviendose(avion_1_Aliados) && time>timeNafta)
-            {                
-                if(avion_1_Aliados.combustible!=0)
-                {   
-                    timeNafta =timeNafta+1000;                    
-                    //console.log(avion_1_Aliados.combustible);
-                    avion_1_Aliados.combustible--;
-                }
+        }            
+        if (this.EstaMoviendose(avion_4) && time>timeNafta)
+        {                
+            if(avion_4.combustible!=0)
+            {   
+                timeNafta =timeNafta+1000;                    
+                console.log(avion_4.combustible);
+                avion_4.combustible--;
             }
-            if (this.EstaMoviendose(avion_2_Aliados) && time>timeNafta)
-            {                
-                if(avion_2_Aliados.combustible!=0)
-                {   
-                    timeNafta =timeNafta+1000;                    
-                    console.log(avion_2_Aliados.combustible);
-                    avion_2_Aliados.combustible--;
-                }
+        }
+
+        if (this.EstaMoviendose(avion_1_Aliados) && time>timeNafta)
+        {                
+            if(avion_1_Aliados.combustible!=0)
+            {   
+                timeNafta =timeNafta+1000;                    
+                //console.log(avion_1_Aliados.combustible);
+                avion_1_Aliados.combustible--;
             }
-            if (this.EstaMoviendose(avion_3_Aliados) && time>timeNafta)
-            {                
-                if(avion_3_Aliados.combustible!=0)
-                {   
-                    timeNafta =timeNafta+1000;                    
-                    console.log(avion_3_Aliados.combustible);
-                    avion_3_Aliados.combustible--;
-                }
-            }            
-            if (this.EstaMoviendose(avion_4_Aliados) && time>timeNafta)
-            {                
-                if(avion_4_Aliados.combustible!=0)
-                {   
-                    timeNafta =timeNafta+1000;                    
-                    console.log(avion_4_Aliados.combustible);
-                    avion_4_Aliados.combustible--;
-                }
+        }
+        if (this.EstaMoviendose(avion_2_Aliados) && time>timeNafta)
+        {                
+            if(avion_2_Aliados.combustible!=0)
+            {   
+                timeNafta =timeNafta+1000;                    
+                console.log(avion_2_Aliados.combustible);
+                avion_2_Aliados.combustible--;
             }
-    }
+        }
+        if (this.EstaMoviendose(avion_3_Aliados) && time>timeNafta)
+        {                
+            if(avion_3_Aliados.combustible!=0)
+            {   
+                timeNafta =timeNafta+1000;                    
+                console.log(avion_3_Aliados.combustible);
+                avion_3_Aliados.combustible--;
+            }
+        }            
+        if (this.EstaMoviendose(avion_4_Aliados) && time>timeNafta)
+        {                
+            if(avion_4_Aliados.combustible!=0)
+            {   
+                timeNafta =timeNafta+1000;                    
+                console.log(avion_4_Aliados.combustible);
+                avion_4_Aliados.combustible--;
+            }
+        }
+
 
         //Se setea la posicion de los circulos de cada avion para que sigan al avion correspondiente
         this.circulo_1.setPosition(avion_1.x, avion_1.y);  
