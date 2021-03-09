@@ -67,6 +67,10 @@ class Bootloader extends Phaser.Scene {
             'panelBase',
             'mostrarRango',
             'nick',
+            'vidaContainer',
+            'combustibleContainer',
+            'vidaBar',
+            'combustibleBar',
 
              'menupartidas',
              'menupartidas_2',

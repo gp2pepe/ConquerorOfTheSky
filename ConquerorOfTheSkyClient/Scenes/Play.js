@@ -45,6 +45,11 @@ var light3Bomba;
 var light4Bomba;
 var lightBasePotencia;
 var lightBaseAliados;
+var vidaContainer;
+var combustibleContainer;
+var energyBar;
+var energyBar2;
+
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -330,6 +335,37 @@ class Play extends Phaser.Scene {
         this.colisiones(); 
         if(config.Partida.duenio)   
             this.botonGuardar();
+
+          // the energy container. A simple sprite
+        vidaContainer = this.add.sprite(233, 520 , "vidaContainer").setScale(0.25);
+ 
+        // the energy bar. Another simple sprite
+        energyBar = this.add.sprite(vidaContainer.x-10 , vidaContainer.y, "vidaBar").setScale(0.25);
+ 
+        // a copy of the energy bar to be used as a mask. Another simple sprite but...
+        this.energyMask = this.add.sprite(energyBar.x, energyBar.y, "vidaBar").setScale(0.25);
+ 
+        // ...it's not visible...
+        this.energyMask.visible = false;
+ 
+        // and we assign it as energyBar's mask.
+        energyBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.energyMask);
+
+
+           // the energy container. A simple sprite
+           combustibleContainer = this.add.sprite(347, 520 , "combustibleContainer").setScale(0.25);
+ 
+           // the energy bar. Another simple sprite
+           energyBar2 = this.add.sprite(combustibleContainer.x-10 , combustibleContainer.y, "combustibleBar").setScale(0.25);
+    
+           // a copy of the energy bar to be used as a mask. Another simple sprite but...
+           this.energyMask2 = this.add.sprite(energyBar2.x, energyBar2.y, "combustibleBar").setScale(0.25);
+    
+           // ...it's not visible...
+           this.energyMask2.visible = false;
+    
+           // and we assign it as energyBar's mask.
+           energyBar2.mask = new Phaser.Display.Masks.BitmapMask(this, this.energyMask2);
     }
 
     //funcion que carga las funcionalidades del tablero
@@ -673,7 +709,9 @@ class Play extends Phaser.Scene {
         {
             var Hit = Phaser.Math.Between(1,2);
             if (Hit == 1 ){
+                energyBar.x-=5;
                 avion.vidaAvion-=10;  
+                console.log( avion.vidaAvion);
                 config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion.idavion, vida:avion.vidaAvion});
             }  
             console.log('avion :'+avion.vidaAvion);
@@ -872,9 +910,11 @@ class Play extends Phaser.Scene {
             }
             else
             {
+                if (avion_4_Aliados.focus==true){
                 config.Partida.idavion=8;
                 avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
+            }
             }
         }
 
@@ -888,6 +928,7 @@ class Play extends Phaser.Scene {
             {
                 var Hit = Phaser.Math.Between(1,2);
                 if (Hit == 1 ){
+                    energyBar.x-=1;
                     avion_A_pegar.vidaAvion-=10; 
                     config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_A_pegar.idavion, vida:avion_A_pegar.vidaAvion});                    
                 }  
@@ -1385,6 +1426,10 @@ class Play extends Phaser.Scene {
                     this.volverBase2.depth=100;
                     this.volverBase3.depth=100;
                     this.volverBase4.depth=100;
+                    vidaContainer.depth=100;
+                    energyBar.depth=100;
+                    combustibleContainer.depth=100;
+                    energyBar2.depth=100;
                     // Seteo la altitud
                     if (avion_1.altitud == 'Alta')
                     {
@@ -1424,6 +1469,11 @@ class Play extends Phaser.Scene {
                     this.volverBase2.depth=100;
                     this.volverBase3.depth=100;
                     this.volverBase4.depth=100;
+                    
+                    vidaContainer.depth=100;
+                    energyBar.depth=100;
+                    combustibleContainer.depth=100;
+                    energyBar2.depth=100;
                     // Segun su altitud es la imagen lateral que se muestra
                     if (avion_2.altitud == 'Alta')
                     {
@@ -1463,6 +1513,10 @@ class Play extends Phaser.Scene {
                     this.volverBase2.depth=100;
                     this.volverBase3.depth=100;
                     this.volverBase4.depth=100;
+                    vidaContainer.depth=100;
+                    energyBar.depth=100;
+                    combustibleContainer.depth=100;
+                    energyBar2.depth=100;
                     // Segun su altitud es la imagen lateral que se muestra
                     if (avion_3.altitud == 'Alta')
                     {
@@ -1502,6 +1556,11 @@ class Play extends Phaser.Scene {
                     this.volverBase2.depth=100;
                     this.volverBase3.depth=100;
                     this.volverBase4.depth=100;
+                    
+                    vidaContainer.depth=100;
+                    energyBar.depth=100;
+                    combustibleContainer.depth=100;
+                    energyBar2.depth=100;
                      // Segun su altitud es la imagen lateral que se muestra
                      if (avion_4.altitud == 'Alta')
                      {
@@ -1544,6 +1603,11 @@ class Play extends Phaser.Scene {
                     this.volverBase2.depth=100;
                     this.volverBase3.depth=100;
                     this.volverBase4.depth=100;
+                    
+                    vidaContainer.depth=100;
+                    energyBar.depth=100;
+                    combustibleContainer.depth=100;
+                    energyBar2.depth=100;
                     // Seteo la altitud
                     if (avion_1_Aliados.altitud == 'Alta')
                     {
@@ -1583,6 +1647,11 @@ class Play extends Phaser.Scene {
                     this.volverBase2.depth=100;
                     this.volverBase3.depth=100;
                     this.volverBase4.depth=100;
+                    vidaContainer.depth=100;
+                    energyBar.depth=100;
+                    combustibleContainer.depth=100;
+                    energyBar2.depth=100;
+                    
                      // Seteo la altitud
                      if (avion_2_Aliados.altitud == 'Alta')
                      {
@@ -1622,6 +1691,11 @@ class Play extends Phaser.Scene {
                     this.volverBase2.depth=100;
                     this.volverBase3.depth=100;
                     this.volverBase4.depth=100;
+                    vidaContainer.depth=100;
+                    energyBar.depth=100;
+                    combustibleContainer.depth=100;
+                    energyBar2.depth=100;
+                    
                     // Seteo la altitud
                     if (avion_3_Aliados.altitud == 'Alta')
                     {
@@ -1662,6 +1736,11 @@ class Play extends Phaser.Scene {
                     this.volverBase2.depth=100;
                     this.volverBase3.depth=100;
                     this.volverBase4.depth=100;
+                    vidaContainer.depth=100;
+                    energyBar.depth=100;
+                    combustibleContainer.depth=100;
+                    energyBar2.depth=100;
+                    
                     // Seteo la altitud
                     if (avion_4_Aliados.altitud == 'Alta')
                     {
@@ -1989,7 +2068,6 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
-
         //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
         this.lightAvionSinBomba(); // Cambio de color al avion sin bomba
         this.lightAvionConBomba(); // cambio de color al avion con bomba
