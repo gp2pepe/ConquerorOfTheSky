@@ -363,7 +363,7 @@ class Play extends Phaser.Scene {
                 }
             });
         });
-
+        
         this.volverBase1.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.volverBase1,
@@ -819,66 +819,66 @@ class Play extends Phaser.Scene {
     //Evento llamado al realizar click con el mouse
     onObjectClicked(pointer)
     {  
-     //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion       
-    if (config.Partida.Bando=='Potencias')
-    {
-        if (avion_1.focus==true)
-        {            
-            config.Partida.idavion=1;
-            avion_1.moverAvion({x: pointer.x, y: pointer.y});            
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: pointer.x, y: pointer.y});
-        }  
+        //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion       
+        if (config.Partida.Bando=='Potencias')
+        {
+            if (avion_1.focus==true)
+            {            
+                config.Partida.idavion=1;
+                avion_1.moverAvion({x: pointer.x, y: pointer.y});            
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: pointer.x, y: pointer.y});
+            }  
 
-        if (avion_2.focus==true)
-        {            
-            config.Partida.idavion=2;
-            avion_2.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: pointer.x, y: pointer.y});
-        } 
+            if (avion_2.focus==true)
+            {            
+                config.Partida.idavion=2;
+                avion_2.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: pointer.x, y: pointer.y});
+            } 
 
-        if (avion_3.focus==true)
-        {            
-            config.Partida.idavion=3;
-            avion_3.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: pointer.x, y: pointer.y});
-        }  
+            if (avion_3.focus==true)
+            {            
+                config.Partida.idavion=3;
+                avion_3.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: pointer.x, y: pointer.y});
+            }  
 
-        if (avion_4.focus==true)
-        {         
-            config.Partida.idavion=4;
-            avion_4.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: pointer.x, y: pointer.y});
-        } 
+            if (avion_4.focus==true)
+            {         
+                config.Partida.idavion=4;
+                avion_4.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: pointer.x, y: pointer.y});
+            } 
+        }
+            else
+            {
+            if (avion_1_Aliados.focus==true )
+            {
+                config.Partida.idavion=5;
+                avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: pointer.x, y: pointer.y});
+            }
+            if (avion_2_Aliados.focus==true)
+            { 
+                config.Partida.idavion=6;
+                avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: pointer.x, y: pointer.y});
+            }
+            if (avion_3_Aliados.focus==true)
+            {
+                config.Partida.idavion=7;
+                avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: pointer.x, y: pointer.y});
+            }
+            else
+            {
+                config.Partida.idavion=8;
+                avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
+            }
+        }
+
     }
-        else
-        {
-        if (avion_1_Aliados.focus==true )
-        {
-            config.Partida.idavion=5;
-            avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: pointer.x, y: pointer.y});
-        }
-        if (avion_2_Aliados.focus==true)
-        { 
-            config.Partida.idavion=6;
-            avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: pointer.x, y: pointer.y});
-        }
-        if (avion_3_Aliados.focus==true)
-        {
-            config.Partida.idavion=7;
-            avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: pointer.x, y: pointer.y});
-        }
-        else
-        {
-            config.Partida.idavion=8;
-            avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
-        }
-    }
-
-
 
 
     colision_Artillerias_aviones(Bullet, avion_A_pegar)
@@ -2176,4 +2176,4 @@ class Play extends Phaser.Scene {
 }
 
 
-export  default Play;
+export default Play;
