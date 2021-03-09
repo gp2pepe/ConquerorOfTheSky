@@ -44,6 +44,12 @@ class Partida {
             }else if(msg.carga.tipoOp == "sincronizarAltitudAvion"){
                 this.aviones[msg.carga.idavion-1].cambiarAltitud(msg.carga.altitud);
 
+            }else if(msg.carga.tipoOp == "sincronizarBombaAvion"){
+                this.aviones[msg.carga.idavion-1].cargarbomba=msg.carga.bomba;
+
+            }else if(msg.carga.tipoOp == "sincronizarCombustibleAvion"){
+                this.aviones[msg.carga.idavion-1].cargarCombustible=msg.carga.combustible;
+
             }else if(msg.carga.tipoOp == "sincronizarPausa"){
                 if(msg.carga.estado == "Pausar")
                     this.estado = "Pausado";

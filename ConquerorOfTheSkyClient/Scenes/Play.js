@@ -398,6 +398,8 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=1;
                         avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: avion_1.xInicial, y: avion_1.yInicial});
+                        config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:1, bomba: true});
+
                     }            
 
                     if (avion_1_Aliados.focus==true)
@@ -407,6 +409,8 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=5;
                         avion_1_Aliados.moverAvion({x: avion_1_Aliados.xInicial, y: avion_1_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: avion_1_Aliados.xInicial, y: avion_1_Aliados.yInicial});
+                        config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:5, bomba: true});
+
 
                     }          
                 }
@@ -426,6 +430,8 @@ class Play extends Phaser.Scene {
                         avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: avion_1.xInicial, y: avion_1.yInicial});
                         this.volverBase1 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion:1, combustible: true});
+
                     }                
 
                     if (avion_1_Aliados.focus==true)
@@ -435,6 +441,8 @@ class Play extends Phaser.Scene {
                         avion_1_Aliados.moverAvion({x: avion_1_Aliados.xInicial, y: avion_1_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: avion_1_Aliados.xInicial, y: avion_1_Aliados.yInicial});
                         this.volverBase1 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion:5, combustible: true});
+
                     }              
                 }
             });
@@ -453,6 +461,8 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=2;
                         avion_2.moverAvion({x: avion_2.xInicial, y: avion_2.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: avion_2.xInicial, y: avion_2.yInicial});
+                        config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:2, bomba: true});
+
                     }            
 
                     if (avion_2_Aliados.focus==true)
@@ -462,6 +472,8 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=6;
                         avion_2_Aliados.moverAvion({x: avion_2_Aliados.xInicial, y: avion_2_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: avion_2_Aliados.xInicial, y: avion_2_Aliados.yInicial});
+                        config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:6, bomba: true});
+
 
                     }          
                 }
@@ -481,6 +493,8 @@ class Play extends Phaser.Scene {
                         avion_2.moverAvion({x: avion_2.xInicial, y: avion_2.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: avion_2.xInicial, y: avion_2.yInicial});
                         this.volverBase2 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion:2, combustible: true});
+
                     }                
 
                     if (avion_2_Aliados.focus==true)
@@ -490,6 +504,8 @@ class Play extends Phaser.Scene {
                         avion_2_Aliados.moverAvion({x: avion_2_Aliados.xInicial, y: avion_2_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: avion_2_Aliados.xInicial, y: avion_2_Aliados.yInicial});
                         this.volverBase2 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion:6, combustible: true});
+
                     }              
                 }
             });
@@ -508,6 +524,8 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=3;
                         avion_3.moverAvion({x: avion_3.xInicial, y: avion_3.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: avion_3.xInicial, y: avion_3.yInicial});
+                        config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:3, bomba: true});
+
                     }            
 
                     if (avion_3_Aliados.focus==true)
@@ -517,6 +535,7 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=7;
                         avion_3_Aliados.moverAvion({x: avion_3_Aliados.xInicial, y: avion_3_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: avion_3_Aliados.xInicial, y: avion_3_Aliados.yInicial});
+                        config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:7, bomba: true});
 
                     }          
                 }
@@ -536,6 +555,8 @@ class Play extends Phaser.Scene {
                         avion_3.moverAvion({x: avion_3.xInicial, y: avion_3.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: avion_3.xInicial, y: avion_3.yInicial});
                         this.volverBase3 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion:3, combustible: true});
+
                     }                
 
                     if (avion_3_Aliados.focus==true)
@@ -545,6 +566,8 @@ class Play extends Phaser.Scene {
                         avion_3_Aliados.moverAvion({x: avion_3_Aliados.xInicial, y: avion_3_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: avion_3_Aliados.xInicial, y: avion_3_Aliados.yInicial});
                         this.volverBase3 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion:7, combustible: true});
+
                     }              
                 }
             });
@@ -563,6 +586,8 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=4;
                         avion_4.moverAvion({x: avion_4.xInicial, y: avion_4.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: avion_4.xInicial, y: avion_4.yInicial});
+                        config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:4, bomba: true});
+
                     }            
 
                     if (avion_4_Aliados.focus==true)
@@ -572,6 +597,8 @@ class Play extends Phaser.Scene {
                         config.Partida.idavion=8;
                         avion_4_Aliados.moverAvion({x: avion_4_Aliados.xInicial, y: avion_4_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: avion_4_Aliados.xInicial, y: avion_4_Aliados.yInicial});
+                        config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:8, bomba: true});
+
 
                     }          
                 }
@@ -591,6 +618,8 @@ class Play extends Phaser.Scene {
                         avion_4.moverAvion({x: avion_4.xInicial, y: avion_4.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: avion_4.xInicial, y: avion_4.yInicial});
                         this.volverBase4 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion:4, combustible: true});
+
                     }                
 
                     if (avion_4_Aliados.focus==true)
@@ -600,6 +629,8 @@ class Play extends Phaser.Scene {
                         avion_4_Aliados.moverAvion({x: avion_4_Aliados.xInicial, y: avion_4_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: avion_4_Aliados.xInicial, y: avion_4_Aliados.yInicial});
                         this.volverBase4 = this.add.image(220, 545, "botonCombustibleRojo").setOrigin(0).setScale(.3).setInteractive();
+                        config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion:8, combustible: true});
+
                     }              
                 }
             });
@@ -2033,6 +2064,7 @@ class Play extends Phaser.Scene {
                 avion.altitud='En base';
                 avion.setScale(.05);
                 avion.cargarbomba=false;
+                //config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion: avion.idavion, bomba: false});
                 avion.tengobomba=true; 
                 avion.velocidad=avion.calcularVelocidad(velAvion);
                 this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
@@ -2043,7 +2075,8 @@ class Play extends Phaser.Scene {
                 avion.setScale(.05);
                 avion.body.setVelocityY(0);
                 avion.body.setVelocityX(0);
-                avion.cargarCombustible=false;                
+                avion.cargarCombustible=false; 
+                //config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion: avion.idavion, combustible: false});
                 this.volverBase = this.add.image(220, 545, "botonCombustible").setOrigin(0).setScale(.3).setInteractive();
             }            
             return false;
