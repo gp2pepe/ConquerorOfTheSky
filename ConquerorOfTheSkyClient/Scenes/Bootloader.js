@@ -86,7 +86,9 @@ class Bootloader extends Phaser.Scene {
              'imagenDerrota',
              'mask',
              'mitadMapa',
-             'mapa_6Claro'
+             'mapa_6Claro',
+             'Save-64',
+             'guardando'
 
         ])
         this.load.on('complete',()=>{

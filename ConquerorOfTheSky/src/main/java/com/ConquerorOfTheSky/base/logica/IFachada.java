@@ -18,8 +18,8 @@ public interface IFachada {
     
     public List<WebSocketSession>  sincronizarPartida(Long idpartida) throws PartidaNoExisteException;
 
-    public void guardarPartida(Long idPartida) throws PartidaNoExisteException;
-
+    public String guardarPartida(Long idPartida, String data) throws PartidaNoExisteException;
+    
     public String recuperarPartida(Long idPartida) throws PartidaNoExisteException;
 
     public void terminarPartida(Long idPartida);

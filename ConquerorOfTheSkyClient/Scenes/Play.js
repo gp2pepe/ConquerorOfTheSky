@@ -262,34 +262,36 @@ class Play extends Phaser.Scene {
         //Bullets, se define el grupo de balas que utilizaran los aviones
         bullets = this.add.group({
             classType: Bullet,
-            maxSize: 1,
+            maxSize: 4,
             runChildUpdate: true
         });
         //bulletsPotencias, se define el grupo de balas que utilizaran los aviones Potencias
         bulletsPotencias = this.add.group({
             classType: Bullet,
-            maxSize: 1,
+            maxSize: 4,
             runChildUpdate: true
         });
         //bulletsAliados, se define el grupo de balas que utilizaran los aviones Aliados
         bulletsAliados = this.add.group({
             classType: Bullet,
-            maxSize: 1,
+            maxSize: 4,
             runChildUpdate: true
         });
          //bulletsArtilleria, se define el grupo de balas que utilizaran las artillerias Potencias
         bulletsArtilleriaPotencia = this.add.group({
             classType: Bullet,
-            maxSize: 1,
+            maxSize: 8,
             runChildUpdate: true
         });
          //bulletsArtilleriaAliados, se define el grupo de balas que utilizaran las artillerias Aliados
          bulletsArtilleriaAliados = this.add.group({
             classType: Bullet,
-            maxSize: 1,
+            maxSize: 8,
             runChildUpdate: true
         });
-        this.colisiones();     
+        this.colisiones(); 
+        if(config.Partida.duenio)   
+            this.botonGuardar();
     }
 
     //funcion que carga las funcionalidades del tablero
@@ -517,6 +519,27 @@ class Play extends Phaser.Scene {
         });
     }
 
+    botonGuardar(){
+
+        this.guardar = this.add.image(10, 10, "Save-64").setOrigin(0).setScale(.5).setInteractive(); 
+        this.guardar.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.guardar,
+                ease: 'Bounce.easeIn',                
+                onComplete: () => {
+         
+                        this.guardar.setScale(0.6);  
+                        this.scene.pause();
+                        config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                        this.scene.launch('Guardando');
+                        config.Partida.guardarPartida();
+       
+                }
+            });
+        });
+
+    }
+
     Colision_Aviones(circulo, avion)
     {   
         //Se definen colisiones entre el rango visible de un avion (circulo) y el avion con el que colisiona
@@ -651,72 +674,72 @@ class Play extends Phaser.Scene {
     //Evento llamado al realizar click con el mouse
     onObjectClicked(pointer)
     {  
-     //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion       
-    if (config.Partida.Bando=='Potencias')
-    {
-        if (avion_1.focus==true)
-        {            
-            avion_1.altitud ='Baja';
-            config.Partida.idavion=1;
-            avion_1.moverAvion({x: pointer.x, y: pointer.y});            
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: pointer.x, y: pointer.y});
-        }  
+        //Comienzo a chequear que avion o elemento se encuentra en focus para ejecutar su correspondiente accion       
+        if (config.Partida.Bando=='Potencias')
+        {
+            if (avion_1.focus==true)
+            {            
+                avion_1.altitud ='Baja';
+                config.Partida.idavion=1;
+                avion_1.moverAvion({x: pointer.x, y: pointer.y});            
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: pointer.x, y: pointer.y});
+            }  
 
-        if (avion_2.focus==true)
-        {            
-            avion_2.altitud ='Baja';
-            config.Partida.idavion=2;
-            avion_2.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: pointer.x, y: pointer.y});
-        } 
+            if (avion_2.focus==true)
+            {            
+                avion_2.altitud ='Baja';
+                config.Partida.idavion=2;
+                avion_2.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: pointer.x, y: pointer.y});
+            } 
 
-        if (avion_3.focus==true)
-        {            
-            avion_3.altitud ='Baja';
-            config.Partida.idavion=3;
-            avion_3.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: pointer.x, y: pointer.y});
-        }  
+            if (avion_3.focus==true)
+            {            
+                avion_3.altitud ='Baja';
+                config.Partida.idavion=3;
+                avion_3.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: pointer.x, y: pointer.y});
+            }  
 
-        if (avion_4.focus==true)
-        { 
-            avion_4.altitud ='Baja';           
-            config.Partida.idavion=4;
-            avion_4.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: pointer.x, y: pointer.y});
-        } 
-    }
+            if (avion_4.focus==true)
+            { 
+                avion_4.altitud ='Baja';           
+                config.Partida.idavion=4;
+                avion_4.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: pointer.x, y: pointer.y});
+            } 
+        }
         else
         {
-        if (avion_1_Aliados.focus==true )
-        {
-            avion_1_Aliados.altitud ='Baja'; 
-            config.Partida.idavion=5;
-            avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: pointer.x, y: pointer.y});
+            if (avion_1_Aliados.focus==true )
+            {
+                avion_1_Aliados.altitud ='Baja'; 
+                config.Partida.idavion=5;
+                avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: pointer.x, y: pointer.y});
+            }
+            if (avion_2_Aliados.focus==true)
+            {
+                avion_2_Aliados.altitud ='Baja'; 
+                config.Partida.idavion=6;
+                avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: pointer.x, y: pointer.y});
+            }
+            if (avion_3_Aliados.focus==true)
+            {
+                avion_3_Aliados.altitud ='Baja'; 
+                config.Partida.idavion=7;
+                avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: pointer.x, y: pointer.y});
+            }
+            if (avion_4_Aliados.focus==true)
+            {
+                avion_4_Aliados.altitud ='Baja'; 
+                config.Partida.idavion=8;
+                avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
+            }
         }
-        if (avion_2_Aliados.focus==true)
-        {
-            avion_2_Aliados.altitud ='Baja'; 
-            config.Partida.idavion=6;
-            avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: pointer.x, y: pointer.y});
-        }
-        if (avion_3_Aliados.focus==true)
-        {
-            avion_3_Aliados.altitud ='Baja'; 
-            config.Partida.idavion=7;
-            avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: pointer.x, y: pointer.y});
-        }
-        if (avion_4_Aliados.focus==true)
-        {
-            avion_4_Aliados.altitud ='Baja'; 
-            config.Partida.idavion=8;
-            avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});
-            config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
-        }
-    }
     }
 
 
@@ -1627,6 +1650,13 @@ class Play extends Phaser.Scene {
                 this.scene.launch('GameOver');
             }
         }
+
+        if(config.Partida.estado=='Pausado'){
+            this.scene.pause();
+        }else if(config.Partida.estado=='Jugando'){
+            this.scene.resume();
+        }
+
     }
 
 

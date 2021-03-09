@@ -132,6 +132,21 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                         LOGGER.debug("Se perdio conexión con el Jugador");
                     }
                 }
+            //Proceso el guardar partida     
+            }else if(op.equals(new String("guardarPartida"))){
+                try{
+                    //LOGGER.debug("Llego un guardarPartida: " + map.toString());
+                    String respuesta = fachada.guardarPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("data"));
+                    session.sendMessage(new TextMessage(respuesta));
+                }catch(Exception e){
+                    LOGGER.debug(e.getMessage());
+
+                    try{
+                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"guardarPartida\",\"mensaje\": \"Hubo un error al guardar la partida\" }"));
+                    } catch (IOException e1) {
+                        LOGGER.debug("Se perdio conexión con el Jugador");
+                    }
+                }
             }
         }catch(WebSocketHandshakeException e1){
             LOGGER.error("Fallo al procesar mensaje");

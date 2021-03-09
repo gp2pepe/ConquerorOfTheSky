@@ -110,7 +110,9 @@ public class Fachada implements IFachada{
                 posicionX = (int) (Math.random() * ((((baseX+conf.getBaseTamanioX())-20) - (baseX+conf.getBaseTamanioX())+20) + 1)) + (baseX+conf.getBaseTamanioX()+20);
             }
           }
-          artillerias.add(new Artilleria( Long.valueOf(i), posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() ));
+          Artilleria art = new Artilleria(  posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() );
+
+          artillerias.add(art);
         }
 
         Campo campo1 = new Campo(Long.valueOf(0), posicionCampoX, posicionCampoY, artillerias, base1);
@@ -145,10 +147,11 @@ public class Fachada implements IFachada{
                 posicionX = (int) (Math.random() * ((((base2X+conf.getBaseTamanioX())-20) - (base2X+conf.getBaseTamanioX())+20) + 1)) + (base2X+conf.getBaseTamanioX()+20);
             }
           }
-          artillerias2.add(new Artilleria( Long.valueOf(i), posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() ));
+          Artilleria art = new Artilleria( posicionX, posicionY, conf.getArtilleriaSalud(),conf.getArtilleriaRadioDisparo(), conf.getArtilleriaDanio() );
+          artillerias2.add(art);
         }
 
-        Campo campo2 = new Campo(Long.valueOf(0), posicionCampo2X, posicionCampo2Y, artillerias2, base2);
+        Campo campo2 = new Campo(Long.valueOf(1), posicionCampo2X, posicionCampo2Y, artillerias2, base2);
         String bando2 = "Potencias";
         if(bando.equals("Potencias"))
           bando2 = "Aliados";
@@ -311,13 +314,14 @@ public class Fachada implements IFachada{
       return sessions;
     }
 
-
-    public void guardarPartida(Long idPartida) throws PartidaNoExisteException{
+    @Transactional
+    public String guardarPartida(Long idPartida, String data) throws PartidaNoExisteException{
       int i = 0;
       boolean encontre = false;
       while(i<partidas.size() && encontre == false){
         Partida par = partidas.get(i);
         if(par.getIdpartida().equals(idPartida)){
+          LOGGER.debug("Voy a guardar la partida: " + par);
           partidaR.saveAndFlush(par);
           encontre = true;
         }
@@ -326,7 +330,13 @@ public class Fachada implements IFachada{
       if(!encontre){
         throw new PartidaNoExisteException("recuperarPartida", "La partida ya no esta disponible : " + idPartida);
       }
-
+        //Genero el JSon
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        JsonObject innerObject = new JsonObject();
+        innerObject.addProperty("operacion", "guardarPartida");
+        innerObject.addProperty("estado", "OK");
+        LOGGER.debug("Guarde la partida: " + idPartida);
+        return gson.toJson(innerObject);
     }
 
     public String recuperarPartida(Long idPartida) throws PartidaNoExisteException {

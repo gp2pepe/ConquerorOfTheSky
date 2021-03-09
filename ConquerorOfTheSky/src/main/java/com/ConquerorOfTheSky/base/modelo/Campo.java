@@ -98,4 +98,11 @@ public class Campo {
         this.posicionY = posicionY;
     }
 
+    @Override
+    public String toString() {
+        return "Campo [artillerias=" + artillerias + ", base=" + base + ", idCampo=" + idCampo + ", posicionX="
+                + posicionX + ", posicionY=" + posicionY + "]";
+    }
+
+    
 }

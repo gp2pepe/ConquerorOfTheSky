@@ -39,8 +39,7 @@ public class Artilleria {
 
 	}
 
-    public Artilleria(Long idArtilleria, int posicionX, int posicionY, int salud, int radioDisparo, int danio) {
-        this.idArtilleria = idArtilleria;
+    public Artilleria( int posicionX, int posicionY, int salud, int radioDisparo, int danio) {
         this.posicionX = posicionX;
         this.posicionY = posicionY;
         this.salud = salud;
@@ -95,6 +94,12 @@ public class Artilleria {
 
     public void setDanio(int danio) {
         this.danio = danio;
+    }
+
+    @Override
+    public String toString() {
+        return "Artilleria [idArtilleria=" + idArtilleria + ", danio=" + danio + ", posicionX=" + posicionX
+                + ", posicionY=" + posicionY + ", radioDisparo=" + radioDisparo + ", salud=" + salud + "]";
     }
 
 

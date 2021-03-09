@@ -10,6 +10,8 @@ import PartidaLlena from '../Scenes/PartidaLlena.js';
 import GameOver from '../Scenes/GameOver.js'
 import Win from '../Scenes/Win.js'
 import scroll from '../Scenes/scroll.js'
+import Guardando from '../Scenes/popups/Guardando.js'
+
 
 var config = {
     type: Phaser.AUTO,
@@ -27,7 +29,7 @@ var config = {
             debug: true
         }
     },
-    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,PartidaLlena,GameOver,Win,scroll],
+    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,PartidaLlena,GameOver,Win,scroll,Guardando],
     WebSocket: new Client(),
     Partida: new Partida(),   
     

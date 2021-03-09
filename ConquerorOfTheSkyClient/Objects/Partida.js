@@ -9,6 +9,7 @@ class Partida {
         this.listaCargada = false;
         this.hayError = false;
         this.mensajeError = "";
+        this.estado = "Jugando";
 
     }
 
@@ -19,6 +20,7 @@ class Partida {
             this.campoPotencias = msg.campoPotencias;
             this.campoAliados = msg.campoAliados;
             this.configuraciones = msg.configuraciones;
+            this.duenio = true;
             this.partidaCargada = true;
 
         }else if(msg.operacion == "ingresarAPartida"){            
@@ -28,6 +30,7 @@ class Partida {
             this.campoPotencias = msg.campoPotencias;
             this.campoAliados = msg.campoAliados;
             this.configuraciones = msg.configuraciones;
+            this.duenio = false;
             this.partidaCargada = true;
 
         }else if(msg.operacion == "sincronizar"){ 
@@ -41,28 +44,24 @@ class Partida {
             }else if(msg.carga.tipoOp == "sincronizarAltitudAvion"){
                 this.aviones[msg.carga.idavion-1].cambiarAltitud(msg.carga.altitud);
 
+            }else if(msg.carga.tipoOp == "sincronizarPausa"){
+                if(msg.carga.estado == "Pausar")
+                    this.estado = "Pausado";
+                if(msg.carga.estado == "Activar")
+                    this.estado = "Jugando";
+
             }
 
         }else if(msg.operacion == "listarPartidas"){ 
             this.listaPartidas = msg.partidas;
             this.listaCargada = true;
 
-        }else if(msg.operacion == "errorServidor"){ 
+        }else if(msg.operacion == "guardarPartida"){ 
+            this.estado = "Jugando";
 
-            if(msg.metodo == "iniciarPartida"){
+        }else if(msg.operacion == "errorServidor"){ 
                 this.hayError = true;
                 this.mensajeError = msg.mensaje;
-            }else if(msg.metodo == "ingresarAPartida"){
-                this.hayError = true;
-                this.mensajeError = msg.mensaje;
-            }else if(msg.metodo == "sincronizar"){
-                this.hayError = true;
-                this.mensajeError = msg.mensaje;
-            }else if(msg.metodo == "listarPartidas"){
-                this.hayError = true;
-                this.mensajeError = msg.mensaje;
-            } 
-    
         }
     }
     
@@ -86,6 +85,10 @@ class Partida {
 
     listarPartidas(){
         config.WebSocket.ws.send(JSON.stringify({operacion:"listarPartidas"}));        
+    }
+
+    guardarPartida(){
+        config.WebSocket.ws.send(JSON.stringify({operacion:"guardarPartida",idpartida:this.idpartida,aviones: this.aviones }));        
     }
 
 }

@@ -77,6 +77,12 @@ public class Equipo {
     public void setCampo(Campo campo) {
         this.campo = campo;
     }
+
+    @Override
+    public String toString() {
+        return "Equipo [bando=" + bando + ", campo=" + campo + ", idEquipo=" + idEquipo + ", jugadores=" + jugadores
+                + "]";
+    }
     
     
 }
