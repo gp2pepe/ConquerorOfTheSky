@@ -49,6 +49,7 @@ var vidaContainer;
 var combustibleContainer;
 var energyBar;
 var energyBar2;
+var yInicialAvionBase;
 
 
 //Inicializo la clase/escena
@@ -119,7 +120,7 @@ class Play extends Phaser.Scene {
 
         campoPotencias.base.posicionX+= inicioMapaX;
         campoPotencias.base.posicionY+= inicioMapaY;
-
+        
         //Seteo la base y sus elementos
         this.pisoBasePotencias = this.add.image(campoPotencias.base.posicionX + 50, campoPotencias.base.posicionY + 50, 'pisoBase').setScale(.25);
         this.contenedorPotencias = this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
@@ -217,7 +218,12 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].lastFired = 0; 
        }
 
-        //Se llama a funcion que definira los aviones          
+        //Se define la posicion inicial de aviones y se llama a funcion que definira los aviones   
+        if (campoPotencias.base.posicionY - campoPotencias.posicionY + 50 > 200)
+	        yInicialAvionBase = campoPotencias.base.posicionY + 50 - 120;
+        else
+	        yInicialAvionBase = campoPotencias.base.posicionY + 50 + 120;
+            
         this.definicionAviones();   
 
         //Se definen luces que seguiran a los aviones y tambien habra en la base, es para el efecto visual del circulo
@@ -227,10 +233,10 @@ class Play extends Phaser.Scene {
         if (config.Partida.Bando == 'Potencias')
         {
             //var light = this.lights.addLight(10, 20, 200).setColor(0xffffff).setIntensity(2);
-            light1 = this.lights.addLight(500, 200, 100).setIntensity(10);
-            light2 = this.lights.addLight(500, 400, 100).setIntensity(10);
-            light3 = this.lights.addLight(500, 600, 100).setIntensity(10);
-            light4 = this.lights.addLight(500, 800, 100).setIntensity(10);
+            light1 = this.lights.addLight(500, 200, 100).setIntensity(0);
+            light2 = this.lights.addLight(500, 400, 100).setIntensity(0);
+            light3 = this.lights.addLight(500, 600, 100).setIntensity(0);
+            light4 = this.lights.addLight(500, 800, 100).setIntensity(0);
             light1Bomba = this.lights.addLight(500, 200, 100).setColor(0xFF0000).setIntensity(0);
             light2Bomba = this.lights.addLight(500, 400, 100).setColor(0xFF0000).setIntensity(0);
             light3Bomba = this.lights.addLight(500, 600, 100).setColor(0xFF0000).setIntensity(0);
@@ -1073,8 +1079,8 @@ class Play extends Phaser.Scene {
             y: avionYInicial,
             xInicial: avionXInicial,
             yInicial: avionYInicial,*/
-            x: 500,
-            y: 200            
+            x: campoPotencias.posicionX + 70,
+            y: yInicialAvionBase
         }).setInteractive();    
         avion_1.idavion = 1;  
         avion_1.vidaAvion = config.Partida.configuraciones.avionSalud;
@@ -1087,8 +1093,8 @@ class Play extends Phaser.Scene {
 
         avion_2 = new Avion({
             scene: this,
-            x: 500,
-            y: 400                                          
+            x: campoPotencias.posicionX + 120,
+            y: yInicialAvionBase                                        
         }).setInteractive(); 
         avion_2.idavion = 2;  
         avion_2.vidaAvion = config.Partida.configuraciones.avionSalud;     
@@ -1101,8 +1107,8 @@ class Play extends Phaser.Scene {
 
         avion_3 = new Avion({
             scene: this,
-            x: 500,
-            y: 600               
+            x: campoPotencias.posicionX + 170,
+            y: yInicialAvionBase               
         }).setInteractive(); 
         avion_3.idavion = 3;  
         avion_3.vidaAvion = config.Partida.configuraciones.avionSalud;
@@ -1115,8 +1121,8 @@ class Play extends Phaser.Scene {
 
         avion_4 = new Avion({
             scene: this,
-            x: 500,
-            y: 800                   
+            x: campoPotencias.posicionX + 230,
+            y: yInicialAvionBase                  
         }).setInteractive();  
         avion_4.idavion = 4;  
         avion_4.vidaAvion = config.Partida.configuraciones.avionSalud;
@@ -2066,7 +2072,7 @@ class Play extends Phaser.Scene {
         difX= Math.abs(avion.x - avion.xInicial); 
         difY= Math.abs(avion.y - avion.yInicial);
 
-        if (difX < 1.5 && difY < 1.5)
+        if (difX < 2 && difY < 2)
         {   
             avion.combustible = 2000;             
             if (avion.cargarbomba==true)
@@ -2094,7 +2100,10 @@ class Play extends Phaser.Scene {
             return false;
         }
         else
-            return true;           
+        {
+            return true;
+        }
+                       
     }
 
     //Funcion para controlar la visibilidad de los aviones cuando entran en el rango visible de otro avion
@@ -2182,13 +2191,14 @@ class Play extends Phaser.Scene {
         this.lightAvionConBomba(); // cambio de color al avion con bomba
         //Tiempo que se usa para las balas 
         this.time = time;
-
+        console.log(avion_1.altitud);
         if (this.EstaMoviendose(avion_1) && time>timeNafta)
         {                
             if(avion_1.combustible!=0)
             {   
-                timeNafta =timeNafta+1000;            
+                timeNafta =timeNafta+100;            
                 avion_1.combustible--;
+                //console.log(avion_1.cargarCombustible);              
             }
         }
         if (this.EstaMoviendose(avion_2) && time>timeNafta)
