@@ -95,12 +95,41 @@ class Partida {
     }
 
     guardarPartida(contrasenia){
+
+        //Armo el json de aviones
         var stringAviones="{";
         for(var i = 0; i<8 ; i++)
             stringAviones+=this.aviones[i] + ",";
         stringAviones=stringAviones.substring(0, stringAviones.length-1);   
-        stringAviones+="}";    
-        config.WebSocket.ws.send(JSON.stringify({operacion:"guardarPartida",idpartida:this.idpartida,passwd:contrasenia,aviones: stringAviones }));        
+        stringAviones+="}";  
+
+        //Armo el json de la base potencias
+        var baseP = "{ vidaTorre: " + this.basePotencias[0].vida + ", vidaDeposito: " + this.basePotencias[1].vida + ", vidaContenedor: " + this.basePotencias[2].vida + "}";
+        
+        //Armo el json de la base aliados
+        var baseA = "{ vidaTorre: " + this.baseAliados[0].vida + ", vidaDeposito: " + this.baseAliados[1].vida + ", vidaContenedor: " + this.baseAliados[2].vida + "}";
+
+        //Armo el json de artilleria Potencias
+        var stringArtPotencias="{";
+        for(var i = 0; i<this.configuraciones.artilleriaCantidad ; i++)     
+            stringArtPotencias+="{id:"+ i +",vida:" + this.artilleriasPotencias[i].vida + "},";
+        stringArtPotencias=stringArtPotencias.substring(0, stringArtPotencias.length-1);   
+        stringArtPotencias+="}";  
+
+        //Armo el json de artilleria Aliados
+        var stringArtAliados="{";
+        for(var i = 0; i<this.configuraciones.artilleriaCantidad ; i++)     
+            stringArtAliados+="{id:"+ i +",vida:" + this.artilleriasAliados[i].vida + "},";
+        stringArtAliados=stringArtAliados.substring(0, stringArtAliados.length-1);   
+        stringArtAliados+="}";  
+
+        config.WebSocket.ws.send(JSON.stringify({operacion:"guardarPartida",idpartida:this.idpartida,
+            data: {passwd:contrasenia,
+                aviones: stringAviones, 
+                basePotencias: baseP , 
+                baseAliados: baseA, 
+                vidaArtPotencias: stringArtPotencias,
+                vidaArtAliados: stringArtAliados}}));        
     }
 
 
