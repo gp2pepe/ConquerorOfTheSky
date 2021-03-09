@@ -166,6 +166,8 @@ class Play extends Phaser.Scene {
             artilleriasPotencias.getChildren()[i].setCircle(450);
             artilleriasPotencias.getChildren()[i].setOffset(-250,-250);  
             artilleriasPotencias.getChildren()[i].lastFired = 0; 
+            artilleriasPotencias.getChildren()[i].vida = config.Partida.configuraciones.artilleriaSalud; 
+
         }
 
         //Cargo base para bando 2 - Aliados
@@ -218,6 +220,8 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].setCircle(450);
             artilleriasAliados.getChildren()[i].setOffset(-250,-250);    
             artilleriasAliados.getChildren()[i].lastFired = 0; 
+            artilleriasAliados.getChildren()[i].vida = config.Partida.configuraciones.artilleriaSalud; 
+
        }
 
         //Se define la posicion inicial de aviones y se llama a funcion que definira los aviones   
@@ -317,6 +321,26 @@ class Play extends Phaser.Scene {
         config.Partida.aviones[5] = avion_2_Aliados;
         config.Partida.aviones[6] = avion_3_Aliados;
         config.Partida.aviones[7] = avion_4_Aliados;
+
+        config.Partida.basePotencias = new Array();
+        config.Partida.basePotencias[0] = this.torrePotencias;
+        config.Partida.basePotencias[1] = this.depositoPotencias;
+        config.Partida.basePotencias[2] = this.contenedorPotencias;
+
+        config.Partida.baseAliados = new Array();
+        config.Partida.baseAliados[0] = this.torreAliados;
+        config.Partida.baseAliados[1] = this.depositoAliados;
+        config.Partida.baseAliados[2] = this.contenedorAliados;
+
+        config.Partida.artilleriasPotencias = new Array();
+        for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
+            config.Partida.artilleriasPotencias[i] = artilleriasPotencias.getChildren()[i];
+        }
+
+        config.Partida.artilleriasAliados = new Array();
+        for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
+            config.Partida.artilleriasAliados[i] = artilleriasAliados.getChildren()[i];
+        }
         
         this.BotonesLaterales();
         
