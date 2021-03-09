@@ -137,7 +137,8 @@ class Play extends Phaser.Scene {
         this.circulo_torrePotencias = this.add.image(this.torrePotencias.x,this.torrePotencias.y,'circuloAvion').setScale(1.5);
         this.circulo_torrePotencias.setVisible(false);
         this.physics.world.enable(this.circulo_torrePotencias);
-        this.circulo_torrePotencias.body.setCircle(50); 
+        this.circulo_torrePotencias.body.setCircle(60); 
+        this.circulo_torrePotencias.body.setOffset(-10,-10); 
                
 
         this.depositoPotencias.vida= config.Partida.configuraciones.depositoExplosivosSalud;
@@ -193,7 +194,8 @@ class Play extends Phaser.Scene {
         this.circulo_torreAliados = this.add.image(this.torreAliados.x,this.torreAliados.y,'circuloAvion').setScale(1.5);
         this.circulo_torreAliados.setVisible(false);
         this.physics.world.enable(this.circulo_torreAliados);
-        this.circulo_torreAliados.body.setCircle(50); 
+        this.circulo_torreAliados.body.setCircle(60);
+        this.circulo_torreAliados.body.setOffset(-10,-10); 
 
         this.depositoAliados.vida= config.Partida.configuraciones.depositoExplosivosSalud;
         this.physics.world.enable(this.depositoAliados);        
@@ -1932,7 +1934,9 @@ class Play extends Phaser.Scene {
             this.circulo_8.setVisible(false);   
             for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
                 artilleriasAliados.getChildren()[i].setVisible(false);
-            }            
+            }   
+            this.campoAliados.setVisible(false);  
+            this.pisoBaseAliados.setVisible(false);       
         }
         else
         {
@@ -1949,7 +1953,9 @@ class Play extends Phaser.Scene {
             this.circulo_1.setVisible(false);   
             this.circulo_2.setVisible(false);  
             this.circulo_3.setVisible(false);  
-            this.circulo_4.setVisible(false);         
+            this.circulo_4.setVisible(false); 
+            this.imgCampoPotencias.setVisible(false);  
+            this.pisoBasePotencias.setVisible(false);         
         }
            
     }
