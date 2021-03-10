@@ -94,8 +94,8 @@ class Bootloader extends Phaser.Scene {
              'Save-64',
              'guardando',
              'pausado',
-             'fondoGuardar',
-             'loading'
+             'fondoGuardar'
+             //'loading'
 
         ])
         this.load.on('complete',()=>{

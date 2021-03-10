@@ -952,6 +952,7 @@ class Play extends Phaser.Scene {
                 this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_grande.danio;                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('grande:'+this.depositoAliados.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
                 if (this.depositoAliados.vida < 0)
                     console.log('sin deposito');
             });
@@ -961,6 +962,7 @@ class Play extends Phaser.Scene {
                 this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_chico.danio;
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('torre - chica:'+this.torreAliados.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
                 if (this.torreAliados.vida < 0)
                     console.log('sin torre ');
             });
@@ -970,6 +972,7 @@ class Play extends Phaser.Scene {
                 this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_grande.danio;                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('torre -grande:'+this.torreAliados.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
                 if (this.torreAliados.vida < 0)
                     console.log('sin torre');
             });
@@ -979,6 +982,7 @@ class Play extends Phaser.Scene {
                 this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_chico.danio;
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('contendor - chica:'+this.contenedorAliados.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
                 if (this.contenedorAliados.vida < 0)
                     console.log('sin contenedor');
             });
@@ -988,6 +992,7 @@ class Play extends Phaser.Scene {
                 this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_grande.danio;                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('contenedor - grande:'+this.contenedorAliados.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
                 if (this.contenedorAliados.vida < 0)
                     console.log('sin contenedor');
             });
@@ -1000,6 +1005,7 @@ class Play extends Phaser.Scene {
                 this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_chico.danio;
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('chica:'+this.depositoPotencias.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
                 if (this.depositoPotencias.vida < 0)
                     console.log('sin deposito ');
             });
@@ -1009,6 +1015,7 @@ class Play extends Phaser.Scene {
                 this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_grande.danio;                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('grande:'+this.depositoPotencias.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
                 if (this.depositoPotencias.vida < 0)
                     console.log('sin deposito');
             });
@@ -1018,6 +1025,7 @@ class Play extends Phaser.Scene {
                 this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_chico.danio;
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('torre - chica:'+this.torrePotencias.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
                 if (this.torrePotencias.vida < 0)
                     console.log('sin torre ');
             });
@@ -1027,6 +1035,7 @@ class Play extends Phaser.Scene {
                 this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_grande.danio;                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('torre -grande:'+this.torrePotencias.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
                 if (this.torrePotencias.vida < 0)
                     console.log('sin torre');
             });
@@ -1036,6 +1045,7 @@ class Play extends Phaser.Scene {
                 this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_chico.danio;
                 this.circulo_bomba_chico.setPosition(1, 1);                
                 console.log('contendor - chica:'+this.contenedorPotencias.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
                 if (this.contenedorPotencias.vida < 0)
                     console.log('sin contenedor');
             });
@@ -1045,6 +1055,7 @@ class Play extends Phaser.Scene {
                 this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_grande.danio;                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('contenedor - grande:'+this.contenedorPotencias.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
                 if (this.contenedorPotencias.vida < 0)
                     console.log('sin contenedor');
             });      
