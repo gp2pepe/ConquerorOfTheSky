@@ -67,6 +67,10 @@ class Bootloader extends Phaser.Scene {
             'panelBase',
             'mostrarRango',
             'nick',
+            'vidaContainer',
+            'combustibleContainer',
+            'vidaBar',
+            'combustibleBar',
 
              'menupartidas',
              'menupartidas_2',
@@ -88,7 +92,10 @@ class Bootloader extends Phaser.Scene {
              'mitadMapa',
              'mapa_6Claro',
              'Save-64',
-             'guardando'
+             'guardando',
+             'pausado',
+             'fondoGuardar'
+             //'loading'
 
         ])
         /* var context = new AudioContext();
