@@ -10,7 +10,8 @@ import PartidaLlena from '../Scenes/PartidaLlena.js';
 import GameOver from '../Scenes/GameOver.js'
 import Win from '../Scenes/Win.js'
 import scroll from '../Scenes/scroll.js'
-import Guardando from '../Scenes/popups/Guardando.js'
+import Guardar from '../Scenes/popups/Guardar.js'
+import Pausado from '../Scenes/popups/Pausado.js'
 
 
 var config = {
@@ -29,7 +30,7 @@ var config = {
             debug: true
         }
     },
-    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,PartidaLlena,GameOver,Win,scroll,Guardando],
+    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,PartidaLlena,GameOver,Win,scroll,Guardar,Pausado],
     WebSocket: new Client(),
     Partida: new Partida(),   
     

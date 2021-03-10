@@ -135,7 +135,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
             //Proceso el guardar partida     
             }else if(op.equals(new String("guardarPartida"))){
                 try{
-                    //LOGGER.debug("Llego un guardarPartida: " + map.toString());
+                    LOGGER.debug("Llego un guardarPartida: " + map.toString());
                     String respuesta = fachada.guardarPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("data"));
                     session.sendMessage(new TextMessage(respuesta));
                 }catch(Exception e){

@@ -53,8 +53,9 @@ class Partida {
             }else if(msg.carga.tipoOp == "sincronizarPausa"){
                 if(msg.carga.estado == "Pausar")
                     this.estado = "Pausado";
-                if(msg.carga.estado == "Activar")
+                if(msg.carga.estado == "Activar"){
                     this.estado = "Jugando";
+                }
 
             }
 
@@ -63,7 +64,7 @@ class Partida {
             this.listaCargada = true;
 
         }else if(msg.operacion == "guardarPartida"){ 
-            this.estado = "Jugando";
+            this.estado = "Preparado";
 
         }else if(msg.operacion == "errorServidor"){ 
                 this.hayError = true;
@@ -93,9 +94,16 @@ class Partida {
         config.WebSocket.ws.send(JSON.stringify({operacion:"listarPartidas"}));        
     }
 
-    guardarPartida(){
-        config.WebSocket.ws.send(JSON.stringify({operacion:"guardarPartida",idpartida:this.idpartida,aviones: this.aviones }));        
+    guardarPartida(contrasenia){
+        var stringAviones="{";
+        for(var i = 0; i<8 ; i++)
+            stringAviones+=this.aviones[i] + ",";
+        stringAviones=stringAviones.substring(0, stringAviones.length-1);   
+        stringAviones+="}";    
+        config.WebSocket.ws.send(JSON.stringify({operacion:"guardarPartida",idpartida:this.idpartida,passwd:contrasenia,aviones: stringAviones }));        
     }
+
+
 
 }
 

@@ -321,7 +321,6 @@ public class Fachada implements IFachada{
       while(i<partidas.size() && encontre == false){
         Partida par = partidas.get(i);
         if(par.getIdpartida().equals(idPartida)){
-          LOGGER.debug("Voy a guardar la partida: " + par);
           partidaR.saveAndFlush(par);
           encontre = true;
         }

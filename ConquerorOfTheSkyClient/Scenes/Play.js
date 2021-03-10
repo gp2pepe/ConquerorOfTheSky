@@ -300,7 +300,7 @@ class Play extends Phaser.Scene {
 
         //Se realiza la asignacion entre los aviones recien definidos con los que maneja la clase Partida
         //Esto necesario para el sincronizar
-        config.Partida.aviones = new Array;
+        config.Partida.aviones = new Array();
         config.Partida.aviones[0] = avion_1;
         config.Partida.aviones[1] = avion_2;
         config.Partida.aviones[2] = avion_3;
@@ -647,10 +647,10 @@ class Play extends Phaser.Scene {
                 onComplete: () => {
          
                         this.guardar.setScale(0.6);  
-                        this.scene.pause();
+                        config.Partida.estado="Pausado";
+                        this.scene.launch('Guardar');
                         config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                        this.scene.launch('Guardando');
-                        config.Partida.guardarPartida();
+                        this.scene.pause();
        
                 }
             });
@@ -2076,7 +2076,6 @@ class Play extends Phaser.Scene {
                 avion.altitud='En base';
                 avion.setScale(.05);
                 avion.cargarbomba=false;
-                //config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion: avion.idavion, bomba: false});
                 avion.tengobomba=true; 
                 avion.velocidad=avion.calcularVelocidad(velAvion);
                 this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
@@ -2088,7 +2087,6 @@ class Play extends Phaser.Scene {
                 avion.body.setVelocityY(0);
                 avion.body.setVelocityX(0);
                 avion.cargarCombustible=false; 
-                //config.Partida.sincronizar({tipoOp:"sincronizarCombustibleAvion", idavion: avion.idavion, combustible: false});
                 this.volverBase = this.add.image(220, 545, "botonCombustible").setOrigin(0).setScale(.3).setInteractive();
             }            
             return false;
@@ -2347,6 +2345,8 @@ class Play extends Phaser.Scene {
         }
 
         if(config.Partida.estado=='Pausado'){
+            if(!config.Partida.duenio)
+                this.scene.launch('Pausado');
             this.scene.pause();
         }else if(config.Partida.estado=='Jugando'){
             this.scene.resume();

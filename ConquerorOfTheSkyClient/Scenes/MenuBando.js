@@ -235,7 +235,7 @@ class MenuBando extends Phaser.Scene
         }
 
 
-        }
+    }
 
 
 }

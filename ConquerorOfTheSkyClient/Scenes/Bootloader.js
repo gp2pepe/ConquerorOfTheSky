@@ -92,7 +92,10 @@ class Bootloader extends Phaser.Scene {
              'mitadMapa',
              'mapa_6Claro',
              'Save-64',
-             'guardando'
+             'guardando',
+             'pausado',
+             'fondoGuardar',
+             'loading'
 
         ])
         this.load.on('complete',()=>{

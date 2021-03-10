@@ -2,7 +2,7 @@ import Play from '../Scenes/Play.js';
 import { config } from '../lib/main.js';
 
 class Avion extends Phaser.GameObjects.Sprite {
-	
+
 	/**
 	 * Constructor.
 	 */
@@ -67,6 +67,12 @@ class Avion extends Phaser.GameObjects.Sprite {
                 return velocidad/4;
             else
                 return velocidad/2;
+    }
+
+
+
+    toString(){
+        return "{idavion: "+ this.idavion+", x:" + this.x +  ", y:" + this.y + ",combustible:"+ this.combustible + ", altitud:" + this.altitud + ", tengoBomba:"+ this.tengobomba + ",vida :" + this.vidaAvion+"}";
     }
 }
 
