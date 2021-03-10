@@ -30,6 +30,10 @@ class MenuBando extends Phaser.Scene
         this.add.image(650,50, 'seleccioncarac').setOrigin(0);
         this.textBox = this.add.image(750,140, 'textBox').setOrigin(0).setScale(0.5);
         this.text = this.add.text(800, 160, 'Click para ingresar nombre', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
+        this.sonidoClick = this.sound.add('sonido_click',{loop:false});
+        this.sonidoConfirmar = this.sound.add('sonido_confirmar',{loop:false});
+        //this.sonidoFondoPartida = this.sound.add('sonido_fondo_partida',{loop:true,volume:0.1});
+        
         
     
         this.text.on(Phaser.Input.Events.POINTER_DOWN, () => {
@@ -156,6 +160,7 @@ class MenuBando extends Phaser.Scene
                 y: 400,
                 duration: 1000
             });
+            this.sonidoClick.play();
         });
         this.textoPotencias.on(Phaser.Input.Events.POINTER_OVER, () => {
             this.add.tween({
@@ -190,6 +195,7 @@ class MenuBando extends Phaser.Scene
                 y: 400,
                 duration: 1000
             });
+            this.sonidoClick.play();
         });
         
         this.textoAliados.on(Phaser.Input.Events.POINTER_OVER, () => {
@@ -215,6 +221,8 @@ class MenuBando extends Phaser.Scene
                 alerta.setText('Seleccione un Bando'); 
             }else{
             //Creo la partida con el bando y el nombre seleccionado
+            this.sonidoConfirmar.play();
+           // this.sonidoFondoPartida.play();
             console.log('Entre iniciando partida en Menu Bando');
             config.Partida.Bando = bandoElegido;
             config.Partida.Nombre = textEntry.text;

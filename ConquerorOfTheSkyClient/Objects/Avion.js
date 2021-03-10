@@ -18,6 +18,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.vidaAvion = 100;    
         this.focus=false;   
         this.altitud='Baja';
+        this.altitud_anterior='En base';
         this.lastFired=0;
         this.combustible = 2000;
         this.xInicial = config.x;
@@ -40,17 +41,27 @@ class Avion extends Phaser.GameObjects.Sprite {
 
     cambiarAltitud(altitud){
         this.altitud=altitud
-        if(altitud=='Alta'){
-            this.setScale(0.08);
-            this.velocidad = this.calcularVelocidad();
-            var angle = this.rotation;	
-            this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);        
-        }else{
+        if (altitud=='En base')
+        {
             this.setScale(0.05);
-            this.velocidad = this.calcularVelocidad();
+            this.velocidad = 0;
             var angle = this.rotation;	
             this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+
+        }else{
+            if(altitud=='Alta'){
+                this.setScale(0.08);
+                this.velocidad = this.calcularVelocidad();
+                var angle = this.rotation;	
+                this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);        
+            }else{
+                this.setScale(0.05);
+                this.velocidad = this.calcularVelocidad();
+                var angle = this.rotation;	
+                this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+            }
         }
+
     }
 
 
