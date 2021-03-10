@@ -443,35 +443,37 @@ class Play extends Phaser.Scene {
         vidaBar4.mask = new Phaser.Display.Masks.BitmapMask(this, this.vidaMask4);
 
 
-           //Se definen las barras de combustible de cada avion
-           combustibleContainer1 = this.add.sprite(347, 520 , "combustibleContainer").setScale(0.25);
-           combustibleContainer2 = this.add.sprite(347, 615 , "combustibleContainer").setScale(0.25);
-           combustibleContainer3 = this.add.sprite(347, 710 , "combustibleContainer").setScale(0.25);
-           combustibleContainer4 = this.add.sprite(347, 805 , "combustibleContainer").setScale(0.25);
- 
-            //Sprite con la barra de combustible a moverse
-           combustibleBar1 = this.add.sprite(combustibleContainer1.x-10 , combustibleContainer1.y, "combustibleBar").setScale(0.25);
-           combustibleBar2 = this.add.sprite(combustibleContainer2.x-10 , combustibleContainer2.y, "combustibleBar").setScale(0.25);
-           combustibleBar3 = this.add.sprite(combustibleContainer3.x-10 , combustibleContainer3.y, "combustibleBar").setScale(0.25);
-           combustibleBar4 = this.add.sprite(combustibleContainer4.x-10 , combustibleContainer4.y, "combustibleBar").setScale(0.25);
-    
-            //Mascara para ocultar la barra de combustible
-           this.combustibleMask1 = this.add.sprite(combustibleBar1.x, combustibleBar1.y, "combustibleBar").setScale(0.25);
-           this.combustibleMask2 = this.add.sprite(combustibleBar2.x, combustibleBar2.y, "combustibleBar").setScale(0.25);
-           this.combustibleMask3 = this.add.sprite(combustibleBar3.x, combustibleBar3.y, "combustibleBar").setScale(0.25);
-           this.combustibleMask4 = this.add.sprite(combustibleBar4.x, combustibleBar4.y, "combustibleBar").setScale(0.25);
-    
-            // dejo la mascara no visible para que luego aparezca al mover el combustibleBar
-           this.combustibleMask1.visible = false;
-           this.combustibleMask2.visible = false;
-           this.combustibleMask3.visible = false;
-           this.combustibleMask4.visible = false;
-    
-           // Asigno la mascara la barra de combustible
-           combustibleBar1.mask = new Phaser.Display.Masks.BitmapMask(this, this.combustibleMask1);
-           combustibleBar2.mask = new Phaser.Display.Masks.BitmapMask(this, this.combustibleMask2);
-           combustibleBar3.mask = new Phaser.Display.Masks.BitmapMask(this, this.combustibleMask3);
-           combustibleBar4.mask = new Phaser.Display.Masks.BitmapMask(this, this.combustibleMask4);
+        //Se definen las barras de combustible de cada avion
+        combustibleContainer1 = this.add.sprite(347, 520 , "combustibleContainer").setScale(0.25);
+        combustibleContainer2 = this.add.sprite(347, 615 , "combustibleContainer").setScale(0.25);
+        combustibleContainer3 = this.add.sprite(347, 710 , "combustibleContainer").setScale(0.25);
+        combustibleContainer4 = this.add.sprite(347, 805 , "combustibleContainer").setScale(0.25);
+
+        //Sprite con la barra de combustible a moverse
+        combustibleBar1 = this.add.sprite(combustibleContainer1.x-10 , combustibleContainer1.y, "combustibleBar").setScale(0.25);
+        combustibleBar2 = this.add.sprite(combustibleContainer2.x-10 , combustibleContainer2.y, "combustibleBar").setScale(0.25);
+        combustibleBar3 = this.add.sprite(combustibleContainer3.x-10 , combustibleContainer3.y, "combustibleBar").setScale(0.25);
+        combustibleBar4 = this.add.sprite(combustibleContainer4.x-10 , combustibleContainer4.y, "combustibleBar").setScale(0.25);
+
+        //Mascara para ocultar la barra de combustible
+        this.combustibleMask1 = this.add.sprite(combustibleBar1.x, combustibleBar1.y, "combustibleBar").setScale(0.25);
+        this.combustibleMask2 = this.add.sprite(combustibleBar2.x, combustibleBar2.y, "combustibleBar").setScale(0.25);
+        this.combustibleMask3 = this.add.sprite(combustibleBar3.x, combustibleBar3.y, "combustibleBar").setScale(0.25);
+        this.combustibleMask4 = this.add.sprite(combustibleBar4.x, combustibleBar4.y, "combustibleBar").setScale(0.25);
+
+        // dejo la mascara no visible para que luego aparezca al mover el combustibleBar
+        this.combustibleMask1.visible = false;
+        this.combustibleMask2.visible = false;
+        this.combustibleMask3.visible = false;
+        this.combustibleMask4.visible = false;
+
+        // Asigno la mascara la barra de combustible
+        combustibleBar1.mask = new Phaser.Display.Masks.BitmapMask(this, this.combustibleMask1);
+        combustibleBar2.mask = new Phaser.Display.Masks.BitmapMask(this, this.combustibleMask2);
+        combustibleBar3.mask = new Phaser.Display.Masks.BitmapMask(this, this.combustibleMask3);
+        combustibleBar4.mask = new Phaser.Display.Masks.BitmapMask(this, this.combustibleMask4);
+
+        this.BotonesLaterales();
     }
 
 
@@ -485,24 +487,28 @@ class Play extends Phaser.Scene {
                 targets: this.cargarBomba1,
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
-                    console.log('aca estoy');
+                    
                     if (avion_1.focus==true)
                     {    
+                        avion_1.altitud_anterior=avion_1.altitud;
+                        
                         avion_1.cargarbomba=true;      
                         this.cargarBomba1 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();   
-                        this.cargarBomba1.depth =100;      
+                     //   this.cargarBomba1.depth =100;      
                         config.Partida.idavion=1;
-                        avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});
+                        avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});                        
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: avion_1.xInicial, y: avion_1.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:1, bomba: true});
                         
-                         this.avionVistaLateral = this.add.image(100,180,'avionBombaLateral').setOrigin(0).setScale(.7);
-                         this.avionVistaLateral.depth = 100;
+                        this.avionVistaLateral = this.add.image(100,180,'avionBombaLateral').setOrigin(0).setScale(.7);
+                        this.avionVistaLateral.depth = 100;
 
                     }            
 
                     if (avion_1_Aliados.focus==true)
                     {    
+                        avion_1_Aliados.altitud_anterior=avion_1_Aliados.altitud;
+
                         avion_1_Aliados.cargarbomba=true;  
                         this.cargarBomba1 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();         
                         config.Partida.idavion=5;
@@ -524,6 +530,8 @@ class Play extends Phaser.Scene {
                                         
                     if (avion_1.focus==true)
                     {            
+                        avion_1.altitud_anterior=avion_1.altitud;
+
                         avion_1.cargarCombustible=true;
                         config.Partida.idavion=1;
                         avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});
@@ -535,6 +543,8 @@ class Play extends Phaser.Scene {
 
                     if (avion_1_Aliados.focus==true)
                     {        
+                        avion_1_Aliados.altitud_anterior=avion_1_Aliados.altitud;
+
                         avion_1_Aliados.cargarCombustible=true;     
                         config.Partida.idavion=5;
                         avion_1_Aliados.moverAvion({x: avion_1_Aliados.xInicial, y: avion_1_Aliados.yInicial});
@@ -555,6 +565,8 @@ class Play extends Phaser.Scene {
                      
                     if (avion_2.focus==true)
                     {    
+                        avion_2.altitud_anterior=avion_2.altitud;
+
                         avion_2.cargarbomba=true;      
                         this.cargarBomba2 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();         
                         config.Partida.idavion=2;
@@ -566,6 +578,8 @@ class Play extends Phaser.Scene {
 
                     if (avion_2_Aliados.focus==true)
                     {    
+                        avion_2_Aliados.altitud_anterior=avion_2_Aliados.altitud;
+
                         avion_2_Aliados.cargarbomba=true;  
                         this.cargarBomba2 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();         
                         config.Partida.idavion=6;
@@ -587,6 +601,8 @@ class Play extends Phaser.Scene {
                                         
                     if (avion_2.focus==true)
                     {            
+                        avion_2.altitud_anterior=avion_2.altitud;
+
                         avion_2.cargarCombustible=true;
                         config.Partida.idavion=2;
                         avion_2.moverAvion({x: avion_2.xInicial, y: avion_2.yInicial});
@@ -598,6 +614,8 @@ class Play extends Phaser.Scene {
 
                     if (avion_2_Aliados.focus==true)
                     {        
+                        avion_2_Aliados.altitud_anterior=avion_2_Aliados.altitud;
+
                         avion_2_Aliados.cargarCombustible=true;     
                         config.Partida.idavion=6;
                         avion_2_Aliados.moverAvion({x: avion_2_Aliados.xInicial, y: avion_2_Aliados.yInicial});
@@ -618,6 +636,8 @@ class Play extends Phaser.Scene {
                      
                     if (avion_3.focus==true)
                     {    
+                        avion_3.altitud_anterior=avion_3.altitud;
+
                         avion_3.cargarbomba=true;      
                         this.cargarBomba3 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();         
                         config.Partida.idavion=3;
@@ -629,6 +649,8 @@ class Play extends Phaser.Scene {
 
                     if (avion_3_Aliados.focus==true)
                     {    
+                        avion_3_Aliados.altitud_anterior=avion_3_Aliados.altitud;
+                        
                         avion_3_Aliados.cargarbomba=true;  
                         this.cargarBomba3 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();         
                         config.Partida.idavion=7;
@@ -649,6 +671,8 @@ class Play extends Phaser.Scene {
                                         
                     if (avion_3.focus==true)
                     {            
+                        avion_3.altitud_anterior=avion_3.altitud;
+
                         avion_3.cargarCombustible=true;
                         config.Partida.idavion=3;
                         avion_3.moverAvion({x: avion_3.xInicial, y: avion_3.yInicial});
@@ -660,6 +684,8 @@ class Play extends Phaser.Scene {
 
                     if (avion_3_Aliados.focus==true)
                     {        
+                        avion_3_Aliados.altitud_anterior=avion_3_Aliados.altitud;
+
                         avion_3_Aliados.cargarCombustible=true;     
                         config.Partida.idavion=7;
                         avion_3_Aliados.moverAvion({x: avion_3_Aliados.xInicial, y: avion_3_Aliados.yInicial});
@@ -680,6 +706,8 @@ class Play extends Phaser.Scene {
                      
                     if (avion_4.focus==true)
                     {    
+                        avion_4.altitud_anterior=avion_4.altitud;
+
                         avion_4.cargarbomba=true;      
                         this.cargarBomba4 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();         
                         config.Partida.idavion=4;
@@ -691,6 +719,8 @@ class Play extends Phaser.Scene {
 
                     if (avion_4_Aliados.focus==true)
                     {    
+                        avion_4_Aliados.altitud_anterior=avion_4_Aliados.altitud;
+
                         avion_4_Aliados.cargarbomba=true;  
                         this.cargarBomba4 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();         
                         config.Partida.idavion=8;
@@ -851,8 +881,7 @@ class Play extends Phaser.Scene {
         if (1 == avion.activarColision)
         {
             var Hit = Phaser.Math.Between(1,2);
-            if (Hit == 1 ){
-                console.log(avion.idAvion);
+            if (Hit == 1 ){               
                 if(config.Partida.Bando=='Potencias'){
                     if(avion.idAvion == 1){
                         vidaBar1.x-=5;
@@ -1191,14 +1220,27 @@ class Play extends Phaser.Scene {
         if (config.Partida.Bando=='Potencias')
         {
             if (avion_1.focus==true)
-            {            
-                config.Partida.idavion=1;
+            {       
+ 
+                if (avion_1.altitud_anterior!='En base' &&avion_1.altitud==='En base')
+                {    
+                    avion_1.cambiarAltitud(avion_1.altitud_anterior);
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:avion_1.altitud});                    
+                    avion_1.altitud_anterior = 'En base';
+                } 
+                config.Partida.idavion=1;                
                 avion_1.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: pointer.x, y: pointer.y});
             }  
 
             if (avion_2.focus==true)
-            {            
+            {         
+                if (avion_2.altitud_anterior!='En base' &&avion_2.altitud==='En base')
+                {    
+                    avion_2.cambiarAltitud(avion_2.altitud_anterior);
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:avion_2.altitud});                    
+                    avion_2.altitud_anterior = 'En base';
+                }    
                 config.Partida.idavion=2;
                 avion_2.moverAvion({x: pointer.x, y: pointer.y});
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: pointer.x, y: pointer.y});
@@ -1206,13 +1248,25 @@ class Play extends Phaser.Scene {
 
             if (avion_3.focus==true)
             {            
+                if (avion_3.altitud_anterior!='En base' &&avion_3.altitud==='En base')
+                {    
+                    avion_3.cambiarAltitud(avion_3.altitud_anterior);
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:avion_3.altitud});                    
+                    avion_3.altitud_anterior = 'En base';
+                }    
                 config.Partida.idavion=3;
                 avion_3.moverAvion({x: pointer.x, y: pointer.y});
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: pointer.x, y: pointer.y});
             }  
 
             if (avion_4.focus==true)
-            {         
+            {       
+                if (avion_4.altitud_anterior!='En base' &&avion_4.altitud==='En base')
+                {    
+                    avion_4.cambiarAltitud(avion_4.altitud_anterior);
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:avion_4.altitud});                    
+                    avion_4.altitud_anterior = 'En base';
+                }   
                 config.Partida.idavion=4;
                 avion_4.moverAvion({x: pointer.x, y: pointer.y});
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: pointer.x, y: pointer.y});
@@ -1222,24 +1276,48 @@ class Play extends Phaser.Scene {
             {
             if (avion_1_Aliados.focus==true )
             {
+                if (avion_1_Aliados.altitud_anterior!='En base' &&avion_1_Aliados.altitud==='En base')
+                {    
+                    avion_1_Aliados.cambiarAltitud(avion_1_Aliados.altitud_anterior);
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:avion_1_Aliados.altitud});                    
+                    avion_1_Aliados.altitud_anterior = 'En base';
+                } 
                 config.Partida.idavion=5;
                 avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: pointer.x, y: pointer.y});
             }
             if (avion_2_Aliados.focus==true)
             { 
+                if (avion_2_Aliados.altitud_anterior!='En base' &&avion_2_Aliados.altitud==='En base')
+                {    
+                    avion_2_Aliados.cambiarAltitud(avion_2_Aliados.altitud_anterior);
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_2_Aliados.altitud});                    
+                    avion_2_Aliados.altitud_anterior = 'En base';
+                } 
                 config.Partida.idavion=6;
                 avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: pointer.x, y: pointer.y});
             }
             if (avion_3_Aliados.focus==true)
             {
+                if (avion_3_Aliados.altitud_anterior!='En base' &&avion_3_Aliados.altitud==='En base')
+                {    
+                    avion_3_Aliados.cambiarAltitud(avion_3_Aliados.altitud_anterior);
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_3_Aliados.altitud});                    
+                    avion_3_Aliados.altitud_anterior = 'En base';
+                }
                 config.Partida.idavion=7;
                 avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: pointer.x, y: pointer.y});
             }
             else
             {
+                if (avion_4_Aliados.altitud_anterior!='En base' &&avion_4_Aliados.altitud==='En base')
+                {    
+                    avion_4_Aliados.cambiarAltitud(avion_4_Aliados.altitud_anterior);
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_4_Aliados.altitud});                    
+                    avion_4_Aliados.altitud_anterior = 'En base';
+                }
                 if (avion_4_Aliados.focus==true){
                 config.Partida.idavion=8;
                 avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});
@@ -1357,9 +1435,9 @@ class Play extends Phaser.Scene {
             scene: this,
             x: campoPotencias.posicionX + 70,
             y: yInicialAvionBasePotencias,
-            xInicial: campoPotencias.posicionX + 70,
-            yInicial: yInicialAvionBasePotencias
-        }).setInteractive();    
+         //   xInicial: campoPotencias.posicionX + 70,
+        //    yInicial: yInicialAvionBasePotencias
+        }).setInteractive(); 
         avion_1.idavion = 1;  
         avion_1.vidaAvion = config.Partida.configuraciones.avionSalud;
         avion_1.velocidad = velAvion;
@@ -1433,7 +1511,7 @@ class Play extends Phaser.Scene {
         this.circulo_5.body.setCircle(35);
         this.circulo_5.body.setOffset(15,16); 
         this.circulo_5.idAvion=5;
-        avion_1_Aliados.flipX = true;
+       // avion_1_Aliados.flipX = true;
 
         avion_2_Aliados = new Avion({
             scene: this,
@@ -1451,7 +1529,7 @@ class Play extends Phaser.Scene {
         this.circulo_6.body.setCircle(35);
         this.circulo_6.body.setOffset(15,16);
         this.circulo_6.idAvion=6;
-        avion_2_Aliados.flipX = true;
+        //avion_2_Aliados.flipX = true;
 
         avion_3_Aliados = new Avion({
             scene: this,
@@ -1469,7 +1547,7 @@ class Play extends Phaser.Scene {
         this.circulo_7.body.setCircle(35);
         this.circulo_7.body.setOffset(15,16);
         this.circulo_7.idAvion=7;
-        avion_3_Aliados.flipX = true;
+      //  avion_3_Aliados.flipX = true;
 
         avion_4_Aliados = new Avion({
             scene: this,
@@ -1487,7 +1565,7 @@ class Play extends Phaser.Scene {
         this.circulo_8.body.setCircle(35);
         this.circulo_8.body.setOffset(15,16);
         this.circulo_8.idAvion=8;
-        avion_4_Aliados.flipX = true;
+      //  avion_4_Aliados.flipX = true;
 
         this.circulo_bomba_grande = this.add.image(1,1,'circuloAvion').setScale(1.5);
         this.circulo_bomba_grande.setVisible(false);
@@ -1507,58 +1585,93 @@ class Play extends Phaser.Scene {
             if (avion_1.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_1.cambiarAltitud("Alta");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Alta"});                    
-
+                if (avion_1.altitud!='En base'){
+                    avion_1.cambiarAltitud("Alta");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Alta"}); 
+                }  
+                else
+                    avion_1.setScale(0.08);  
+                avion_1.altitud_anterior= "Alta";
             }
-            if (avion_2.focus==true){
+            if (avion_2.focus==true){                
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_2.cambiarAltitud("Alta");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:"Alta"});                    
+                if (avion_2.altitud!='En base'){
+                    avion_2.cambiarAltitud("Alta");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:"Alta"}); 
+                }  
+                else
+                    avion_2.setScale(0.08);  
+                avion_2.altitud_anterior= "Alta";                   
 
             }
             if (avion_3.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7); 
-                avion_3.cambiarAltitud("Alta");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:"Alta"});
+                if (avion_3.altitud!='En base'){    
+                    avion_3.cambiarAltitud("Alta");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:"Alta"});
+                }   
+                else
+                    avion_3.setScale(0.08);  
+                avion_3.altitud_anterior= "Alta"; 
 
             }
             if (avion_4.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_4.cambiarAltitud("Alta");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:"Alta"});
+                if (avion_4.altitud!='En base'){
+                    avion_4.cambiarAltitud("Alta");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:"Alta"});
+                }   
+                else
+                    avion_4.setScale(0.08);  
+                avion_4.altitud_anterior= "Alta"; 
 
             }   
             if (avion_1_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_1_Aliados.cambiarAltitud("Alta");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:"Alta"});
-    
+                if (avion_1_Aliados.altitud!='En base'){
+                    avion_1_Aliados.cambiarAltitud("Alta");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:"Alta"});
+                }   
+                else
+                    avion_1_Aliados.setScale(0.08);  
+                avion_1_Aliados.altitud_anterior= "Alta"; 
             }
             if (avion_2_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_2_Aliados.cambiarAltitud("Alta");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:"Alta"});
-
+                if (avion_2_Aliados.altitud!='En base'){
+                    avion_2_Aliados.cambiarAltitud("Alta");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:"Alta"});
+                }   
+                else
+                    avion_2_Aliados.setScale(0.08);  
+                avion_2_Aliados.altitud_anterior= "Alta"; 
             }
             if (avion_3_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_3_Aliados.cambiarAltitud("Alta");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:"Alta"});
-
+                if (avion_3_Aliados.altitud!='En base'){
+                    avion_3_Aliados.cambiarAltitud("Alta");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:"Alta"});
+                }   
+                else
+                    avion_3_Aliados.setScale(0.08);  
+                avion_3_Aliados.altitud_anterior= "Alta"; 
             }
             if (avion_4_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_4_Aliados.cambiarAltitud("Alta");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Alta"});
-
+                if (avion_4_Aliados.altitud!='En base'){
+                    avion_4_Aliados.cambiarAltitud("Alta");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Alta"});
+                }   
+                else
+                    avion_4_Aliados.setScale(0.08);  
+                avion_4_Aliados.altitud_anterior= "Alta"; 
             }
         });
 
@@ -1567,57 +1680,94 @@ class Play extends Phaser.Scene {
             if (avion_1.focus==true){
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_1.cambiarAltitud("Baja");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Baja"});
+                if (avion_1.altitud!='En base'){
+                    avion_1.cambiarAltitud("Baja");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Baja"});
+                }   
+                else
+                    avion_1.setScale(0.05);  
+                avion_1.altitud_anterior= "Baja"; 
             }
             if (avion_2.focus==true){
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_2.cambiarAltitud("Baja");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:"Baja"});
+                if (avion_2.altitud!='En base'){
+                    avion_2.cambiarAltitud("Baja");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:"Baja"});
+                }   
+                else
+                    avion_2.setScale(0.05);  
+                avion_2.altitud_anterior= "Baja"
 
             }
             if (avion_3.focus==true){
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_3.cambiarAltitud("Baja");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:"Baja"});
+                if (avion_3.altitud!='En base'){
+                    avion_3.cambiarAltitud("Baja");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:"Baja"});
+                }   
+                else
+                    avion_3.setScale(0.05);  
+                avion_3.altitud_anterior= "Baja"
 
             }
             if (avion_4.focus==true){
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_4.cambiarAltitud("Baja");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:"Baja"});
+                if (avion_4.altitud!='En base'){
+                    avion_4.cambiarAltitud("Baja");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:"Baja"});
+                }   
+                else
+                    avion_4.setScale(0.05);  
+                avion_4.altitud_anterior= "Baja"
+
 
             } 
             if (avion_1_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_1_Aliados.cambiarAltitud("Baja");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:"Baja"});
-
+                if (avion_1_Aliados.altitud!='En base'){
+                    avion_1_Aliados.cambiarAltitud("Baja");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:"Baja"});
+                }   
+                else
+                    avion_1_Aliados.setScale(0.05);  
+                avion_1_Aliados.altitud_anterior= "Baja"
             }
             if (avion_2_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_2_Aliados.cambiarAltitud("Baja");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:"Baja"});
-
+                if (avion_2_Aliados.altitud!='En base'){
+                    avion_2_Aliados.cambiarAltitud("Baja");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:"Baja"});
+                }
+                else
+                    avion_2_Aliados.setScale(0.05);  
+                avion_2_Aliados.altitud_anterior= "Baja"
             }
             if (avion_3_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_3_Aliados.cambiarAltitud("Baja");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:"Baja"});
-
+                if (avion_3_Aliados.altitud!='En base'){
+                    avion_3_Aliados.cambiarAltitud("Baja");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:"Baja"});
+                }
+                else
+                    avion_3_Aliados.setScale(0.05);  
+                avion_3_Aliados.altitud_anterior= "Baja"
             }
             if (avion_4_Aliados.focus==true){ 
                 this.vistaLateral = this.add.image(45,47,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_4_Aliados.cambiarAltitud("Baja");
-                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Baja"});
-
+                if (avion_4_Aliados.altitud!='En base'){
+                    avion_4_Aliados.cambiarAltitud("Baja");
+                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Baja"});
+                }
+                else
+                    avion_4_Aliados.setScale(0.05);  
+                avion_4_Aliados.altitud_anterior= "Baja"
             }   
         });
 
@@ -1632,16 +1782,15 @@ class Play extends Phaser.Scene {
                 this.circulo_bomba_grande.setPosition(avion_1.x, avion_1.y); 
                 this.circulo_bomba_grande.body.setCircle(26);
                 this.circulo_bomba_grande.body.setOffset(25,25);
+               // this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
+
+               this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
+               this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);              
+               avion_1.tengobomba=false;
+               avion_1.velocidad= avion_1.calcularVelocidad();
+               this.sonidoBomba.play();
             } 
-            if (avion_1.focus==true && avion_1.tengobomba){                
-                this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
-                this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                avion_1.altitud = 'Baja';
-                avion_1.tengobomba=false;
-                avion_1.velocidad= avion_1.calcularVelocidad();
-                this.sonidoBomba.play();
- 
-            }
+
             if (avion_2.focus==true && avion_2.tengobomba){ 
                 this.circulo_bomba_chico.setPosition(avion_2.x, avion_2.y); 
                 this.circulo_bomba_chico.body.setCircle(13);
@@ -1650,14 +1799,13 @@ class Play extends Phaser.Scene {
                 this.circulo_bomba_grande.setPosition(avion_2.x, avion_2.y); 
                 this.circulo_bomba_grande.body.setCircle(26);
                 this.circulo_bomba_grande.body.setOffset(25,25);
-            }
-            if (avion_2.focus==true && avion_2.tengobomba){                
                 this.vistaLateral = this.add.image(45,47,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,180,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
                 avion_2.tengobomba=false;
                 avion_2.velocidad= avion_2.calcularVelocidad();
                 this.sonidoBomba.play();
             }
+
             if (avion_3.focus==true && avion_3.tengobomba){
                 this.circulo_bomba_chico.setPosition(avion_3.x, avion_3.y); 
                 this.circulo_bomba_chico.body.setCircle(13);
@@ -2225,22 +2373,19 @@ class Play extends Phaser.Scene {
         {   
             avion.combustible = 2000;             
             if (avion.cargarbomba==true)
-            {               
+            {            
                 avion.body.setVelocityY(0);
-                avion.body.setVelocityX(0);
-                avion.altitud='En base';
-                avion.setScale(.05);
+                avion.body.setVelocityX(0);                            
+                avion.cambiarAltitud('En base');                              
+                this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
                 avion.cargarbomba=false;
                 avion.tengobomba=true; 
-                avion.velocidad=avion.calcularVelocidad(velAvion);
-                this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
             }
             if (avion.cargarCombustible==true)
             {
-                avion.altitud='En base';
-                avion.setScale(.05);
                 avion.body.setVelocityY(0);
-                avion.body.setVelocityX(0);
+                avion.body.setVelocityX(0);                            
+                avion.cambiarAltitud('En base');                
                 avion.cargarCombustible=false; 
                 this.volverBase = this.add.image(220, 545, "botonCombustible").setOrigin(0).setScale(.3).setInteractive();
             }            
