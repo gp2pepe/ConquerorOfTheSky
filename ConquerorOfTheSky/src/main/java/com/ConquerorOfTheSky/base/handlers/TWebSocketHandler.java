@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import com.ConquerorOfTheSky.base.logica.IFachada;
+import com.ConquerorOfTheSky.base.modelo.Avion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -135,8 +139,15 @@ public class TWebSocketHandler extends TextWebSocketHandler {
             //Proceso el guardar partida     
             }else if(op.equals(new String("guardarPartida"))){
                 try{
-                    LOGGER.debug("Llego un guardarPartida: " + map.toString());
-                    String respuesta = fachada.guardarPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("data"));
+                    LOGGER.debug("Llego un guardarPartida: " + map.get("aviones").toString());
+
+                    JsonObject[] aviones = gson.fromJson(map.get("aviones").toString(), JsonObject[].class);
+                    JsonObject basePotencias = gson.fromJson(map.get("basePotencias").toString(), JsonObject.class);
+                    JsonObject baseAliados = gson.fromJson(map.get("baseAliados").toString(), JsonObject.class);
+                    JsonObject[] artPotencias = gson.fromJson(map.get("artPotencias").toString(), JsonObject[].class);
+                    JsonObject[] artAliados = gson.fromJson(map.get("artAliados").toString(), JsonObject[].class);
+
+                    String respuesta = fachada.guardarPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("passwd"), aviones, basePotencias, baseAliados, artPotencias, artAliados );
                     session.sendMessage(new TextMessage(respuesta));
                 }catch(Exception e){
                     LOGGER.debug(e.getMessage());

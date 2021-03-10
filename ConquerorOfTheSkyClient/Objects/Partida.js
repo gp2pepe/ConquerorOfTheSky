@@ -65,6 +65,7 @@ class Partida {
 
         }else if(msg.operacion == "guardarPartida"){ 
             this.estado = "Preparado";
+            this.nroPartida = msg.nroPartida;
 
         }else if(msg.operacion == "errorServidor"){ 
                 this.hayError = true;
@@ -97,39 +98,40 @@ class Partida {
     guardarPartida(contrasenia){
 
         //Armo el json de aviones
-        var stringAviones="{";
+        var stringAviones="[";
         for(var i = 0; i<8 ; i++)
             stringAviones+=this.aviones[i] + ",";
         stringAviones=stringAviones.substring(0, stringAviones.length-1);   
-        stringAviones+="}";  
+        stringAviones+="]";  
 
         //Armo el json de la base potencias
-        var baseP = "{ vidaTorre: " + this.basePotencias[0].vida + ", vidaDeposito: " + this.basePotencias[1].vida + ", vidaContenedor: " + this.basePotencias[2].vida + "}";
+        var baseP = "{ vidaTorre: " + this.basePotencias[0].vida + ", vidaDepositoExplosivos: " + this.basePotencias[1].vida + ", vidaTanqueCombustible: " + this.basePotencias[2].vida + "}";
         
         //Armo el json de la base aliados
-        var baseA = "{ vidaTorre: " + this.baseAliados[0].vida + ", vidaDeposito: " + this.baseAliados[1].vida + ", vidaContenedor: " + this.baseAliados[2].vida + "}";
+        var baseA = "{ vidaTorre: " + this.baseAliados[0].vida + ", vidaDepositoExplosivos: " + this.baseAliados[1].vida + ", vidaTanqueCombustible: " + this.baseAliados[2].vida + "}";
 
         //Armo el json de artilleria Potencias
-        var stringArtPotencias="{";
+        var stringArtPotencias="[";
         for(var i = 0; i<this.configuraciones.artilleriaCantidad ; i++)     
-            stringArtPotencias+="{id:"+ i +",vida:" + this.artilleriasPotencias[i].vida + "},";
+            stringArtPotencias+="{id:"+ i +",salud:" + this.artilleriasPotencias[i].vida + "},";
         stringArtPotencias=stringArtPotencias.substring(0, stringArtPotencias.length-1);   
-        stringArtPotencias+="}";  
+        stringArtPotencias+="]";  
 
         //Armo el json de artilleria Aliados
-        var stringArtAliados="{";
+        var stringArtAliados="[";
         for(var i = 0; i<this.configuraciones.artilleriaCantidad ; i++)     
-            stringArtAliados+="{id:"+ i +",vida:" + this.artilleriasAliados[i].vida + "},";
+            stringArtAliados+="{id:"+ i +",salud:" + this.artilleriasAliados[i].vida + "},";
         stringArtAliados=stringArtAliados.substring(0, stringArtAliados.length-1);   
-        stringArtAliados+="}";  
+        stringArtAliados+="]";  
+
 
         config.WebSocket.ws.send(JSON.stringify({operacion:"guardarPartida",idpartida:this.idpartida,
-            data: {passwd:contrasenia,
-                aviones: stringAviones, 
-                basePotencias: baseP , 
-                baseAliados: baseA, 
-                vidaArtPotencias: stringArtPotencias,
-                vidaArtAliados: stringArtAliados}}));        
+            passwd:contrasenia,
+            aviones: stringAviones, 
+            basePotencias: baseP , 
+            baseAliados: baseA, 
+            artPotencias: stringArtPotencias,
+            artAliados: stringArtAliados}));        
     }
 
 

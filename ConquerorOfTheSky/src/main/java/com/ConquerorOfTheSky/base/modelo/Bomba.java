@@ -21,8 +21,7 @@ public class Bomba {
     public Bomba() {
     }
 
-    public Bomba(Long idBomba, int radioImpacto, int danio) {
-        this.idBomba = idBomba;
+    public Bomba( int radioImpacto, int danio) {
         this.radioImpacto = radioImpacto;
         this.danio = danio;
     }

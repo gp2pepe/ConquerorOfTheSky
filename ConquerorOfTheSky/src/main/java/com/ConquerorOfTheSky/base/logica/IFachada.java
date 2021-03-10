@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.web.socket.WebSocketSession;
 
+import com.ConquerorOfTheSky.base.excepciones.ErrorAlGuardarException;
 import com.ConquerorOfTheSky.base.excepciones.PartidaLlenaException;
 import com.ConquerorOfTheSky.base.excepciones.PartidaNoExisteException;
+import com.google.gson.JsonObject;
 
 public interface IFachada {
 
@@ -18,7 +20,8 @@ public interface IFachada {
     
     public List<WebSocketSession>  sincronizarPartida(Long idpartida) throws PartidaNoExisteException;
 
-    public String guardarPartida(Long idPartida, String data) throws PartidaNoExisteException;
+    public String guardarPartida(Long idPartida, String passwd, JsonObject[] aviones, JsonObject basePotencias, JsonObject baseAliados, 
+    JsonObject[] artPotencias, JsonObject[] artAliados )  throws PartidaNoExisteException, ErrorAlGuardarException;
     
     public String recuperarPartida(Long idPartida) throws PartidaNoExisteException;
 

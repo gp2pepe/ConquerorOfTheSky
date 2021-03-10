@@ -118,5 +118,13 @@ public class Avion {
         this.combustible = combustible;
     }
 
+    public Bomba getBomba() {
+        return bomba;
+    }
+
+    public void setBomba(Bomba bomba) {
+        this.bomba = bomba;
+    }
+
     
 }

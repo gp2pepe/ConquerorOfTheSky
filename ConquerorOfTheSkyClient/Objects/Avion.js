@@ -72,7 +72,7 @@ class Avion extends Phaser.GameObjects.Sprite {
 
 
     toString(){
-        return "{idavion: "+ this.idavion+", x:" + this.x +  ", y:" + this.y + ",combustible:"+ this.combustible + ", altitud:" + this.altitud + ", tengoBomba:"+ this.tengobomba + ",vida :" + this.vidaAvion+"}";
+        return "{idAvion: "+ this.idavion+", posicionX:" + this.x +  ", posicionY:" + this.y + ",combustible:"+ this.combustible + ", altitud:" + this.altitud + ", bomba:"+ this.tengobomba + ",salud :" + this.vidaAvion+"}";
     }
 }
 

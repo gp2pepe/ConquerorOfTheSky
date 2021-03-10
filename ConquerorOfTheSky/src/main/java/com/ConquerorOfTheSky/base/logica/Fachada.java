@@ -3,6 +3,7 @@ package com.ConquerorOfTheSky.base.logica;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.transaction.Transactional;
 import com.ConquerorOfTheSky.base.dao.ConfiguracionRepo;
@@ -10,6 +11,7 @@ import com.ConquerorOfTheSky.base.dao.PartidaRepo;
 import com.ConquerorOfTheSky.base.modelo.Artilleria;
 import com.ConquerorOfTheSky.base.modelo.Avion;
 import com.ConquerorOfTheSky.base.modelo.Base;
+import com.ConquerorOfTheSky.base.modelo.Bomba;
 import com.ConquerorOfTheSky.base.modelo.Campo;
 import com.ConquerorOfTheSky.base.modelo.Equipo;
 import com.ConquerorOfTheSky.base.modelo.Jugador;
@@ -32,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.ConquerorOfTheSky.base.excepciones.ErrorAlGuardarException;
 import com.ConquerorOfTheSky.base.excepciones.PartidaLlenaException;
 import com.ConquerorOfTheSky.base.excepciones.PartidaNoExisteException;
 
@@ -73,11 +76,12 @@ public class Fachada implements IFachada{
 
         //Equipo 1
         List<Avion> aviones = new LinkedList<>();
-        aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-        aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-        aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-        aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-
+        if(modalidad.equals("1vs1")){
+          aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+        }
         List<Jugador> jugadores = new LinkedList<>();
         jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
         
@@ -121,6 +125,17 @@ public class Fachada implements IFachada{
 
 
         //Equipo 2
+        List<Jugador> jugadores2 = new LinkedList<>();
+        List<Avion> aviones2 = new LinkedList<>();
+        if(modalidad.equals("1vs1")){
+          aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          jugadores2.add(new Jugador("", null, false, aviones2));
+
+        }
+
         DepositoDeExplosivos depositoExp2 = new DepositoDeExplosivos(conf.getDepositoExplosivosSalud());
         TorreDeControl torre2 = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
         TanqueDeCombustible tanque2 = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());       
@@ -155,7 +170,6 @@ public class Fachada implements IFachada{
         String bando2 = "Potencias";
         if(bando.equals("Potencias"))
           bando2 = "Aliados";
-        List<Jugador> jugadores2 = new LinkedList<>();
         Equipo equipo2 = new Equipo(bando2, jugadores2,campo2);
         // Fin equipo 2
 
@@ -177,16 +191,12 @@ public class Fachada implements IFachada{
 
         LOGGER.debug("Tamaño de la lista de partidas: " + partidas.size());
         
-
-        //this.guardarPartida(idpartida);
-
         //Genero el JSon
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonElement jsonElementConf = gson.toJsonTree(conf);
         JsonElement jsonElementPartida = gson.toJsonTree(partidaNueva);
         JsonElement jsonElementCampo = gson.toJsonTree(campo1);
         JsonElement jsonElementCampo2 = gson.toJsonTree(campo2);
-
 
         JsonObject innerObject = new JsonObject();
         innerObject.addProperty("operacion", "iniciarPartida");
@@ -206,7 +216,6 @@ public class Fachada implements IFachada{
        
       Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
 
-      List<Jugador> jugadores = new LinkedList<>();
       Partida partida = null;
       Campo campo  = null;
       Campo campoContrario = null;
@@ -218,19 +227,22 @@ public class Fachada implements IFachada{
         partida = partidas.get(i);
         if(partida.getIdpartida().equals(idPartida)){
           //Reviso si la partida esta llena
-          if(partida.getModalidad().equals("1vs1") && partida.getEquipos().get(1).getJugadores().size()>0){
+          int cantJug = 0;
+          for(Equipo eq : partida.getEquipos())
+            for(Jugador jug : eq.getJugadores())
+              if(jug.getSesionActual()!=null)
+                cantJug++;
+
+          if(partida.getModalidad().equals("1vs1") && cantJug==2){
             throw new PartidaLlenaException("ingresarAPartida","La partida esta llena");
 
           }else if(partida.getModalidad().equals("1vs1")){
             LOGGER.debug("Voy a armar la partida para Ingresar: " + idPartida);
             //Equipo 2
-            List<Avion> aviones = new LinkedList<>();
-            aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-            aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-            aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-            aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-            jugadores.add(new Jugador(nick, sesionUsu, false, aviones));
             List<Equipo> equipos = partida.getEquipos();
+            List<Jugador> jugadores= equipos.get(1).getJugadores();
+            jugadores.get(0).setNick(nick);
+            jugadores.get(0).setSesionActual(sesionUsu);
             equipos.get(1).setJugadores(jugadores);
             partida.setEquipos(equipos);
             campo =  equipos.get(1).getCampo();
@@ -315,26 +327,77 @@ public class Fachada implements IFachada{
     }
 
     @Transactional
-    public String guardarPartida(Long idPartida, String data) throws PartidaNoExisteException{
+    public String guardarPartida(Long idPartida, String passwd, JsonObject[] aviones, JsonObject basePotencias, JsonObject baseAliados, 
+    JsonObject[] artPotencias, JsonObject[] artAliados ) throws PartidaNoExisteException, ErrorAlGuardarException{
+
       int i = 0;
       boolean encontre = false;
-      while(i<partidas.size() && encontre == false){
-        Partida par = partidas.get(i);
-        if(par.getIdpartida().equals(idPartida)){
-          partidaR.saveAndFlush(par);
-          encontre = true;
+      Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+      Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
+      Partida par = null;
+      try{
+        while(i<partidas.size() && encontre == false){
+          par = partidas.get(i);
+          if(par.getIdpartida().equals(idPartida)){
+
+            for(Equipo eq : par.getEquipos()){
+              for(Jugador jug: eq.getJugadores()){
+                int q = 0;
+                int a = 0;
+                Campo campo = eq.getCampo();
+                Base base = campo.getBase();
+                JsonObject dataBase = null;
+                JsonObject[] dataArt = null;
+                if(eq.getBando().equals("Aliados")){
+                  q = 4;
+                  dataBase = baseAliados; 
+                  dataArt = artAliados; 
+                }else{
+                  dataBase = basePotencias;
+                  dataArt = artPotencias;
+                }
+                for(Artilleria art : campo.getArtillerias()){
+                  art.setSalud(dataArt[a].get("salud").getAsInt());
+                  a++;
+                }
+
+                base.getTorreControl().setSalud(dataBase.get("vidaTorre").getAsInt());
+                base.getTanqueCombustible().setSalud(dataBase.get("vidaTanqueCombustible").getAsInt());
+                base.getDepositoExplosivos().setSalud(dataBase.get("vidaDepositoExplosivos").getAsInt());
+
+                for(Avion av : jug.getAviones()){
+                  av.setPosicionX( aviones[q].get("posicionX").getAsInt());
+                  av.setPosicionY(aviones[q].get("posicionY").getAsInt());
+                  av.setCombustible(aviones[q].get("combustible").getAsInt());
+                  av.setAltitud(aviones[q].get("altitud").toString());
+                  av.setSalud(aviones[q].get("salud").getAsInt());
+                  if(aviones[q].get("bomba").getAsBoolean()){
+                    av.setBomba(new Bomba(conf.getBombaRadioImpacto(),conf.getBombaDanio()));
+                  }
+
+                }
+                q++;
+              }
+            }
+            par.setPassword(passwd);
+            par = partidaR.saveAndFlush(par);
+            encontre = true;
+          }
+          i++;
         }
-        i++;
+      }catch(Exception e){
+        LOGGER.debug(e.toString());
+        throw new ErrorAlGuardarException("guardarPartida", "Hubo un error al guardar la partida");
       }
       if(!encontre){
-        throw new PartidaNoExisteException("recuperarPartida", "La partida ya no esta disponible : " + idPartida);
+        throw new PartidaNoExisteException("guardarPartida", "La partida ya no esta disponible" );
       }
         //Genero el JSon
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         JsonObject innerObject = new JsonObject();
         innerObject.addProperty("operacion", "guardarPartida");
         innerObject.addProperty("estado", "OK");
-        LOGGER.debug("Guarde la partida: " + idPartida);
+        innerObject.addProperty("nroPartida",  par.getIdpartida());
+        LOGGER.debug("Guarde la partida: " +  par.getIdpartida());
         return gson.toJson(innerObject);
     }
 
