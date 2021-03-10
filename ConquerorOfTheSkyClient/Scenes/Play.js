@@ -2351,12 +2351,8 @@ class Play extends Phaser.Scene {
         //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
         this.lightAvionSinBomba(); // Cambio de color al avion sin bomba
         this.lightAvionConBomba(); // cambio de color al avion con bomba
-        //Tiempo que se usa para las balas 
-<<<<<<< Updated upstream
-        this.time = time;        
-=======
+        //Tiempo que se usa para las balas     
         this.time = time;
->>>>>>> Stashed changes
         if (this.EstaMoviendose(avion_1) && time>timeNafta)
         {                
             if(avion_1.combustible!=0)
