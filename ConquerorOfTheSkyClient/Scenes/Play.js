@@ -2646,6 +2646,7 @@ class Play extends Phaser.Scene {
                     this.mensajeAviso('El avion 1 del enemigo fue destruido');
                     mensajeAvionDestruido1 = true;
                 }
+                this.circulo_1.destroy();
                 avion_1.destroy();
             }
         if(avion_2.vidaAvion <= 0) 
@@ -2655,6 +2656,7 @@ class Play extends Phaser.Scene {
                     this.mensajeAviso('El avion 2 del enemigo fue destruido');
                     mensajeAvionDestruido2 = true;
                 }
+            this.circulo_2.destroy();
             avion_2.destroy();
         }
             
@@ -2665,6 +2667,7 @@ class Play extends Phaser.Scene {
                     this.mensajeAviso('El avion 3 del enemigo fue destruido');
                     mensajeAvionDestruido3 = true;
                 }
+                this.circulo_3.destroy();
                 avion_3.destroy();
             }
         if(avion_4.vidaAvion <= 0) 
@@ -2674,6 +2677,7 @@ class Play extends Phaser.Scene {
                     this.mensajeAviso('El avion 4 del enemigo fue destruido');
                     mensajeAvionDestruido4 = true;
                 }
+                this.circulo_4.destroy();
                 avion_4.destroy();
             }   
         if(avion_1_Aliados.vidaAvion <= 0) 
@@ -2683,6 +2687,7 @@ class Play extends Phaser.Scene {
                     this.mensajeAviso('El avion 1 del enemigo fue destruido');
                     mensajeAvionDestruido5 = true;
                 }
+                this.circulo_5.destroy();
                 avion_1_Aliados.destroy(); 
             }
         if(avion_2_Aliados.vidaAvion <= 0) 
@@ -2692,6 +2697,7 @@ class Play extends Phaser.Scene {
                     this.mensajeAviso('El avion 2 del enemigo fue destruido');
                     mensajeAvionDestruido6 = true;
                 }
+                this.circulo_6.destroy();
                 avion_2_Aliados.destroy();
             }
         if(avion_3_Aliados.vidaAvion <= 0) 
@@ -2701,6 +2707,7 @@ class Play extends Phaser.Scene {
                     this.mensajeAviso('El avion 3 del enemigo fue destruido');
                     mensajeAvionDestruido7 = true;
                 }
+                this.circulo_7.destroy();
                 avion_3_Aliados.destroy();
             }
         if(avion_4_Aliados.vidaAvion <= 0) 
@@ -2710,6 +2717,7 @@ class Play extends Phaser.Scene {
                     this.mensajeAviso('El avion 4 del enemigo fue destruido');
                     mensajeAvionDestruido8 = true;
                 }
+                this.circulo_8.destroy();
                 avion_4_Aliados.destroy();
             }
 
