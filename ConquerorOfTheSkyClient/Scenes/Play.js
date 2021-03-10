@@ -97,6 +97,11 @@ class Play extends Phaser.Scene {
         this.wall_floor.create(433, 1060, 'wall2').setOrigin(0, 1);
         //El refresh es para que cargue bien las zonas de colision de la imagen
         this.wall_floor.refresh();
+
+        // agrego sonido de fondo de la partida
+        
+        this.sonidoDisparos = this.sound.add('sonido_disparos',{loop:false});
+        this.sonidoBomba = this.sound.add('sonido_confirmar',{loop:false});
         
         console.log("Before Change", JSON.parse(JSON.stringify(config.Partida)));
 
@@ -588,7 +593,7 @@ class Play extends Phaser.Scene {
                 avion.setVisible(true);           
                 this.disparar(avion_1,avion)   
                 avion_1.lastFired = this.time + 500; 
-                avion.activarColision=1;                             
+                avion.activarColision=1; 
             }
         }
         if (circulo==this.circulo_2 )
@@ -686,7 +691,8 @@ class Play extends Phaser.Scene {
     {           
         //Dispara balas entre aviones    
         bullet = bullets.get();     
-        bullet.fire( avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});         
+        bullet.fire( avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});    
+        this.sonidoDisparos.play();     
     }
     
     colisiones()
@@ -1244,6 +1250,7 @@ class Play extends Phaser.Scene {
                 //this.avionVistaLateral.depth=100;
                 avion_1.tengobomba=false;
                 avion_1.velocidad= avion_1.calcularVelocidad();
+                this.sonidoBomba.play();
  
             }
             if (avion_2.focus==true && avion_2.tengobomba){ 
@@ -1263,6 +1270,7 @@ class Play extends Phaser.Scene {
                 //this.avionVistaLateral.depth=100;
                 avion_2.tengobomba=false;
                 avion_2.velocidad= avion_2.calcularVelocidad();
+                this.sonidoBomba.play();
             }
             if (avion_3.focus==true && avion_3.tengobomba){
                 this.circulo_bomba_chico.setPosition(avion_3.x, avion_3.y); 
@@ -1279,6 +1287,7 @@ class Play extends Phaser.Scene {
                 //this.avionVistaLateral.depth=100;
                 avion_3.tengobomba=false;
                 avion_3.velocidad= avion_3.calcularVelocidad();
+                this.sonidoBomba.play();
             }
             if (avion_4.focus==true && avion_4.tengobomba){
                 this.circulo_bomba_chico.setPosition(avion_4.x, avion_4.y); 
@@ -1295,6 +1304,7 @@ class Play extends Phaser.Scene {
                 //this.avionVistaLateral.depth=100;
                 avion_4.tengobomba=false;
                 avion_4.velocidad= avion_4.calcularVelocidad();
+                this.sonidoBomba.play();
             } 
             if (avion_1_Aliados.focus==true && avion_1_Aliados.tengobomba){
                 this.circulo_bomba_chico.setPosition(avion_1_Aliados.x, avion_1_Aliados.y); 
@@ -1311,6 +1321,7 @@ class Play extends Phaser.Scene {
                 //this.avionVistaLateral.depth=100;
                 avion_1_Aliados.tengobomba=false;
                 avion_1_Aliados.velocidad= avion_1_Aliados.calcularVelocidad();
+                this.sonidoBomba.play();
             }
             if (avion_2_Aliados.focus==true && avion_2_Aliados.tengobomba){
                 this.circulo_bomba_chico.setPosition(avion_2_Aliados.x, avion_2_Aliados.y); 
@@ -1327,6 +1338,7 @@ class Play extends Phaser.Scene {
                 //this.avionVistaLateral.depth=100;
                 avion_2_Aliados.tengobomba=false;
                 avion_2_Aliados.velocidad= avion_2_Aliados.calcularVelocidad();
+                this.sonidoBomba.play();
             }
             if (avion_3_Aliados.focus==true && avion_3_Aliados.tengobomba){
                 this.circulo_bomba_chico.setPosition(avion_3_Aliados.x, avion_3_Aliados.y); 
@@ -1343,6 +1355,7 @@ class Play extends Phaser.Scene {
                 //this.avionVistaLateral.depth=100;
                 avion_3_Aliados.tengobomba=false;
                 avion_3_Aliados.velocidad= avion_3_Aliados.calcularVelocidad();
+                this.sonidoBomba.play();
             }
             if (avion_4_Aliados.focus==true && avion_4_Aliados.tengobomba){
                 this.circulo_bomba_chico.setPosition(avion_4_Aliados.x, avion_4_Aliados.y); 
@@ -1359,6 +1372,7 @@ class Play extends Phaser.Scene {
                 //this.avionVistaLateral.depth=100;
                 avion_4_Aliados.tengobomba=false;
                 avion_4_Aliados.velocidad= avion_4_Aliados.calcularVelocidad();
+                this.sonidoBomba.play();
             }     
         });
 

@@ -91,13 +91,27 @@ class Bootloader extends Phaser.Scene {
              'guardando'
 
         ])
+        /* var context = new AudioContext();
+        console.log(context); */
+        this.load.audio('fondo_menu','audio/fondo_menu.wav');
+        this.load.audio('sonido_disparos','audio/sonido_disparos.wav');
+        this.load.audio('sonido_click','audio/sonido_click.mp3');
+        this.load.audio('sonido_confirmar','audio/sonido_confirmar.wav');
+        this.load.audio('sonido_fondo_partida','audio/sonido_fondo_partida.wav');
         this.load.on('complete',()=>{
             this.scene.start('MenuInicial');
         })
         config.WebSocket.openConnection();
     }
     create(){       
-        
+        /* let sonido_fondo = this.sound.add('fondo_menu',{loop:true})
+        sonido_fondo.resume();
+         this.input.keyboard.on('keydown_RIGHT',() => {
+            sonido_fondo.play();
+        })
+        this.input.keyboard.on('keydown_LEFT',() => {
+            sonido_fondo.stop(0);
+        })  */
     }
 }
 
