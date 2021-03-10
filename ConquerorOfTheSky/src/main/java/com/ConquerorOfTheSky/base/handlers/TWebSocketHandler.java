@@ -71,6 +71,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     String respuesta = fachada.crearPartida((String) map.get("nick"), (String) map.get("modalidad"), (String) map.get("nombre"),session, true, (String) map.get("passwd"),(String) map.get("bando"));            
                     session.sendMessage(new TextMessage(respuesta));
                 } catch (Exception e) {
+                    LOGGER.debug(e.toString());
                     try{
                         session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"iniciarPartida\",\"mensaje\": \"Error al iniciar partida\"  }"));
                     } catch (IOException e1) {
