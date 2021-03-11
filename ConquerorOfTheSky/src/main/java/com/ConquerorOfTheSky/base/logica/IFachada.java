@@ -23,7 +23,7 @@ public interface IFachada {
     public String guardarPartida(Long idPartida, String passwd, JsonObject[] aviones, JsonObject basePotencias, JsonObject baseAliados, 
     JsonObject[] artPotencias, JsonObject[] artAliados )  throws PartidaNoExisteException, ErrorAlGuardarException;
     
-    public String recuperarPartida(Long idPartida) throws PartidaNoExisteException;
+    public String recuperarPartida(Long idPartida, String passwd) throws PartidaNoExisteException;
 
     public void terminarPartida(Long idPartida);
 

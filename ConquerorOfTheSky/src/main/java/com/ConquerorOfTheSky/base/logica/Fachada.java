@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
 import com.ConquerorOfTheSky.base.dao.ConfiguracionRepo;
 import com.ConquerorOfTheSky.base.dao.PartidaRepo;
 import com.ConquerorOfTheSky.base.modelo.Artilleria;
@@ -401,40 +403,46 @@ public class Fachada implements IFachada{
         return gson.toJson(innerObject);
     }
 
-    public String recuperarPartida(Long idPartida) throws PartidaNoExisteException {
+    @Transactional
+    public String recuperarPartida(Long idPartida, String passwd) throws PartidaNoExisteException {
       try{
-
+        
         Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
 
-        Partida partida = partidaR.getOne(idPartida);
-        Long idpartida ;
-        synchronized(this) {
-          idpartida = Long.valueOf(partidas.size());
-          partida.setIdpartida(idpartida);
-          partidas.add(partida);
+        Partida par = (Partida) Hibernate.unproxy(partidaR.getOne(idPartida));
+        Partida partida = par;
+        if(partida.getPassword().equals(passwd)){
+          synchronized(this) {
+            partidas.add(partida);
+          }
+          Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+          JsonElement jsonElementConf = gson.toJsonTree(conf);
+          JsonElement jsonElementPartida = gson.toJsonTree(partida);
+          JsonElement jsonElementCampo = gson.toJsonTree(partida.getEquipos().get(0).getCampo());
+          JsonElement jsonElementCampo2 = gson.toJsonTree(partida.getEquipos().get(1).getCampo());
+          JsonElement jsonElementAviones = gson.toJsonTree(partida.getEquipos().get(0).getJugadores().get(0).getAviones());
+          JsonElement jsonElementAviones2 = gson.toJsonTree(partida.getEquipos().get(1).getJugadores().get(0).getAviones());
+
+          String bando = partida.getEquipos().get(0).getBando();
+          String bando2 = partida.getEquipos().get(1).getBando();
+
+          JsonObject innerObject = new JsonObject();
+          innerObject.addProperty("operacion", "recuperarPartida");
+          innerObject.add("configuraciones", jsonElementConf);
+          innerObject.add("partida", jsonElementPartida);
+          innerObject.addProperty("bando", bando);
+          innerObject.add("campo"+bando, jsonElementCampo);
+          innerObject.add("campo"+bando2, jsonElementCampo2);
+          innerObject.add("aviones"+bando, jsonElementAviones);
+          innerObject.add("aviones"+bando2, jsonElementAviones2);
+
+          return gson.toJson(innerObject);
+        }else{
+          throw new PartidaNoExisteException("recuperarPartida", "No existe una partida con esa contraseña");
         }
 
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        JsonElement jsonElementConf = gson.toJsonTree(conf);
-        JsonElement jsonElementPartida = gson.toJsonTree(partida);
-        JsonElement jsonElementCampo = gson.toJsonTree(partida.getEquipos().get(0).getCampo());
-        JsonElement jsonElementCampo2 = gson.toJsonTree(partida.getEquipos().get(1).getCampo());
-
-        String bando = partida.getEquipos().get(0).getBando();
-        String bando2 = partida.getEquipos().get(1).getBando();
-
-
-        JsonObject innerObject = new JsonObject();
-        innerObject.addProperty("operacion", "iniciarPartida");
-        innerObject.add("configuraciones", jsonElementConf);
-        innerObject.add("partida", jsonElementPartida);
-        innerObject.addProperty("bando", bando);
-        innerObject.add("campo"+bando, jsonElementCampo);
-        innerObject.add("campo"+bando2, jsonElementCampo2);
-
-        return gson.toJson(innerObject);
-
       }catch (Exception e){
+        System.out.print(e);
         throw new PartidaNoExisteException("recuperarPartida", "No existe la partida : " + idPartida);
       }
     }

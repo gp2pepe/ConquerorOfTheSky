@@ -5,13 +5,13 @@ import Client from './websocket.js';
 import Partida from '../Objects/Partida.js';
 import MenuPartidas from '../Scenes/MenuPartidas.js';
 import MenuBando from '../Scenes/MenuBando.js';
-import confirmarNuevaPartida from '../Scenes/confirmarNuevaPartida.js';
-import PartidaLlena from '../Scenes/PartidaLlena.js';
+import MenuCargar from '../Scenes/MenuCargar.js';
 import GameOver from '../Scenes/GameOver.js'
 import Win from '../Scenes/Win.js'
 import scroll from '../Scenes/scroll.js'
 import Guardar from '../Scenes/popups/Guardar.js'
 import Pausado from '../Scenes/popups/Pausado.js'
+import PartidaLlena from '../Scenes/popups/PartidaLlena.js';
 
 
 var config = {
@@ -30,7 +30,7 @@ var config = {
             debug: true
         }
     },
-    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuBando,confirmarNuevaPartida,PartidaLlena,GameOver,Win,scroll,Guardar,Pausado],
+    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuCargar,MenuBando,PartidaLlena,GameOver,Win,scroll,Guardar,Pausado],
     WebSocket: new Client(),
     Partida: new Partida(),   
     

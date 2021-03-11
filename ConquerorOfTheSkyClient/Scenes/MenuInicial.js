@@ -99,7 +99,7 @@ class MenuInicial extends Phaser.Scene {
                 x:1300,
                 duration: 1000,
                 onComplete: () => {    
-                    config.Partida.listarPartidas(); //Hacer luego un boton refresh              
+                    this.scene.launch('MenuCargar');
                 }
             });
 

@@ -1,4 +1,4 @@
-import { config } from '../lib/main.js';
+import { config } from '../../lib/main.js';
 var timedEvent;
 
 class PartidaLlena extends Phaser.Scene

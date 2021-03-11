@@ -67,6 +67,19 @@ class Partida {
             this.estado = "Preparado";
             this.nroPartida = msg.nroPartida;
 
+        }else if(msg.operacion == "recuperarPartida"){ 
+            this.estado = "Preparado";
+            this.idpartida = msg.partida.idPartida;
+            this.Bando = msg.bando;
+            this.campoPotencias = msg.campoPotencias;
+            this.campoAliados = msg.campoAliados;
+            this.avionesPotencias = msg.avionesPotencias;
+            this.avionesAliados = msg.avionesAliados;
+            this.configuraciones = msg.configuraciones;
+            this.Nombre = msg.partida.nombre;
+            this.duenio = true;
+            this.partidaCargada = true;
+
         }else if(msg.operacion == "errorServidor"){ 
                 this.hayError = true;
                 this.mensajeError = msg.mensaje;
@@ -134,8 +147,9 @@ class Partida {
             artAliados: stringArtAliados}));        
     }
 
-
-
+    recuperarPartida(idpart, contrasenia){
+        config.WebSocket.ws.send(JSON.stringify({operacion:"recuperarPartida",idpartida: idpart, passwd: contrasenia}));  
+    }
 }
 
 export default Partida ;

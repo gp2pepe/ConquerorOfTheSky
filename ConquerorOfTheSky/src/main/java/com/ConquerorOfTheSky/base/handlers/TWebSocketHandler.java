@@ -140,7 +140,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
             //Proceso el guardar partida     
             }else if(op.equals(new String("guardarPartida"))){
                 try{
-                    LOGGER.debug("Llego un guardarPartida: " + map.get("aviones").toString());
+                    LOGGER.debug("Llego un guardarPartida: " + map.toString());
 
                     JsonObject[] aviones = gson.fromJson(map.get("aviones").toString(), JsonObject[].class);
                     JsonObject basePotencias = gson.fromJson(map.get("basePotencias").toString(), JsonObject.class);
@@ -155,6 +155,21 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
                     try{
                         session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"guardarPartida\",\"mensaje\": \"Hubo un error al guardar la partida\" }"));
+                    } catch (IOException e1) {
+                        LOGGER.debug("Se perdio conexión con el Jugador");
+                    }
+                }
+            }else if(op.equals(new String("recuperarPartida"))){
+                try{
+                    LOGGER.debug("Llego un recuperarPartida: " + map.toString());
+
+                    String respuesta = fachada.recuperarPartida(Long.valueOf((Integer.valueOf(map.get("idpartida").toString()))),  map.get("passwd").toString() );
+                    session.sendMessage(new TextMessage(respuesta));
+                }catch(Exception e){
+                    LOGGER.debug(e.getMessage());
+
+                    try{
+                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"recuperarPartida\",\"mensaje\": \"Hubo un error al recuperar la partida\" }"));
                     } catch (IOException e1) {
                         LOGGER.debug("Se perdio conexión con el Jugador");
                     }
