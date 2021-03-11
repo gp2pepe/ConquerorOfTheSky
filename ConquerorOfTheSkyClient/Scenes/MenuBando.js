@@ -30,9 +30,9 @@ class MenuBando extends Phaser.Scene
         this.add.image(650,50, 'seleccioncarac').setOrigin(0);
         this.textBox = this.add.image(750,140, 'textBox').setOrigin(0).setScale(0.5);
         this.text = this.add.text(800, 160, 'Click para ingresar nombre', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
-        this.sonidoClick = this.sound.add('sonido_click',{loop:false});
-        this.sonidoConfirmar = this.sound.add('sonido_confirmar',{loop:false});
-        //this.sonidoFondoPartida = this.sound.add('sonido_fondo_partida',{loop:true,volume:0.1});
+        this.sonidoClick = this.sound.add('sonido_click',{loop:false,volume:0.06});
+        this.sonidoConfirmar = this.sound.add('sonido_confirmar',{loop:false,volume:0.08});
+        this.sonidoFondoPartida = this.sound.add('Battleship',{loop:true,volume:0.007});
         
         
     
@@ -228,7 +228,7 @@ class MenuBando extends Phaser.Scene
             {
             //Creo la partida con el bando y el nombre seleccionado
             this.sonidoConfirmar.play();
-           // this.sonidoFondoPartida.play();
+            this.sonidoFondoPartida.play();
             console.log('Entre iniciando partida en Menu Bando');
             while (textEntry.text.length != 12)
             {

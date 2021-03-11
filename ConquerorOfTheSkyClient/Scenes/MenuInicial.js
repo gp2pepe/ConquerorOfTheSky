@@ -25,7 +25,7 @@ class MenuInicial extends Phaser.Scene {
         //Carga boton de nueva partida y dirije a la escena nueva partida
         this.fondoMenu = this.add.image(0, 0, "fondoMenu").setOrigin(0).setInteractive();
         this.add.image(900, 100, "titulo").setOrigin(0);
-        this.sonido_fondo = this.sound.add('fondo_menu',{loop:false,volume:0.1});
+        this.sonido_fondo = this.sound.add('fondo_menu',{loop:false,volume:0.02});
         this.sonido_fondo.resume();
         console.log('antes del sonido');
         console.log(this.sonido_fondo);

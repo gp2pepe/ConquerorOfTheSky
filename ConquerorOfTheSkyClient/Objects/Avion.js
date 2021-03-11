@@ -28,6 +28,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.lastFired = 0;
         this.activarColision=0;
         this.tengobomba=false;
+        this.mepegaron='false';
     }
 
     moverAvion(msg)
@@ -62,6 +63,9 @@ class Avion extends Phaser.GameObjects.Sprite {
             }
         }
 
+    }
+    mePegaron(mepegaron){
+        this.mepegaron=mepegaron;
     }
 
 

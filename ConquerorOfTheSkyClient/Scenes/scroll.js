@@ -1,7 +1,7 @@
 import { config } from '../lib/main.js';
 const Random = Phaser.Math.Between;
 
-const COLOR_PRIMARY = 0x99b8c3 ;
+const COLOR_PRIMARY = 0x8a7a55 ;
 const COLOR_LIGHT = 0x5E7B57;
 const COLOR_DARK = 0x040B26;
 
