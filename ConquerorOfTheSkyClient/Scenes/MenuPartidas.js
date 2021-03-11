@@ -36,25 +36,10 @@ class MenuPartidas extends Phaser.Scene {
 
             background: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_PRIMARY),
 
-<<<<<<< Updated upstream
+
             table: {
                 cellWidth: (scrollMode === 0) ? undefined : 190,
-                cellHeight: (scrollMode === 0) ? 100 : undefined,
-=======
-        var ejeX = 450;
-        var ejeY = 300;
-        this.add.image(150, 150, "fondoBuscarPartida").setOrigin(0).setScale(0.3);
-       
-        console.log('Aca abajo tendría que estar todo');
-        //config.Partida.listarPartidas();
-        var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante
-        console.log(listaPartidas);
-        var cantPartidasPrueba = listaPartidas.length;
-        console.log(cantPartidasPrueba);
-        var num = 0;
-        
->>>>>>> Stashed changes
-
+                cellHeight: (scrollMode === 0) ? 100 : undefined,  
                 columns: 1,
 
                 mask: {
