@@ -286,6 +286,7 @@ class MenuBando extends Phaser.Scene
             config.Partida.Nombre = textEntry.text;
             config.Partida.nick = textEntryNick.text;
             config.Partida.tipoPartida = "NuevaPartida";
+            console.log(config.Partida.nick);
             config.Partida.iniciarPartida();
             //console.log(config.Partida);
             //this.scene.launch('confirmarNuevaPartida');

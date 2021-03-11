@@ -84,6 +84,7 @@ class Play extends Phaser.Scene {
     }
     create(){ 
         this.entre=true;
+        console.log(config.Partida.nick);
         //Se remueven escenas de menus anteriores
         this.scene.remove('MenuInicial');
         this.scene.remove('ElegirBando');
