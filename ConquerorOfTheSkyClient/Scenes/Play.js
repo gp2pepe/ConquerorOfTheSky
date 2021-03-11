@@ -101,6 +101,9 @@ class Play extends Phaser.Scene {
         this.panelBase = this.add.image(28, 890, "panelBase").setOrigin(0).setScale(.3).setInteractive();
         this.mostrarRango = this.add.image(112, 938, "mostrarRango").setOrigin(0).setScale(.22).setInteractive();
         this.nick = this.add.image(70, 985, "nick").setOrigin(0).setScale(.7).setInteractive();
+        this.textNick = this.add.text(180, 1008, config.Partida.nick,{fontSize: 14,color: '#000000'}).setOrigin(0).setScale(2);
+        //console.log(this.textNick);
+        //console.log(config.Partida.nick);
      
 
         this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
@@ -262,7 +265,7 @@ class Play extends Phaser.Scene {
 
        //Llamo a la funcion para definir los aviones
         this.definicionAviones();   
-
+        this.mensaje = this.add.text(800, 0, ' ');
         //Se definen luces que seguiran a los aviones y tambien habra en la base, es para el efecto visual del circulo
         this.mapaMask.setPipeline('Light2D');
         this.lights.enable();
@@ -2414,7 +2417,8 @@ class Play extends Phaser.Scene {
 
    mensajeAviso(String)
     {
-        this.mensaje = this.add.text(800,0, String).setScale(1.9);
+        this.mensaje.destroy();
+        this.mensaje = this.add.text(800,5, String).setScale(1.9);
     }
 
     onEvent()

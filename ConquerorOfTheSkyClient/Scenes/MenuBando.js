@@ -1,5 +1,6 @@
 import { config } from '../lib/main.js';
 var ingresoTexto;
+var ingresoTexto2;
 
 
 class MenuBando extends Phaser.Scene
@@ -27,9 +28,11 @@ class MenuBando extends Phaser.Scene
     {
         ingresoTexto = false;
         this.add.image(0,0, 'desenfocar').setOrigin(0);
-        this.add.image(650,50, 'seleccioncarac').setOrigin(0);
-        this.textBox = this.add.image(750,140, 'textBox').setOrigin(0).setScale(0.5);
-        this.text = this.add.text(800, 160, 'Click para ingresar nombre', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
+        this.add.image(650,20, 'seleccioncarac').setOrigin(0);
+        this.textBox = this.add.image(750,130, 'textBox').setOrigin(0).setScale(0.5);
+        this.text = this.add.text(800, 155, 'Click para ingresar nombre', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
+        this.textBox2 = this.add.image(750,860, 'textBox').setOrigin(0).setScale(0.5);
+        this.text2 = this.add.text(800, 885, 'Click para ingresar nombre', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
         this.sonidoClick = this.sound.add('sonido_click',{loop:false,volume:0.06});
         this.sonidoConfirmar = this.sound.add('sonido_confirmar',{loop:false,volume:0.08});
         this.sonidoFondoPartida = this.sound.add('Battleship',{loop:true,volume:0.007});
@@ -45,8 +48,11 @@ class MenuBando extends Phaser.Scene
                 onComplete: () => {
                     ingresoTexto = true;
                     this.text.destroy();
+                    ingresoTexto2 = false;
                 }
             });
+
+        
 
             this.add.tween({
                 targets: [ this.pointsText, this.bestPointsText ],                
@@ -55,7 +61,29 @@ class MenuBando extends Phaser.Scene
             });
         });
 
-        var textEntry = this.add.text(760, 160, '', { font: '48px Courier', fill: '#474747' });
+        this.text2.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.text,
+                ease: 'Bounce.easeIn',
+                x:810,
+                duration: 100,
+                onComplete: () => {
+                    ingresoTexto2 = true;
+                    this.text2.destroy();
+                    ingresoTexto = false;
+                }
+            });
+
+        
+
+            this.add.tween({
+                targets: [ this.pointsText, this.bestPointsText ],                
+                y: 400,
+                duration: 1000
+            });
+        });
+
+        var textEntry = this.add.text(760, 150, '', { font: '48px Courier', fill: '#474747' });
         
         this.input.keyboard.on('keydown', function (event) {
             if(ingresoTexto == true){
@@ -69,12 +97,28 @@ class MenuBando extends Phaser.Scene
                 }
             }
         });
+
+        var textEntryNick = this.add.text(760, 880, '', { font: '48px Courier', fill: '#474747' });
         
-       this.textoPotencias = this.add.image(600, 520, 'potenciasCentrales').setOrigin(0).setScale(0.5).setInteractive();
-        this.textoAliados = this.add.image(920, 520, 'Aliados').setOrigin(0).setScale(0.5).setInteractive();
+        this.input.keyboard.on('keydown', function (event) {
+            if(ingresoTexto2 == true){
+                if (event.keyCode === 8 && textEntryNick.text.length > 0)
+                {
+                    textEntryNick.text = textEntryNick.text.substr(0, textEntryNick.text.length - 1);
+                }
+                else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
+                {
+                    textEntryNick.text += event.key;
+                    console.log(textEntryNick.text);
+                }
+            }
+        });
+
+        this.textoPotencias = this.add.image(600, 490, 'potenciasCentrales').setOrigin(0).setScale(0.5).setInteractive();
+        this.textoAliados = this.add.image(920, 490, 'Aliados').setOrigin(0).setScale(0.5).setInteractive();
         var bandoElegido ; 
 
-       this.selecBando = this.add.image(670, 330, "seleccionBando").setOrigin(0).setScale(0.85).setInteractive();
+       this.selecBando = this.add.image(670, 300, "seleccionBando").setOrigin(0).setScale(0.85).setInteractive();
        this.selecBando.inputEnabled = true;
        this.selecBando.alpha = 0.1;
        this.selecBando.on(Phaser.Input.Events.POINTER_OVER, () => {
@@ -108,7 +152,7 @@ class MenuBando extends Phaser.Scene
             duration: 1000
         });
     });
-    this.selecBando2 = this.add.image(945, 290, "seleccionBando").setOrigin(0).setScale(1.05).setInteractive();
+    this.selecBando2 = this.add.image(945, 260, "seleccionBando").setOrigin(0).setScale(1.05).setInteractive();
        this.selecBando2.inputEnabled = true;
        this.selecBando2.alpha = 0.1;
        this.selecBando2.on(Phaser.Input.Events.POINTER_OVER, () => {
@@ -214,8 +258,8 @@ class MenuBando extends Phaser.Scene
             });
         });
 
-        var alerta = this.add.text(700, 900, '', { font: 'bold 48px Courier', fill: '#080808' });
-        this.crearNuevaPartida = this.add.image(780, 950, 'crearPartida').setOrigin(0).setScale(0.5).setInteractive();
+        var alerta = this.add.text(700, 960, '', { font: 'bold 48px Courier', fill: '#080808' });
+        this.crearNuevaPartida = this.add.image(780, 1020, 'crearPartida').setOrigin(0).setScale(0.5).setInteractive();
         this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
             if(bandoElegido == null){
                 alerta.setText('Seleccione un Bando'); 
@@ -225,7 +269,11 @@ class MenuBando extends Phaser.Scene
                 alerta.setText('El nombre debe ser menor a 12 caracteres').setScale(0.45);
             }
             else
+            if (textEntryNick.text.length > 10)
             {
+                alerta.setText('el nick debe de ser menor a 10 caracteres').setScale(0.45);
+            }
+            else{
             //Creo la partida con el bando y el nombre seleccionado
             this.sonidoConfirmar.play();
             this.sonidoFondoPartida.play();
@@ -236,6 +284,7 @@ class MenuBando extends Phaser.Scene
             }
             config.Partida.Bando = bandoElegido;
             config.Partida.Nombre = textEntry.text;
+            config.Partida.nick = textEntryNick.text;
             config.Partida.tipoPartida = "NuevaPartida";
             config.Partida.iniciarPartida();
             //console.log(config.Partida);

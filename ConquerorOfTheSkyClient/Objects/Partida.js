@@ -22,6 +22,8 @@ class Partida {
             this.configuraciones = msg.configuraciones;
             this.duenio = true;
             this.partidaCargada = true;
+            this.nick = msg.partida.nick;
+            this.pass = msg.partida.publica;
 
         }else if(msg.operacion == "ingresarAPartida"){            
 
@@ -101,7 +103,7 @@ class Partida {
     
     iniciarPartida(){
         if (config.WebSocket.isConnected()) {        
-            config.WebSocket.ws.send(JSON.stringify({operacion:"iniciarPartida",nick:"pepe",modalidad:"1vs1",nombre:this.Nombre,publica:"true",passwd:"0",bando:this.Bando}));
+            config.WebSocket.ws.send(JSON.stringify({operacion:"iniciarPartida",nick:this.nick,modalidad:"1vs1",nombre:this.Nombre,publica:"true",passwd:"0",bando:this.Bando}));
         //aca el backend registrara una nueva partida y la sesion del usuaria, ademas retornara la sesion del juego.
         }        
     }
