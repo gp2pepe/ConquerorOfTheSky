@@ -2427,6 +2427,29 @@ class Play extends Phaser.Scene {
 
     }
 
+    actualizarCombustible(time){
+
+        this.time = time;
+        for(var i = 0; i < 8; i++){
+            if (this.EstaMoviendose(config.Partida.aviones[i]) && time>config.Partida.aviones[i].timeNafta)
+            {  
+                if(config.Partida.aviones[i].combustible>0)
+                {   
+                    config.Partida.aviones[i].timeNafta =time+550;            
+                    config.Partida.aviones[i].combustible--;   
+                    var moverX = config.Partida.aviones[i].combustible+253;
+                    if(config.Partida.Bando=='Potencias' && i<4)
+                        eval("combustibleBar"+((i+1))+".x="+ moverX + ";")   
+                    else if(config.Partida.Bando=='Aliados' && i>3)
+                        eval("combustibleBar"+((i-3))+".x="+ moverX + ";")                 
+                }
+                else       
+                    config.Partida.aviones[i].vidaAvion = 0;              
+            }
+
+        }
+    }
+
     update(time,delta)
     {    
         this.actualizarBarraVida();
@@ -2484,8 +2507,11 @@ class Play extends Phaser.Scene {
         this.lightAvionSinBomba(); // Cambio de color al avion sin bomba
         this.lightAvionConBomba(); // cambio de color al avion con bomba
         //Tiempo que se usa para las balas     
-        this.time = time;
         
+        this.actualizarCombustible(time);
+
+
+        /*
         if (this.EstaMoviendose(avion_1) && time>avion_1.timeNafta)
         {  
             if(avion_1.combustible>0)
@@ -2582,7 +2608,7 @@ class Play extends Phaser.Scene {
             }
             else
                 avion_4_Aliados.vidaAvion = 0;
-        }
+        }*/
 
 
         //Se setea la posicion de los circulos de cada avion para que sigan al avion correspondiente
