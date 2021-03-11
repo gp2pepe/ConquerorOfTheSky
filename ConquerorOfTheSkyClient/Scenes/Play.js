@@ -2440,7 +2440,7 @@ class Play extends Phaser.Scene {
                     var moverX = config.Partida.aviones[i].combustible+253;
                     if(config.Partida.Bando=='Potencias' && i<4)
                         eval("combustibleBar"+((i+1))+".x="+ moverX + ";")   
-                    else if(config.Partida.Bando=='Aliados' && i>3)c
+                    else if(config.Partida.Bando=='Aliados' && i>3)
                         eval("combustibleBar"+((i-3))+".x="+ moverX + ";")                 
                 }
                 else       
@@ -2453,6 +2453,55 @@ class Play extends Phaser.Scene {
     update(time,delta)
     {    
         this.actualizarVidaAvion();
+
+/*
+        //se controla si le pegaron a los aviones para descontar la barra de vida
+            if(config.Partida.Bando=='Potencias'){
+                if(avion_1.mePegaron == 'true'){
+                    vidaBar1.x-=10;
+                    avion_1.mePegaron = 'false';
+                }else{
+                    if(avion_2.mePegaron == 'true'){
+                        vidaBar2.x-=10;
+                        avion_1.mePegaron = 'false';
+                        
+                    }else{
+                        if(avion_3.mePegaron == 'true'){
+                            vidaBar3.x-=10;
+                            avion_1.mePegaron = 'false';
+                        }else{
+                            if(avion_4.mePegaron == 'true'){
+                                vidaBar4.x-=10;
+                                avion_1.mePegaron = 'false';
+                            }
+                            
+                        }
+                    }
+                }
+            }else{
+                if(config.Partida.Bando=='Aliados'){
+                    if(avion_1_Aliados.mePegaron == 'true'){
+                        vidaBar1.x-=10;
+                        avion_1_Aliados.mePegaron = 'false';
+                        }else{
+                            if(avion_2_Aliados.mePegaron == 'true'){
+                                vidaBar2-=10;
+                                avion_2_Aliados.mePegaron = 'false';
+                            }else{
+                                if(avion_3_Aliados.mePegaron == 'true'){
+                                    vidaBar3.x-=10;
+                                    avion_3_Aliados.mePegaron = 'false';
+                                }else{
+                                    if(avion_4_Aliados.mePegaron == 'true'){
+                                        vidaBar4.x-=10;
+                                        avion_4_Aliados.mePegaron = 'false';
+                                
+                                    }
+                                }
+                            }
+                        }
+                }
+            }*/
         
         //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
         this.lightAvionSinBomba(); // Cambio de color al avion sin bomba
@@ -2460,6 +2509,107 @@ class Play extends Phaser.Scene {
         //Tiempo que se usa para las balas     
         
         this.actualizarCombustible(time);
+
+
+        /*
+        if (this.EstaMoviendose(avion_1) && time>avion_1.timeNafta)
+        {  
+            if(avion_1.combustible>0)
+            {   
+                avion_1.timeNafta =time+550;            
+                avion_1.combustible--;   
+                if(config.Partida.Bando=='Potencias')
+                    combustibleBar1.x =avion_1.combustible+253;
+            }
+            else       
+                avion_1.vidaAvion = 0;              
+        }
+        if (this.EstaMoviendose(avion_2) && time>avion_2.timeNafta)
+        {                
+            if(avion_2.combustible!=0)
+            {   
+                avion_2.timeNafta =time+550;          
+                avion_2.combustible --;
+                if(config.Partida.Bando=='Potencias')
+                     combustibleBar2.x =avion_2.combustible+253;
+            }
+            else
+                avion_2.vidaAvion = 0;
+        }
+        if (this.EstaMoviendose(avion_3) && time>avion_3.timeNafta)
+        {                
+            if(avion_3.combustible!=0)
+            {   
+                avion_3.timeNafta =time+550;            
+                avion_3.combustible--;
+                if(config.Partida.Bando=='Potencias')
+                    combustibleBar3.x =avion_3.combustible+253;
+            }
+            else
+                avion_3.vidaAvion = 0;
+        }            
+        if (this.EstaMoviendose(avion_4) && time>avion_4.timeNafta)
+        {                
+            if(avion_4.combustible!=0)
+            {   
+                avion_4.timeNafta =time+550; 
+                avion_4.combustible--;
+                if(config.Partida.Bando=='Potencias')
+                    combustibleBar4.x =avion_4.combustible+253;
+            }
+            else
+                avion_4.vidaAvion = 0;
+        }
+
+        if (this.EstaMoviendose(avion_1_Aliados) && time>avion_1_Aliados.timeNafta)
+        {                
+            if(avion_1_Aliados.combustible!=0)
+            {   
+                avion_1_Aliados.timeNafta =time+550; 
+                avion_1_Aliados.combustible--;
+                if(config.Partida.Bando=='Aliados')
+                    combustibleBar1.x =avion_1_Aliados.combustible+253;
+            }
+            else
+                avion_1_Aliados.vidaAvion = 0;
+        }
+        if (this.EstaMoviendose(avion_2_Aliados) && time>avion_2_Aliados.timeNafta)
+        {                
+            if(avion_2_Aliados.combustible!=0)
+            {   
+                avion_2_Aliados.timeNafta =time+550;  
+                avion_2_Aliados.combustible--;
+                if(config.Partida.Bando=='Aliados')
+                    combustibleBar2.x =avion_2_Aliados.combustible+253;
+            }
+            else
+                avion_2_Aliados.vidaAvion = 0;
+        }
+        if (this.EstaMoviendose(avion_3_Aliados) && time>avion_3_Aliados.timeNafta)
+        {                
+            if(avion_3_Aliados.combustible!=0)
+            {   
+                avion_3_Aliados.timeNafta =time+550;  
+                avion_3_Aliados.combustible--;
+                if(config.Partida.Bando=='Aliados')
+                    combustibleBar3.x =avion_3_Aliados.combustible+253;
+            }
+            else
+                avion_3_Aliados.vidaAvion = 0;
+        }            
+        if (this.EstaMoviendose(avion_4_Aliados) && time>avion_4_Aliados.timeNafta)
+        {                
+            if(avion_4_Aliados.combustible!=0)
+            {   
+                avion_4_Aliados.timeNafta =time+550;       
+                avion_4_Aliados.combustible--;
+                if(config.Partida.Bando=='Aliados')
+                    combustibleBar4.x =avion_4_Aliados.combustible+253;
+            }
+            else
+                avion_4_Aliados.vidaAvion = 0;
+        }*/
+
 
         //Se setea la posicion de los circulos de cada avion para que sigan al avion correspondiente
         this.circulo_1.setPosition(avion_1.x, avion_1.y);  
