@@ -515,8 +515,6 @@ class Play extends Phaser.Scene {
                         avion_1_Aliados.moverAvion({x: avion_1_Aliados.xInicial, y: avion_1_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: avion_1_Aliados.xInicial, y: avion_1_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:5, bomba: true});
-
-
                     }          
                 }
             });
@@ -2680,6 +2678,34 @@ class Play extends Phaser.Scene {
                 this.circulo_4.destroy();
                 avion_4.destroy();
             }   
+        if(this.torrePotencias.vida <= 0) 
+        {
+            if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Aliados')
+            {
+                this.mensajeAviso('La torre enemiga fue destruida');
+                mensajeAvionDestruido8 = true;
+            }
+            this.circulo_torrePotencias.destroy();
+            this.torrePotencias.destroy();
+        }
+        if(this.contenedorPotencias.vida <= 0) 
+        {
+            if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Aliados')
+            {
+                this.mensajeAviso('El contenedor enemigo fue destruido');
+                mensajeAvionDestruido8 = true;
+            }
+            this.contenedorPotencias.destroy();            
+        }
+        if(this.depositoPotencias.vida <= 0) 
+        {
+            if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Aliados')
+            {
+                this.mensajeAviso('El deposito enemigo fue destruido');
+                mensajeAvionDestruido8 = true;
+            }
+            this.depositoPotencias.destroy();            
+        }
         if(avion_1_Aliados.vidaAvion <= 0) 
             {
                 if (mensajeAvionDestruido5 == false && config.Partida.Bando == 'Potencias')
@@ -2720,6 +2746,37 @@ class Play extends Phaser.Scene {
                 this.circulo_8.destroy();
                 avion_4_Aliados.destroy();
             }
+
+        if(this.torreAliados.vida <= 0) 
+        {
+            if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Potencias')
+            {
+                this.mensajeAviso('La torre enemiga fue destruida');
+                mensajeAvionDestruido8 = true;
+            }
+            this.circulo_torreAliados.destroy();
+            this.torreAliados.destroy();
+        }
+
+        if(this.contenedorAliados.vida <= 0) 
+        {
+            if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Potencias')
+            {
+                this.mensajeAviso('El contenedor enemigo fue destruido');
+                mensajeAvionDestruido8 = true;
+            }
+            this.contenedorAliados.destroy();            
+        }
+
+        if(this.depositoAliados.vida <= 0) 
+        {
+            if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Potencias')
+            {
+                this.mensajeAviso('El deposito enemigo fue destruido');
+                mensajeAvionDestruido8 = true;
+            }
+            this.depositoAliados.destroy();            
+        }
 
         if (config.Partida.Bando == 'Potencias')
         {
