@@ -165,7 +165,7 @@ var CreateItems = function (count) {
     console.log(data);
     for (var i = 0; i < cantPartidas; i++) {
         data.push({
-            id: +listaPartidas[i].idPartida + '                                         '  +listaPartidas[i].nombre + '                             ' + listaPartidas[i].jugConectados + '/2' + '                                 ' + esPublica(listaPartidas[i].publica) + '                                 ' + listaPartidas[i].modalidad,
+            id: +listaPartidas[i].idPartida + '                                '  +listaPartidas[i].nombre + '                             ' + listaPartidas[i].jugConectados + '/2' + '                                 ' + esPublica(listaPartidas[i].publica) + '                                 ' + listaPartidas[i].modalidad,
             gold:listaPartidas[i].idPartida ,
         });
         console.log(listaPartidas);
