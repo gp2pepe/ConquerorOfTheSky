@@ -113,7 +113,7 @@ class MenuInicial extends Phaser.Scene {
     }
     update(){     
         if(config.Partida.listaCargada)
-         this.scene.start('scroll');
+         this.scene.start('MenuPartidas');
     }
 }
 export  default MenuInicial;
