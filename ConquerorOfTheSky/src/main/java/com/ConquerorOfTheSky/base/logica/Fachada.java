@@ -294,7 +294,9 @@ public class Fachada implements IFachada{
         List<Equipo> equipos = par.getEquipos();
         int jugConectados = 0;
         for(Equipo eq : equipos)
-          jugConectados += eq.getJugadores().size();
+            for(Jugador jug : eq.getJugadores())
+              if(jug.getSesionActual()!=null)
+                jugConectados++;
 
         innerObjectPartida.addProperty("jugConectados", jugConectados);
         innerObjectLista.add(innerObjectPartida);
