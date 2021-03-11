@@ -96,7 +96,11 @@ class Bootloader extends Phaser.Scene {
              'guardando',
              'pausado',
              'fondoGuardar',
+<<<<<<< Updated upstream
              "fondoCargar"
+=======
+             'fondoBuscarPartida'
+>>>>>>> Stashed changes
              //'loading'
 
         ])

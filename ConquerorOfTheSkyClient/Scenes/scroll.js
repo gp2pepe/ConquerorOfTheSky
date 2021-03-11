@@ -21,14 +21,15 @@ class scroll extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(0, 0, "fondoMenu").setOrigin(0);
-        this.add.image(0,0, 'desenfocar').setOrigin(0);
-        this.add.image(150, 150, "menupartidas_2").setOrigin(0).setScale(0.8);
+        console.log(config.Partida.listaPartidas);
+        //this.add.image(0, 0, "fondoMenu").setOrigin(0);
+        //this.add.image(0,0, 'desenfocar').setOrigin(0);
+        this.add.image(150, 150, "fondoBuscarPartida").setOrigin(0).setScale(2);
         var scrollMode = 0; // 0:vertical, 1:horizontal
         var gridTable = this.rexUI.add.gridTable({
-            x: 800,
+            x: 770,
             y: 600,
-            width: (scrollMode === 0) ? 1000 : 1800,
+            width: (scrollMode === 0) ? 1020 : 1800,
             height: (scrollMode === 0) ? 550 : 1000,
 
             scrollMode: scrollMode,
@@ -164,7 +165,7 @@ var CreateItems = function (count) {
     console.log(data);
     for (var i = 0; i < cantPartidas; i++) {
         data.push({
-            id: +listaPartidas[i].idPartida + '                                                 '  +listaPartidas[i].nombre + '                                                           '  + listaPartidas[i].modalidad,
+            id: +listaPartidas[i].idPartida + '                                         '  +listaPartidas[i].nombre + '                             ' + listaPartidas[i].jugConectados + '/2' + '                                 ' + esPublica(listaPartidas[i].publica) + '                                 ' + listaPartidas[i].modalidad,
             gold:listaPartidas[i].idPartida ,
         });
         console.log(listaPartidas);
@@ -172,7 +173,13 @@ var CreateItems = function (count) {
     return data;
 }
 
-
+var esPublica = function(boolean)
+{
+    if (boolean == true)
+        return 'Si';
+    else
+        return 'No';
+}
 var GetFooterSizer = function (scene, orientation) {
     return scene.rexUI.add.sizer({
         orientation: orientation

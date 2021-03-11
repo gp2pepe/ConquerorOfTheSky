@@ -219,11 +219,21 @@ class MenuBando extends Phaser.Scene
         this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
             if(bandoElegido == null){
                 alerta.setText('Seleccione un Bando'); 
-            }else{
+            }else
+            if (textEntry.text.length > 12)
+            { 
+                alerta.setText('El nombre debe ser menor a 12 caracteres').setScale(0.45);
+            }
+            else
+            {
             //Creo la partida con el bando y el nombre seleccionado
             this.sonidoConfirmar.play();
            // this.sonidoFondoPartida.play();
             console.log('Entre iniciando partida en Menu Bando');
+            while (textEntry.text.length != 12)
+            {
+                textEntry.text = ' ' + textEntry.text;     
+            }
             config.Partida.Bando = bandoElegido;
             config.Partida.Nombre = textEntry.text;
             config.Partida.tipoPartida = "NuevaPartida";
