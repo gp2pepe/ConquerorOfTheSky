@@ -40,7 +40,7 @@ class Partida {
 
             }else if(msg.carga.tipoOp == "sincronizarVidaAvion"){
                 this.aviones[msg.carga.idavion-1].vidaAvion=msg.carga.vida;
-                this.aviones[msg.carga.idavion-1].mePegaron('true');
+                //this.aviones[msg.carga.idavion-1].mePegaron('true');
 
             }else if(msg.carga.tipoOp == "sincronizarAltitudAvion"){
                 this.aviones[msg.carga.idavion-1].cambiarAltitud(msg.carga.altitud);

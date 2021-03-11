@@ -72,6 +72,7 @@ var mensajeAvionDestruido5 = false;
 var mensajeAvionDestruido6 = false;
 var mensajeAvionDestruido7 = false;
 var mensajeAvionDestruido8 = false;
+const arregloVida = new Array();
 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
@@ -371,7 +372,16 @@ class Play extends Phaser.Scene {
         for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
             config.Partida.artilleriasAliados[i] = artilleriasAliados.getChildren()[i];
         }
-        
+
+        arregloVida[0] = config.Partida.aviones[0].vidaAvion;
+        arregloVida[1] = config.Partida.aviones[1].vidaAvion;
+        arregloVida[2] = config.Partida.aviones[2].vidaAvion;
+        arregloVida[3] = config.Partida.aviones[3].vidaAvion;
+        arregloVida[4] = config.Partida.aviones[4].vidaAvion;
+        arregloVida[5] = config.Partida.aviones[5].vidaAvion;
+        arregloVida[6] = config.Partida.aviones[6].vidaAvion;
+        arregloVida[7] = config.Partida.aviones[7].vidaAvion;
+
         //Evento que escucha cuando se clickea con el mouse y llama al onObjectClicked
         this.input.on('pointerdown',this.onObjectClicked);   
         
@@ -2391,28 +2401,55 @@ class Play extends Phaser.Scene {
         this.mensaje.destroy();
     }
 
+    actualizarBarraVida(){
+
+        if(config.Partida.Bando=='Potencias'){
+            for(var i = 0; i < 4; i++){
+                if(config.Partida.aviones[i].vidaAvion<arregloVida[i]){
+                    var moverX =  (( arregloVida[i] - config.Partida.aviones[i].vidaAvion) * 100 / config.Partida.configuraciones.avionSalud );
+                    arregloVida[i] = config.Partida.aviones[i].vidaAvion;
+                    console.log("llegue, la vida que tengo es: " +config.Partida.aviones[i].vidaAvion + " y lo voy a mover - :" + moverX);
+                    eval("vidaBar"+(i+1)+".x-="+ moverX + ";")
+                }
+                
+            }
+        }else{
+            for(var i = 4; i < 8; i++){
+                if(config.Partida.aviones[i].vidaAvion<arregloVida[i]){
+                    var moverX =  (( arregloVida[i] - config.Partida.aviones[i].vidaAvion) * 100 / config.Partida.configuraciones.avionSalud );
+                    arregloVida[i] = config.Partida.aviones[i].vidaAvion;
+                    console.log("llegue " + moverX);
+                    eval("vidaBar"+((i-3))+".x-="+ moverX + ";")
+                }
+                
+            }
+        }
+
+    }
 
     update(time,delta)
     {    
-       
+        this.actualizarBarraVida();
+
+/*
         //se controla si le pegaron a los aviones para descontar la barra de vida
             if(config.Partida.Bando=='Potencias'){
-                if(avion_1.mepegaron == 'true'){
+                if(avion_1.mePegaron == 'true'){
                     vidaBar1.x-=10;
-                    avion_1.mepegaron = 'false';
+                    avion_1.mePegaron = 'false';
                 }else{
-                    if(avion_2.mepegaron == 'true'){
+                    if(avion_2.mePegaron == 'true'){
                         vidaBar2.x-=10;
-                        avion_1.mepegaron = 'false';
+                        avion_1.mePegaron = 'false';
                         
                     }else{
-                        if(avion_3.mepegaron == 'true'){
+                        if(avion_3.mePegaron == 'true'){
                             vidaBar3.x-=10;
-                            avion_1.mepegaron = 'false';
+                            avion_1.mePegaron = 'false';
                         }else{
-                            if(avion_4.mepegaron == 'true'){
+                            if(avion_4.mePegaron == 'true'){
                                 vidaBar4.x-=10;
-                                avion_1.mepegaron = 'false';
+                                avion_1.mePegaron = 'false';
                             }
                             
                         }
@@ -2420,28 +2457,28 @@ class Play extends Phaser.Scene {
                 }
             }else{
                 if(config.Partida.Bando=='Aliados'){
-                    if(avion_1_Aliados.mepegaron == 'true'){
+                    if(avion_1_Aliados.mePegaron == 'true'){
                         vidaBar1.x-=10;
-                        avion_1_Aliados.mepegaron = 'false';
+                        avion_1_Aliados.mePegaron = 'false';
                         }else{
-                            if(avion_2_Aliados.mepegaron == 'true'){
+                            if(avion_2_Aliados.mePegaron == 'true'){
                                 vidaBar2-=10;
-                                avion_2_Aliados.mepegaron = 'false';
+                                avion_2_Aliados.mePegaron = 'false';
                             }else{
-                                if(avion_3_Aliados.mepegaron == 'true'){
+                                if(avion_3_Aliados.mePegaron == 'true'){
                                     vidaBar3.x-=10;
-                                    avion_3_Aliados.mepegaron = 'false';
+                                    avion_3_Aliados.mePegaron = 'false';
                                 }else{
-                                    if(avion_4_Aliados.mepegaron == 'true'){
+                                    if(avion_4_Aliados.mePegaron == 'true'){
                                         vidaBar4.x-=10;
-                                        avion_4_Aliados.mepegaron = 'false';
+                                        avion_4_Aliados.mePegaron = 'false';
                                 
                                     }
                                 }
                             }
                         }
                 }
-            }
+            }*/
         
         //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
         this.lightAvionSinBomba(); // Cambio de color al avion sin bomba
@@ -2758,6 +2795,7 @@ class Play extends Phaser.Scene {
             }
             this.depositoAliados.destroy();            
         }
+
 
         if (config.Partida.Bando == 'Potencias')
         {
