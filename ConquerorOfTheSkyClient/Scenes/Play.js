@@ -82,6 +82,7 @@ class Play extends Phaser.Scene {
         this.bullets;
     }
     create(){ 
+        this.entre=true;
         //Se remueven escenas de menus anteriores
         this.scene.remove('MenuInicial');
         this.scene.remove('ElegirBando');
@@ -494,13 +495,11 @@ class Play extends Phaser.Scene {
                         
                         avion_1.cargarbomba=true;      
                         this.cargarBomba1 = this.add.image(65, 545, "botonBombaRojo").setOrigin(0).setScale(.3).setInteractive();   
-                         this.cargarBomba1.depth =100;      
+                        //this.cargarBomba1.depth =100;      
                         config.Partida.idavion=1;
                         avion_1.moverAvion({x: avion_1.xInicial, y: avion_1.yInicial});                        
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: avion_1.xInicial, y: avion_1.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:1, bomba: true});
-                        
-                        
 
                     }            
 
@@ -2274,14 +2273,14 @@ class Play extends Phaser.Scene {
 
         if (difX < 2 && difY < 2)
         {   
-            avion.combustible = 2000;             
+            avion.combustible = 85;                          
             if (avion.cargarbomba==true)
             {            
                 avion.body.setVelocityY(0);
                 avion.body.setVelocityX(0);                            
                 avion.cambiarAltitud('En base');                              
-                this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
-                this.cargarBomba1.depth = 100;
+                //this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
+                //this.cargarBomba1.depth = 100;
                 avion.cargarbomba=false;
                 avion.tengobomba=true; 
                 this.avionVistaLateral = this.add.image(100,240,'avionBombaLateral').setOrigin(0).setScale(.7);
@@ -2449,92 +2448,103 @@ class Play extends Phaser.Scene {
         this.lightAvionConBomba(); // cambio de color al avion con bomba
         //Tiempo que se usa para las balas     
         this.time = time;
-        if (this.EstaMoviendose(avion_1) && time>timeNafta)
-        {                
-            if(avion_1.combustible!=0)
+        
+        if (this.EstaMoviendose(avion_1) && time>avion_1.timeNafta)
+        {  
+            if(avion_1.combustible>0)
             {   
-                timeNafta =timeNafta+100;            
-                avion_1.combustible--;
+                avion_1.timeNafta =time+550;            
+                avion_1.combustible--;   
                 if(config.Partida.Bando=='Potencias')
-                     combustibleBar1.x -=1;
-                console.log(avion_1.cargarCombustible);              
+                    combustibleBar1.x =avion_1.combustible+253;
             }
+            else       
+                avion_1.vidaAvion = 0;              
         }
-        if (this.EstaMoviendose(avion_2) && time>timeNafta)
+        if (this.EstaMoviendose(avion_2) && time>avion_2.timeNafta)
         {                
             if(avion_2.combustible!=0)
             {   
-                timeNafta =timeNafta+1000;          
+                avion_2.timeNafta =time+550;          
                 avion_2.combustible --;
                 if(config.Partida.Bando=='Potencias')
-                     combustibleBar2.x -=1;
+                     combustibleBar2.x =avion_2.combustible+253;
             }
+            else
+                avion_2.vidaAvion = 0;
         }
-        if (this.EstaMoviendose(avion_3) && time>timeNafta)
+        if (this.EstaMoviendose(avion_3) && time>avion_3.timeNafta)
         {                
             if(avion_3.combustible!=0)
             {   
-                timeNafta =timeNafta+1000;            
+                avion_3.timeNafta =time+550;            
                 avion_3.combustible--;
                 if(config.Partida.Bando=='Potencias')
-                    combustibleBar3.x -=1;
+                    combustibleBar3.x =avion_3.combustible+253;
             }
+            else
+                avion_3.vidaAvion = 0;
         }            
-        if (this.EstaMoviendose(avion_4) && time>timeNafta)
+        if (this.EstaMoviendose(avion_4) && time>avion_4.timeNafta)
         {                
             if(avion_4.combustible!=0)
             {   
-                timeNafta =timeNafta+1000;                    
-                console.log(avion_4.combustible);
+                avion_4.timeNafta =time+550; 
                 avion_4.combustible--;
                 if(config.Partida.Bando=='Potencias')
-                    combustibleBar4.x -=1;
+                    combustibleBar4.x =avion_4.combustible+253;
             }
+            else
+                avion_4.vidaAvion = 0;
         }
 
-        if (this.EstaMoviendose(avion_1_Aliados) && time>timeNafta)
+        if (this.EstaMoviendose(avion_1_Aliados) && time>avion_1_Aliados.timeNafta)
         {                
             if(avion_1_Aliados.combustible!=0)
             {   
-                timeNafta =timeNafta+1000;                    
-                //console.log(avion_1_Aliados.combustible);
+                avion_1_Aliados.timeNafta =time+550; 
                 avion_1_Aliados.combustible--;
                 if(config.Partida.Bando=='Aliados')
-                    combustibleBar1.x -=1;
+                    combustibleBar1.x =avion_1_Aliados.combustible+253;
             }
+            else
+                avion_1_Aliados.vidaAvion = 0;
         }
-        if (this.EstaMoviendose(avion_2_Aliados) && time>timeNafta)
+        if (this.EstaMoviendose(avion_2_Aliados) && time>avion_2_Aliados.timeNafta)
         {                
             if(avion_2_Aliados.combustible!=0)
             {   
-                timeNafta =timeNafta+1000;                    
-                console.log(avion_2_Aliados.combustible);
+                avion_2_Aliados.timeNafta =time+550;  
                 avion_2_Aliados.combustible--;
                 if(config.Partida.Bando=='Aliados')
-                    combustibleBar2.x -=1;
+                    combustibleBar2.x =avion_2_Aliados.combustible+253;
             }
+            else
+                avion_2_Aliados.vidaAvion = 0;
         }
-        if (this.EstaMoviendose(avion_3_Aliados) && time>timeNafta)
+        if (this.EstaMoviendose(avion_3_Aliados) && time>avion_3_Aliados.timeNafta)
         {                
             if(avion_3_Aliados.combustible!=0)
             {   
-                timeNafta =timeNafta+1000;                    
-                console.log(avion_3_Aliados.combustible);
+                avion_3_Aliados.timeNafta =time+550;  
                 avion_3_Aliados.combustible--;
                 if(config.Partida.Bando=='Aliados')
-                    combustibleBar3.x -=1;
+                    combustibleBar3.x =avion_3_Aliados.combustible+253;
             }
+            else
+                avion_3_Aliados.vidaAvion = 0;
         }            
-        if (this.EstaMoviendose(avion_4_Aliados) && time>timeNafta)
+        if (this.EstaMoviendose(avion_4_Aliados) && time>avion_4_Aliados.timeNafta)
         {                
             if(avion_4_Aliados.combustible!=0)
             {   
-                timeNafta =timeNafta+1000;                    
-                console.log(avion_4_Aliados.combustible);
+                avion_4_Aliados.timeNafta =time+550;       
                 avion_4_Aliados.combustible--;
                 if(config.Partida.Bando=='Aliados')
-                    combustibleBar4.x -=1;
+                    combustibleBar4.x =avion_4_Aliados.combustible+253;
             }
+            else
+                avion_4_Aliados.vidaAvion = 0;
         }
 
 
@@ -2608,7 +2618,7 @@ class Play extends Phaser.Scene {
 
         //Se prueba evento de destruccion de avion al llegar la vida a 0
         
-        if(avion_1.vidaAvion <= 0) 
+        if(avion_1.vidaAvion <= 0 ) 
             {
                 if (mensajeAvionDestruido1 == false && config.Partida.Bando == 'Aliados')
                 {
@@ -2618,7 +2628,7 @@ class Play extends Phaser.Scene {
                 this.circulo_1.destroy();
                 avion_1.destroy();
             }
-        if(avion_2.vidaAvion <= 0) 
+        if(avion_2.vidaAvion <= 0 ) 
         {
             if (mensajeAvionDestruido2 == false && config.Partida.Bando == 'Aliados')
                 {
@@ -2629,7 +2639,7 @@ class Play extends Phaser.Scene {
             avion_2.destroy();
         }
             
-        if(avion_3.vidaAvion <= 0) 
+        if(avion_3.vidaAvion <= 0 ) 
             {
                 if (mensajeAvionDestruido3 == false && config.Partida.Bando == 'Aliados')
                 {
