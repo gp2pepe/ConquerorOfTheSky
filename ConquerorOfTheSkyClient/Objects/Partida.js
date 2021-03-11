@@ -22,7 +22,6 @@ class Partida {
             this.configuraciones = msg.configuraciones;
             this.duenio = true;
             this.partidaCargada = true;
-            this.nick = msg.partida.nick;
             this.pass = msg.partida.publica;
 
         }else if(msg.operacion == "ingresarAPartida"){            
