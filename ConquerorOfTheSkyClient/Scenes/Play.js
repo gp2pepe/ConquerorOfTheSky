@@ -1027,6 +1027,16 @@ class Play extends Phaser.Scene {
                     this.depositoPotencias.setVisible(true);
                 } 
             });
+            this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_chico, ()=>
+            {   
+                this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_chico.danio;  
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
+                this.circulo_bomba_chico.setPosition(1, 1);
+                console.log('grande:'+this.depositoAliados.vida);
+                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
+                if (this.depositoAliados.vida < 0)
+                    console.log('sin deposito');
+            });
 
             this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_grande, ()=>
             {   

@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mysql.cj.Session;
 import com.ConquerorOfTheSky.base.modelo.Configuracion;
 import com.ConquerorOfTheSky.base.modelo.DepositoDeExplosivos;
 
@@ -292,6 +293,7 @@ public class Fachada implements IFachada{
         innerObjectPartida.addProperty("modalidad", par.getModalidad());
         innerObjectPartida.addProperty("nombre", par.getNombre());
         List<Equipo> equipos = par.getEquipos();
+        String nickDuenio = equipos.get(0).getJugadores().get(0).getNick();
         int jugConectados = 0;
         for(Equipo eq : equipos)
             for(Jugador jug : eq.getJugadores())
@@ -299,11 +301,14 @@ public class Fachada implements IFachada{
                 jugConectados++;
 
         innerObjectPartida.addProperty("jugConectados", jugConectados);
+        innerObjectPartida.addProperty("nickDuenio", nickDuenio);
         innerObjectLista.add(innerObjectPartida);
+        
       }
 
       innerObject.add("partidas", innerObjectLista);
       innerObject.addProperty("operacion", "listarPartidas");
+
       return gson.toJson(innerObject);
 
     }
@@ -406,7 +411,7 @@ public class Fachada implements IFachada{
     }
 
     @Transactional
-    public String recuperarPartida(Long idPartida, String passwd) throws PartidaNoExisteException {
+    public String recuperarPartida(Long idPartida, WebSocketSession sesionUsu, String passwd) throws PartidaNoExisteException {
       try{
         
         Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
@@ -414,6 +419,7 @@ public class Fachada implements IFachada{
         Partida par = (Partida) Hibernate.unproxy(partidaR.getOne(idPartida));
         Partida partida = par;
         if(partida.getPassword().equals(passwd)){
+          partida.getEquipos().get(0).getJugadores().get(0).setSesionActual(sesionUsu);
           synchronized(this) {
             partidas.add(partida);
           }

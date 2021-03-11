@@ -84,9 +84,10 @@ public class TWebSocketHandler extends TextWebSocketHandler {
             }else if(op.equals(new String("ingresarAPartida"))){
                 try{
                     LOGGER.debug("Llego un ingresarAPartida: " + map.toString());
-                    String respuesta = fachada.ingresarAPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("nick"), session,(String) map.get("passwd"));
+                    String respuesta = fachada.ingresarAPartida(Long.valueOf(map.get("idpartida").toString()), map.get("nick").toString(), session, map.get("passwd").toString());
                     session.sendMessage(new TextMessage(respuesta));
                 } catch (Exception e) {
+                    LOGGER.debug(e.toString());
                     try { 
                         session.sendMessage(new TextMessage(gson.toJson(e)));
                     } catch (IOException e1) {
@@ -99,7 +100,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
                 try{
                     LOGGER.debug("Llego un sincronizar: " + map.toString());
-                    List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(((Integer) map.get("idpartida"))));
+                    List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(map.get("idpartida").toString()));
                     listaSesiones.forEach(webSocketSession -> {
                         try {
                             if(webSocketSession != session){
@@ -110,6 +111,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                             }
 
                         } catch (Exception e) {
+                            LOGGER.debug(e.toString());
                             try {                            
                                 LOGGER.debug("Se desconecto un jugador de una partida");
                                 session.sendMessage(new TextMessage(gson.toJson(e)));
@@ -131,6 +133,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     String respuesta = fachada.listarPartidas();
                     session.sendMessage(new TextMessage(respuesta));
                 }catch(Exception e){
+                    LOGGER.debug(e.toString());
                     try{
                         session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"listarPartidas\",\"mensaje\": \"Hubo un error al buscar las partidas\" }"));
                     } catch (IOException e1) {
@@ -148,11 +151,10 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     JsonObject[] artPotencias = gson.fromJson(map.get("artPotencias").toString(), JsonObject[].class);
                     JsonObject[] artAliados = gson.fromJson(map.get("artAliados").toString(), JsonObject[].class);
 
-                    String respuesta = fachada.guardarPartida(Long.valueOf(((Integer) map.get("idpartida"))), (String) map.get("passwd"), aviones, basePotencias, baseAliados, artPotencias, artAliados );
+                    String respuesta = fachada.guardarPartida(Long.valueOf(map.get("idpartida").toString()), map.get("passwd").toString(), aviones, basePotencias, baseAliados, artPotencias, artAliados );
                     session.sendMessage(new TextMessage(respuesta));
                 }catch(Exception e){
                     LOGGER.debug(e.getMessage());
-
                     try{
                         session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"guardarPartida\",\"mensaje\": \"Hubo un error al guardar la partida\" }"));
                     } catch (IOException e1) {
@@ -163,11 +165,10 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                 try{
                     LOGGER.debug("Llego un recuperarPartida: " + map.toString());
 
-                    String respuesta = fachada.recuperarPartida(Long.valueOf((Integer.valueOf(map.get("idpartida").toString()))),  map.get("passwd").toString() );
+                    String respuesta = fachada.recuperarPartida(Long.valueOf(map.get("idpartida").toString()),session,  map.get("passwd").toString() );
                     session.sendMessage(new TextMessage(respuesta));
                 }catch(Exception e){
                     LOGGER.debug(e.getMessage());
-
                     try{
                         session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"recuperarPartida\",\"mensaje\": \"Hubo un error al recuperar la partida\" }"));
                     } catch (IOException e1) {

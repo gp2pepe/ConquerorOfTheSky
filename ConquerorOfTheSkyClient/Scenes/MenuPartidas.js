@@ -122,10 +122,21 @@ class MenuPartidas extends Phaser.Scene {
             }, this)
             .on('cell.click', function (cellContainer, cellIndex, pointer) {
                 this.print.text += 'click ' + cellIndex + ': ' + cellContainer.text + '\n';
-                var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
                 var partida =cellContainer.text.split(' ');
-                const partida1 = listaPartidas[partida[0]].idPartida;
-                config.Partida.ingresarAPartida(partida1);
+                
+                //No necesario ?
+               /*var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
+               encontre = false;
+                var i = 0;
+                const partida1;
+                while(i < listaPartidas.length && !encontre){
+                    if(listaPartidas[i].idPartida==partida[0]){
+                        partida1 = listaPartidas[i].idPartida;
+                        encontre = true;
+                    }
+                    i++;
+                }*/
+                config.Partida.ingresarAPartida(partida[0]);
                 var nextCellIndex = cellIndex + 1;
                 var nextItem = gridTable.items[nextCellIndex];
                 if (!nextItem) {
@@ -159,7 +170,7 @@ class MenuPartidas extends Phaser.Scene {
 
 var CreateItems = function (count) {
     var data = [];  
-     var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
+    var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
     var cantPartidas = listaPartidas.length;
     console.log(listaPartidas);
     console.log(data);
@@ -187,29 +198,5 @@ var GetFooterSizer = function (scene, orientation) {
         
 }
 
-var CreateFooterButton = function (scene, text, orientation) {
-    return scene.rexUI.add.label({
-        height: (orientation === 0) ? 40 : undefined,
-        width: (orientation === 0) ? undefined : 40,
-        orientation: orientation,
-        background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
-        text: scene.add.text(0, 0, text),
-        icon: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_LIGHT),
-        align: 'center',
-        space: {           
-            icon: 10
-        }
-    })
-        .setInteractive()
-        .on('pointerdown', function () {
-            console.log(`Pointer down ${text}`)
-        })
-        .on('pointerover', function(){
-            this.getElement('background').setStrokeStyle(1, 0xffffff);
-        })
-        .on('pointerout', function(){
-            this.getElement('background').setStrokeStyle();
-        })  
-}
 
 export default MenuPartidas
