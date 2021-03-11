@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="depositodeexplosivos")
 public class DepositoDeExplosivos {
@@ -15,6 +17,7 @@ public class DepositoDeExplosivos {
     @Column(name="id_deposito")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idDeposito;
+    @Expose
     private int salud;
 
     public DepositoDeExplosivos() {

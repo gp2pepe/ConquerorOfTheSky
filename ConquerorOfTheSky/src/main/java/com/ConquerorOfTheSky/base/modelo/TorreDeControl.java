@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="torredecontrol")
 public class TorreDeControl {
@@ -15,8 +17,11 @@ public class TorreDeControl {
     @Column(name="id_torre")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idTorre;
+	@Expose
     private int salud;
+	@Expose
     private int radioDisparo;
+	@Expose
     private int danio;
 
     public TorreDeControl() {

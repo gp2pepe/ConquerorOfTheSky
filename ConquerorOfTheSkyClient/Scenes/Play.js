@@ -152,7 +152,7 @@ class Play extends Phaser.Scene {
         this.torrePotencias = this.add.image(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 'torre').setScale(.07);
         avionXInicial = campoPotencias.base.posicionX ; 
 
-        this.torrePotencias.vida= config.Partida.configuraciones.torreSalud;
+        this.torrePotencias.vida= campoPotencias.base.torreControl.salud;
         this.physics.world.enable(this.torrePotencias);        
 		this.torrePotencias.body.setCollideWorldBounds(true);
         this.torrePotencias.body.setSize(300,900);
@@ -165,11 +165,11 @@ class Play extends Phaser.Scene {
         this.circulo_torrePotencias.body.setOffset(-10,-10); 
                
 
-        this.depositoPotencias.vida= config.Partida.configuraciones.depositoExplosivosSalud;
+        this.depositoPotencias.vida= campoPotencias.base.depositoExplosivos.salud;
         this.physics.world.enable(this.depositoPotencias);        
 		this.depositoPotencias.body.setCollideWorldBounds(true);
 
-        this.contenedorPotencias.vida= config.Partida.configuraciones.tanqueCombustibleSalud;
+        this.contenedorPotencias.vida= campoPotencias.base.tanqueCombustible.salud;
         this.physics.world.enable(this.contenedorPotencias);        
 		this.contenedorPotencias.body.setCollideWorldBounds(true);
 
@@ -190,7 +190,7 @@ class Play extends Phaser.Scene {
             artilleriasPotencias.getChildren()[i].setCircle(450);
             artilleriasPotencias.getChildren()[i].setOffset(-250,-250);  
             artilleriasPotencias.getChildren()[i].lastFired = 0; 
-            artilleriasPotencias.getChildren()[i].vida = config.Partida.configuraciones.artilleriaSalud; 
+            artilleriasPotencias.getChildren()[i].vida = campoPotencias.artillerias[i].salud; 
 
         }
 
@@ -211,7 +211,7 @@ class Play extends Phaser.Scene {
         this.depositoAliados = this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.torreAliados = this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
        
-        this.torreAliados.vida= config.Partida.configuraciones.torreSalud;
+        this.torreAliados.vida= campoAliados.base.torreControl.salud;
         this.physics.world.enable(this.torreAliados);        
 		this.torreAliados.body.setCollideWorldBounds(true);
         this.torreAliados.body.setSize(300,900);
@@ -223,11 +223,11 @@ class Play extends Phaser.Scene {
         this.circulo_torreAliados.body.setCircle(60);
         this.circulo_torreAliados.body.setOffset(-10,-10); 
 
-        this.depositoAliados.vida= config.Partida.configuraciones.depositoExplosivosSalud;
+        this.depositoAliados.vida= campoAliados.base.depositoExplosivos.salud;
         this.physics.world.enable(this.depositoAliados);        
 		this.depositoAliados.body.setCollideWorldBounds(true);
 
-        this.contenedorAliados.vida= config.Partida.configuraciones.tanqueCombustibleSalud;
+        this.contenedorAliados.vida= campoAliados.base.tanqueCombustible.salud;
         this.physics.world.enable(this.contenedorAliados);        
 		this.contenedorAliados.body.setCollideWorldBounds(true);
 
@@ -244,7 +244,7 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].setCircle(450);
             artilleriasAliados.getChildren()[i].setOffset(-250,-250);    
             artilleriasAliados.getChildren()[i].lastFired = 0; 
-            artilleriasAliados.getChildren()[i].vida = config.Partida.configuraciones.artilleriaSalud; 
+            artilleriasAliados.getChildren()[i].vida = campoAliados.artillerias[i].salud; 
 
        }
 
@@ -1030,7 +1030,8 @@ class Play extends Phaser.Scene {
 
             this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_grande, ()=>
             {   
-                this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_grande.danio;                
+                this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_grande.danio;  
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('grande:'+this.depositoAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
@@ -1041,6 +1042,7 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(this.torreAliados,this.circulo_bomba_chico, ()=>
             {   
                 this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_chico.danio;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('torre - chica:'+this.torreAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
@@ -1050,7 +1052,8 @@ class Play extends Phaser.Scene {
 
             this.physics.add.overlap(this.torreAliados,this.circulo_bomba_grande, ()=>
             {   
-                this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_grande.danio;                
+                this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_grande.danio;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('torre -grande:'+this.torreAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
@@ -1061,6 +1064,7 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(this.contenedorAliados,this.circulo_bomba_chico, ()=>
             {   
                 this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_chico.danio;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                    
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('contendor - chica:'+this.contenedorAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
@@ -1070,7 +1074,8 @@ class Play extends Phaser.Scene {
 
             this.physics.add.overlap(this.contenedorAliados,this.circulo_bomba_grande, ()=>
             {   
-                this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_grande.danio;                
+                this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_grande.danio;    
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('contenedor - grande:'+this.contenedorAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
@@ -1084,6 +1089,7 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(this.depositoPotencias,this.circulo_bomba_chico, ()=>
             {   
                 this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_chico.danio;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});                    
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('chica:'+this.depositoPotencias.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
@@ -1093,7 +1099,8 @@ class Play extends Phaser.Scene {
 
             this.physics.add.overlap(this.depositoPotencias,this.circulo_bomba_grande, ()=>
             {   
-                this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_grande.danio;                
+                this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_grande.danio;  
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});              
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('grande:'+this.depositoPotencias.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
@@ -1104,6 +1111,7 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(this.torrePotencias,this.circulo_bomba_chico, ()=>
             {   
                 this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_chico.danio;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Potencias", vida: this.torrePotencias.vida});
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('torre - chica:'+this.torrePotencias.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
@@ -1113,7 +1121,8 @@ class Play extends Phaser.Scene {
 
             this.physics.add.overlap(this.torrePotencias,this.circulo_bomba_grande, ()=>
             {   
-                this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_grande.danio;                
+                this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_grande.danio;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Potencias", vida: this.torrePotencias.vida});                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('torre -grande:'+this.torrePotencias.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
@@ -1124,6 +1133,7 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(this.contenedorPotencias,this.circulo_bomba_chico, ()=>
             {   
                 this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_chico.danio;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});
                 this.circulo_bomba_chico.setPosition(1, 1);                
                 console.log('contendor - chica:'+this.contenedorPotencias.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
@@ -1133,7 +1143,8 @@ class Play extends Phaser.Scene {
 
             this.physics.add.overlap(this.contenedorPotencias,this.circulo_bomba_grande, ()=>
             {   
-                this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_grande.danio;                
+                this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_grande.danio;  
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});              
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('contenedor - grande:'+this.contenedorPotencias.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');

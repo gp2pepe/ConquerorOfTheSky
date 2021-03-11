@@ -26,14 +26,17 @@ public class Base {
     @Expose
     private int posicionY;
 
+    @Expose
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_deposito", referencedColumnName = "id_deposito")
     private DepositoDeExplosivos depositoExplosivos;
 
+    @Expose
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_torre", referencedColumnName = "id_torre")
     private TorreDeControl torreControl;
 
+    @Expose
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tanque", referencedColumnName = "id_tanque")
     private TanqueDeCombustible tanqueCombustible;
