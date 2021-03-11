@@ -1275,7 +1275,7 @@ class Play extends Phaser.Scene {
          if (bullet)
          {           
             artilleria_focus.setVisible(true);
-            if (this.time > artilleria_focus.lastFired)
+            if (this.time > artilleria_focus.lastFired && avion_A_pegar.altitud=='Baja')
             {                 
                 avion_A_pegar.activarColision=1;
                 bullet.fireArtilleria(artilleria_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
