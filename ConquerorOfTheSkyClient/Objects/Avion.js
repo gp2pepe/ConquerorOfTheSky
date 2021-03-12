@@ -16,6 +16,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
 		this.body.setMaxSpeed(500);        
 		this.body.setCollideWorldBounds(true);
+        this.body.bounce.setTo(1, 1);
         this.vidaAvion = 100;    
         this.focus=false;   
         this.altitud='En base';
