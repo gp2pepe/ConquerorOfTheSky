@@ -86,8 +86,9 @@ class Play extends Phaser.Scene {
         this.entre=true;
         console.log(config.Partida.nick);
         //Se remueven escenas de menus anteriores
-        this.scene.remove('MenuInicial');
-        this.scene.remove('ElegirBando');
+        this.scene.sleep('MenuInicial');
+        this.scene.sleep('ElegirBando');
+        //this.scene.bringToTop('Play');
 
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);
@@ -1037,7 +1038,8 @@ class Play extends Phaser.Scene {
                 console.log('grande:'+this.depositoAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
                 if (this.depositoAliados.vida < 0)
-                    console.log('sin deposito');
+                {console.log('sin deposito');
+                console.log(this.depositoAliados.vida)}
             });
 
             this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_grande, ()=>
@@ -1048,7 +1050,8 @@ class Play extends Phaser.Scene {
                 console.log('grande:'+this.depositoAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
                 if (this.depositoAliados.vida < 0)
-                    console.log('sin deposito');
+                    {console.log('sin deposito');
+            console.log(this.depositoAliados.vida)}
             });
             // torre
             this.physics.add.overlap(this.torreAliados,this.circulo_bomba_chico, ()=>
@@ -1059,7 +1062,8 @@ class Play extends Phaser.Scene {
                 console.log('torre - chica:'+this.torreAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
                 if (this.torreAliados.vida < 0)
-                    console.log('sin torre ');
+                    {console.log('sin torre ');
+                console.log(this.torreAliados.vida)}
             });
 
             this.physics.add.overlap(this.torreAliados,this.circulo_bomba_grande, ()=>
@@ -1070,7 +1074,8 @@ class Play extends Phaser.Scene {
                 console.log('torre -grande:'+this.torreAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
                 if (this.torreAliados.vida < 0)
-                    console.log('sin torre');
+                {console.log('sin torre ');
+                console.log(this.torreAliados.vida)}
             });
             //contendor
             this.physics.add.overlap(this.contenedorAliados,this.circulo_bomba_chico, ()=>
@@ -1081,7 +1086,8 @@ class Play extends Phaser.Scene {
                 console.log('contendor - chica:'+this.contenedorAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
                 if (this.contenedorAliados.vida < 0)
-                    console.log('sin contenedor');
+                    {console.log('sin contenedor');
+                console.log(this.contenedorAliados.vida)}
             });
 
             this.physics.add.overlap(this.contenedorAliados,this.circulo_bomba_grande, ()=>
@@ -1092,7 +1098,8 @@ class Play extends Phaser.Scene {
                 console.log('contenedor - grande:'+this.contenedorAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
                 if (this.contenedorAliados.vida < 0)
-                    console.log('sin contenedor');
+                {console.log('sin contenedor');
+                console.log(this.contenedorAliados.vida)}
             });
         }else{ 
             this.physics.add.overlap(circulo_aviones_aliados, aviones, this.Colision_Aviones, null, this);         
@@ -3002,29 +3009,85 @@ class Play extends Phaser.Scene {
         {
             if (config.Partida.Bando=='Potencias')
             {
+                config.Partida.estado="Pausado";
+                this.scene.launch('Game Over');
+                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
                 this.scene.pause();
-                this.scene.launch('GameOver');
             }
             else
             {
-                this.scene.pause();
+                config.Partida.estado="Pausado";
                 this.scene.launch('Win');
+                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                this.scene.pause();
             }
                 
         }
+
 
         //Se controla condicion de victoria del juego
         if(avion_1_Aliados.vidaAvion <= 0 && avion_2_Aliados.vidaAvion <= 0 && avion_3_Aliados.vidaAvion <= 0 && avion_4_Aliados.vidaAvion <= 0)
         {
             if (config.Partida.Bando=='Potencias')
             {
-                this.scene.pause();
+                
+                config.Partida.estado="Pausado";
                 this.scene.launch('Win');
+                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                this.scene.pause();
             }
             else
             {
+                
+                config.Partida.estado="Pausado";
+                this.scene.launch('Game Over');
+                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
                 this.scene.pause();
-                this.scene.launch('GameOver');
+            }
+        }
+
+        if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0)
+        {
+            {
+                if (config.Partida.Bando=='Potencias')
+                {
+                    
+                    config.Partida.estado="Pausado";
+                    config.Partida.destruirPartida();
+                    this.scene.launch('Win');
+                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                    this.scene.pause();
+                
+                }
+                else
+                {
+                    
+                    config.Partida.estado="Pausado";
+                    this.scene.launch('Game Over');
+                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                    this.scene.pause();
+                }
+            }
+        }
+
+        if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0)
+        {
+            {
+                if (config.Partida.Bando=='Aliados')
+                {
+                    
+                    config.Partida.estado="Pausado";
+                this.scene.launch('Win');
+                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                this.scene.pause();
+                }
+                else
+                {
+                    config.Partida.estado="Pausado";
+                    this.scene.launch('Game Over');
+                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                    this.scene.pause();
+                }
             }
         }
 
