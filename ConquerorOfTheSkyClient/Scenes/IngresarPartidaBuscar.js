@@ -37,7 +37,10 @@ class IngresarPartidaBuscar extends Phaser.Scene
         this.add.image(73, 100, "menuEmergenteBuscar").setOrigin(0).setScale(1.1);
         this.add.text(220,280, this.IdPartida).setScale(4);
         this.add.text(396,347, this.Nombre).setScale(4);
-        this.add.text(354,447, 'Potencias').setScale(4);
+        if (this.Bando == 'Aliados')
+            this.add.text(354,447, 'Potencias').setScale(4);
+        else
+            this.add.text(354,447, 'Aliados').setScale(4);
         if (this.Publica == true)
         {
             this.add.text(395,532, 'SI').setScale(4);
@@ -165,9 +168,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 {config.Partida.ingresarAPartida(this.IdPartida, textContra.text);
                     console.log('Mal, entré a privado')
                 }
-
-                this.scene.remove('MenuBando');
-                this.scene.start('Play');
             //console.log(config.Partida);
             //this.scene.launch('confirmarNuevaPartida');
         }
