@@ -139,6 +139,7 @@ class IngresarPartidaBuscar extends Phaser.Scene
             console.log('Ingresé a una partida');
             //config.Partida.Bando = bandoElegido;
             //config.Partida.Nombre = this.Nombre;
+            console.log(config.Partida);
             config.Partida.nick = textNick.text;
             config.Partida.pass = textContra.text;
             config.Partida.tipoPartida = "ingresarAPartida";

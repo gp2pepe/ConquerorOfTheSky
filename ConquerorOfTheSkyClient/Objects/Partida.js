@@ -22,7 +22,7 @@ class Partida {
             this.configuraciones = msg.configuraciones;
             this.duenio = true;
             this.partidaCargada = true;
-            this.pass = msg.partida.publica;
+            this.pass = msg.partida.passwd;
 
         }else if(msg.operacion == "ingresarAPartida"){            
 
@@ -33,7 +33,7 @@ class Partida {
             this.configuraciones = msg.configuraciones;
             this.duenio = false;
             this.partidaCargada = true;
-            this.pass = msg.Partida.pass;
+            this.pass = msg.Partida.passwd;
 
         }else if(msg.operacion == "sincronizar"){ 
             
@@ -81,6 +81,7 @@ class Partida {
         }else if(msg.operacion == "guardarPartida"){ 
             this.estado = "Preparado";
             this.nroPartida = msg.nroPartida;
+            this.pass = msg.partida.passwd;
 
         }else if(msg.operacion == "recuperarPartida"){ 
             this.estado = "Preparado";
@@ -153,7 +154,7 @@ class Partida {
         stringArtAliados=stringArtAliados.substring(0, stringArtAliados.length-1);   
         stringArtAliados+="]";  
 
-
+        console.log('contrasenia');
         config.WebSocket.ws.send(JSON.stringify({operacion:"guardarPartida",idpartida:this.idpartida,
             passwd:contrasenia,
             aviones: stringAviones, 

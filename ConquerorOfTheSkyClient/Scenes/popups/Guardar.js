@@ -72,7 +72,8 @@ class Guardar extends Phaser.Scene
             }else{
 				config.Partida.guardarPartida(textEntry.text);
 				this.guardando = this.add.image(820,535, 'guardando').setOrigin(0).setScale(1.3);
-
+				config.Partida.estado = "Preparado";
+				console.log(config.Partida);
         	}
         });
 

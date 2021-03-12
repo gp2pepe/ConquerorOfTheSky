@@ -84,7 +84,7 @@ class Play extends Phaser.Scene {
     }
     create(){ 
         this.entre=true;
-        console.log(config.Partida.nick);
+        console.log(config.Partida);
         //Se remueven escenas de menus anteriores
         this.scene.sleep('MenuInicial');
         this.scene.sleep('ElegirBando');
@@ -789,7 +789,7 @@ class Play extends Phaser.Scene {
                         this.scene.launch('Guardar');
                         config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
                         this.scene.pause();
-       
+                        
                 }
             });
         });
