@@ -47,34 +47,14 @@ class IngresarPartidaBuscar extends Phaser.Scene
             this.add.text(395,532, 'NO').setScale(4);
         }
 
-        this.textBox = this.add.image(570,780, 'textBox').setOrigin(0).setScale(0.5);
-        this.text = this.add.text(605, 805, 'Click para ingresar contraseña', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
-        var textContra = this.add.text(580, 800, '', { font: '48px Courier', fill: '#474747' });
+        
         
         this.textBox2 = this.add.image(300,620, 'textBox').setOrigin(0).setScale(0.5);
         this.text2 = this.add.text(350, 645, 'Click para ingresar Nick', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
         var textNick = this.add.text(310, 640, '', { font: '48px Courier', fill: '#474747' });
 
 
-        this.text.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            this.add.tween({
-                targets: this.text,
-                ease: 'Bounce.easeIn',
-                x:810,
-                duration: 100,
-                onComplete: () => {
-                    ingresoTexto2 = true;
-                    this.text.destroy();
-                    ingresoTexto = false;
-                }
-            });
 
-            this.add.tween({
-                targets: [ this.pointsText, this.bestPointsText ],                
-                y: 400,
-                duration: 1000
-            });
-        });
 
         this.text2.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
@@ -95,7 +75,46 @@ class IngresarPartidaBuscar extends Phaser.Scene
             });
         });
         
-        
+        this.input.keyboard.on('keydown', function (event) {
+            if(ingresoTexto == true){
+                if (event.keyCode === 8 && textNick.text.length > 0)
+                {
+                    textNick.text = textNick.text.substr(0, textNick.text.length - 1);
+                }
+                else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
+                {
+                    textNick.text += event.key;
+                    console.log(textNick.text);
+                }
+            }
+        });
+
+        if (!this.Publica)
+      {  
+        console.log('Mal, entré a privado')
+        this.textBox = this.add.image(570,780, 'textBox').setOrigin(0).setScale(0.5);
+        this.text = this.add.text(605, 805, 'Click para ingresar contraseña', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
+        var textContra = this.add.text(580, 800, '', { font: '48px Courier', fill: '#474747' });
+
+        this.text.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.text,
+                ease: 'Bounce.easeIn',
+                x:810,
+                duration: 100,
+                onComplete: () => {
+                    ingresoTexto2 = true;
+                    this.text.destroy();
+                    ingresoTexto = false;
+                }
+            });
+
+            this.add.tween({
+                targets: [ this.pointsText, this.bestPointsText ],                
+                y: 400,
+                duration: 1000
+            });
+        });
         this.input.keyboard.on('keydown', function (event) {
             if(ingresoTexto2 == true){
                 if (event.keyCode === 8 && textContra.text.length > 0)
@@ -110,19 +129,12 @@ class IngresarPartidaBuscar extends Phaser.Scene
             }
         });
 
-        this.input.keyboard.on('keydown', function (event) {
-            if(ingresoTexto == true){
-                if (event.keyCode === 8 && textNick.text.length > 0)
-                {
-                    textNick.text = textNick.text.substr(0, textNick.text.length - 1);
-                }
-                else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
-                {
-                    textNick.text += event.key;
-                    console.log(textNick.text);
-                }
-            }
-        });
+        }
+        else
+        {
+            this.textBox = this.add.text(570,780, 'N/A').setOrigin(0).setScale(4);
+            console.log('Bien, entré en publica');
+        }
 
         var alerta = this.add.text(700, 960, '', { font: 'bold 48px Courier', fill: '#080808' });
 
@@ -141,9 +153,20 @@ class IngresarPartidaBuscar extends Phaser.Scene
             //config.Partida.Nombre = this.Nombre;
             console.log(config.Partida);
             config.Partida.nick = textNick.text;
-            config.Partida.pass = textContra.text;
+            //config.Partida.pass = textContra.text;
             config.Partida.tipoPartida = "ingresarAPartida";
-            config.Partida.ingresarAPartida(this.IdPartida, textContra.text);
+            if (this.Publica)
+                {
+                    config.Partida.ingresarAPartida(this.IdPartida, '');
+                    console.log('Bien, entré en publica');
+                }
+            else
+                {config.Partida.ingresarAPartida(this.IdPartida, textContra.text);
+                    console.log('Mal, entré a privado')
+                }
+
+                this.scene.remove('MenuBando');
+                this.scene.start('Play');
             //console.log(config.Partida);
             //this.scene.launch('confirmarNuevaPartida');
         }
@@ -151,6 +174,25 @@ class IngresarPartidaBuscar extends Phaser.Scene
 
         //config.Partida.ingresarAPartida(this.IdPartida);
     }
+
+    update() {
+        /*if(config.Partida.partidaCargada){
+            this.scene.remove('MenuInicial');
+            this.scene.remove('MenuPartidas');
+            this.scene.remove('PartidaLlena');
+            this.scene.start('Play');
+        }else */
+        if(config.Partida.hayError){
+            if(config.Partida.mensajeError=="La partida esta llena"){
+                console.log("Sigo avisando de error");
+                this.scene.sendToBack();
+                this.scene.launch('PartidaLlena');
+                this.currentScene = this.scene.get('PartidaLlena');
+                this.scene.setVisible(true, this.currentScene);
+            }
+            
+        }
+     }
 
 
 }

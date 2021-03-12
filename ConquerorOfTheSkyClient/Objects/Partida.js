@@ -33,7 +33,7 @@ class Partida {
             this.configuraciones = msg.configuraciones;
             this.duenio = false;
             this.partidaCargada = true;
-            this.pass = msg.Partida.passwd;
+            //this.pass = msg.Partida.passwd;
 
         }else if(msg.operacion == "ingresoUnJugador"){            
             this.estado = "Jugando";
