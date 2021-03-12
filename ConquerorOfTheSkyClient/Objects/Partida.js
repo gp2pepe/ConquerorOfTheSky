@@ -93,6 +93,7 @@ class Partida {
             this.Nombre = msg.partida.nombre;
             this.duenio = true;
             this.partidaCargada = true;
+            console.log('Partida1: '+msg);
 
         }else if(msg.operacion == "errorServidor"){ 
                 this.hayError = true;

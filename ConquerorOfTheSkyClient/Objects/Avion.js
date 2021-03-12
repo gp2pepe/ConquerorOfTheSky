@@ -30,6 +30,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.tengobomba=false;
         this.mepegaron='false';
         this.timeNafta=550;
+        this.saliBase=true;
     }
 
     moverAvion(msg)

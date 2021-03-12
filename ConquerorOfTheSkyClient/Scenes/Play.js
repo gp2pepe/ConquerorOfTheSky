@@ -681,7 +681,6 @@ class Play extends Phaser.Scene {
                     if (avion_3.focus==true)
                     {            
                         avion_3.altitud_anterior=avion_3.altitud;
-
                         avion_3.cargarCombustible=true;
                         config.Partida.idavion=3;
                         avion_3.moverAvion({x: avion_3.xInicial, y: avion_3.yInicial});
@@ -694,7 +693,6 @@ class Play extends Phaser.Scene {
                     if (avion_3_Aliados.focus==true)
                     {        
                         avion_3_Aliados.altitud_anterior=avion_3_Aliados.altitud;
-
                         avion_3_Aliados.cargarCombustible=true;     
                         config.Partida.idavion=7;
                         avion_3_Aliados.moverAvion({x: avion_3_Aliados.xInicial, y: avion_3_Aliados.yInicial});
@@ -946,7 +944,6 @@ class Play extends Phaser.Scene {
             {                
                 if (this.time > this.torrePotencias.lastFired)
                 {     
-                         
                     avion_A_pegar.activarColision=1;
                     bullet.fireArtilleria(this.torrePotencias,{x: avion_A_pegar.x, y: avion_A_pegar.y});  
                     this.physics.add.overlap(bullet, avion_A_pegar, this.colision_torre_aviones, null, this);   
@@ -959,7 +956,7 @@ class Play extends Phaser.Scene {
      
     choqueAviones(avion_potencia,avion_aliado)
     {
-        if (avion_potencia.altitud = avion_aliado.altitud)
+        if (avion_potencia.altitud == avion_aliado.altitud)
         {
             avion_potencia.vidaAvion= 0;
             avion_aliado.vidaAvion= 0;
@@ -999,10 +996,10 @@ class Play extends Phaser.Scene {
         this.physics.add.overlap(artilleriasAliados,aviones, this.dispararArtilleria, null, this);
         this.physics.add.overlap(artilleriasPotencias, aviones_aliados, this.dispararArtilleria, null, this);
         this.physics.add.overlap(this.circulo_torreAliados, aviones, this.colision_torre_avion, null, this); 
-        this.physics.add.overlap(this.circulo_torrePotencias, aviones_aliados, this.colision_torre_avion, null, this); 
+        this.physics.add.overlap(this.circulo_torrePotencias, aviones_aliados, this.colision_torre_avion, null, this);
         
+       
         this.physics.add.overlap(aviones, aviones_aliados, this.choqueAviones, null, this);
-        
         this.physics.add.overlap(circulo_aviones, this.depositoAliados, this.colision_aviones_deposito, null, this); 
         this.physics.add.overlap(circulo_aviones_aliados, this.depositoPotencias, this.colision_aviones_deposito, null, this); 
 
@@ -1177,14 +1174,21 @@ class Play extends Phaser.Scene {
         if (config.Partida.Bando=='Potencias')
         {
             if (avion_1.focus==true)
-            {       
- 
-                if (avion_1.altitud_anterior!='En base' &&avion_1.altitud==='En base')
+            {      
+                if (!avion_1.saliBase)
                 {    
-                    avion_1.cambiarAltitud(avion_1.altitud_anterior);
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:avion_1.altitud});                    
-                    avion_1.altitud_anterior = 'En base';
-                } 
+                    if (avion_1.altitud=='En base') 
+                    {              
+                        avion_1.cambiarAltitud(avion_1.altitud_anterior);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:avion_1.altitud}); 
+                    }    
+                    else
+                    {
+                        avion_1.cambiarAltitud(avion_1.altitud);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:avion_1.altitud}); 
+                    } 
+                    avion_1.saliBase=true;
+                }                              
                 config.Partida.idavion=1;                
                 avion_1.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: pointer.x, y: pointer.y});
@@ -1192,40 +1196,64 @@ class Play extends Phaser.Scene {
 
             if (avion_2.focus==true)
             {         
-                if (avion_2.altitud_anterior!='En base' &&avion_2.altitud==='En base')
+                if (!avion_2.saliBase)
                 {    
-                    avion_2.cambiarAltitud(avion_2.altitud_anterior);
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:avion_2.altitud});                    
-                    avion_2.altitud_anterior = 'En base';
-                }    
-                config.Partida.idavion=2;
-                avion_2.moverAvion({x: pointer.x, y: pointer.y});
+                    if (avion_2.altitud=='En base') 
+                    {              
+                        avion_2.cambiarAltitud(avion_2.altitud_anterior);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:avion_2.altitud}); 
+                    }    
+                    else
+                    {
+                        avion_2.cambiarAltitud(avion_2.altitud);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:avion_2.altitud}); 
+                    } 
+                    avion_2.saliBase=true;
+                }                              
+                config.Partida.idavion=2;                
+                avion_2.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: pointer.x, y: pointer.y});
             } 
 
             if (avion_3.focus==true)
             {            
-                if (avion_3.altitud_anterior!='En base' &&avion_3.altitud==='En base')
+                if (!avion_3.saliBase)
                 {    
-                    avion_3.cambiarAltitud(avion_3.altitud_anterior);
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:avion_3.altitud});                    
-                    avion_3.altitud_anterior = 'En base';
-                }    
-                config.Partida.idavion=3;
-                avion_3.moverAvion({x: pointer.x, y: pointer.y});
+                    if (avion_3.altitud=='En base') 
+                    {              
+                        avion_3.cambiarAltitud(avion_3.altitud_anterior);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:avion_3.altitud}); 
+                    }    
+                    else
+                    {
+                        avion_3.cambiarAltitud(avion_3.altitud);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:avion_3.altitud}); 
+                    } 
+                    avion_3.saliBase=true;
+                }                              
+                config.Partida.idavion=3;                
+                avion_3.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: pointer.x, y: pointer.y});
             }  
 
             if (avion_4.focus==true)
             {       
-                if (avion_4.altitud_anterior!='En base' &&avion_4.altitud==='En base')
+                if (!avion_4.saliBase)
                 {    
-                    avion_4.cambiarAltitud(avion_4.altitud_anterior);
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:avion_4.altitud});                    
-                    avion_4.altitud_anterior = 'En base';
-                }   
-                config.Partida.idavion=4;
-                avion_4.moverAvion({x: pointer.x, y: pointer.y});
+                    if (avion_4.altitud=='En base') 
+                    {              
+                        avion_4.cambiarAltitud(avion_4.altitud_anterior);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:avion_4.altitud}); 
+                    }    
+                    else
+                    {
+                        avion_4.cambiarAltitud(avion_4.altitud);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:avion_4.altitud}); 
+                    } 
+                    avion_4.saliBase=true;
+                }                              
+                config.Partida.idavion=4;                
+                avion_4.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: pointer.x, y: pointer.y});
             } 
         }
@@ -1233,54 +1261,84 @@ class Play extends Phaser.Scene {
             {
             if (avion_1_Aliados.focus==true )
             {
-                if (avion_1_Aliados.altitud_anterior!='En base' &&avion_1_Aliados.altitud==='En base')
+                if (!avion_1_Aliados.saliBase)
                 {    
-                    avion_1_Aliados.cambiarAltitud(avion_1_Aliados.altitud_anterior);
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:avion_1_Aliados.altitud});                    
-                    avion_1_Aliados.altitud_anterior = 'En base';
-                } 
-                config.Partida.idavion=5;
-                avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                    if (avion_1_Aliados.altitud=='En base') 
+                    {              
+                        avion_1_Aliados.cambiarAltitud(avion_1_Aliados.altitud_anterior);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:avion_1_Aliados.altitud}); 
+                    }    
+                    else
+                    {
+                        avion_1_Aliados.cambiarAltitud(avion_1_Aliados.altitud);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:avion_1_Aliados.altitud}); 
+                    } 
+                    avion_1_Aliados.saliBase=true;
+                }                              
+                config.Partida.idavion=5;                
+                avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: pointer.x, y: pointer.y});
             }
             if (avion_2_Aliados.focus==true)
             { 
-                if (avion_2_Aliados.altitud_anterior!='En base' &&avion_2_Aliados.altitud==='En base')
+                if (!avion_2_Aliados.saliBase)
                 {    
-                    avion_2_Aliados.cambiarAltitud(avion_2_Aliados.altitud_anterior);
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_2_Aliados.altitud});                    
-                    avion_2_Aliados.altitud_anterior = 'En base';
-                } 
-                config.Partida.idavion=6;
-                avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                    if (avion_2_Aliados.altitud=='En base') 
+                    {              
+                        avion_2_Aliados.cambiarAltitud(avion_2_Aliados.altitud_anterior);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_2_Aliados.altitud}); 
+                    }    
+                    else
+                    {
+                        avion_2_Aliados.cambiarAltitud(avion_2_Aliados.altitud);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_1_Aliados.altitud}); 
+                    } 
+                    avion_2_Aliados.saliBase=true;
+                }                              
+                config.Partida.idavion=6;                
+                avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: pointer.x, y: pointer.y});
             }
             if (avion_3_Aliados.focus==true)
             {
-                if (avion_3_Aliados.altitud_anterior!='En base' &&avion_3_Aliados.altitud==='En base')
+                if (!avion_3_Aliados.saliBase)
                 {    
-                    avion_3_Aliados.cambiarAltitud(avion_3_Aliados.altitud_anterior);
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_3_Aliados.altitud});                    
-                    avion_3_Aliados.altitud_anterior = 'En base';
-                }
-                config.Partida.idavion=7;
-                avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                    if (avion_3_Aliados.altitud=='En base') 
+                    {              
+                        avion_3_Aliados.cambiarAltitud(avion_3_Aliados.altitud_anterior);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:avion_3_Aliados.altitud}); 
+                    }    
+                    else
+                    {
+                        avion_3_Aliados.cambiarAltitud(avion_3_Aliados.altitud);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:avion_3_Aliados.altitud}); 
+                    } 
+                    avion_3_Aliados.saliBase=true;
+                }                              
+                config.Partida.idavion=7;                
+                avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: pointer.x, y: pointer.y});
             }
-            else
+            if (avion_4_Aliados.focus==true)
             {
-                if (avion_4_Aliados.altitud_anterior!='En base' &&avion_4_Aliados.altitud==='En base')
+                if (!avion_4_Aliados.saliBase)
                 {    
-                    avion_4_Aliados.cambiarAltitud(avion_4_Aliados.altitud_anterior);
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_4_Aliados.altitud});                    
-                    avion_4_Aliados.altitud_anterior = 'En base';
-                }
-                if (avion_4_Aliados.focus==true){
-                config.Partida.idavion=8;
-                avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});
+                    if (avion_4_Aliados.altitud=='En base') 
+                    {              
+                        avion_4_Aliados.cambiarAltitud(avion_4_Aliados.altitud_anterior);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:avion_4_Aliados.altitud}); 
+                    }    
+                    else
+                    {
+                        avion_4_Aliados.cambiarAltitud(avion_4_Aliados.altitud);
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:avion_4_Aliados.altitud}); 
+                    } 
+                    avion_4_Aliados.saliBase=true;
+                }                              
+                config.Partida.idavion=8;                
+                avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                 config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
-            }
-            }
+            }           
         }
 
     }
@@ -1348,14 +1406,15 @@ class Play extends Phaser.Scene {
      }
     
     definicionAviones()
-    {	
+    {	         
+        var velAvion = config.Partida.configuraciones.avionVelocidad;
         //Se definen los aviones de ambos bandos
-        var velAvion = config.Partida.configuraciones.avionVelocidad;  
+        
         avion_1 = new Avion({
             scene: this,
             x: campoPotencias.posicionX + 70,
             y: yInicialAvionBasePotencias,
-         //   xInicial: campoPotencias.posicionX + 70,
+        //   xInicial: campoPotencias.posicionX + 70,
         //    yInicial: yInicialAvionBasePotencias
         }).setInteractive(); 
         avion_1.idavion = 1;  
@@ -1366,7 +1425,7 @@ class Play extends Phaser.Scene {
         this.circulo_1.body.setCircle(35);
         this.circulo_1.body.setOffset(15,16); 
         this.circulo_1.idAvion=1;
-
+  
         avion_2 = new Avion({
             scene: this,
             x: campoPotencias.posicionX + 120,
@@ -1502,96 +1561,114 @@ class Play extends Phaser.Scene {
         this.keys = this.input.keyboard.createCursorKeys();
         this.keys.up.on('down',()=>
         {            
-            if (avion_1.focus==true){
+            if (avion_1.focus==true){ 
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_1.altitud!='En base'){
-                    avion_1.cambiarAltitud("Alta");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Alta"}); 
-                }  
-                else
-                    avion_1.setScale(0.08);  
-                avion_1.altitud_anterior= "Alta";
+
+                if (!avion_1.saliBase)
+                    {                
+                        avion_1.setScale(0.08);
+                        avion_1.altitud ="Alta";
+                    }
+                else                                  
+                    avion_1.cambiarAltitud("Alta");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Alta"});                
             }
             if (avion_2.focus==true){                
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_2.altitud!='En base'){
-                    avion_2.cambiarAltitud("Alta");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:"Alta"}); 
-                }  
-                else
-                    avion_2.setScale(0.08);  
-                avion_2.altitud_anterior= "Alta";                   
+
+                if (!avion_2.saliBase)
+                    {                
+                        avion_2.setScale(0.08);
+                        avion_2.altitud ="Alta";
+                    }
+                else                                  
+                    avion_2.cambiarAltitud("Alta");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:"Alta"});                  
 
             }
             if (avion_3.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7); 
-                if (avion_3.altitud!='En base'){    
-                    avion_3.cambiarAltitud("Alta");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:"Alta"});
-                }   
-                else
-                    avion_3.setScale(0.08);  
-                avion_3.altitud_anterior= "Alta"; 
+                if (!avion_3.saliBase)
+                    {                
+                        avion_3.setScale(0.08);
+                        avion_3.altitud ="Alta";
+                    }
+                else                                  
+                    avion_3.cambiarAltitud("Alta");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:"Alta"});  
 
             }
             if (avion_4.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_4.altitud!='En base'){
-                    avion_4.cambiarAltitud("Alta");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:"Alta"});
-                }   
-                else
-                    avion_4.setScale(0.08);  
-                avion_4.altitud_anterior= "Alta"; 
+                if (!avion_4.saliBase)
+                    {                
+                        avion_4.setScale(0.08);
+                        avion_4.altitud ="Alta";
+                    }
+                else                                  
+                    avion_4.cambiarAltitud("Alta");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:"Alta"});  
 
             }   
             if (avion_1_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_1_Aliados.altitud!='En base'){
-                    avion_1_Aliados.cambiarAltitud("Alta");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:"Alta"});
-                }   
-                else
-                    avion_1_Aliados.setScale(0.08);  
-                avion_1_Aliados.altitud_anterior= "Alta"; 
+                if (!avion_1_Aliados.saliBase)
+                    {                
+                        avion_1_Aliados.setScale(0.08);
+                        avion_1_Aliados.altitud ="Alta";
+                    }
+                else                                  
+                    avion_1_Aliados.cambiarAltitud("Alta");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:"Alta"});  
             }
             if (avion_2_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_2_Aliados.altitud!='En base'){
-                    avion_2_Aliados.cambiarAltitud("Alta");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:"Alta"});
-                }   
-                else
-                    avion_2_Aliados.setScale(0.08);  
-                avion_2_Aliados.altitud_anterior= "Alta"; 
+                if (!avion_2_Aliados.saliBase)
+                    {                
+                        avion_2_Aliados.setScale(0.08);
+                        avion_2_Aliados.altitud ="Alta";
+                    }
+                else                                  
+                    avion_2_Aliados.cambiarAltitud("Alta");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:"Alta"});  
             }
             if (avion_3_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_3_Aliados.altitud!='En base'){
-                    avion_3_Aliados.cambiarAltitud("Alta");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:"Alta"});
-                }   
-                else
-                    avion_3_Aliados.setScale(0.08);  
-                avion_3_Aliados.altitud_anterior= "Alta"; 
+                if (!avion_3_Aliados.saliBase)
+                    {                
+                        avion_3_Aliados.setScale(0.08);
+                        avion_3_Aliados.altitud ="Alta";
+                    }
+                else                                  
+                    avion_3_Aliados.cambiarAltitud("Alta");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:"Alta"}); 
             }
             if (avion_4_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_4_Aliados.altitud!='En base'){
-                    avion_4_Aliados.cambiarAltitud("Alta");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Alta"});
-                }   
-                else
-                    avion_4_Aliados.setScale(0.08);  
-                avion_4_Aliados.altitud_anterior= "Alta"; 
+                if (!avion_4_Aliados.saliBase)
+                    {                
+                        avion_4_Aliados.setScale(0.08);
+                        avion_4_Aliados.altitud ="Alta";
+                    }
+                else                                  
+                    avion_4_Aliados.cambiarAltitud("Alta");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Alta"}); 
             }
         });
 
@@ -1600,94 +1677,111 @@ class Play extends Phaser.Scene {
             if (avion_1.focus==true){
                 this.vistaLateral = this.add.image(45,113,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_1.altitud!='En base'){
-                    avion_1.cambiarAltitud("Baja");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Baja"});
-                }   
-                else
-                    avion_1.setScale(0.05);  
-                avion_1.altitud_anterior= "Baja"; 
+
+                if (!avion_1.saliBase)
+                    {                
+                        avion_1.setScale(0.05);
+                        avion_1.altitud ="Baja";
+                    }
+                else                                  
+                    avion_1.cambiarAltitud("Baja");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Baja"});    
             }
             if (avion_2.focus==true){
                 this.vistaLateral = this.add.image(45,113,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_2.altitud!='En base'){
-                    avion_2.cambiarAltitud("Baja");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:"Baja"});
-                }   
-                else
-                    avion_2.setScale(0.05);  
-                avion_2.altitud_anterior= "Baja"
+                if (!avion_2.saliBase)
+                    {                
+                        avion_2.setScale(0.05);
+                        avion_2.altitud ="Baja";
+                    }
+                else                                  
+                    avion_2.cambiarAltitud("Baja");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:"Baja"}); 
 
             }
             if (avion_3.focus==true){
                 this.vistaLateral = this.add.image(45,113,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_3.altitud!='En base'){
-                    avion_3.cambiarAltitud("Baja");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:"Baja"});
-                }   
-                else
-                    avion_3.setScale(0.05);  
-                avion_3.altitud_anterior= "Baja"
+                if (!avion_3.saliBase)
+                    {                
+                        avion_3.setScale(0.05);
+                        avion_3.altitud ="Baja";
+                    }
+                else                                  
+                    avion_3.cambiarAltitud("Baja");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:"Baja"}); 
 
             }
             if (avion_4.focus==true){
                 this.vistaLateral = this.add.image(45,113,'vistaLateralBaja').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_4.altitud!='En base'){
-                    avion_4.cambiarAltitud("Baja");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:"Baja"});
-                }   
-                else
-                    avion_4.setScale(0.05);  
-                avion_4.altitud_anterior= "Baja"
+                if (!avion_4.saliBase)
+                    {                
+                        avion_4.setScale(0.05);
+                        avion_4.altitud ="Baja";
+                    }
+                else                                  
+                    avion_4.cambiarAltitud("Baja");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:"Baja"}); 
 
 
             } 
             if (avion_1_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_1_Aliados.altitud!='En base'){
-                    avion_1_Aliados.cambiarAltitud("Baja");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:"Baja"});
-                }   
-                else
-                    avion_1_Aliados.setScale(0.05);  
-                avion_1_Aliados.altitud_anterior= "Baja"
+                if (!avion_1_Aliados.saliBase)
+                    {                
+                        avion_1_Aliados.setScale(0.05);
+                        avion_1_Aliados.altitud ="Baja";
+                    }
+                else                                  
+                    avion_1_Aliados.cambiarAltitud("Baja");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:"Baja"}); 
             }
             if (avion_2_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_2_Aliados.altitud!='En base'){
-                    avion_2_Aliados.cambiarAltitud("Baja");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:"Baja"});
-                }
-                else
-                    avion_2_Aliados.setScale(0.05);  
-                avion_2_Aliados.altitud_anterior= "Baja"
+                if (!avion_2_Aliados.saliBase)
+                    {                
+                        avion_2_Aliados.setScale(0.05);
+                        avion_2_Aliados.altitud ="Baja";
+                    }
+                else                                  
+                    avion_2_Aliados.cambiarAltitud("Baja");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:"Baja"}); 
             }
             if (avion_3_Aliados.focus==true){
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_3_Aliados.altitud!='En base'){
-                    avion_3_Aliados.cambiarAltitud("Baja");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:"Baja"});
-                }
-                else
-                    avion_3_Aliados.setScale(0.05);  
-                avion_3_Aliados.altitud_anterior= "Baja"
+                if (!avion_3_Aliados.saliBase)
+                    {                
+                        avion_3_Aliados.setScale(0.05);
+                        avion_3_Aliados.altitud ="Baja";
+                    }
+                else                                  
+                    avion_3_Aliados.cambiarAltitud("Baja");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:"Baja"}); 
             }
             if (avion_4_Aliados.focus==true){ 
                 this.vistaLateral = this.add.image(45,113,'nubeslateral').setOrigin(0).setScale(1);
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7);
-                if (avion_4_Aliados.altitud!='En base'){
-                    avion_4_Aliados.cambiarAltitud("Baja");
-                    config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Baja"});
-                }
-                else
-                    avion_4_Aliados.setScale(0.05);  
-                avion_4_Aliados.altitud_anterior= "Baja"
+                if (!avion_4_Aliados.saliBase)
+                    {                
+                        avion_4_Aliados.setScale(0.05);
+                        avion_4_Aliados.altitud ="Baja";
+                    }
+                else                                  
+                    avion_4_Aliados.cambiarAltitud("Baja");  
+
+                config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Baja"}); 
             }   
         });
 
@@ -2311,8 +2405,10 @@ class Play extends Phaser.Scene {
             if (avion.cargarbomba==true)
             {            
                 avion.body.setVelocityY(0);
-                avion.body.setVelocityX(0);                            
-                avion.cambiarAltitud('En base');                              
+                avion.body.setVelocityX(0);      
+                this.altitud_anterior=avion.altitud;                      
+                avion.cambiarAltitud('En base');    
+                avion.saliBase=false;                          
                 //this.cargarBomba1 = this.add.image(65, 545, "botonBomba").setOrigin(0).setScale(.3).setInteractive(); 
                 //this.cargarBomba1.depth = 100;
                 avion.cargarbomba=false;
@@ -2323,7 +2419,9 @@ class Play extends Phaser.Scene {
             if (avion.cargarCombustible==true)
             {
                 avion.body.setVelocityY(0);
-                avion.body.setVelocityX(0);                            
+                avion.body.setVelocityX(0);  
+                avion.saliBase=false;     
+                this.altitud_anterior=avion.altitud;                     
                 avion.cambiarAltitud('En base');                
                 avion.cargarCombustible=false; 
                 this.volverBase = this.add.image(220, 545, "botonCombustible").setOrigin(0).setScale(.3).setInteractive();
