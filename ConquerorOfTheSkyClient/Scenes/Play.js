@@ -958,10 +958,11 @@ class Play extends Phaser.Scene {
     {
         if (avion_potencia.altitud == avion_aliado.altitud)
         {
+            console.log("rompi");
             avion_potencia.vidaAvion= 0;
             avion_aliado.vidaAvion= 0;
-            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:avion_potencia.vidaAvion});                    
-            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:avion_aliado.vidaAvion});
+            //config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:avion_potencia.vidaAvion});                    
+            //config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:avion_aliado.vidaAvion});
         }     
     }
 
@@ -999,7 +1000,7 @@ class Play extends Phaser.Scene {
         this.physics.add.overlap(this.circulo_torrePotencias, aviones_aliados, this.colision_torre_avion, null, this);
         
        
-        this.physics.add.overlap(aviones, aviones_aliados, this.choqueAviones, null, this);
+        this.physics.add.overlap([avion_1,avion_2,avion_3,avion_4],[avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados], this.choqueAviones, null, this);
         this.physics.add.overlap(circulo_aviones, this.depositoAliados, this.colision_aviones_deposito, null, this); 
         this.physics.add.overlap(circulo_aviones_aliados, this.depositoPotencias, this.colision_aviones_deposito, null, this); 
 
@@ -2399,7 +2400,7 @@ class Play extends Phaser.Scene {
         difX= Math.abs(avion.x - avion.xInicial); 
         difY= Math.abs(avion.y - avion.yInicial);
 
-        if (difX < 2 && difY < 2)
+        if (difX < 4 && difY < 4)
         {   
             avion.combustible = 85;                          
             if (avion.cargarbomba==true)
