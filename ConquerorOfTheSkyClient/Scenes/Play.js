@@ -1184,7 +1184,7 @@ class Play extends Phaser.Scene {
                 {      
                     if (!avion_1.saliBase)
                     {    
-                        if (avion_1.altitud=='En base') 
+                        if (avion_1.altitud=='EnBase') 
                         {              
                             avion_1.cambiarAltitud(avion_1.altitud_anterior);
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:avion_1.altitud}); 
@@ -1205,7 +1205,7 @@ class Play extends Phaser.Scene {
                 {         
                     if (!avion_2.saliBase)
                     {    
-                        if (avion_2.altitud=='En base') 
+                        if (avion_2.altitud=='EnBase') 
                         {              
                             avion_2.cambiarAltitud(avion_2.altitud_anterior);
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:avion_2.altitud}); 
@@ -1226,7 +1226,7 @@ class Play extends Phaser.Scene {
                 {            
                     if (!avion_3.saliBase)
                     {    
-                        if (avion_3.altitud=='En base') 
+                        if (avion_3.altitud=='EnBase') 
                         {              
                             avion_3.cambiarAltitud(avion_3.altitud_anterior);
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:avion_3.altitud}); 
@@ -1247,7 +1247,7 @@ class Play extends Phaser.Scene {
                 {       
                     if (!avion_4.saliBase)
                     {    
-                        if (avion_4.altitud=='En base') 
+                        if (avion_4.altitud=='EnBase') 
                         {              
                             avion_4.cambiarAltitud(avion_4.altitud_anterior);
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:avion_4.altitud}); 
@@ -1270,7 +1270,7 @@ class Play extends Phaser.Scene {
                 {
                     if (!avion_1_Aliados.saliBase)
                     {    
-                        if (avion_1_Aliados.altitud=='En base') 
+                        if (avion_1_Aliados.altitud=='EnBase') 
                         {              
                             avion_1_Aliados.cambiarAltitud(avion_1_Aliados.altitud_anterior);
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:avion_1_Aliados.altitud}); 
@@ -1290,7 +1290,7 @@ class Play extends Phaser.Scene {
                 { 
                     if (!avion_2_Aliados.saliBase)
                     {    
-                        if (avion_2_Aliados.altitud=='En base') 
+                        if (avion_2_Aliados.altitud=='EnBase') 
                         {              
                             avion_2_Aliados.cambiarAltitud(avion_2_Aliados.altitud_anterior);
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_2_Aliados.altitud}); 
@@ -1310,7 +1310,7 @@ class Play extends Phaser.Scene {
                 {
                     if (!avion_3_Aliados.saliBase)
                     {    
-                        if (avion_3_Aliados.altitud=='En base') 
+                        if (avion_3_Aliados.altitud=='EnBase') 
                         {              
                             avion_3_Aliados.cambiarAltitud(avion_3_Aliados.altitud_anterior);
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:avion_3_Aliados.altitud}); 
@@ -1330,7 +1330,7 @@ class Play extends Phaser.Scene {
                 {
                     if (!avion_4_Aliados.saliBase)
                     {    
-                        if (avion_4_Aliados.altitud=='En base') 
+                        if (avion_4_Aliados.altitud=='EnBase') 
                         {              
                             avion_4_Aliados.cambiarAltitud(avion_4_Aliados.altitud_anterior);
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:avion_4_Aliados.altitud}); 
@@ -2627,7 +2627,7 @@ class Play extends Phaser.Scene {
                 avion.body.setVelocityY(0);
                 avion.body.setVelocityX(0);      
                 this.altitud_anterior=avion.altitud;                      
-                avion.cambiarAltitud('En base');    
+                avion.cambiarAltitud('EnBase');    
                 avion.saliBase=false;                      
                 avion.cargarbomba=false;
                 avion.tengobomba=true; 
@@ -2642,7 +2642,7 @@ class Play extends Phaser.Scene {
                 avion.body.setVelocityX(0);  
                 avion.saliBase=false;     
                 this.altitud_anterior=avion.altitud;                     
-                avion.cambiarAltitud('En base');                
+                avion.cambiarAltitud('EnBase');                
                 avion.cargarCombustible=false; 
             }            
             return false;

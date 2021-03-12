@@ -19,8 +19,8 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.body.bounce.setTo(1, 1);
         this.vidaAvion = 100;    
         this.focus=false;   
-        this.altitud='En base';
-        this.altitud_anterior='En base';
+        this.altitud='EnBase';
+        this.altitud_anterior='EnBase';
         this.lastFired=0;
         this.combustible = 85;
         this.xInicial = config.x;
@@ -91,7 +91,7 @@ class Avion extends Phaser.GameObjects.Sprite {
 
 
     toString(){
-        return "{idAvion: "+ this.idavion+", posicionX:" + this.x +  ", posicionY:" + this.y + ",combustible:"+ this.combustible + ", altitud: '" + this.altitud + "', bomba:"+ this.tengobomba + ",salud :" + this.vidaAvion+"}";
+        return "{idAvion: "+ this.idavion+", posicionX:" + this.x +  ", posicionY:" + this.y + ",combustible:"+ this.combustible + ", altitud: " + this.altitud + ", bomba:"+ this.tengobomba + ",salud :" + this.vidaAvion+"}";
     }
 }
 

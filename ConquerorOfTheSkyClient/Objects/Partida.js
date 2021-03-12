@@ -91,7 +91,6 @@ class Partida {
             this.avionesPotencias = msg.avionesPotencias;
             this.avionesAliados = msg.avionesAliados;
             this.configuraciones = msg.configuraciones;
-            console.log(this.avionesAliados[0].altitud);
             this.Nombre = msg.partida.nombre;
             this.duenio = true;
             this.partidaCargada = true;
