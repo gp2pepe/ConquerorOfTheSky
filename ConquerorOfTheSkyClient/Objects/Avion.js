@@ -12,6 +12,7 @@ class Avion extends Phaser.GameObjects.Sprite {
 		super(config.scene, config.x, config.y, 'Nieuport_28C1').setScale(.05);
         this.scene = config.scene;
 		this.scene.physics.world.enable(this);
+        this.body.setSize(300,300); 
         this.scene.add.existing(this);
 		this.body.setMaxSpeed(500);        
 		this.body.setCollideWorldBounds(true);
