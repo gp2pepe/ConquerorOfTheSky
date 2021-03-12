@@ -165,9 +165,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 {config.Partida.ingresarAPartida(this.IdPartida, textContra.text);
                     console.log('Mal, entré a privado')
                 }
-
-                this.scene.remove('MenuBando');
-                this.scene.start('Play');
             //console.log(config.Partida);
             //this.scene.launch('confirmarNuevaPartida');
         }
