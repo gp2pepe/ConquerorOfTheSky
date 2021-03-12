@@ -21,6 +21,8 @@ class MenuPartidas extends Phaser.Scene {
     }
 
     create() {
+        var listaPartidass = config.Partida.listaPartidas;
+        console.log(listaPartidass);
         console.log(config.Partida.listaPartidas);
         //this.add.image(0, 0, "fondoMenu").setOrigin(0);
         //this.add.image(0,0, 'desenfocar').setOrigin(0);
@@ -136,15 +138,20 @@ class MenuPartidas extends Phaser.Scene {
                     }
                     i++;
                 }*/
-                config.Partida.ingresarAPartida(partida[0]);
+                var nombrePartida = listaPartidass[partida[0]].nombre;
+                var cantLetrasPartida = cantLetrasString(nombrePartida)
+                //var bando = listaPartidass[partida[0]].bando; Aca cuando Gabi me avise lo cambio
+               // console.log(bando);
+                var posicionNombre = 44 - cantLetrasPartida;
+                this.scene.pause();
+                this.scene.launch('IngresarPartidaBuscar', { Id: partida[0], Nombre: partida[posicionNombre], Bando: 'Potencias', Publica: partida[103] });
                 var nextCellIndex = cellIndex + 1;
                 var nextItem = gridTable.items[nextCellIndex];
                 if (!nextItem) {
                     return;
                 }
                 nextItem.color = 0xffffff - nextItem.color;
-                gridTable.updateVisibleCell(nextCellIndex);
-          
+                gridTable.updateVisibleCell(nextCellIndex);          
             }, this)    
          
     }
@@ -198,5 +205,18 @@ var GetFooterSizer = function (scene, orientation) {
         
 }
 
+var cantLetrasString = function (String)
+{
+    var cantLetras = 0;
+    for(var i = 0; i<12; i++)
+    {
+        console.log(String[i]);
+        if (String[i] != ' ')
+        {
+            cantLetras++;
+        }
+    }
+    return cantLetras;
+}
 
 export default MenuPartidas

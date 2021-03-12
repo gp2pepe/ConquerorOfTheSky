@@ -97,7 +97,8 @@ class Bootloader extends Phaser.Scene {
              'pausado',
              'fondoGuardar',
              "fondoCargar",
-             'fondoBuscarPartida'
+             'fondoBuscarPartida',
+             'menuEmergenteBuscar'
              //'loading'
 
         ])

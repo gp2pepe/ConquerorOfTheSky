@@ -33,6 +33,7 @@ class Partida {
             this.configuraciones = msg.configuraciones;
             this.duenio = false;
             this.partidaCargada = true;
+            this.pass = msg.Partida.pass;
 
         }else if(msg.operacion == "sincronizar"){ 
             
@@ -108,9 +109,9 @@ class Partida {
         }        
     }
 
-    ingresarAPartida(idpartida){
+    ingresarAPartida(idpartida, passwd){
         console.log(idpartida);
-        config.WebSocket.ws.send(JSON.stringify({operacion:"ingresarAPartida",idpartida:idpartida,nick:"Juan",passwd:"0"}));
+        config.WebSocket.ws.send(JSON.stringify({operacion:"ingresarAPartida",idpartida:idpartida,nick:"Juan",passwd:passwd}));
     }
 
     sincronizar(carga){
