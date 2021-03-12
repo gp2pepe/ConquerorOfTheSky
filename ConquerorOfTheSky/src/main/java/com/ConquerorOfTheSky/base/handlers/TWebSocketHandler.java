@@ -86,6 +86,28 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     LOGGER.debug("Llego un ingresarAPartida: " + map.toString());
                     String respuesta = fachada.ingresarAPartida(Long.valueOf(map.get("idpartida").toString()), map.get("nick").toString(), session, map.get("passwd").toString());
                     session.sendMessage(new TextMessage(respuesta));
+                    //Mando mensaje al resto de que se conecto un jugador
+                    List<WebSocketSession> listaSesiones = fachada.sincronizarPartida(Long.valueOf(map.get("idpartida").toString()));
+                    listaSesiones.forEach(webSocketSession -> {
+                        try {
+                            if(webSocketSession != session){
+                                if(webSocketSession.isOpen())
+                                    webSocketSession.sendMessage(new TextMessage("{ \"operacion\":\"ingresoUnJugador\",\"idPartida\": " + map.get("idpartida").toString() + " }"));
+                                else if(webSocketSession!=null)
+                                    throw new JugadorDesconectadoException("sincronizar", "Se desconecto un jugador");
+                            }
+
+                        } catch (Exception e) {
+                            LOGGER.debug(e.toString());
+                            try {                            
+                                LOGGER.debug("Se desconecto un jugador de una partida");
+                                session.sendMessage(new TextMessage(gson.toJson(e)));
+                            } catch (IOException e1) {
+                                LOGGER.debug("Se perdio conexión con el Jugador");
+
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     LOGGER.debug(e.toString());
                     try { 
@@ -106,7 +128,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                             if(webSocketSession != session){
                                 if(webSocketSession.isOpen())
                                     webSocketSession.sendMessage(message);
-                                else
+                                else if(webSocketSession!=null)
                                     throw new JugadorDesconectadoException("sincronizar", "Se desconecto un jugador");
                             }
 
@@ -156,7 +178,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                 }catch(Exception e){
                     LOGGER.debug(e.getMessage());
                     try{
-                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"guardarPartida\",\"mensaje\": \"Hubo un error al guardar la partida\" }"));
+                        session.sendMessage(new TextMessage(gson.toJson(e)));
                     } catch (IOException e1) {
                         LOGGER.debug("Se perdio conexión con el Jugador");
                     }
@@ -170,7 +192,8 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                 }catch(Exception e){
                     LOGGER.debug(e.getMessage());
                     try{
-                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"recuperarPartida\",\"mensaje\": \"Hubo un error al recuperar la partida\" }"));
+                        session.sendMessage(new TextMessage(gson.toJson(e)));
+                        //session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"recuperarPartida\",\"mensaje\": \"Hubo un error al recuperar la partida\" }"));
                     } catch (IOException e1) {
                         LOGGER.debug("Se perdio conexión con el Jugador");
                     }

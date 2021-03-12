@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="avion")
 public class Avion {
@@ -19,13 +21,21 @@ public class Avion {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long idAvion;
     
+    @Expose
     private String nombre;
+    @Expose
     private int salud;
+    @Expose
     private int danio;
+    @Expose
     private int velocidad;
+    @Expose
     private int combustible;
+    @Expose
     private String altitud;
+    @Expose
     private int posicionX;
+    @Expose
     private int posicionY;
 
     @OneToOne(cascade = CascadeType.ALL)

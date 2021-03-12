@@ -13,16 +13,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name="partida")
 public class Partida {
     
-    @Expose
     @Id
     @Column(name="id_partida")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long idParBD;
+    
+    @Transient
+    @Expose
     private Long idPartida;
     
     @Expose
@@ -119,6 +124,14 @@ public class Partida {
     public String toString() {
         return "Partida [equipos=" + equipos + ", idPartida=" + idPartida + ", mapa=" + mapa + ", modalidad="
                 + modalidad + ", nombre=" + nombre + ", password=" + password + ", publica=" + publica + "]";
+    }
+
+    public Long getIdParBD() {
+        return idParBD;
+    }
+
+    public void setIdParBD(Long idParBD) {
+        this.idParBD = idParBD;
     }
 
     
