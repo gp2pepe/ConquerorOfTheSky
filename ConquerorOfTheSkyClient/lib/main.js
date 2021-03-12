@@ -26,7 +26,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { n: 300 },
-            debug: true
+            debug: false
         }
     },
     scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuCargar,MenuBando,PartidaLlena,GameOver,Win,Guardar,Pausado],

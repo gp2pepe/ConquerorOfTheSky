@@ -40,6 +40,7 @@ import org.springframework.web.socket.WebSocketSession;
 import com.ConquerorOfTheSky.base.excepciones.ErrorAlGuardarException;
 import com.ConquerorOfTheSky.base.excepciones.PartidaLlenaException;
 import com.ConquerorOfTheSky.base.excepciones.PartidaNoExisteException;
+import com.ConquerorOfTheSky.base.excepciones.PasswordEquivocadaException;
 
 @Component("fachada")
 public class Fachada implements IFachada{
@@ -98,7 +99,7 @@ public class Fachada implements IFachada{
         int baseY = (int) (Math.random() * (((posicionCampoY + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampoY) + 1)) + posicionCampoY;
 
         List<Base> bases = new LinkedList<>();
-        Base base1 = new Base(Long.valueOf(0),baseX,baseY,depositoExp,torre,tanque);
+        Base base1 = new Base(baseX,baseY,depositoExp,torre,tanque);
         bases.add(base1);
 
         //Seteo la artilleria para el campo 1
@@ -122,8 +123,9 @@ public class Fachada implements IFachada{
           artillerias.add(art);
         }
 
-        Campo campo1 = new Campo(Long.valueOf(0), posicionCampoX, posicionCampoY, artillerias, base1);
+        Campo campo1 = new Campo( posicionCampoX, posicionCampoY, artillerias, base1);
         Equipo equipo1 = new Equipo(bando, jugadores,campo1);
+
         //Fin equipo1
 
 
@@ -131,10 +133,10 @@ public class Fachada implements IFachada{
         List<Jugador> jugadores2 = new LinkedList<>();
         List<Avion> aviones2 = new LinkedList<>();
         if(modalidad.equals("1vs1")){
-          aviones.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
+          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
           jugadores2.add(new Jugador("", null, false, aviones2));
 
         }
@@ -147,7 +149,7 @@ public class Fachada implements IFachada{
         int base2X = (int) (Math.random() * (((posicionCampo2X + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampo2X) + 1)) + posicionCampo2X;
         int base2Y = (int) (Math.random() * (((posicionCampo2Y + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampo2Y) + 1)) + posicionCampo2Y;
 
-        Base base2 = new Base(Long.valueOf(1),base2X,base2Y,depositoExp2,torre2,tanque2);
+        Base base2 = new Base(base2X,base2Y,depositoExp2,torre2,tanque2);
 
         //Seteo la artilleria para el campo 2
         Set<Artilleria> artillerias2 = new HashSet<Artilleria>();
@@ -169,7 +171,7 @@ public class Fachada implements IFachada{
           artillerias2.add(art);
         }
 
-        Campo campo2 = new Campo(Long.valueOf(1), posicionCampo2X, posicionCampo2Y, artillerias2, base2);
+        Campo campo2 = new Campo(posicionCampo2X, posicionCampo2Y, artillerias2, base2);
         String bando2 = "Potencias";
         if(bando.equals("Potencias"))
           bando2 = "Aliados";
@@ -215,7 +217,7 @@ public class Fachada implements IFachada{
 
     @Transactional
     public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd)
-        throws PartidaLlenaException, PartidaNoExisteException {
+        throws PartidaLlenaException, PartidaNoExisteException, PasswordEquivocadaException {
        
       Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
 
@@ -229,31 +231,35 @@ public class Fachada implements IFachada{
       while(i<partidas.size() && encontre == false){
         partida = partidas.get(i);
         if(partida.getIdpartida().equals(idPartida)){
-          //Reviso si la partida esta llena
-          int cantJug = 0;
-          for(Equipo eq : partida.getEquipos())
-            for(Jugador jug : eq.getJugadores())
-              if(jug.getSesionActual()!=null)
-                cantJug++;
+          if(partida.isPublica() || passwd.equals(partida.getPassword())){
+            //Reviso si la partida esta llena
+            int cantJug = 0;
+            for(Equipo eq : partida.getEquipos())
+              for(Jugador jug : eq.getJugadores())
+                if(jug.getSesionActual()!=null)
+                  cantJug++;
 
-          if(partida.getModalidad().equals("1vs1") && cantJug==2){
-            throw new PartidaLlenaException("ingresarAPartida","La partida esta llena");
+            if(partida.getModalidad().equals("1vs1") && cantJug==2){
+              throw new PartidaLlenaException("ingresarAPartida","La partida esta llena");
 
-          }else if(partida.getModalidad().equals("1vs1")){
-            LOGGER.debug("Voy a armar la partida para Ingresar: " + idPartida);
-            //Equipo 2
-            List<Equipo> equipos = partida.getEquipos();
-            List<Jugador> jugadores= equipos.get(1).getJugadores();
-            jugadores.get(0).setNick(nick);
-            jugadores.get(0).setSesionActual(sesionUsu);
-            equipos.get(1).setJugadores(jugadores);
-            partida.setEquipos(equipos);
-            campo =  equipos.get(1).getCampo();
-            bando = equipos.get(1).getBando();
-            campoContrario =  equipos.get(0).getCampo();
-            bandoContrario =  equipos.get(0).getBando();
+            }else if(partida.getModalidad().equals("1vs1")){
+              LOGGER.debug("Voy a armar la partida para Ingresar: " + idPartida);
+              //Equipo 2
+              List<Equipo> equipos = partida.getEquipos();
+              List<Jugador> jugadores= equipos.get(1).getJugadores();
+              jugadores.get(0).setNick(nick);
+              jugadores.get(0).setSesionActual(sesionUsu);
+              equipos.get(1).setJugadores(jugadores);
+              partida.setEquipos(equipos);
+              campo =  equipos.get(1).getCampo();
+              bando = equipos.get(1).getBando();
+              campoContrario =  equipos.get(0).getCampo();
+              bandoContrario =  equipos.get(0).getBando();
+            }
+            encontre = true;
+          }else{
+            throw new PasswordEquivocadaException("ingresarAPartida", "La contraseña no es correcta");
           }
-          encontre = true;
         }
         i++;
       }
@@ -293,7 +299,6 @@ public class Fachada implements IFachada{
         innerObjectPartida.addProperty("modalidad", par.getModalidad());
         innerObjectPartida.addProperty("nombre", par.getNombre());
         List<Equipo> equipos = par.getEquipos();
-        String nickDuenio = equipos.get(0).getJugadores().get(0).getNick();
         int jugConectados = 0;
         for(Equipo eq : equipos)
             for(Jugador jug : eq.getJugadores())
@@ -301,7 +306,9 @@ public class Fachada implements IFachada{
                 jugConectados++;
 
         innerObjectPartida.addProperty("jugConectados", jugConectados);
-        innerObjectPartida.addProperty("nickDuenio", nickDuenio);
+        innerObjectPartida.addProperty("nickDuenio", equipos.get(0).getJugadores().get(0).getNick());
+        innerObjectPartida.addProperty("bandoDuenio", equipos.get(0).getBando());
+
         innerObjectLista.add(innerObjectPartida);
         
       }
@@ -348,7 +355,7 @@ public class Fachada implements IFachada{
         while(i<partidas.size() && encontre == false){
           par = partidas.get(i);
           if(par.getIdpartida().equals(idPartida)){
-
+            
             for(Equipo eq : par.getEquipos()){
               for(Jugador jug: eq.getJugadores()){
                 int q = 0;
@@ -389,23 +396,23 @@ public class Fachada implements IFachada{
               }
             }
             par.setPassword(passwd);
+            par.setPublica(false);
             par = partidaR.saveAndFlush(par);
             encontre = true;
           }
           i++;
         }
       }catch(Exception e){
-        LOGGER.debug(e.toString());
-        throw new ErrorAlGuardarException("guardarPartida", "Hubo un error al guardar la partida");
+        throw new ErrorAlGuardarException("guardarPartida", "Hubo un error al guardar");
       }
       if(!encontre){
-        throw new PartidaNoExisteException("guardarPartida", "La partida ya no esta disponible" );
+        throw new PartidaNoExisteException("guardarPartida", "La partida no esta disponible" );
       }
         //Genero el JSon
         JsonObject innerObject = new JsonObject();
         innerObject.addProperty("operacion", "guardarPartida");
         innerObject.addProperty("estado", "OK");
-        innerObject.addProperty("nroPartida",  par.getIdpartida());
+        innerObject.addProperty("nroPartida",  par.getIdParBD());
         LOGGER.debug("Guarde la partida: " +  par.getIdpartida());
         return gson.toJson(innerObject);
     }
@@ -416,20 +423,26 @@ public class Fachada implements IFachada{
         
         Configuracion conf = (Configuracion) Hibernate.unproxy(configuracionR.getOne(1));
 
-        Partida par = (Partida) Hibernate.unproxy(partidaR.getOne(idPartida));
-        Partida partida = par;
+        Partida partida = (Partida) Hibernate.unproxy(partidaR.getOne(idPartida));
+        //Partida partida = new Partida(par.isPublica(), par.getModalidad(), par.getNombre(), par.getPassword(), par.getEquipos(), par.getMapa());
         if(partida.getPassword().equals(passwd)){
           partida.getEquipos().get(0).getJugadores().get(0).setSesionActual(sesionUsu);
+          Long idpartida ;
           synchronized(this) {
+            idpartida = Long.valueOf(partidas.size());
+            partida.setIdpartida(idpartida);
             partidas.add(partida);
           }
+          List<Avion> aviones = partida.getEquipos().get(0).getJugadores().get(0).getAviones();
+          List<Avion> aviones2 = partida.getEquipos().get(1).getJugadores().get(0).getAviones();
+
           Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
           JsonElement jsonElementConf = gson.toJsonTree(conf);
           JsonElement jsonElementPartida = gson.toJsonTree(partida);
           JsonElement jsonElementCampo = gson.toJsonTree(partida.getEquipos().get(0).getCampo());
           JsonElement jsonElementCampo2 = gson.toJsonTree(partida.getEquipos().get(1).getCampo());
-          JsonElement jsonElementAviones = gson.toJsonTree(partida.getEquipos().get(0).getJugadores().get(0).getAviones());
-          JsonElement jsonElementAviones2 = gson.toJsonTree(partida.getEquipos().get(1).getJugadores().get(0).getAviones());
+          JsonElement jsonElementAviones = gson.toJsonTree(aviones);
+          JsonElement jsonElementAviones2 = gson.toJsonTree(aviones2);
 
           String bando = partida.getEquipos().get(0).getBando();
           String bando2 = partida.getEquipos().get(1).getBando();

@@ -7,6 +7,7 @@ import org.springframework.web.socket.WebSocketSession;
 import com.ConquerorOfTheSky.base.excepciones.ErrorAlGuardarException;
 import com.ConquerorOfTheSky.base.excepciones.PartidaLlenaException;
 import com.ConquerorOfTheSky.base.excepciones.PartidaNoExisteException;
+import com.ConquerorOfTheSky.base.excepciones.PasswordEquivocadaException;
 import com.google.gson.JsonObject;
 
 public interface IFachada {
@@ -14,7 +15,7 @@ public interface IFachada {
     
     public String crearPartida(String nick, String modalidad, String nombre, WebSocketSession sesionUsu, boolean publica, String passwd, String bando);
 
-    public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd) throws PartidaLlenaException, PartidaNoExisteException;
+    public String ingresarAPartida(Long idPartida, String nick, WebSocketSession sesionUsu, String passwd) throws PartidaLlenaException, PartidaNoExisteException, PasswordEquivocadaException;
 
     public String listarPartidas();
     

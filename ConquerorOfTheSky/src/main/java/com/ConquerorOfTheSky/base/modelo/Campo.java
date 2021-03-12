@@ -49,9 +49,8 @@ public class Campo {
     public Campo() {
     }
 
-    public Campo(Long idCampo, int posicionX, int posicionY, Set<Artilleria> artillerias,
+    public Campo( int posicionX, int posicionY, Set<Artilleria> artillerias,
             Base base) {
-        this.idCampo = idCampo;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
         this.artillerias = artillerias;
