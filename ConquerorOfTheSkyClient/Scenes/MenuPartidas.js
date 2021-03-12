@@ -143,8 +143,9 @@ class MenuPartidas extends Phaser.Scene {
                 console.log(partida);
                 var bando = listaPartidass[partida[0]].bandoDuenio;
                 var posicionNombre = 44 - cantLetrasPartida;
+                console.log()
                 this.scene.pause();
-                this.scene.launch('IngresarPartidaBuscar', { Id: partida[0], Nombre: partida[posicionNombre], Bando: bando, Publica: partida[posicionNombre] + 62 });
+                this.scene.launch('IngresarPartidaBuscar', { Id: partida[0], Nombre: partida[posicionNombre], Bando: bando, Publica: partida[posicionNombre  + 62] });
                 var nextCellIndex = cellIndex + 1;
                 var nextItem = gridTable.items[nextCellIndex];
                 if (!nextItem) {
