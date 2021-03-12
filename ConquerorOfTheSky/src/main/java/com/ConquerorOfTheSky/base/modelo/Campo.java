@@ -77,8 +77,8 @@ public class Campo {
         return base;
     }
 
-    public void setBase(Base bases) {
-        this.base = bases;
+    public void setBase(Base base) {
+        this.base = base;
     }
 
     public int getPosicionX() {
