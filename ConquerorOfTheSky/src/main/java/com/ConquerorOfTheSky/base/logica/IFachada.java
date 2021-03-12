@@ -26,6 +26,6 @@ public interface IFachada {
     
     public String recuperarPartida(Long idPartida, WebSocketSession sesionUsu,  String passwd) throws PartidaNoExisteException;
 
-    public void terminarPartida(Long idPartida);
+    public void terminarPartida(Long idPartida) throws PartidaNoExisteException;
 
 }

@@ -3231,6 +3231,7 @@ class Play extends Phaser.Scene {
             {
                 config.Partida.estado="Pausado";
                 this.scene.launch('Game Over');
+                config.Partida.terminarPartida();
                 config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
                 this.scene.pause();
             }
@@ -3254,6 +3255,7 @@ class Play extends Phaser.Scene {
                 config.Partida.estado="Pausado";
                 this.scene.launch('Win');
                 config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                config.Partida.terminarPartida();
                 this.scene.pause();
             }
             else
@@ -3273,9 +3275,9 @@ class Play extends Phaser.Scene {
                 {
                     
                     config.Partida.estado="Pausado";
-                    config.Partida.destruirPartida();
                     this.scene.launch('Win');
                     config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                    config.Partida.terminarPartida();
                     this.scene.pause();
                 
                 }
@@ -3297,9 +3299,10 @@ class Play extends Phaser.Scene {
                 {
                     
                     config.Partida.estado="Pausado";
-                this.scene.launch('Win');
-                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                this.scene.pause();
+                    this.scene.launch('Win');
+                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                    config.Partida.terminarPartida();
+                    this.scene.pause();
                 }
                 else
                 {

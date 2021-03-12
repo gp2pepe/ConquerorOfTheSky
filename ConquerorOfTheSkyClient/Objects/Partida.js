@@ -81,7 +81,6 @@ class Partida {
         }else if(msg.operacion == "guardarPartida"){ 
             this.estado = "Preparado";
             this.nroPartida = msg.nroPartida;
-            this.pass = msg.partida.passwd;
 
         }else if(msg.operacion == "recuperarPartida"){ 
             this.estado = "Preparado";
@@ -92,6 +91,7 @@ class Partida {
             this.avionesPotencias = msg.avionesPotencias;
             this.avionesAliados = msg.avionesAliados;
             this.configuraciones = msg.configuraciones;
+            console.log(this.avionesAliados[0].altitud);
             this.Nombre = msg.partida.nombre;
             this.duenio = true;
             this.partidaCargada = true;
@@ -167,6 +167,11 @@ class Partida {
     recuperarPartida(idpart, contrasenia){
         config.WebSocket.ws.send(JSON.stringify({operacion:"recuperarPartida",idpartida: idpart, passwd: contrasenia}));  
     }
+
+    terminarPartida(){
+        config.WebSocket.ws.send(JSON.stringify({operacion:"terminarPartida",idpartida:this.idpartida}));  
+    }
+
 }
 
 export default Partida ;

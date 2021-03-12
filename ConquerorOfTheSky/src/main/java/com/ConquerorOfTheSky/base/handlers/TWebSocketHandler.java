@@ -23,7 +23,9 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.ConquerorOfTheSky.base.excepciones.ErrorAlGuardarException;
 import com.ConquerorOfTheSky.base.excepciones.JugadorDesconectadoException;
+import com.ConquerorOfTheSky.base.excepciones.PartidaNoExisteException;
 
 
 public class TWebSocketHandler extends TextWebSocketHandler {
@@ -55,14 +57,14 @@ public class TWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
-        super.handleTextMessage(session, message);
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        JsonParser springParser = JsonParserFactory.getJsonParser();
-        Map<String, Object> map = springParser.parseMap(message.getPayload());
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) {
 
         try{
+            super.handleTextMessage(session, message);
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            JsonParser springParser = JsonParserFactory.getJsonParser();
+            Map<String, Object> map = springParser.parseMap(message.getPayload());
+
             String op = (String) map.get("operacion");
             //Proceso el mensaje de iniciarPartida y devuelvo datos de partida nueva
             if(op.equals(new String("iniciarPartida"))){
@@ -175,13 +177,21 @@ public class TWebSocketHandler extends TextWebSocketHandler {
 
                     String respuesta = fachada.guardarPartida(Long.valueOf(map.get("idpartida").toString()), map.get("passwd").toString(), aviones, basePotencias, baseAliados, artPotencias, artAliados );
                     session.sendMessage(new TextMessage(respuesta));
-                }catch(Exception e){
-                    LOGGER.debug(e.getMessage());
+                }catch(ErrorAlGuardarException | PartidaNoExisteException e){
                     try{
                         session.sendMessage(new TextMessage(gson.toJson(e)));
                     } catch (IOException e1) {
                         LOGGER.debug("Se perdio conexión con el Jugador");
                     }
+                    LOGGER.debug(e.getMessage());
+
+                }catch(Exception e){
+                    try{
+                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"guardarPartida\",\"mensaje\": \"Hubo un error al guardar\" }"));
+                    } catch (IOException e1) {
+                        LOGGER.debug("Se perdio conexión con el Jugador");
+                    }
+                    LOGGER.debug(e.getMessage());
                 }
             }else if(op.equals(new String("recuperarPartida"))){
                 try{
@@ -198,8 +208,21 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                         LOGGER.debug("Se perdio conexión con el Jugador");
                     }
                 }
+            }else if(op.equals(new String("terminarPartida"))){
+                try{
+                    LOGGER.debug("Llego un terminarPartida: " + map.toString());
+                    fachada.terminarPartida(Long.valueOf(map.get("idpartida").toString()));
+                    session.sendMessage(new TextMessage("{ \"operacion\":\"terminarPartida\",\"mensaje\": \"OK\" }"));
+                }catch(Exception e){
+                    LOGGER.debug(e.getMessage());
+                    try{
+                        session.sendMessage(new TextMessage("{ \"operacion\":\"errorServidor\",\"metodo\": \"terminarPartida\",\"mensaje\": \"Hubo un error al terminar la partida\" }"));
+                    } catch (IOException e1) {
+                        LOGGER.debug("Se perdio conexión con el Jugador");
+                    }
+                }
             }
-        }catch(WebSocketHandshakeException e1){
+        }catch(Exception e){
             LOGGER.error("Fallo al procesar mensaje");
 
         }

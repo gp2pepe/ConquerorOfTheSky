@@ -3,10 +3,8 @@ package com.ConquerorOfTheSky.base.logica;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
 import com.ConquerorOfTheSky.base.dao.ConfiguracionRepo;
 import com.ConquerorOfTheSky.base.dao.PartidaRepo;
@@ -26,7 +24,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mysql.cj.Session;
 import com.ConquerorOfTheSky.base.modelo.Configuracion;
 import com.ConquerorOfTheSky.base.modelo.DepositoDeExplosivos;
 
@@ -464,12 +461,28 @@ public class Fachada implements IFachada{
 
       }catch (Exception e){
         System.out.print(e);
-        throw new PartidaNoExisteException("recuperarPartida", "No existe la partida : " + idPartida);
+        throw new PartidaNoExisteException("recuperarPartida", "No existe la partida ");
       }
     }
 
-    public void terminarPartida(Long idPartida){
-
+    public void terminarPartida(Long idPartida) throws PartidaNoExisteException{
+      try{
+        boolean encontre = false;
+        int i = 0;
+        while(i<partidas.size() && encontre == false){
+          if(partidas.get(i).getIdpartida().equals(idPartida)){
+            partidas.remove(i);
+            encontre = true;
+          }
+          i++;
+        }
+        if(!encontre){
+          throw new PartidaNoExisteException("terminarPartida", "No existe la partida" );
+        }
+      }catch (Exception e){
+        System.out.print(e);
+        throw new PartidaNoExisteException("terminarPartida", "Error al terminar la partida" );
+      }
 
     }
 
