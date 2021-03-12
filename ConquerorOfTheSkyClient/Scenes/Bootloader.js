@@ -64,6 +64,7 @@ class Bootloader extends Phaser.Scene {
             'panelAvion2Rojo',
             'panelAvion3Rojo',
             'panelAvion4Rojo',
+            'panelAvionDestruido',
             'panelBase',
             'mostrarRango',
             'nick',

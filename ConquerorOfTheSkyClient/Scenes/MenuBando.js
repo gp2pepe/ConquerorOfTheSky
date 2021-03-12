@@ -1,6 +1,8 @@
 import { config } from '../lib/main.js';
 var ingresoTexto;
 var ingresoTexto2;
+var IngresoNombrePartida;
+var IngresoNick;
 
 
 class MenuBando extends Phaser.Scene
@@ -27,6 +29,9 @@ class MenuBando extends Phaser.Scene
     create() 
     {
         ingresoTexto = false;
+        ingresoTexto2 = false;
+        IngresoNombrePartida = false;
+        IngresoNick = false;
         this.add.image(0,0, 'desenfocar').setOrigin(0);
         this.add.image(650,20, 'seleccioncarac').setOrigin(0);
         this.textBox = this.add.image(750,130, 'textBox').setOrigin(0).setScale(0.5);
@@ -94,7 +99,10 @@ class MenuBando extends Phaser.Scene
                 else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
                 {
                     textEntry.text += event.key;
+                    
+                    IngresoNombrePartida = true;
                 }
+
             }
         });
 
@@ -109,7 +117,7 @@ class MenuBando extends Phaser.Scene
                 else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
                 {
                     textEntryNick.text += event.key;
-                    console.log(textEntryNick.text);
+                    IngresoNick = true;
                 }
             }
         });
@@ -258,11 +266,18 @@ class MenuBando extends Phaser.Scene
             });
         });
 
-        var alerta = this.add.text(700, 960, '', { font: 'bold 48px Courier', fill: '#080808' });
+        var alerta = this.add.text(680, 960, '', { font: 'bold 44px Courier', fill: '#080808' });
         this.crearNuevaPartida = this.add.image(780, 1020, 'crearPartida').setOrigin(0).setScale(0.5).setInteractive();
         this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            if(bandoElegido == null){
+            console.log(ingresoTexto);
+            if(IngresoNombrePartida == false ){
+                alerta.setText('Ingrese Nombre Partida'); 
+            }else
+            if(bandoElegido == null ){
                 alerta.setText('Seleccione un Bando'); 
+            }else
+            if(IngresoNick == false  ){
+                alerta.setText('Ingrese un Nick'); 
             }else
             if (textEntry.text.length > 12)
             { 

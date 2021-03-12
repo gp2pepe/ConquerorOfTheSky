@@ -1,4 +1,4 @@
-import { config } from '../../lib/main.js';
+import { config } from '../lib/main.js';
 var textEntry;
 var textEntry2;
 var selected;
