@@ -35,6 +35,8 @@ class Partida {
             this.partidaCargada = true;
             this.pass = msg.Partida.passwd;
 
+        }else if(msg.operacion == "ingresoUnJugador"){            
+            this.estado = "Jugando";
         }else if(msg.operacion == "sincronizar"){ 
             
             if(msg.carga.tipoOp == "sincronizarAvion") {

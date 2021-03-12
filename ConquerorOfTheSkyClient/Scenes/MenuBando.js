@@ -315,6 +315,9 @@ class MenuBando extends Phaser.Scene
             this.scene.remove('MenuInicial');
             this.scene.remove('MenuBando');
             this.scene.start('Play');
+            config.Partida.estado = "Pausado";
+            this.scene.launch('EsperandoContrincante');
+
         }
 
 

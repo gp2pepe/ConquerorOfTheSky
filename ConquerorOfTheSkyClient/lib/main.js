@@ -6,13 +6,13 @@ import Partida from '../Objects/Partida.js';
 import MenuPartidas from '../Scenes/MenuPartidas.js';
 import MenuBando from '../Scenes/MenuBando.js';
 import MenuCargar from '../Scenes/MenuCargar.js';
-import GameOver from '../Scenes/GameOver.js'
-import Win from '../Scenes/Win.js'
-import IngresarPartidaBuscar from '../Scenes/IngresarPartidaBuscar.js'
-import Guardar from '../Scenes/popups/Guardar.js'
-import Pausado from '../Scenes/popups/Pausado.js'
+import GameOver from '../Scenes/GameOver.js';
+import Win from '../Scenes/Win.js';
+import IngresarPartidaBuscar from '../Scenes/IngresarPartidaBuscar.js';
+import Guardar from '../Scenes/popups/Guardar.js';
+import Pausado from '../Scenes/popups/Pausado.js';
 import PartidaLlena from '../Scenes/popups/PartidaLlena.js';
-
+import EsperandoContrincante from '../Scenes/popups/EsperandoContrincante.js';
 
 var config = {
     type: Phaser.AUTO,
@@ -30,7 +30,7 @@ var config = {
             debug: true
         }
     },
-    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuCargar,MenuBando,PartidaLlena,GameOver,Win,Guardar,Pausado, IngresarPartidaBuscar],
+    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuCargar,MenuBando,PartidaLlena,GameOver,Win,Guardar,Pausado,EsperandoContrincante, IngresarPartidaBuscar],
     WebSocket: new Client(),
     Partida: new Partida(),   
     

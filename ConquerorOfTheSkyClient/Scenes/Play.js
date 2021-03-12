@@ -3320,6 +3320,7 @@ class Play extends Phaser.Scene {
             this.scene.pause();
         }else if(config.Partida.estado=='Jugando'){
             this.scene.resume();
+            
         }
 
     }
