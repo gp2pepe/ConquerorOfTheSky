@@ -2550,15 +2550,15 @@ class Play extends Phaser.Scene {
 
     }
 
-    actualizarCombustible(time){
+    actualizarCombustible(){
 
-        this.time = time;
+        
         for(var i = 0; i < 8; i++){
-            if (this.EstaMoviendose(config.Partida.aviones[i]) && time>config.Partida.aviones[i].timeNafta)
+            if (this.EstaMoviendose(config.Partida.aviones[i]) && this.time>config.Partida.aviones[i].timeNafta)
             {  
                 if(config.Partida.aviones[i].combustible>0)
                 {   
-                    config.Partida.aviones[i].timeNafta =time+550;            
+                    config.Partida.aviones[i].timeNafta =this.time+550;            
                     config.Partida.aviones[i].combustible--;   
                     var moverX = config.Partida.aviones[i].combustible+253;
                     if(config.Partida.Bando=='Potencias' && i<4)
@@ -2575,6 +2575,7 @@ class Play extends Phaser.Scene {
 
     update(time,delta)
     {    
+        this.time = time;
         this.actualizarVidaAvion();
 
 /*
