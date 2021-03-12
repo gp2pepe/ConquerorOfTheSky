@@ -36,10 +36,10 @@ class MenuPartidas extends Phaser.Scene {
 
             background: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_PRIMARY),
 
-
             table: {
                 cellWidth: (scrollMode === 0) ? undefined : 190,
                 cellHeight: (scrollMode === 0) ? 100 : undefined,  
+
                 columns: 1,
 
                 mask: {
