@@ -140,11 +140,12 @@ class MenuPartidas extends Phaser.Scene {
                 }*/
                 var nombrePartida = listaPartidass[partida[0]].nombre;
                 var cantLetrasPartida = cantLetrasString(nombrePartida)
+                console.log(partida);
                 //var bando = listaPartidass[partida[0]].bando; Aca cuando Gabi me avise lo cambio
                // console.log(bando);
                 var posicionNombre = 44 - cantLetrasPartida;
                 this.scene.pause();
-                this.scene.launch('IngresarPartidaBuscar', { Id: partida[0], Nombre: partida[posicionNombre], Bando: 'Potencias', Publica: partida[103] });
+                this.scene.launch('IngresarPartidaBuscar', { Id: partida[0], Nombre: partida[posicionNombre], Bando: 'Potencias', Publica: partida[posicionNombre] + 62 });
                 var nextCellIndex = cellIndex + 1;
                 var nextItem = gridTable.items[nextCellIndex];
                 if (!nextItem) {
@@ -157,12 +158,12 @@ class MenuPartidas extends Phaser.Scene {
     }
 
     update() {
-        if(config.Partida.partidaCargada){
+        /*if(config.Partida.partidaCargada){
             this.scene.remove('MenuInicial');
             this.scene.remove('MenuPartidas');
             this.scene.remove('PartidaLlena');
             this.scene.start('Play');
-        }else if(config.Partida.hayError){
+        }else*/ if(config.Partida.hayError){
             if(config.Partida.mensajeError=="La partida esta llena"){
                 console.log("Sigo avisando de error");
                 this.scene.sendToBack();

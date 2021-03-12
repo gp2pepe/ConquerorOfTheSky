@@ -88,7 +88,7 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 }
             }
         });
-
+        console.log(this.Publica);
         if (!this.Publica)
       {  
         console.log('Mal, entré a privado')
@@ -157,6 +157,7 @@ class IngresarPartidaBuscar extends Phaser.Scene
             config.Partida.tipoPartida = "ingresarAPartida";
             if (this.Publica)
                 {
+                    console.log('Antes de intresar a Partida');
                     config.Partida.ingresarAPartida(this.IdPartida, '');
                     console.log('Bien, entré en publica');
                 }
@@ -176,12 +177,16 @@ class IngresarPartidaBuscar extends Phaser.Scene
     }
 
     update() {
-        /*if(config.Partida.partidaCargada){
+        if(config.Partida.partidaCargada){
+            console.log('Estoy en el update');
             this.scene.remove('MenuInicial');
             this.scene.remove('MenuPartidas');
             this.scene.remove('PartidaLlena');
+            console.log(config.Partida.partidaCargada);
             this.scene.start('Play');
-        }else */
+            
+            
+        }else 
         if(config.Partida.hayError){
             if(config.Partida.mensajeError=="La partida esta llena"){
                 console.log("Sigo avisando de error");
