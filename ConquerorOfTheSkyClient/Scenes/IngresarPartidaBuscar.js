@@ -31,6 +31,7 @@ class IngresarPartidaBuscar extends Phaser.Scene
 
     create()
     {
+        console.log(this.Publica);
         var ingresoTexto = false;
         var ingresoTexto2 = false;
         this.add.image(0,0, 'desenfocar').setOrigin(0);
@@ -41,13 +42,13 @@ class IngresarPartidaBuscar extends Phaser.Scene
             this.add.text(354,447, 'Potencias').setScale(4);
         else
             this.add.text(354,447, 'Aliados').setScale(4);
-        if (this.Publica == true)
+        if (this.Publica == 'No')
         {
-            this.add.text(395,532, 'SI').setScale(4);
+            this.add.text(395,532, 'NO').setScale(4);
         }
         else
         {
-            this.add.text(395,532, 'NO').setScale(4);
+            this.add.text(395,532, 'Si').setScale(4);
         }
 
         
@@ -92,7 +93,7 @@ class IngresarPartidaBuscar extends Phaser.Scene
             }
         });
         console.log(this.Publica);
-        if (!this.Publica)
+        if (this.Publica == 'No')
       {  
         console.log('Mal, entré a privado')
         this.textBox = this.add.image(570,780, 'textBox').setOrigin(0).setScale(0.5);
@@ -158,15 +159,16 @@ class IngresarPartidaBuscar extends Phaser.Scene
             config.Partida.nick = textNick.text;
             //config.Partida.pass = textContra.text;
             config.Partida.tipoPartida = "ingresarAPartida";
-            if (this.Publica)
+            if (this.Publica == 'No')
                 {
-                    console.log('Antes de intresar a Partida');
-                    config.Partida.ingresarAPartida(this.IdPartida, '');
-                    console.log('Bien, entré en publica');
+                    config.Partida.ingresarAPartida(this.IdPartida, textContra.text);
+                    console.log('Mal, entré a privado')    
                 }
             else
-                {config.Partida.ingresarAPartida(this.IdPartida, textContra.text);
-                    console.log('Mal, entré a privado')
+                {
+                console.log('Antes de intresar a Partida');
+                config.Partida.ingresarAPartida(this.IdPartida, '');
+                console.log('Bien, entré en publica');
                 }
             //console.log(config.Partida);
             //this.scene.launch('confirmarNuevaPartida');
