@@ -70,6 +70,7 @@ class Bootloader extends Phaser.Scene {
             'nick',
             'vidaContainer',
             'combustibleContainer',
+            'baseContainer',
             'vidaBar',
             'combustibleBar',
             'avionBombaLateral',
@@ -78,6 +79,7 @@ class Bootloader extends Phaser.Scene {
              'menupartidas_2',
              'nubeslateral',
              'vistaLateralBaja',
+             'vistaLateralEnBase',
 
 
             'wall1',
