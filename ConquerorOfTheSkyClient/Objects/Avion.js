@@ -39,7 +39,10 @@ class Avion extends Phaser.GameObjects.Sprite {
     {             
 		var angle = Phaser.Math.Angle.BetweenPoints(this, msg);
         this.rotation = angle;	
-		this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+		if(this.vidaAvion > 0){
+            
+        this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+        }
 		this.setActive(true);
 		this.setVisible(true);
     }

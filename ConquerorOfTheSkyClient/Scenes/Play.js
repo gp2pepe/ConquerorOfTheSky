@@ -2879,13 +2879,14 @@ class Play extends Phaser.Scene {
         
         if(avion_1.vidaAvion <= 0 ) 
             {
+               
+                avion_1.destroy();
                 if (mensajeAvionDestruido1 == false && config.Partida.Bando == 'Aliados')
                 {
                     this.mensajeAviso('El avion 1 del enemigo fue destruido');
                     mensajeAvionDestruido1 = true;
                 }
                 this.circulo_1.destroy();
-                avion_1.destroy();
                 this.panelAvion1 = this.add.image(45, 500, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
                 this.cargarBomba1.destroy();
                 this.volverBase1.destroy();
