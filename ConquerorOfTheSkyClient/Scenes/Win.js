@@ -1,6 +1,3 @@
-import { config } from '../lib/main.js';
-import MenuInicial from '../Scenes/MenuInicial.js';
-
 
 class Win extends Phaser.Scene
 {

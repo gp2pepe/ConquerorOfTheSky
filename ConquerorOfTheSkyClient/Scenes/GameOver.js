@@ -1,5 +1,3 @@
-import { config } from '../lib/main.js';
-import Partida from '../Objects/Partida.js';
 
 class GameOver extends Phaser.Scene
 {

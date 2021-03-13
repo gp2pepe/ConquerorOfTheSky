@@ -1,16 +1,12 @@
 package com.ConquerorOfTheSky.base.handlers;
 
 import java.io.IOException;
-import java.net.http.WebSocketHandshakeException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import com.ConquerorOfTheSky.base.logica.IFachada;
-import com.ConquerorOfTheSky.base.modelo.Avion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.slf4j.Logger;
@@ -193,6 +189,7 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                     }
                     LOGGER.debug(e.getMessage());
                 }
+            //Recupero una partida guardada
             }else if(op.equals(new String("recuperarPartida"))){
                 try{
                     LOGGER.debug("Llego un recuperarPartida: " + map.toString());
@@ -208,6 +205,8 @@ public class TWebSocketHandler extends TextWebSocketHandler {
                         LOGGER.debug("Se perdio conexión con el Jugador");
                     }
                 }
+
+            //Termino una partida (la saco del listado)
             }else if(op.equals(new String("terminarPartida"))){
                 try{
                     LOGGER.debug("Llego un terminarPartida: " + map.toString());

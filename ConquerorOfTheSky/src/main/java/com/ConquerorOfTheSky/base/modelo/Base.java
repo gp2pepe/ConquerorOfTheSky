@@ -81,24 +81,24 @@ public class Base {
         return depositoExplosivos;
     }
 
-    public void setDepositoExplosivos(DepositoDeExplosivos depositoExplosivos) {
-        this.depositoExplosivos = depositoExplosivos;
+    public void setDepositoExplosivos(DepositoDeExplosivos deposito) {
+        this.depositoExplosivos = deposito;
     }
 
     public TorreDeControl getTorreControl() {
         return torreControl;
     }
 
-    public void setTorreControl(TorreDeControl torreControl) {
-        this.torreControl = torreControl;
+    public void setTorreControl(TorreDeControl torre) {
+        this.torreControl = torre;
     }
 
     public TanqueDeCombustible getTanqueCombustible() {
         return tanqueCombustible;
     }
 
-    public void setTanqueCombustible(TanqueDeCombustible tanqueCombustible) {
-        this.tanqueCombustible = tanqueCombustible;
+    public void setTanqueCombustible(TanqueDeCombustible tanque) {
+        this.tanqueCombustible = tanque;
     }
     
     
