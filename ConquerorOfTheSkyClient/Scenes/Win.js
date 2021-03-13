@@ -23,7 +23,7 @@ class Win extends Phaser.Scene
         this.add.image(0,0, 'desenfocar').setOrigin(0);
         this.add.image(900, 550, "imagenWinGame3estrellas").setScale(1);
         this.pruebaEndGame = this.add.image(1150,830, 'pruebaEndGame').setScale(0.4).setInteractive();
-        this.pruebaEndGame.setVisible(false);
+        this.pruebaEndGame.setAlpha(0.03);
         console.log('Entre a Win.js');
         this.pruebaEndGame.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
@@ -32,9 +32,12 @@ class Win extends Phaser.Scene
                 x:740,
                 duration: 1000,
                 onComplete: () => {
-                    this.scene.remove('Play');
+                    /*this.scene.remove('Play');
                     this.scene.start('MenuInicial');
-                    console.log('Abriendo MenuInicial');
+                    console.log('Abriendo MenuInicial');*/
+                    console.log('Antes del reload');
+                    location.reload();
+                    console.log('Despues del reload');
                 }
             });
 

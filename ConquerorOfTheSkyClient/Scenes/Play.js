@@ -73,6 +73,9 @@ var mensajeAvionDestruido6 = false;
 var mensajeAvionDestruido7 = false;
 var mensajeAvionDestruido8 = false;
 var moverX;
+var sleep;
+var Espera;
+
 const arregloVida = new Array();
 
 //Inicializo la clase/escena
@@ -86,8 +89,8 @@ class Play extends Phaser.Scene {
     create(){         
         console.log(config.Partida);
         //Se remueven escenas de menus anteriores
-        this.scene.sleep('MenuInicial');
-        this.scene.sleep('ElegirBando');
+        //this.scene.sleep('MenuInicial');
+        //this.scene.sleep('ElegirBando');
         //this.scene.bringToTop('Play');
 
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
@@ -265,9 +268,13 @@ class Play extends Phaser.Scene {
         else
 	        yInicialAvionBaseAliados = campoAliados.base.posicionY + 50 + 120;
 
+            
+
+            //Espera()
        //Llamo a la funcion para definir los aviones
         this.definicionAviones();   
         this.mensaje = this.add.text(800, 0, ' ');
+        this.mensaje2 = this.add.text(800, 0, ' ');
         //Se definen luces que seguiran a los aviones y tambien habra en la base, es para el efecto visual del circulo
         this.mapaMask.setPipeline('Light2D');
         this.lights.enable();
@@ -1045,7 +1052,7 @@ class Play extends Phaser.Scene {
                 config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('grande:'+this.depositoAliados.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
+                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
                 if (this.depositoAliados.vida < 0)
                     {console.log('sin deposito');
             console.log(this.depositoAliados.vida)}
@@ -1058,6 +1065,7 @@ class Play extends Phaser.Scene {
                 this.circulo_bomba_chico.setPosition(1, 1);
                 console.log('torre - chica:'+this.torreAliados.vida);
                 this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
+                //this.mensaje.destroy();
                 if (this.torreAliados.vida < 0)
                     {console.log('sin torre ');
                 console.log(this.torreAliados.vida)}
@@ -1069,7 +1077,8 @@ class Play extends Phaser.Scene {
                 config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('torre -grande:'+this.torreAliados.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
+                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
+                //this.mensaje.destroy();
                 if (this.torreAliados.vida < 0)
                 {console.log('sin torre ');
                 console.log(this.torreAliados.vida)}
@@ -1093,7 +1102,7 @@ class Play extends Phaser.Scene {
                 config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('contenedor - grande:'+this.contenedorAliados.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
+                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
                 if (this.contenedorAliados.vida < 0)
                 {console.log('sin contenedor');
                 console.log(this.contenedorAliados.vida)}
@@ -1119,7 +1128,7 @@ class Play extends Phaser.Scene {
                 config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});              
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('grande:'+this.depositoPotencias.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
+                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
                 if (this.depositoPotencias.vida < 0)
                     console.log('sin deposito');
             });
@@ -1141,7 +1150,7 @@ class Play extends Phaser.Scene {
                 config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Potencias", vida: this.torrePotencias.vida});                
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('torre -grande:'+this.torrePotencias.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
+                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
                 if (this.torrePotencias.vida < 0)
                     console.log('sin torre');
             });
@@ -1163,7 +1172,7 @@ class Play extends Phaser.Scene {
                 config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});              
                 this.circulo_bomba_grande.setPosition(1, 1);
                 console.log('contenedor - grande:'+this.contenedorPotencias.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
+                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
                 if (this.contenedorPotencias.vida < 0)
                     console.log('sin contenedor');
             });      
@@ -2675,9 +2684,40 @@ class Play extends Phaser.Scene {
     }
 
    mensajeAviso(String)
-    {
-        this.mensaje.destroy();
-        this.mensaje = this.add.text(800,5, String).setScale(1.9);
+    {        
+        if(this.mensaje.text.length > 0 || this.mensaje2.text.length > 0)
+            {this.mensaje.destroy();
+            this.mensaje2.destroy();    
+            console.log('Entré al if de destruir texto');}
+         sleep = (delay) => new Promise((resolve) => setTimeout(resolve,delay))
+            Espera = async () => {
+                this.mensaje = this.add.text(800,5, String).setScale(1.9)
+                console.log(this.mensaje.text);
+                await sleep(1000)
+                await sleep(2000)
+                await sleep(1000)
+                this.mensaje.destroy();
+            }
+            Espera();  
+    }
+
+    mensajeAviso2(String)
+    {        
+        console.log(this.mensaje2);
+        if(this.mensaje.text.length > 0 || this.mensaje2.text.length > 0)
+            {this.mensaje2.destroy();
+            this.mensaje.destroy();    
+            console.log('Entré al if de destruir texto');}
+         sleep = (delay) => new Promise((resolve) => setTimeout(resolve,delay))
+            Espera = async () => {
+                this.mensaje2 = this.add.text(800,5, String).setScale(1.9)
+                console.log(this.mensaje2.text);
+                await sleep(1000)
+                await sleep(2000)
+                await sleep(1000)
+                this.mensaje2.destroy();
+            }
+            Espera();  
     }
 
     onEvent()
@@ -2989,6 +3029,7 @@ class Play extends Phaser.Scene {
             if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Potencias')
             {
                 this.mensajeAviso('La torre enemiga fue destruida');
+                //timeout = setTimeout(this.destroyAviso(this.mensaje), 3000);
                 mensajeAvionDestruido8 = true;
             }
             this.circulo_torreAliados.destroy();
@@ -3018,23 +3059,23 @@ class Play extends Phaser.Scene {
 
         if (config.Partida.Bando == 'Potencias')
         {
-            if(avion_1.vidaAvion == 0)
+            if(avion_1.vidaAvion <= 0)
             {
                 light1.setIntensity(0);
                 light1Bomba.setIntensity(0);
             }
-            if(avion_2.vidaAvion == 0)
+            if(avion_2.vidaAvion <= 0)
             {
                 light2.setIntensity(0);
                 light2Bomba.setIntensity(0);
             }
-            if(avion_3.vidaAvion == 0)
+            if(avion_3.vidaAvion <= 0)
             {
                 light3.setIntensity(0);
                 light3Bomba.setIntensity(0);
                 
             }
-            if(avion_4.vidaAvion == 0)
+            if(avion_4.vidaAvion <= 0)
             {
                 light4.setIntensity(0);
                 light4Bomba.setIntensity(0);
@@ -3043,22 +3084,22 @@ class Play extends Phaser.Scene {
         }
         else
         {
-            if(avion_1_Aliados.vidaAvion == 0)
+            if(avion_1_Aliados.vidaAvion <= 0)
             {
                 light1.setIntensity(0);
                 light1Bomba.setIntensity(0);
             }
-            if(avion_2_Aliados.vidaAvion == 0)
+            if(avion_2_Aliados.vidaAvion <= 0)
             {
                 light2.setIntensity(0);
                 light2Bomba.setIntensity(0);
             }
-            if(avion_3_Aliados.vidaAvion == 0)
+            if(avion_3_Aliados.vidaAvion <= 0)
             {
                 light3.setIntensity(0);
                 light3Bomba.setIntensity(0);
             }
-            if(avion_4_Aliados.vidaAvion == 0)
+            if(avion_4_Aliados.vidaAvion <= 0)
             {
                 light4.setIntensity(0);
                 light4Bomba.setIntensity(0);
@@ -3093,7 +3134,7 @@ class Play extends Phaser.Scene {
         {
             if (config.Partida.Bando=='Potencias')
             {
-                
+
                 config.Partida.estado="Pausado";
                 this.scene.launch('Win');
                 config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
