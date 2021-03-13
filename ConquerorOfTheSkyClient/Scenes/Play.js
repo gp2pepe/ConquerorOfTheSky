@@ -3120,50 +3120,33 @@ class Play extends Phaser.Scene {
             }
         }
 
+
+        //Se controla condicion de victoria del juego por destruccion de la base
         if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0)
         {
+            config.Partida.estado="Terminada";
+            if (config.Partida.Bando=='Potencias')
             {
-                if (config.Partida.Bando=='Potencias')
-                {
-                    
-                    config.Partida.estado="Pausado";
-                    this.scene.launch('Win');
-                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                    config.Partida.terminarPartida();
-                    this.scene.pause();
-                
-                }
-                else
-                {
-                    
-                    config.Partida.estado="Pausado";
-                    this.scene.launch('Game Over');
-                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                    this.scene.pause();
-                }
+                this.scene.launch('Win');
+                config.Partida.terminarPartida();
+            }else{
+                this.scene.launch('GameOver');
             }
+            this.scene.pause();    
         }
 
         if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0)
         {
+            
+            config.Partida.estado="Terminada";
+            if (config.Partida.Bando=='Aliados')
             {
-                if (config.Partida.Bando=='Aliados')
-                {
-                    
-                    config.Partida.estado="Pausado";
-                    this.scene.launch('Win');
-                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                    config.Partida.terminarPartida();
-                    this.scene.pause();
-                }
-                else
-                {
-                    config.Partida.estado="Pausado";
-                    this.scene.launch('Game Over');
-                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                    this.scene.pause();
-                }
+                this.scene.launch('Win');
+                config.Partida.terminarPartida();
+            }else{
+                this.scene.launch('GameOver');
             }
+            this.scene.pause();
         }
 
         if(config.Partida.estado=='Pausado'){
