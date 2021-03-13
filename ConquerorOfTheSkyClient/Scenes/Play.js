@@ -3235,48 +3235,56 @@ class Play extends Phaser.Scene {
         
         
         //Se controla condicion de victoria del juego
-        if(avion_1.vidaAvion <= 0 && avion_2.vidaAvion <= 0 && avion_3.vidaAvion <= 0 && avion_4.vidaAvion <= 0) 
+        if((avion_1.vidaAvion <= 0 && avion_2.vidaAvion <= 0 && avion_3.vidaAvion <= 0 && avion_4.vidaAvion <= 0)  ) //||(avion_1.combustible <= 0 && avion_2.combustible <= 0 && avion_3.combustible <= 0 && avion_4.combustible <= 0)
         {
+            config.Partida.estado="Terminada";
             if (config.Partida.Bando=='Potencias')
             {
-                config.Partida.estado="Pausado";
-                this.scene.launch('Game Over');
+                //config.Partida.estado="Pausado";
+                this.scene.start('GameOver');
                 config.Partida.terminarPartida();
-                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                this.scene.pause();
+                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                //this.scene.pause();
             }
             else
             {
-                config.Partida.estado="Pausado";
+                //config.Partida.estado="Terminada";
+                //config.Partida.estado="Pausado";
                 this.scene.launch('Win');
                 config.Partida.terminarPartida();
-                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                this.scene.pause();
+                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
             }
-                
+                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+               
+                this.scene.pause();
         }
 
 
         //Se controla condicion de victoria del juego
         if(avion_1_Aliados.vidaAvion <= 0 && avion_2_Aliados.vidaAvion <= 0 && avion_3_Aliados.vidaAvion <= 0 && avion_4_Aliados.vidaAvion <= 0)
         {
+            config.Partida.estado="Terminada";
             if (config.Partida.Bando=='Potencias')
             {
-
-                config.Partida.estado="Pausado";
+                
+               // config.Partida.estado="Pausado";
                 this.scene.launch('Win');
-                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
                 config.Partida.terminarPartida();
-                this.scene.pause();
+                //this.scene.pause();
             }
             else
             {
-                config.Partida.estado="Pausado";
-                this.scene.launch('Game Over');
+                //config.Partida.estado="Pausado";
+                this.scene.launch('GameOver');
                 config.Partida.terminarPartida();
-                config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                this.scene.pause();
+                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                //this.scene.pause();
+                //config.Partida.estado="Terminada";
+
+                
             }
+            this.scene.pause();
         }
 
 
