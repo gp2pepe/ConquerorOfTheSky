@@ -54,19 +54,28 @@ class Avion extends Phaser.GameObjects.Sprite {
             this.setScale(0.05);
             this.velocidad = 0;
             var angle = this.rotation;	
-            this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+            if(this.vidaAvion > 0){
+            
+                this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+                }
 
         }else{
             if(altitud=='Alta'){
                 this.setScale(0.08);
                 this.velocidad = this.calcularVelocidad();
                 var angle = this.rotation;	
-                this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);        
+                if(this.vidaAvion > 0){
+            
+                    this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+                    }  
             }else{
                 this.setScale(0.05);
                 this.velocidad = this.calcularVelocidad();
                 var angle = this.rotation;	
-                this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+                if(this.vidaAvion > 0){
+            
+                    this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
+                    }
             }
         }
 
