@@ -504,7 +504,7 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
                     
-                    if (avion_1.focus==true)
+                    if (avion_1.focus==true && avion_1.altitud!='Inicial')
                     {    
                         avion_1.altitud_anterior=avion_1.altitud;
                         
@@ -517,7 +517,7 @@ class Play extends Phaser.Scene {
 
                     }            
 
-                    if (avion_1_Aliados.focus==true)
+                    if (avion_1_Aliados.focus==true && avion_1_Aliados.altitud!='Inicial')
                     {    
                         avion_1_Aliados.altitud_anterior=avion_1_Aliados.altitud;
 
@@ -538,7 +538,7 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
                                         
-                    if (avion_1.focus==true)
+                    if (avion_1.focus==true && avion_1.altitud!='Inicial')
                     {            
                         avion_1.altitud_anterior=avion_1.altitud;
 
@@ -551,7 +551,7 @@ class Play extends Phaser.Scene {
 
                     }                
 
-                    if (avion_1_Aliados.focus==true)
+                    if (avion_1_Aliados.focus==true && avion_1_Aliados.altitud!='Inicial')
                     {        
                         avion_1_Aliados.altitud_anterior=avion_1_Aliados.altitud;
 
@@ -573,7 +573,7 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
                      
-                    if (avion_2.focus==true)
+                    if (avion_2.focus==true && avion_2.altitud!='Inicial')
                     {    
                         avion_2.altitud_anterior=avion_2.altitud;
 
@@ -586,7 +586,7 @@ class Play extends Phaser.Scene {
 
                     }            
 
-                    if (avion_2_Aliados.focus==true)
+                    if (avion_2_Aliados.focus==true && avion_2_Aliados.altitud!='Inicial')
                     {    
                         avion_2_Aliados.altitud_anterior=avion_2_Aliados.altitud;
 
@@ -609,7 +609,7 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
                                         
-                    if (avion_2.focus==true)
+                    if (avion_2.focus==true && avion_2.altitud!='Inicial')
                     {            
                         avion_2.altitud_anterior=avion_2.altitud;
 
@@ -622,7 +622,7 @@ class Play extends Phaser.Scene {
 
                     }                
 
-                    if (avion_2_Aliados.focus==true)
+                    if (avion_2_Aliados.focus==true && avion_2_Aliados.altitud!='Inicial')
                     {        
                         avion_2_Aliados.altitud_anterior=avion_2_Aliados.altitud;
 
@@ -644,7 +644,7 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
                      
-                    if (avion_3.focus==true)
+                    if (avion_3.focus==true && avion_3.altitud!='Inicial')
                     {    
                         avion_3.altitud_anterior=avion_3.altitud;
 
@@ -657,7 +657,7 @@ class Play extends Phaser.Scene {
 
                     }            
 
-                    if (avion_3_Aliados.focus==true)
+                    if (avion_3_Aliados.focus==true && avion_3_Aliados.altitud!='Inicial')
                     {    
                         avion_3_Aliados.altitud_anterior=avion_3_Aliados.altitud;
                         
@@ -679,7 +679,7 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
                                         
-                    if (avion_3.focus==true)
+                    if (avion_3.focus==true && avion_3.altitud!='Inicial')
                     {            
                         avion_3.altitud_anterior=avion_3.altitud;
                         avion_3.cargarCombustible=true;
@@ -691,7 +691,7 @@ class Play extends Phaser.Scene {
 
                     }                
 
-                    if (avion_3_Aliados.focus==true)
+                    if (avion_3_Aliados.focus==true && avion_3_Aliados.altitud!='Inicial')
                     {        
                         avion_3_Aliados.altitud_anterior=avion_3_Aliados.altitud;
                         avion_3_Aliados.cargarCombustible=true;     
@@ -712,7 +712,7 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
                      
-                    if (avion_4.focus==true)
+                    if (avion_4.focus==true && avion_4.altitud!='Inicial')
                     {    
                         avion_4.altitud_anterior=avion_4.altitud;
 
@@ -725,7 +725,7 @@ class Play extends Phaser.Scene {
 
                     }            
 
-                    if (avion_4_Aliados.focus==true)
+                    if (avion_4_Aliados.focus==true && avion_4_Aliados.altitud!='Inicial')
                     {    
                         avion_4_Aliados.altitud_anterior=avion_4_Aliados.altitud;
 
@@ -747,7 +747,7 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
                                         
-                    if (avion_4.focus==true)
+                    if (avion_4.focus==true && avion_4.altitud!='Inicial')
                     {            
                         avion_4.cargarCombustible=true;
                         config.Partida.idavion=4;
@@ -758,7 +758,7 @@ class Play extends Phaser.Scene {
 
                     }                
 
-                    if (avion_4_Aliados.focus==true)
+                    if (avion_4_Aliados.focus==true && avion_4_Aliados.altitud!='Inicial')
                     {        
                         avion_4_Aliados.cargarCombustible=true;     
                         config.Partida.idavion=8;
@@ -1340,7 +1340,8 @@ class Play extends Phaser.Scene {
                             config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:avion_4_Aliados.altitud}); 
                         } 
                         avion_4_Aliados.saliBase=true;
-                    }                              
+                    }   
+                    console.log(avion_4_Aliados.altitud);                           
                     config.Partida.idavion=8;                
                     avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
@@ -1731,7 +1732,7 @@ class Play extends Phaser.Scene {
                     }
                 else                                  
                     avion_4_Aliados.cambiarAltitud("Alta");  
-
+                console.log(avion_4_Aliados.altitud);
                 config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:"Alta"}); 
             }
         });
@@ -2561,7 +2562,7 @@ class Play extends Phaser.Scene {
 
         if (difX < 4 && difY < 4)
         {   
-            avion.combustible = 85;                          
+            //avion.combustible = 85;                          
             if (avion.cargarbomba==true)
             {            
                 avion.body.setVelocityY(0);
@@ -2718,6 +2719,7 @@ class Play extends Phaser.Scene {
             if (this.EstaMoviendose(config.Partida.aviones[i]) && this.time>config.Partida.aviones[i].timeNafta 
                 && config.Partida.aviones[i].altitud!='EnBase')
             {  
+                
                 if(config.Partida.aviones[i].combustible>0)
                 {   
                     config.Partida.aviones[i].timeNafta =this.time+550;            
@@ -2731,7 +2733,15 @@ class Play extends Phaser.Scene {
                 else       
                     config.Partida.aviones[i].vidaAvion = 0;              
             }
-
+            if (config.Partida.aviones[i].altitud=='EnBase')
+            {                
+                config.Partida.aviones[i].combustible =85;
+                moverX = config.Partida.aviones[i].combustible+253;
+                if(config.Partida.Bando=='Potencias' && i<4)
+                    eval("combustibleBar"+((i+1))+".x="+ moverX + ";")   
+                else if(config.Partida.Bando=='Aliados' && i>3)
+                    eval("combustibleBar"+((i-3))+".x="+ moverX + ";")     
+            }
         }
     }
 
