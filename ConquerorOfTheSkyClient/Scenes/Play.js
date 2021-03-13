@@ -891,7 +891,7 @@ class Play extends Phaser.Scene {
             if (Hit == 1 ){      
                 avion.vidaAvion-=10;  
                 console.log( avion.vidaAvion);
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion.idavion, vida:avion.vidaAvion});
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion.idavion, vida:10});
             }  
             console.log('avion :'+avion.vidaAvion);
             avion.activarColision = 0;
@@ -915,7 +915,7 @@ class Play extends Phaser.Scene {
             var Hit = Phaser.Math.Between(1,2);
             if (Hit == 1 ){
                 avion_A_pegar.vidaAvion-=10; 
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_A_pegar.idavion, vida:avion_A_pegar.vidaAvion});                    
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_A_pegar.idavion, vida:10});                    
             }  
             avion_A_pegar.activarColision=0; 
             console.log("vida avion: "+avion_A_pegar.vidaAvion);               
@@ -1358,7 +1358,7 @@ class Play extends Phaser.Scene {
                 var Hit = Phaser.Math.Between(1,2);
                 if (Hit == 1 ){
                     avion_A_pegar.vidaAvion-=10; 
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_A_pegar.idavion, vida:avion_A_pegar.vidaAvion});                    
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_A_pegar.idavion, vida:10});                    
                 }  
                 avion_A_pegar.activarColision=0; 
                 console.log("vida avion: "+avion_A_pegar.vidaAvion);               
