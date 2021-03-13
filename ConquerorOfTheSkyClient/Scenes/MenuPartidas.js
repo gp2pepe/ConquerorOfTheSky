@@ -146,6 +146,7 @@ class MenuPartidas extends Phaser.Scene {
                 console.log()
                 this.scene.pause();
                 this.scene.launch('IngresarPartidaBuscar', { Id: partida[0], Nombre: partida[posicionNombre], Bando: bando, Publica: partida[posicionNombre  + 62] });
+                this.scene.pause('MenuPartidas');
                 var nextCellIndex = cellIndex + 1;
                 var nextItem = gridTable.items[nextCellIndex];
                 if (!nextItem) {
@@ -153,8 +154,27 @@ class MenuPartidas extends Phaser.Scene {
                 }
                 nextItem.color = 0xffffff - nextItem.color;
                 gridTable.updateVisibleCell(nextCellIndex);          
-            }, this)    
-         
+            }, this) 
+        
+        this.menuInicial = this.add.image(750,945, 'pruebaEndGame').setScale(0.4).setInteractive();
+        this.menuInicial.setAlpha(0.01);
+        this.menuInicial.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.menuInicial,
+                ease: 'Bounce.easeIn',
+                x:740,
+                duration: 100,
+                onComplete: () => {
+                    location.reload();
+                }
+            });
+
+            this.add.tween({
+                targets: [ this.pointsText, this.bestPointsText ],                
+                y: 400,
+                duration: 100
+            });
+        });
     }
 
     update() {

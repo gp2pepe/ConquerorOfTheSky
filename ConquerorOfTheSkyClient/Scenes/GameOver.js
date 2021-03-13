@@ -27,7 +27,7 @@ class GameOver extends Phaser.Scene
                 targets: this.pruebaEndGame,
                 ease: 'Bounce.easeIn',
                 x:620,
-                duration: 1000,
+                duration: 100,
                 onComplete: () => {
                     console.log('Antes del reload');
                     location.reload();
@@ -38,7 +38,7 @@ class GameOver extends Phaser.Scene
             this.add.tween({
                 targets: [ this.pointsText, this.bestPointsText ],                
                 y: 400,
-                duration: 1000
+                duration: 100
             });
         });
     }

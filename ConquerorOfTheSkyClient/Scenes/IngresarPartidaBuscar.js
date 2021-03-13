@@ -36,6 +36,27 @@ class IngresarPartidaBuscar extends Phaser.Scene
         var ingresoTexto2 = false;
         this.add.image(0,0, 'desenfocar').setOrigin(0);
         this.add.image(73, 100, "menuEmergenteBuscar").setOrigin(0).setScale(1.1);
+        this.pruebaEndGame = this.add.image(1470,920, 'pruebaEndGame').setScale(0.6).setInteractive();
+        this.pruebaEndGame.setAlpha(0.05);
+        this.pruebaEndGame.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.pruebaEndGame,
+                ease: 'Bounce.easeIn',
+                x:740,
+                duration: 100,
+                onComplete: () => {
+                    this.scene.stop('IngresarPartidaBuscar');
+                    this.scene.resume('MenuPartidas');
+                    console.log('Post sleep');
+                }
+            });
+
+            this.add.tween({
+                targets: [ this.pointsText, this.bestPointsText ],                
+                y: 400,
+                duration: 100
+            });
+        });
         this.add.text(220,280, this.IdPartida).setScale(4);
         this.add.text(396,347, this.Nombre).setScale(4);
         if (this.Bando == 'Aliados')

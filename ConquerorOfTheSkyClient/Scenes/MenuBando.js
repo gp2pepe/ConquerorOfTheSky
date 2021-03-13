@@ -267,7 +267,7 @@ class MenuBando extends Phaser.Scene
         });
 
         var alerta = this.add.text(680, 960, '', { font: 'bold 44px Courier', fill: '#080808' });
-        this.crearNuevaPartida = this.add.image(780, 1020, 'crearPartida').setOrigin(0).setScale(0.5).setInteractive();
+        this.crearNuevaPartida = this.add.image(680, 1025, 'crearPartida').setOrigin(0).setScale(0.36).setInteractive();
         this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
             console.log(ingresoTexto);
             if(IngresoNombrePartida == false ){
@@ -306,6 +306,26 @@ class MenuBando extends Phaser.Scene
             //console.log(config.Partida);
             //this.scene.launch('confirmarNuevaPartida');
         }
+        });
+
+        this.menuInicial = this.add.image(1140,1050, 'pruebaEndGame').setScale(0.43).setInteractive();
+        this.menuInicial.setAlpha(0.01);
+        this.menuInicial.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.menuInicial,
+                ease: 'Bounce.easeIn',
+                x:740,
+                duration: 100,
+                onComplete: () => {
+                    location.reload();
+                }
+            });
+
+            this.add.tween({
+                targets: [ this.pointsText, this.bestPointsText ],                
+                y: 400,
+                duration: 100
+            });
         });
 
     }
