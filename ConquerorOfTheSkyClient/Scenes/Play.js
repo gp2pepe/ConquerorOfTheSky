@@ -1050,7 +1050,7 @@ class Play extends Phaser.Scene {
         
         }
             
-        this.physics.add.overlap([avion_1,avion_2,avion_3,avion_4],[avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados], this.choqueAviones, null, this);
+       // this.physics.add.overlap([avion_1,avion_2,avion_3,avion_4],[avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados], this.choqueAviones, null, this);
         this.physics.add.overlap(circulo_aviones, this.depositoAliados, this.colision_aviones_deposito, null, this); 
         this.physics.add.overlap(circulo_aviones_aliados, this.depositoPotencias, this.colision_aviones_deposito, null, this); 
 
@@ -3049,13 +3049,16 @@ class Play extends Phaser.Scene {
                     mensajeAvionDestruido1 = true;
                 }
                 this.circulo_1.destroy();
-                this.panelAvion1 = this.add.image(45, 500, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
-                this.cargarBomba1.destroy();
-                this.volverBase1.destroy();
-                vidaContainer1.destroy();
-                combustibleContainer1.destroy();
-                combustibleBar1.destroy();
-                avion_1.focus = false;
+                if (config.Partida.Bando == 'Potencias')
+                {
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba1.destroy();
+                    this.volverBase1.destroy();
+                    vidaContainer1.destroy();
+                    combustibleContainer1.destroy();
+                    combustibleBar1.destroy();
+                    avion_1.focus = false;
+                }
             }
         if(avion_2.vidaAvion <= 0 ) 
         {
@@ -3066,13 +3069,16 @@ class Play extends Phaser.Scene {
                     mensajeAvionDestruido2 = true;
                 }
             this.circulo_2.destroy();
-            this.panelAvion2 = this.add.image(45, 595, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
-            this.cargarBomba2.destroy();
-            this.volverBase2.destroy();
-            vidaContainer2.destroy();
-            combustibleContainer2.destroy();
-            combustibleBar2.destroy();
-            avion_2.focus = false;
+            if (config.Partida.Bando == 'Potencias')
+            {
+                this.panelAvion2 = this.add.image(45, 595, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
+                this.cargarBomba2.destroy();
+                this.volverBase2.destroy();
+                vidaContainer2.destroy();
+                combustibleContainer2.destroy();
+                combustibleBar2.destroy();
+                avion_2.focus = false;
+            }
         }
             
         if(avion_3.vidaAvion <= 0 ) 
@@ -3084,30 +3090,36 @@ class Play extends Phaser.Scene {
                     mensajeAvionDestruido3 = true;
                 }
                 avion_3.destroy();
-                this.panelAvion3 = this.add.image(45, 690, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
-                this.cargarBomba3.destroy();
-                this.volverBase3.destroy();
-                vidaContainer3.destroy();
-                combustibleContainer3.destroy();
-                combustibleBar3.destroy();
-                avion_3.focus = false;
+                if (config.Partida.Bando == 'Potencias')
+                {
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba3.destroy();
+                    this.volverBase3.destroy();
+                    vidaContainer3.destroy();
+                    combustibleContainer3.destroy();
+                    combustibleBar3.destroy();
+                    avion_3.focus = false;
+                }
             }
         if(avion_4.vidaAvion <= 0) 
             {
+                avion_4.destroy();
                 if (mensajeAvionDestruido4 == false&& config.Partida.Bando == 'Aliados')
                 {
                     this.mensajeAviso('El avion 4 del enemigo fue destruido');
                     mensajeAvionDestruido4 = true;
                 }
                 this.circulo_4.destroy();
-                avion_4.destroy();
-                this.panelAvion4 = this.add.image(45, 785, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
-                this.cargarBomba4.destroy();
-                this.volverBase4.destroy();
-                vidaContainer4.destroy();
-                combustibleContainer4.destroy();
-                combustibleBar4.destroy();
-                avion_4.focus = false;
+                if (config.Partida.Bando == 'Potencias')
+                {
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba4.destroy();
+                    this.volverBase4.destroy();
+                    vidaContainer4.destroy();
+                    combustibleContainer4.destroy();
+                    combustibleBar4.destroy();
+                    avion_4.focus = false;
+                }
             }   
         if(this.torrePotencias.vida <= 0) 
         {
@@ -3146,13 +3158,16 @@ class Play extends Phaser.Scene {
                     mensajeAvionDestruido5 = true;
                 }
                 this.circulo_5.destroy();
-                this.panelAvion1 = this.add.image(45, 500, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
-                this.cargarBomba1.destroy();
-                this.volverBase1.destroy();
-                vidaContainer1.destroy();
-                combustibleContainer1.destroy();
-                combustibleBar1.destroy();
-                avion_1_Aliados.focus = false;
+                if (config.Partida.Bando == 'Aliados')
+                {
+                    this.panelAvion1 = this.add.image(45, 500, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba1.destroy();
+                    this.volverBase1.destroy();
+                    vidaContainer1.destroy();
+                    combustibleContainer1.destroy();
+                    combustibleBar1.destroy();
+                    avion_1_Aliados.focus = false;
+                }
             }
         if(avion_2_Aliados.vidaAvion <= 0) 
             {
@@ -3163,13 +3178,16 @@ class Play extends Phaser.Scene {
                     mensajeAvionDestruido6 = true;
                 }
                 this.circulo_6.destroy();
-                this.panelAvion2 = this.add.image(45, 595, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
-                this.cargarBomba2.destroy();
-                this.volverBase2.destroy();
-                vidaContainer2.destroy();
-                combustibleContainer2.destroy();
-                combustibleBar2.destroy();
-                avion_2_Aliados.focus = false;
+                if (config.Partida.Bando == 'Aliados')
+                {
+                    this.panelAvion2 = this.add.image(45, 595, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba2.destroy();
+                    this.volverBase2.destroy();
+                    vidaContainer2.destroy();
+                    combustibleContainer2.destroy();
+                    combustibleBar2.destroy();
+                    avion_2_Aliados.focus = false;
+                }
             }
         if(avion_3_Aliados.vidaAvion <= 0) 
             {
@@ -3180,13 +3198,16 @@ class Play extends Phaser.Scene {
                     mensajeAvionDestruido7 = true;
                 }
                 this.circulo_7.destroy();
-                this.panelAvion3 = this.add.image(45, 690, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
-                this.cargarBomba3.destroy();
-                this.volverBase3.destroy();
-                vidaContainer3.destroy();
-                combustibleContainer3.destroy();
-                combustibleBar3.destroy();
-                avion_3_Aliados.focus = false;
+                if (config.Partida.Bando == 'Aliados')
+                {
+                    this.panelAvion3 = this.add.image(45, 690, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba3.destroy();
+                    this.volverBase3.destroy();
+                    vidaContainer3.destroy();
+                    combustibleContainer3.destroy();
+                    combustibleBar3.destroy();
+                    avion_3_Aliados.focus = false;
+                }
             }
         if(avion_4_Aliados.vidaAvion <= 0) 
             {
@@ -3197,13 +3218,16 @@ class Play extends Phaser.Scene {
                     mensajeAvionDestruido8 = true;
                 }
                 this.circulo_8.destroy();
-                this.panelAvion4 = this.add.image(45, 785, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
-                this.cargarBomba4.destroy();
-                this.volverBase4.destroy();
-                vidaContainer4.destroy();
-                combustibleContainer4.destroy();
-                combustibleBar4.destroy();
-                avion_4_Aliados.focus = false;
+                if (config.Partida.Bando == 'Aliados')
+                {
+                    this.panelAvion4 = this.add.image(45, 785, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
+                    this.cargarBomba4.destroy();
+                    this.volverBase4.destroy();
+                    vidaContainer4.destroy();
+                    combustibleContainer4.destroy();
+                    combustibleBar4.destroy();
+                    avion_4_Aliados.focus = false;
+                }
             }
 
         if(this.torreAliados.vida <= 0) 
