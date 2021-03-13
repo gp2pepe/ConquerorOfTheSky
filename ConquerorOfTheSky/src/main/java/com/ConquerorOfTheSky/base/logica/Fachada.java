@@ -387,9 +387,8 @@ public class Fachada implements IFachada{
                   if(aviones[q].get("bomba").getAsBoolean()){
                     av.setBomba(new Bomba(conf.getBombaRadioImpacto(),conf.getBombaDanio()));
                   }
-
-                }
-                q++;
+                  q++;
+                }                
               }
             }
             par.setPassword(passwd);
