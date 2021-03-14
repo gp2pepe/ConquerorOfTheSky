@@ -9,7 +9,7 @@ insert into configuracion (id_configuracion,
                             tanque_combustible_salud,
                             torre_danio,torre_radio_disparo,torre_salud)
                             values (1, 
-                            8, 10, 450, 50, 
+                            8, 30, 450, 50, 
                             85,10,35,80,150,
                             25,26,
                             300,400,
