@@ -406,7 +406,7 @@ class Play extends Phaser.Scene {
          //bulletsArtilleria, se define el grupo de balas que utilizaran las artillerias Aliados
          bulletsArtilleria = this.add.group({
             classType: Bullet,
-            maxSize: 25,
+            maxSize: -1,
             runChildUpdate: true
         });
 
@@ -1011,7 +1011,7 @@ class Play extends Phaser.Scene {
      }
      
     choqueAviones(avion_potencia,avion_aliado)
-{
+    {
         if (avion_potencia.altitud == avion_aliado.altitud)
         {
             avion_potencia.vidaAvion= 0;
@@ -1591,8 +1591,14 @@ class Play extends Phaser.Scene {
         velAvion = config.Partida.configuraciones.avionVelocidad;
         //Se definen los aviones de ambos bandos
         var posi = 50;
-        inicioMapaX=433;
-        inicioMapaY=40;
+        inicioMapaX=0;
+        inicioMapaY=0;
+        if (config.Partida.tipoPartida!='cargarPartida')
+        { 
+            inicioMapaX=433;
+            inicioMapaY=40;
+        }  
+        
         for(var i = 0; i < 4; i++)
         {              
             eval("avion_"+(i+1)+"= new Avion({scene: this,x:"+ (config.Partida.avionesPotencias[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesPotencias[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesPotencias[i].altitud+"',vidaAvion:"+ config.Partida.avionesPotencias[i].salud+",combustible: "+config.Partida.avionesPotencias[i].combustible+",idavion:" +(i+1)+" }).setInteractive(); ")
