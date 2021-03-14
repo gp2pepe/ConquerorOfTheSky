@@ -154,10 +154,10 @@ public class Fachada implements IFachada{
         List<Jugador> jugadores2 = new LinkedList<>();
         List<Avion> aviones2 = new LinkedList<>();
         if(modalidad.equals("1vs1")){
-          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+70, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+140, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+210, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+280, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+70, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+140, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+210, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+280, yInicialAvionCampo2));
           jugadores2.add(new Jugador("", null, false, aviones2));
 
         }
