@@ -1440,7 +1440,7 @@ class Play extends Phaser.Scene {
                         } 
                         avion_3_Aliados.saliBase=true;
                     }       
-                    if (Avion_3_Aliados.vidaAvion > 0)
+                    if (avion_3_Aliados.vidaAvion > 0)
                     {
                         config.Partida.idavion=7;                
                         avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
