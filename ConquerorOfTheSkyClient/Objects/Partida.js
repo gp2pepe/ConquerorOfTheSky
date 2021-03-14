@@ -148,10 +148,10 @@ class Partida {
         stringAviones+="]";  
 
         //Armo el json de la base potencias
-        var baseP = "{ vidaTorre: " + this.basePotencias[0].vida + ", vidaDepositoExplosivos: " + this.basePotencias[1].vida + ", vidaTanqueCombustible: " + this.basePotencias[2].vida + "}";
+        var baseP = "{ vidaTorre: " + this.basePotencias[0].vida + ", vidaDepositoExplosivos: " + this.basePotencias[2].vida + ", vidaTanqueCombustible: " + this.basePotencias[1].vida + "}";
         
         //Armo el json de la base aliados
-        var baseA = "{ vidaTorre: " + this.baseAliados[0].vida + ", vidaDepositoExplosivos: " + this.baseAliados[1].vida + ", vidaTanqueCombustible: " + this.baseAliados[2].vida + "}";
+        var baseA = "{ vidaTorre: " + this.baseAliados[0].vida + ", vidaDepositoExplosivos: " + this.baseAliados[2].vida + ", vidaTanqueCombustible: " + this.baseAliados[1].vida + "}";
 
         //Armo el json de artilleria Potencias
         var stringArtPotencias="[";

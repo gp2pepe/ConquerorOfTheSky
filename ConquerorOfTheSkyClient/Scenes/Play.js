@@ -157,8 +157,8 @@ class Play extends Phaser.Scene {
         
         //Seteo la base y sus elementos
         this.pisoBasePotencias = this.add.image(campoPotencias.base.posicionX + 50, campoPotencias.base.posicionY + 50, 'pisoBase').setScale(.25);
-        this.contenedorPotencias = this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
-        this.depositoPotencias = this.add.image(campoPotencias.base.posicionX + 70, campoPotencias.base.posicionY + 10, 'depositoCombustible').setScale(.10);
+        this.contenedorExplosivosPotencias = this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
+        this.depositoCombustiblePotencias = this.add.image(campoPotencias.base.posicionX + 70, campoPotencias.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.torrePotencias = this.add.image(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 'torre').setScale(.07);
         avionXInicial = campoPotencias.base.posicionX ; 
 
@@ -175,13 +175,13 @@ class Play extends Phaser.Scene {
         this.circulo_torrePotencias.body.setOffset(-10,-10); 
                
         //deposito de combustible
-        this.depositoPotencias.vida= campoPotencias.base.tanqueCombustible.salud;
-        this.physics.world.enable(this.depositoPotencias);        
-		this.depositoPotencias.body.setCollideWorldBounds(true);
+        this.depositoCombustiblePotencias.vida= campoPotencias.base.tanqueCombustible.salud;
+        this.physics.world.enable(this.depositoCombustiblePotencias);        
+		this.depositoCombustiblePotencias.body.setCollideWorldBounds(true);
         //deposito de explosivos       
-        this.contenedorPotencias.vida= campoPotencias.base.depositoExplosivos.salud;
-        this.physics.world.enable(this.contenedorPotencias);        
-		this.contenedorPotencias.body.setCollideWorldBounds(true);
+        this.contenedorExplosivosPotencias.vida= campoPotencias.base.depositoExplosivos.salud;
+        this.physics.world.enable(this.contenedorExplosivosPotencias);        
+		this.contenedorExplosivosPotencias.body.setCollideWorldBounds(true);
 
         if(campoPotencias.posicionY > 540)
             avionYInicial = campoPotencias.base.posicionY -120;
@@ -217,8 +217,8 @@ class Play extends Phaser.Scene {
 
         //Seteo la base enemiga y sus elementos
         this.pisoBaseAliados = this.add.image(campoAliados.base.posicionX + 50, campoAliados.base.posicionY + 50, 'pisoBase').setScale(.25);
-        this.contenedorAliados = this.add.image(campoAliados.base.posicionX+10, campoAliados.base.posicionY + 10, 'contenedor_2').setScale(.15);
-        this.depositoAliados = this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
+        this.contenedorExplosivosAliados = this.add.image(campoAliados.base.posicionX+10, campoAliados.base.posicionY + 10, 'contenedor_2').setScale(.15);
+        this.depositoCombustibleAliados = this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.torreAliados = this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
        
         this.torreAliados.vida= campoAliados.base.torreControl.salud;
@@ -233,13 +233,13 @@ class Play extends Phaser.Scene {
         this.circulo_torreAliados.body.setCircle(campoAliados.base.torreControl.radioDisparo);
         this.circulo_torreAliados.body.setOffset(-10,-10); 
 
-        this.depositoAliados.vida= campoAliados.base.tanqueCombustible.salud;
-        this.physics.world.enable(this.depositoAliados);        
-		this.depositoAliados.body.setCollideWorldBounds(true);
+        this.depositoCombustibleAliados.vida= campoAliados.base.tanqueCombustible.salud;
+        this.physics.world.enable(this.depositoCombustibleAliados);        
+		this.depositoCombustibleAliados.body.setCollideWorldBounds(true);
 
-        this.contenedorAliados.vida= campoAliados.base.depositoExplosivos.salud;
-        this.physics.world.enable(this.contenedorAliados);        
-		this.contenedorAliados.body.setCollideWorldBounds(true);
+        this.contenedorExplosivosAliados.vida= campoAliados.base.depositoExplosivos.salud;
+        this.physics.world.enable(this.contenedorExplosivosAliados);        
+		this.contenedorExplosivosAliados.body.setCollideWorldBounds(true);
 
         //Defino las artillerias de los Aliados
         artilleriasAliados = this.physics.add.group({
@@ -353,13 +353,13 @@ class Play extends Phaser.Scene {
 
         config.Partida.basePotencias = new Array();
         config.Partida.basePotencias[0] = this.torrePotencias;
-        config.Partida.basePotencias[1] = this.depositoPotencias;
-        config.Partida.basePotencias[2] = this.contenedorPotencias;
+        config.Partida.basePotencias[1] = this.depositoCombustiblePotencias;
+        config.Partida.basePotencias[2] = this.contenedorExplosivosPotencias;
 
         config.Partida.baseAliados = new Array();
         config.Partida.baseAliados[0] = this.torreAliados;
-        config.Partida.baseAliados[1] = this.depositoAliados;
-        config.Partida.baseAliados[2] = this.contenedorAliados;
+        config.Partida.baseAliados[1] = this.depositoCombustibleAliados;
+        config.Partida.baseAliados[2] = this.contenedorExplosivosAliados;
 
         config.Partida.artilleriasPotencias = new Array();
         for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
@@ -1012,11 +1012,11 @@ class Play extends Phaser.Scene {
     {        
         if (config.Partida.Bando=='Potencias')
         { 
-            this.depositoAliados.setVisible(true);            
+            this.depositoCombustibleAliados.setVisible(true);            
         }  
         else   
         {                
-            this.depositoPotencias.setVisible(true);
+            this.depositoCombustiblePotencias.setVisible(true);
         } 
     }
 
@@ -1024,11 +1024,11 @@ class Play extends Phaser.Scene {
     {        
         if (config.Partida.Bando=='Potencias')
         { 
-            this.contenedorAliados.setVisible(true);
+            this.contenedorExplosivosAliados.setVisible(true);
         }  
         else   
         {                
-            this.contenedorPotencias.setVisible(true);
+            this.contenedorExplosivosPotencias.setVisible(true);
         } 
     }
 
@@ -1046,11 +1046,11 @@ class Play extends Phaser.Scene {
         }
             
         this.physics.add.overlap([avion_1,avion_2,avion_3,avion_4],[avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados], this.choqueAviones, null, this);
-        this.physics.add.overlap(circulo_aviones, this.depositoAliados, this.colision_aviones_deposito, null, this); 
-        this.physics.add.overlap(circulo_aviones_aliados, this.depositoPotencias, this.colision_aviones_deposito, null, this); 
+        this.physics.add.overlap(circulo_aviones, this.depositoCombustibleAliados, this.colision_aviones_deposito, null, this); 
+        this.physics.add.overlap(circulo_aviones_aliados, this.depositoCombustiblePotencias, this.colision_aviones_deposito, null, this); 
 
-        this.physics.add.overlap(circulo_aviones, this.contenedorAliados, this.colision_aviones_contenedor, null, this); 
-        this.physics.add.overlap(circulo_aviones_aliados, this.contenedorPotencias, this.colision_aviones_contenedor, null, this); 
+        this.physics.add.overlap(circulo_aviones, this.contenedorExplosivosAliados, this.colision_aviones_contenedor, null, this); 
+        this.physics.add.overlap(circulo_aviones_aliados, this.contenedorExplosivosPotencias, this.colision_aviones_contenedor, null, this); 
         
         //Aniado colision entre los aviones y los muros
         this.physics.add.collider([avion_1,avion_2,avion_3,avion_4,avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados],this.wall_floor); 
@@ -1063,25 +1063,25 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(bullets, aviones_aliados, this.colision_bala_avion, null, this); 
             
             //deposito
-            this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_chico, ()=>
+            this.physics.add.overlap(this.depositoCombustibleAliados,this.circulo_bomba_chico, ()=>
             {   
-                if (this.depositoAliados.recibeBombaCirculoChico)
+                if (this.depositoCombustibleAliados.recibeBombaCirculoChico)
                 {                    
-                    this.depositoAliados.recibeBombaCirculoChico = false;
-                    this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_chico.danio; 
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
+                    this.depositoCombustibleAliados.recibeBombaCirculoChico = false;
+                    this.depositoCombustibleAliados.vida = this.depositoCombustibleAliados.vida - this.circulo_bomba_chico.danio; 
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoCombustibleAliados.vida});                    
                     this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
                 }
             });
 
-            this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_grande, ()=>
+            this.physics.add.overlap(this.depositoCombustibleAliados,this.circulo_bomba_grande, ()=>
             {   
-                if (this.depositoAliados.recibeBombaCirculoGrande)
+                if (this.depositoCombustibleAliados.recibeBombaCirculoGrande)
                 {
-                    this.depositoAliados.recibeBombaCirculoGrande = false;
-                    this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_grande.danio;
+                    this.depositoCombustibleAliados.recibeBombaCirculoGrande = false;
+                    this.depositoCombustibleAliados.vida = this.depositoCombustibleAliados.vida - this.circulo_bomba_grande.danio;
                     torreBar.x= torreBar.x-this.circulo_bomba_chico.danio;
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoCombustibleAliados.vida});                    
                     this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
                 }
             });
@@ -1108,24 +1108,24 @@ class Play extends Phaser.Scene {
                 }
             });
             //contendor
-            this.physics.add.overlap(this.contenedorAliados,this.circulo_bomba_chico, ()=>
+            this.physics.add.overlap(this.contenedorExplosivosAliados,this.circulo_bomba_chico, ()=>
             {   
-                if (this.contenedorAliados.recibeBombaCirculoChico)
+                if (this.contenedorExplosivosAliados.recibeBombaCirculoChico)
                 {
-                    this.contenedorAliados.recibeBombaCirculoChico = false;
-                    this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_chico.danio;                   
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                    
+                    this.contenedorExplosivosAliados.recibeBombaCirculoChico = false;
+                    this.contenedorExplosivosAliados.vida = this.contenedorExplosivosAliados.vida - this.circulo_bomba_chico.danio;                   
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorExplosivosAliados.vida});                    
                     this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
                 }
             });
 
-            this.physics.add.overlap(this.contenedorAliados,this.circulo_bomba_grande, ()=>
+            this.physics.add.overlap(this.contenedorExplosivosAliados,this.circulo_bomba_grande, ()=>
             {   
-                if (this.contenedorAliados.recibeBombaCirculoGrande)
+                if (this.contenedorExplosivosAliados.recibeBombaCirculoGrande)
                 {
-                    this.contenedorAliados.recibeBombaCirculoGrande = false;
-                    this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_grande.danio; 
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                                
+                    this.contenedorExplosivosAliados.recibeBombaCirculoGrande = false;
+                    this.contenedorExplosivosAliados.vida = this.contenedorExplosivosAliados.vida - this.circulo_bomba_grande.danio; 
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorExplosivosAliados.vida});                                
                     this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
                 }
             });
@@ -1133,24 +1133,24 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(circulo_aviones_aliados, aviones, this.Colision_Aviones, null, this);         
             this.physics.add.overlap(bullets, aviones, this.colision_bala_avion, null, this);  
             //deposito
-            this.physics.add.overlap(this.depositoPotencias,this.circulo_bomba_chico, ()=>
+            this.physics.add.overlap(this.depositoCombustiblePotencias,this.circulo_bomba_chico, ()=>
             {   
-                if (this.depositoPotencias.recibeBombaCirculoChico)
+                if (this.depositoCombustiblePotencias.recibeBombaCirculoChico)
                 {
-                    this.depositoPotencias.recibeBombaCirculoChico = false;
-                    this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_chico.danio;
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});                    
+                    this.depositoCombustiblePotencias.recibeBombaCirculoChico = false;
+                    this.depositoCombustiblePotencias.vida = this.depositoCombustiblePotencias.vida - this.circulo_bomba_chico.danio;
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoCombustiblePotencias.vida});                    
                     this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
                 }
             });
 
-            this.physics.add.overlap(this.depositoPotencias,this.circulo_bomba_grande, ()=>
+            this.physics.add.overlap(this.depositoCombustiblePotencias,this.circulo_bomba_grande, ()=>
             {   
-                if (this.depositoPotencias.recibeBombaCirculoGrande)
+                if (this.depositoCombustiblePotencias.recibeBombaCirculoGrande)
                 {
-                    this.depositoPotencias.recibeBombaCirculoGrande = false;                    
-                    this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_grande.danio;  
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});              
+                    this.depositoCombustiblePotencias.recibeBombaCirculoGrande = false;                    
+                    this.depositoCombustiblePotencias.vida = this.depositoCombustiblePotencias.vida - this.circulo_bomba_grande.danio;  
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoCombustiblePotencias.vida});              
                     this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
                 }
             });
@@ -1168,7 +1168,7 @@ class Play extends Phaser.Scene {
 
             this.physics.add.overlap(this.torrePotencias,this.circulo_bomba_grande, ()=>
             {   
-                if (this.depositoPotencias.recibeBombaCirculoGrande)
+                if (this.depositoCombustiblePotencias.recibeBombaCirculoGrande)
                 {
                     this.torrePotencias.recibeBombaCirculoGrande = false; 
                     this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_grande.danio;
@@ -1177,24 +1177,24 @@ class Play extends Phaser.Scene {
                 }
             });
             //contendor
-            this.physics.add.overlap(this.contenedorPotencias,this.circulo_bomba_chico, ()=>
+            this.physics.add.overlap(this.contenedorExplosivosPotencias,this.circulo_bomba_chico, ()=>
             {   
-                if (this.contenedorPotencias.recibeBombaCirculoChico)
+                if (this.contenedorExplosivosPotencias.recibeBombaCirculoChico)
                 {
-                    this.contenedorPotencias.recibeBombaCirculoChico = false;
-                    this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_chico.danio;
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});
+                    this.contenedorExplosivosPotencias.recibeBombaCirculoChico = false;
+                    this.contenedorExplosivosPotencias.vida = this.contenedorExplosivosPotencias.vida - this.circulo_bomba_chico.danio;
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorExplosivosPotencias.vida});
                     this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
                 }
             });
 
-            this.physics.add.overlap(this.contenedorPotencias,this.circulo_bomba_grande, ()=>
+            this.physics.add.overlap(this.contenedorExplosivosPotencias,this.circulo_bomba_grande, ()=>
             {   
-                if (this.contenedorPotencias.recibeBombaCirculoGrande)
+                if (this.contenedorExplosivosPotencias.recibeBombaCirculoGrande)
                 {
-                    this.contenedorPotencias.recibeBombaCirculoGrande = false; 
-                    this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_grande.danio;  
-                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});              
+                    this.contenedorExplosivosPotencias.recibeBombaCirculoGrande = false; 
+                    this.contenedorExplosivosPotencias.vida = this.contenedorExplosivosPotencias.vida - this.circulo_bomba_grande.danio;  
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorExplosivosPotencias.vida});              
                     this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
                 }
             });      
@@ -2520,8 +2520,8 @@ class Play extends Phaser.Scene {
             avion_3_Aliados.setVisible(false);
             avion_4_Aliados.setVisible(false);     
             this.torreAliados.setVisible(false);  
-            this.contenedorAliados.setVisible(false); 
-            this.depositoAliados.setVisible(false); 
+            this.contenedorExplosivosAliados.setVisible(false); 
+            this.depositoCombustibleAliados.setVisible(false); 
             this.circulo_5.setVisible(false);   
             this.circulo_6.setVisible(false);  
             this.circulo_7.setVisible(false);  
@@ -2542,8 +2542,8 @@ class Play extends Phaser.Scene {
             avion_3.setVisible(false);
             avion_4.setVisible(false); 
             this.torrePotencias.setVisible(false);  
-            this.contenedorPotencias.setVisible(false); 
-            this.depositoPotencias.setVisible(false); 
+            this.contenedorExplosivosPotencias.setVisible(false); 
+            this.depositoCombustiblePotencias.setVisible(false); 
             this.circulo_1.setVisible(false);   
             this.circulo_2.setVisible(false);  
             this.circulo_3.setVisible(false);  
@@ -2735,17 +2735,17 @@ class Play extends Phaser.Scene {
                 //habilito colision con circulo grande de la bomba    
                 this.torreAliados.recibeBombaCirculoGrande=true; 
                 this.torrePotencias.recibeBombaCirculoGrande=true;  
-                this.contenedorAliados.recibeBombaCirculoGrande=true;
-                this.contenedorPotencias.recibeBombaCirculoGrande=true;
-                this.depositoAliados.recibeBombaCirculoGrande=true;
-                this.depositoPotencias.recibeBombaCirculoGrande=true;
+                this.contenedorExplosivosAliados.recibeBombaCirculoGrande=true;
+                this.contenedorExplosivosPotencias.recibeBombaCirculoGrande=true;
+                this.depositoCombustibleAliados.recibeBombaCirculoGrande=true;
+                this.depositoCombustiblePotencias.recibeBombaCirculoGrande=true;
                 //habilito colision con circulo chico de la bomba  
                 this.torreAliados.recibeBombaCirculoChico=true; 
                 this.torrePotencias.recibeBombaCirculoChico=true;  
-                this.contenedorAliados.recibeBombaCirculoChico=true;
-                this.contenedorPotencias.recibeBombaCirculoChico=true;
-                this.depositoAliados.recibeBombaCirculoChico=true;
-                this.depositoPotencias.recibeBombaCirculoChico=true;
+                this.contenedorExplosivosAliados.recibeBombaCirculoChico=true;
+                this.contenedorExplosivosPotencias.recibeBombaCirculoChico=true;
+                this.depositoCombustibleAliados.recibeBombaCirculoChico=true;
+                this.depositoCombustiblePotencias.recibeBombaCirculoChico=true;
                 avion.velocidad=0;
             }
             if (avion.cargarCombustible==true)
@@ -2943,13 +2943,13 @@ class Play extends Phaser.Scene {
             if (config.Partida.aviones[i].altitud=='EnBase')
             {   
                 config.Partida.aviones[i].combustible =config.Partida.configuraciones.avionCombustible;
-                if(config.Partida.Bando=='Potencias' && i<4 && this.contenedorPotencias.vida>0)
+                if(config.Partida.Bando=='Potencias' && i<4 && this.contenedorExplosivosPotencias.vida>0)
                 {                     
                     moverX = config.Partida.aviones[i].combustible+253;
                     eval("combustibleBar"+((i+1))+".x="+ moverX + ";")                    
                     this.vistaLateral = this.add.image(45,113,'vistaLateralEnBase').setOrigin(0).setScale(1); 
                 }  
-                else if(config.Partida.Bando=='Aliados' && i>3 && this.contenedorAliados.vida>0)
+                else if(config.Partida.Bando=='Aliados' && i>3 && this.contenedorExplosivosAliados.vida>0)
                 {    
                     moverX = config.Partida.aviones[i].combustible+253;  
                     eval("combustibleBar"+((i-3))+".x="+ moverX + ";")
@@ -2997,11 +2997,11 @@ class Play extends Phaser.Scene {
             if (!this.MostrarOcultar(this.torrePotencias)) 
                 this.torrePotencias.setVisible(false);
 
-            if (!this.MostrarOcultar(this.contenedorPotencias)) 
-                this.contenedorPotencias.setVisible(false);
+            if (!this.MostrarOcultar(this.contenedorExplosivosPotencias)) 
+                this.contenedorExplosivosPotencias.setVisible(false);
 
-            if (!this.MostrarOcultar(this.depositoPotencias)) 
-                this.depositoPotencias.setVisible(false);
+            if (!this.MostrarOcultar(this.depositoCombustiblePotencias)) 
+                this.depositoCombustiblePotencias.setVisible(false);
 
             for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
                 if (!this.MostrarOcultar(artilleriasPotencias.getChildren()[i])) 
@@ -3025,11 +3025,11 @@ class Play extends Phaser.Scene {
             if (!this.MostrarOcultar(this.torreAliados)) 
                 this.torreAliados.setVisible(false);
 
-            if (!this.MostrarOcultar(this.contenedorAliados)) 
-                this.contenedorAliados.setVisible(false);
+            if (!this.MostrarOcultar(this.contenedorExplosivosAliados)) 
+                this.contenedorExplosivosAliados.setVisible(false);
 
-            if (!this.MostrarOcultar(this.depositoAliados)) 
-                this.depositoAliados.setVisible(false);
+            if (!this.MostrarOcultar(this.depositoCombustibleAliados)) 
+                this.depositoCombustibleAliados.setVisible(false);
 
             for(var i = 0; i<config.Partida.configuraciones.artilleriaCantidad; i++){
                 if (!this.MostrarOcultar(artilleriasAliados.getChildren()[i])) 
@@ -3139,23 +3139,23 @@ class Play extends Phaser.Scene {
             this.circulo_torrePotencias.destroy();
             this.torrePotencias.destroy();
         }
-        if(this.contenedorPotencias.vida <= 0) 
+        if(this.contenedorExplosivosPotencias.vida <= 0) 
         {
             if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Aliados')
             {
                 this.mensajeAviso('El contenedor enemigo fue destruido');
                 mensajeAvionDestruido8 = true;
             }
-            this.contenedorPotencias.destroy();            
+            this.contenedorExplosivosPotencias.destroy();            
         }
-        if(this.depositoPotencias.vida <= 0) 
+        if(this.depositoCombustiblePotencias.vida <= 0) 
         {
             if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Aliados')
             {
                 this.mensajeAviso('El deposito enemigo fue destruido');
                 mensajeAvionDestruido8 = true;
             }
-            this.depositoPotencias.destroy();            
+            this.depositoCombustiblePotencias.destroy();            
         }
         if(avion_1_Aliados.vidaAvion <= 0) 
             {
@@ -3257,30 +3257,30 @@ class Play extends Phaser.Scene {
             this.torreAliados.destroy();
         }
 
-        if(this.contenedorAliados.vida <= 0) 
+        if(this.contenedorExplosivosAliados.vida <= 0) 
         {
             if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Potencias')
             {
                 this.mensajeAviso('El contenedor enemigo fue destruido');
                 mensajeAvionDestruido8 = true;
             }
-            this.contenedorAliados.destroy();            
+            this.contenedorExplosivosAliados.destroy();            
         }
 
-        if(this.depositoAliados.vida <= 0) 
+        if(this.depositoCombustibleAliados.vida <= 0) 
         {
             if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Potencias')
             {
                 this.mensajeAviso('El deposito enemigo fue destruido');
                 mensajeAvionDestruido8 = true;
             }
-            this.depositoAliados.destroy();            
+            this.depositoCombustibleAliados.destroy();            
         }
 
         //compruebo condicion de victoria para bando Potencia
         if (config.Partida.Bando=='Potencias')
         {   
-            if ((this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0)||(avion_1.vidaAvion <= 0 && avion_2.vidaAvion <= 0 && avion_3.vidaAvion <= 0 && avion_4.vidaAvion <= 0))
+            if ((this.torrePotencias.vida <= 0 && this.depositoCombustiblePotencias.vida <= 0 && this.contenedorExplosivosPotencias.vida <= 0)||(avion_1.vidaAvion <= 0 && avion_2.vidaAvion <= 0 && avion_3.vidaAvion <= 0 && avion_4.vidaAvion <= 0))
             {
                 config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
                 this.scene.remove('Play');  
@@ -3298,7 +3298,7 @@ class Play extends Phaser.Scene {
          //compruebo condicion de victoria para bando Aliados
         if (config.Partida.Bando=='Aliados')
         {   
-            if ((this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 )||(avion_1_Aliados.vidaAvion <= 0 && avion_2_Aliados.vidaAvion <= 0 && avion_3_Aliados.vidaAvion <= 0 && avion_4_Aliados.vidaAvion <= 0))
+            if ((this.torreAliados.vida <= 0 && this.depositoCombustibleAliados.vida <= 0 && this.contenedorExplosivosAliados.vida <= 0 )||(avion_1_Aliados.vidaAvion <= 0 && avion_2_Aliados.vidaAvion <= 0 && avion_3_Aliados.vidaAvion <= 0 && avion_4_Aliados.vidaAvion <= 0))
             {
                 config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
                 this.scene.remove('Play');  
