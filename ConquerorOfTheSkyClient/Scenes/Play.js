@@ -16,16 +16,11 @@ var avion_2_Aliados;
 var avion_3_Aliados;
 var avion_4_Aliados;
 var bullets;
-var bulletsPotencias;
-var bulletsAliados;
-var bulletsArtilleriaPotencia;
-var bulletsArtilleriaAliados;
-var bulletsTorre;
+var bulletsArtilleria;
 var distance
 var bullet;
 var difX; 
 var difY;
-var timeNafta = 0;
 var avionXInicial;
 var avionYInicial;
 var campoPotencias;
@@ -83,6 +78,7 @@ var mensajeAvionDestruido8 = false;
 var moverX;
 var sleep;
 var Espera;
+var prueba =0;
 
 const arregloVida = new Array();
 
@@ -161,7 +157,7 @@ class Play extends Phaser.Scene {
         this.torrePotencias = this.add.image(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 'torre').setScale(.07);
         avionXInicial = campoPotencias.base.posicionX ; 
 
-        this.torrePotencias.vida= campoPotencias.base.torreControl.salud;
+        this.torrePotencias.vida= 90;
         this.physics.world.enable(this.torrePotencias);        
 		this.torrePotencias.body.setCollideWorldBounds(true);
         this.torrePotencias.body.setSize(300,900);
@@ -174,11 +170,11 @@ class Play extends Phaser.Scene {
         this.circulo_torrePotencias.body.setOffset(-10,-10); 
                
 
-        this.depositoPotencias.vida= campoPotencias.base.depositoExplosivos.salud;
+        this.depositoPotencias.vida= 70;
         this.physics.world.enable(this.depositoPotencias);        
 		this.depositoPotencias.body.setCollideWorldBounds(true);
 
-        this.contenedorPotencias.vida= campoPotencias.base.tanqueCombustible.salud;
+        this.contenedorPotencias.vida= 70;
         this.physics.world.enable(this.contenedorPotencias);        
 		this.contenedorPotencias.body.setCollideWorldBounds(true);
 
@@ -220,7 +216,7 @@ class Play extends Phaser.Scene {
         this.depositoAliados = this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
         this.torreAliados = this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
        
-        this.torreAliados.vida= campoAliados.base.torreControl.salud;
+        this.torreAliados.vida= 90;
         this.physics.world.enable(this.torreAliados);        
 		this.torreAliados.body.setCollideWorldBounds(true);
         this.torreAliados.body.setSize(300,900);
@@ -232,11 +228,11 @@ class Play extends Phaser.Scene {
         this.circulo_torreAliados.body.setCircle(60);
         this.circulo_torreAliados.body.setOffset(-10,-10); 
 
-        this.depositoAliados.vida= campoAliados.base.depositoExplosivos.salud;
+        this.depositoAliados.vida= 70;
         this.physics.world.enable(this.depositoAliados);        
 		this.depositoAliados.body.setCollideWorldBounds(true);
 
-        this.contenedorAliados.vida= campoAliados.base.tanqueCombustible.salud;
+        this.contenedorAliados.vida= 70;
         this.physics.world.enable(this.contenedorAliados);        
 		this.contenedorAliados.body.setCollideWorldBounds(true);
 
@@ -404,26 +400,9 @@ class Play extends Phaser.Scene {
             maxSize: 10,
             runChildUpdate: true
         });
-        //bulletsPotencias, se define el grupo de balas que utilizaran los aviones Potencias
-        bulletsPotencias = this.add.group({
-            classType: Bullet,
-            maxSize: 4,
-            runChildUpdate: true
-        });
-        //bulletsAliados, se define el grupo de balas que utilizaran los aviones Aliados
-        bulletsAliados = this.add.group({
-            classType: Bullet,
-            maxSize: 4,
-            runChildUpdate: true
-        });
-         //bulletsArtilleria, se define el grupo de balas que utilizaran las artillerias Potencias
-        bulletsArtilleriaPotencia = this.add.group({
-            classType: Bullet,
-            maxSize: 8,
-            runChildUpdate: true
-        });
-         //bulletsArtilleriaAliados, se define el grupo de balas que utilizaran las artillerias Aliados
-         bulletsArtilleriaAliados = this.add.group({
+
+         //bulletsArtilleria, se define el grupo de balas que utilizaran las artillerias Aliados
+         bulletsArtilleria = this.add.group({
             classType: Bullet,
             maxSize: 8,
             runChildUpdate: true
@@ -507,7 +486,7 @@ class Play extends Phaser.Scene {
         this.torreMask.visible = false;
         // Asigno la mascara la barra de vida
         torreBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.torreMask);
-
+        
         //Se definen las barra de vida del deposito de combustible
         depositoCombustibleContainer = this.add.sprite(347, 955 , "baseContainer").setScale(0.22);
         //Sprite con la barra de vida a moverse
@@ -636,8 +615,6 @@ class Play extends Phaser.Scene {
                         avion_2_Aliados.moverAvion({x: avion_2_Aliados.xInicial, y: avion_2_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: avion_2_Aliados.xInicial, y: avion_2_Aliados.yInicial});
                         config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:6, bomba: true});
-
-
                     }          
                 }
             });
@@ -1011,7 +988,7 @@ class Play extends Phaser.Scene {
     {        
         if (config.Partida.Bando=='Potencias')
         { 
-            this.depositoAliados.setVisible(true);
+            this.depositoAliados.setVisible(true);            
         }  
         else   
         {                
@@ -1064,76 +1041,69 @@ class Play extends Phaser.Scene {
             //deposito
             this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_chico, ()=>
             {   
-                this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_chico.danio;  
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
-                this.circulo_bomba_chico.setPosition(1, 1);
-                console.log('grande:'+this.depositoAliados.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
-                if (this.depositoAliados.vida < 0)
-                {console.log('sin deposito');
-                console.log(this.depositoAliados.vida)}
+                if (this.depositoAliados.recibeBombaCirculoChico)
+                {                    
+                    this.depositoAliados.recibeBombaCirculoChico = false;
+                    this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_chico.danio; 
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
+                    this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
+                }
             });
 
             this.physics.add.overlap(this.depositoAliados,this.circulo_bomba_grande, ()=>
             {   
-                this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_grande.danio;  
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
-                this.circulo_bomba_grande.setPosition(1, 1);
-                console.log('grande:'+this.depositoAliados.vida);
-                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
-                if (this.depositoAliados.vida < 0)
-                    {console.log('sin deposito');
-            console.log(this.depositoAliados.vida)}
+                if (this.depositoAliados.recibeBombaCirculoGrande)
+                {
+                    this.depositoAliados.recibeBombaCirculoGrande = false;
+                    this.depositoAliados.vida = this.depositoAliados.vida - this.circulo_bomba_grande.danio;
+                    torreBar.x= torreBar.x-this.circulo_bomba_chico.danio;
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Aliados", vida: this.depositoAliados.vida});                    
+                    this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
+                }
             });
             // torre
             this.physics.add.overlap(this.torreAliados,this.circulo_bomba_chico, ()=>
             {   
-                this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_chico.danio;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
-                this.circulo_bomba_chico.setPosition(1, 1);
-                console.log('torre - chica:'+this.torreAliados.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
-                //this.mensaje.destroy();
-                if (this.torreAliados.vida < 0)
-                    {console.log('sin torre ');
-                console.log(this.torreAliados.vida)}
+                if (this.torreAliados.recibeBombaCirculoChico)
+                {
+                    this.torreAliados.recibeBombaCirculoChico = false;
+                    this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_chico.danio;                   
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
+                    this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
+                }
             });
 
             this.physics.add.overlap(this.torreAliados,this.circulo_bomba_grande, ()=>
             {   
-                this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_grande.danio;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
-                this.circulo_bomba_grande.setPosition(1, 1);
-                console.log('torre -grande:'+this.torreAliados.vida);
-                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
-                //this.mensaje.destroy();
-                if (this.torreAliados.vida < 0)
-                {console.log('sin torre ');
-                console.log(this.torreAliados.vida)}
+                if (this.torreAliados.recibeBombaCirculoGrande)
+                {
+                    this.torreAliados.recibeBombaCirculoGrande = false;
+                    this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_grande.danio;                   
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
+                    this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
+                }
             });
             //contendor
             this.physics.add.overlap(this.contenedorAliados,this.circulo_bomba_chico, ()=>
             {   
-                this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_chico.danio;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                    
-                this.circulo_bomba_chico.setPosition(1, 1);
-                console.log('contendor - chica:'+this.contenedorAliados.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
-                if (this.contenedorAliados.vida < 0)
-                    {console.log('sin contenedor');
-                console.log(this.contenedorAliados.vida)}
+                if (this.contenedorAliados.recibeBombaCirculoChico)
+                {
+                    this.contenedorAliados.recibeBombaCirculoChico = false;
+                    this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_chico.danio;                   
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                    
+                    this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
+                }
             });
 
             this.physics.add.overlap(this.contenedorAliados,this.circulo_bomba_grande, ()=>
             {   
-                this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_grande.danio;    
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                                
-                this.circulo_bomba_grande.setPosition(1, 1);
-                console.log('contenedor - grande:'+this.contenedorAliados.vida);
-                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
-                if (this.contenedorAliados.vida < 0)
-                {console.log('sin contenedor');
-                console.log(this.contenedorAliados.vida)}
+                if (this.contenedorAliados.recibeBombaCirculoGrande)
+                {
+                    this.contenedorAliados.recibeBombaCirculoGrande = false;
+                    this.contenedorAliados.vida = this.contenedorAliados.vida - this.circulo_bomba_grande.danio; 
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Aliados", vida: this.contenedorAliados.vida});                                
+                    this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
+                }
             });
         }else{ 
             this.physics.add.overlap(circulo_aviones_aliados, aviones, this.Colision_Aviones, null, this);         
@@ -1141,68 +1111,68 @@ class Play extends Phaser.Scene {
             //deposito
             this.physics.add.overlap(this.depositoPotencias,this.circulo_bomba_chico, ()=>
             {   
-                this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_chico.danio;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});                    
-                this.circulo_bomba_chico.setPosition(1, 1);
-                console.log('chica:'+this.depositoPotencias.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
-                if (this.depositoPotencias.vida < 0)
-                    console.log('sin deposito ');
+                if (this.depositoPotencias.recibeBombaCirculoChico)
+                {
+                    this.depositoPotencias.recibeBombaCirculoChico = false;
+                    this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_chico.danio;
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});                    
+                    this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Deposito enemigo');
+                }
             });
 
             this.physics.add.overlap(this.depositoPotencias,this.circulo_bomba_grande, ()=>
             {   
-                this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_grande.danio;  
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});              
-                this.circulo_bomba_grande.setPosition(1, 1);
-                console.log('grande:'+this.depositoPotencias.vida);
-                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
-                if (this.depositoPotencias.vida < 0)
-                    console.log('sin deposito');
+                if (this.depositoPotencias.recibeBombaCirculoGrande)
+                {
+                    this.depositoPotencias.recibeBombaCirculoGrande = false;                    
+                    this.depositoPotencias.vida = this.depositoPotencias.vida - this.circulo_bomba_grande.danio;  
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:1, bando:"Potencias", vida: this.depositoPotencias.vida});              
+                    this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Deposito enemigo');
+                }
             });
             // torre
             this.physics.add.overlap(this.torrePotencias,this.circulo_bomba_chico, ()=>
             {   
-                this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_chico.danio;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Potencias", vida: this.torrePotencias.vida});
-                this.circulo_bomba_chico.setPosition(1, 1);
-                console.log('torre - chica:'+this.torrePotencias.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
-                if (this.torrePotencias.vida < 0)
-                    console.log('sin torre ');
+                if (this.torrePotencias.recibeBombaCirculoChico)
+                {
+                    this.torrePotencias.recibeBombaCirculoChico = false;
+                    this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_chico.danio;
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Potencias", vida: this.torrePotencias.vida});
+                    this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
+                }
             });
 
             this.physics.add.overlap(this.torrePotencias,this.circulo_bomba_grande, ()=>
             {   
-                this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_grande.danio;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Potencias", vida: this.torrePotencias.vida});                
-                this.circulo_bomba_grande.setPosition(1, 1);
-                console.log('torre -grande:'+this.torrePotencias.vida);
-                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
-                if (this.torrePotencias.vida < 0)
-                    console.log('sin torre');
+                if (this.depositoPotencias.recibeBombaCirculoGrande)
+                {
+                    this.torrePotencias.recibeBombaCirculoGrande = false; 
+                    this.torrePotencias.vida = this.torrePotencias.vida - this.circulo_bomba_grande.danio;
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Potencias", vida: this.torrePotencias.vida});                
+                    this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
+                }
             });
             //contendor
             this.physics.add.overlap(this.contenedorPotencias,this.circulo_bomba_chico, ()=>
             {   
-                this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_chico.danio;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});
-                this.circulo_bomba_chico.setPosition(1, 1);                
-                console.log('contendor - chica:'+this.contenedorPotencias.vida);
-                this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
-                if (this.contenedorPotencias.vida < 0)
-                    console.log('sin contenedor');
+                if (this.contenedorPotencias.recibeBombaCirculoChico)
+                {
+                    this.contenedorPotencias.recibeBombaCirculoChico = false;
+                    this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_chico.danio;
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});
+                    this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño al Contenedor enemigo');
+                }
             });
 
             this.physics.add.overlap(this.contenedorPotencias,this.circulo_bomba_grande, ()=>
             {   
-                this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_grande.danio;  
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});              
-                this.circulo_bomba_grande.setPosition(1, 1);
-                console.log('contenedor - grande:'+this.contenedorPotencias.vida);
-                this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
-                if (this.contenedorPotencias.vida < 0)
-                    console.log('sin contenedor');
+                if (this.contenedorPotencias.recibeBombaCirculoGrande)
+                {
+                    this.torrePotcontenedorPotenciasencias.recibeBombaCirculoGrande = false; 
+                    this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_grande.danio;  
+                    config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});              
+                    this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
+                }
             });      
         }
     }
@@ -1406,7 +1376,7 @@ class Play extends Phaser.Scene {
      dispararArtilleria(artilleria_focus,avion_A_pegar)
      {           
          //Se pasa el avion que esta en focus 
-         bullet = bulletsArtilleriaAliados.get();         
+         bullet = bulletsArtilleria.get();         
          if (bullet && avion_A_pegar.vidaAvion>0)
          {      
             artilleria_focus.setVisible(true);
@@ -1584,13 +1554,13 @@ class Play extends Phaser.Scene {
         this.circulo_bomba_grande = this.add.image(1,1,'circuloAvion').setScale(1.5);
         this.circulo_bomba_grande.setVisible(false);
         this.physics.world.enable(this.circulo_bomba_grande);
-        this.circulo_bomba_grande.danio= 50;
+        this.circulo_bomba_grande.danio= 20;
 
 
         this.circulo_bomba_chico = this.add.image(1,1,'circuloAvion').setScale(1.5);
         this.circulo_bomba_chico.setVisible(false);
         this.physics.world.enable(this.circulo_bomba_chico);
-        this.circulo_bomba_chico.danio= 50;
+        this.circulo_bomba_chico.danio= 20;
         
         //Se guardan las teclas cursor y se setea evento para cambiar altitud del avion
         this.keys = this.input.keyboard.createCursorKeys();
@@ -2662,7 +2632,23 @@ class Play extends Phaser.Scene {
                 if(avion.focus){
                     this.avionVistaLateral = this.add.image(100,240,'avionBombaLateral').setOrigin(0).setScale(.7);
                     this.avionVistaLateral.depth = 100;
-                }                
+                } 
+                this.circulo_bomba_chico.setPosition(1, 1); 
+                this.circulo_bomba_grande.setPosition(1, 1);
+                //habilito colision con circulo grande de la bomba    
+                this.torreAliados.recibeBombaCirculoGrande=true; 
+                this.torrePotencias.recibeBombaCirculoGrande=true;  
+                this.contenedorAliados.recibeBombaCirculoGrande=true;
+                this.contenedorPotencias.recibeBombaCirculoGrande=true;
+                this.depositoAliados.recibeBombaCirculoGrande=true;
+                this.depositoPotencias.recibeBombaCirculoGrande=true;
+                //habilito colision con circulo chico de la bomba  
+                this.torreAliados.recibeBombaCirculoChico=true; 
+                this.torrePotencias.recibeBombaCirculoChico=true;  
+                this.contenedorAliados.recibeBombaCirculoChico=true;
+                this.contenedorPotencias.recibeBombaCirculoChico=true;
+                this.depositoAliados.recibeBombaCirculoChico=true;
+                this.depositoPotencias.recibeBombaCirculoChico=true;
                 avion.velocidad=0;
             }
             if (avion.cargarCombustible==true)
@@ -2879,15 +2865,13 @@ class Play extends Phaser.Scene {
     }
 
     update(time,delta)
-    {    
+    {           
         this.time = time;
         this.actualizarVidaAvion();
-
-        
         //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
         this.lightAvionSinBomba(); // Cambio de color al avion sin bomba
         this.lightAvionConBomba(); // cambio de color al avion con bomba
-        //Tiempo que se usa para las balas     
+        //Tiempo que se usa para las balas    
         
         this.actualizarCombustible(time);
 
@@ -3326,6 +3310,19 @@ class Play extends Phaser.Scene {
             this.scene.resume();
             
         }
+   //     if (time > prueba)
+    //    {
+            if(config.Partida.Bando=="Potencias"){
+                depositoExplosivosBar.x=config.Partida.basePotencias[2].vida+267;
+                depositoCombustibleBar.x = config.Partida.basePotencias[1].vida+267;
+                torreBar.x = config.Partida.basePotencias[0].vida+70;            
+            }else{
+                depositoExplosivosBar.x=config.Partida.baseAliados[2].vida+267;
+                depositoCombustibleBar.x = config.Partida.baseAliados[1].vida+267;
+                torreBar.x = config.Partida.baseAliados[0].vida+70;  
+      //      }
+       //     prueba = time+5000;
+            }
 
     }
 
