@@ -1168,7 +1168,7 @@ class Play extends Phaser.Scene {
             {   
                 if (this.contenedorPotencias.recibeBombaCirculoGrande)
                 {
-                    this.torrePotcontenedorPotenciasencias.recibeBombaCirculoGrande = false; 
+                    this.contenedorPotencias.recibeBombaCirculoGrande = false; 
                     this.contenedorPotencias.vida = this.contenedorPotencias.vida - this.circulo_bomba_grande.danio;  
                     config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:2, bando:"Potencias", vida: this.contenedorPotencias.vida});              
                     this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño al Contenedor enemigo');
