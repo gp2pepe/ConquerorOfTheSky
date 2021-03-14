@@ -1206,7 +1206,18 @@ class Play extends Phaser.Scene {
                     config.Partida.idavion=1;                
                     avion_1.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: pointer.x, y: pointer.y});
-                }  
+                } else{
+                    if(avion_1.altitud == 'Inicial' && avion_1.focus==true){
+                        config.Partida.idavion=1;          
+                        avion_1.setScale(0.05);
+                        avion_1.altitud ="Baja";
+                        avion_1.cambiarAltitud(avion_1.altitud);
+                        avion_1.saliBase=true;
+                        avion_1.moverAvion({x: pointer.x, y: pointer.y});   
+                        config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:1, x: pointer.x, y: pointer.y});
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:avion_1.altitud}); 
+                    }
+                }
 
                 if (avion_2.focus==true && avion_2.altitud!='Inicial')
                 {         
@@ -1227,7 +1238,18 @@ class Play extends Phaser.Scene {
                     config.Partida.idavion=2;                
                     avion_2.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: pointer.x, y: pointer.y});
-                } 
+                } else{
+                    if(avion_2.altitud == 'Inicial' && avion_2.focus==true){
+                        config.Partida.idavion=2;           
+                        avion_2.setScale(0.05);
+                        avion_2.altitud ="Baja";
+                        avion_2.cambiarAltitud(avion_2.altitud);
+                        avion_2.saliBase=true;
+                        avion_2.moverAvion({x: pointer.x, y: pointer.y});   
+                        config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:2, x: pointer.x, y: pointer.y});
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:2, altitud:avion_2.altitud}); 
+                    }
+                }
 
                 if (avion_3.focus==true && avion_3.altitud!='Inicial')
                 {            
@@ -1248,6 +1270,17 @@ class Play extends Phaser.Scene {
                     config.Partida.idavion=3;                
                     avion_3.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: pointer.x, y: pointer.y});
+                }else{
+                    if(avion_3.altitud == 'Inicial' && avion_3.focus==true){
+                        config.Partida.idavion=3;           
+                        avion_3.setScale(0.05);
+                        avion_3.altitud ="Baja";
+                        avion_3.cambiarAltitud(avion_3.altitud);
+                        avion_3.saliBase=true;
+                        avion_3.moverAvion({x: pointer.x, y: pointer.y});   
+                        config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:3, x: pointer.x, y: pointer.y});
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:3, altitud:avion_3.altitud}); 
+                    }
                 }  
 
                 if (avion_4.focus==true && avion_4.altitud!='Inicial')
@@ -1269,7 +1302,18 @@ class Play extends Phaser.Scene {
                     config.Partida.idavion=4;                
                     avion_4.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: pointer.x, y: pointer.y});
-                } 
+                }else{
+                    if(avion_4.altitud == 'Inicial' && avion_4.focus==true){
+                        config.Partida.idavion=4;           
+                        avion_4.setScale(0.05);
+                        avion_4.altitud ="Baja";
+                        avion_4.cambiarAltitud(avion_4.altitud);
+                        avion_4.saliBase=true;
+                        avion_4.moverAvion({x: pointer.x, y: pointer.y});   
+                        config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:4, x: pointer.x, y: pointer.y});
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:4, altitud:avion_4.altitud}); 
+                    }
+                }   
             }
                 else
                 {
@@ -1292,7 +1336,18 @@ class Play extends Phaser.Scene {
                     config.Partida.idavion=5;                
                     avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: pointer.x, y: pointer.y});
-                }
+                }else{
+                    if(avion_1_Aliados.altitud == 'Inicial' && avion_1_Aliados.focus==true){
+                        config.Partida.idavion=5;           
+                        avion_1_Aliados.setScale(0.05);
+                        avion_1_Aliados.altitud ="Baja";
+                        avion_1_Aliados.cambiarAltitud(avion_1_Aliados.altitud);
+                        avion_1_Aliados.saliBase=true;
+                        avion_1_Aliados.moverAvion({x: pointer.x, y: pointer.y});   
+                        config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:5, x: pointer.x, y: pointer.y});
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:5, altitud:avion_1_Aliados.altitud}); 
+                    }
+                } 
                 if (avion_2_Aliados.focus==true && avion_2_Aliados.altitud!='Inicial')
                 { 
                     if (!avion_2_Aliados.saliBase)
@@ -1312,7 +1367,18 @@ class Play extends Phaser.Scene {
                     config.Partida.idavion=6;                
                     avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: pointer.x, y: pointer.y});
-                }
+                }else{
+                    if(avion_2_Aliados.altitud == 'Inicial' && avion_2_Aliados.focus==true){
+                        config.Partida.idavion=6;           
+                        avion_2_Aliados.setScale(0.05);
+                        avion_2_Aliados.altitud ="Baja";
+                        avion_2_Aliados.cambiarAltitud(avion_2_Aliados.altitud);
+                        avion_2_Aliados.saliBase=true;
+                        avion_2_Aliados.moverAvion({x: pointer.x, y: pointer.y});   
+                        config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:6, x: pointer.x, y: pointer.y});
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:6, altitud:avion_2_Aliados.altitud}); 
+                    }
+                } 
                 if (avion_3_Aliados.focus==true && avion_3_Aliados.altitud!='Inicial')
                 {
                     if (!avion_3_Aliados.saliBase)
@@ -1332,7 +1398,18 @@ class Play extends Phaser.Scene {
                     config.Partida.idavion=7;                
                     avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: pointer.x, y: pointer.y});
-                }
+                }else{
+                    if(avion_3_Aliados.altitud == 'Inicial' && avion_3_Aliados.focus==true){
+                        config.Partida.idavion=7;           
+                        avion_3_Aliados.setScale(0.05);
+                        avion_3_Aliados.altitud ="Baja";
+                        avion_3_Aliados.cambiarAltitud(avion_3_Aliados.altitud);
+                        avion_3_Aliados.saliBase=true;
+                        avion_3_Aliados.moverAvion({x: pointer.x, y: pointer.y});   
+                        config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:7, x: pointer.x, y: pointer.y});
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:7, altitud:avion_3_Aliados.altitud}); 
+                    }
+                } 
                 if (avion_4_Aliados.focus==true && avion_4_Aliados.altitud!='Inicial')
                 {
                     if (!avion_4_Aliados.saliBase)
@@ -1352,7 +1429,18 @@ class Play extends Phaser.Scene {
                     config.Partida.idavion=8;                
                     avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});            
                     config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
-                }          
+                }else{
+                    if(avion_4_Aliados.altitud == 'Inicial' && avion_4_Aliados.focus==true){
+                        config.Partida.idavion=8;           
+                        avion_4_Aliados.setScale(0.05);
+                        avion_4_Aliados.altitud ="Baja";
+                        avion_4_Aliados.cambiarAltitud(avion_4_Aliados.altitud);
+                        avion_4_Aliados.saliBase=true;
+                        avion_4_Aliados.moverAvion({x: pointer.x, y: pointer.y});   
+                        config.Partida.sincronizar({tipoOp:"sincronizarAvion", idavion:8, x: pointer.x, y: pointer.y});
+                        config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:8, altitud:avion_4_Aliados.altitud}); 
+                    }
+                }           
             }
         }
     }
