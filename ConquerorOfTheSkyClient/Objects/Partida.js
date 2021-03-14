@@ -51,13 +51,15 @@ class Partida {
 
             }else if(msg.carga.tipoOp == "sincronizarVidaAvion"){
                 this.aviones[msg.carga.idavion-1].vidaAvion-=msg.carga.vida;
-                //this.aviones[msg.carga.idavion-1].mePegaron('true');
 
             }else if(msg.carga.tipoOp == "sincronizarAltitudAvion"){
                 this.aviones[msg.carga.idavion-1].cambiarAltitud(msg.carga.altitud);
 
             }else if(msg.carga.tipoOp == "sincronizarBombaAvion"){
                 this.aviones[msg.carga.idavion-1].cargarbomba=msg.carga.bomba;
+                if(!msg.carga.bomba){
+                    this.aviones[msg.carga.idavion-1].velocidad= this.aviones[msg.carga.idavion-1].calcularVelocidad();
+                }
                
 
             }else if(msg.carga.tipoOp == "sincronizarCombustibleAvion"){

@@ -83,10 +83,11 @@ class Guardar extends Phaser.Scene
 			this.scene.resume("Play");
         });
 
-		this.menuInicial =this.add.text(10010,6070, 'Menu Inicial', { font: 'bold 32px Courier', fill: '#333' }).setInteractive();
+		this.menuInicial =this.add.text(1060,670, 'Menu Inicial', { font: 'bold 32px Courier', fill: '#333' }).setInteractive();
+		this.menuInicial.setVisible(false);
 		this.menuInicial.on(Phaser.Input.Events.POINTER_DOWN, () => {
-			location.reload();
-		})
+			window.location = window.location;
+		});
 	}
 
 	update(){
@@ -102,9 +103,7 @@ class Guardar extends Phaser.Scene
 			this.alerta.setText('Partida guardada id : ' + config.Partida.nroPartida); 
 			this.cancelar.setX(820);
 			this.cancelar.setText("Volver");
-			
-			this.menuInicial.setY(670);
-			this.menuInicial.setX(1010);
+			this.menuInicial.setVisible(true);
 
 		}
 		//Manejo los errores que vienen de backend
