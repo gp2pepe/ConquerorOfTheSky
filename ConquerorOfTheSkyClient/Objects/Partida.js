@@ -69,7 +69,7 @@ class Partida {
 
                 }else{
                     this.baseAliados[msg.carga.objeto].vida = msg.carga.vida;
-                    if(this.basePotencias[0].vida  == 0 && this.basePotencias[1].vida  == 0 && this.basePotencias[2].vida  == 0 )
+                    if(this.baseAliados[0].vida  == 0 && this.baseAliados[1].vida  == 0 && this.baseAliados[2].vida  == 0 )
                     this.estado="Terminada";
                 }
 
