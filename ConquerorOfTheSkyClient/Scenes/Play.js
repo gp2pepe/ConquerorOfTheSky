@@ -3140,7 +3140,6 @@ class Play extends Phaser.Scene {
             if (mensajeAvionDestruido8 == false && config.Partida.Bando == 'Potencias')
             {
                 this.mensajeAviso('La torre enemiga fue destruida');
-                //timeout = setTimeout(this.destroyAviso(this.mensaje), 3000);
                 mensajeAvionDestruido8 = true;
             }
             this.circulo_torreAliados.destroy();
@@ -3219,13 +3218,11 @@ class Play extends Phaser.Scene {
         
         if (config.Partida.Bando=='Potencias')
         {   
-            if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0 )
+            if ((this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0)||(avion_1.vidaAvion <= 0 && avion_2.vidaAvion <= 0 && avion_3.vidaAvion <= 0 && avion_4.vidaAvion <= 0))
             {
                 config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
                 this.scene.remove('Play');  
                 this.scene.launch('GameOver');
-     
-
             }else{
                 if(config.Partida.estado == 'Terminada')
                 {
@@ -3239,7 +3236,7 @@ class Play extends Phaser.Scene {
         
         if (config.Partida.Bando=='Aliados')
         {   
-            if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 )
+            if ((this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 )||(avion_1_Aliados.vidaAvion <= 0 && avion_2_Aliados.vidaAvion <= 0 && avion_3_Aliados.vidaAvion <= 0 && avion_4_Aliados.vidaAvion <= 0))
             {
                 config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
                 this.scene.remove('Play');  
@@ -3258,39 +3255,6 @@ class Play extends Phaser.Scene {
         }           
       
 
-     /*   
-        //Se controla condicion de victoria del juego por destruccion de la base
-        if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 ) 
-        {
-            
-            if (config.Partida.Bando=='Potencias')
-            {
-                this.scene.launch('Win');
-                config.Partida.terminarPartida();
-            }else{
-                this.scene.launch('GameOver');
-                config.Partida.terminarPartida();
-            }
-            this.scene.pause();    
-        }
-
-
-        if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0 )
-        {
-            
-            //config.Partida.estado="Terminada";
-            if (config.Partida.Bando=='Aliados')
-            {
-                this.scene.launch('Win');
-                config.Partida.terminarPartida();
-            }else{
-                this.scene.launch('GameOver');
-                config.Partida.terminarPartida();
-            }
-            this.scene.pause();
-        }
-        */
-
         if(config.Partida.estado=='Pausado'){
             if(!config.Partida.duenio)
                 this.scene.launch('Pausado');
@@ -3299,8 +3263,6 @@ class Play extends Phaser.Scene {
             this.scene.resume();
             
         }
-   //     if (time > prueba)
-    //    {
             if(config.Partida.Bando=="Potencias"){
                 depositoExplosivosBar.x=config.Partida.basePotencias[2].vida+267;
                 depositoCombustibleBar.x = config.Partida.basePotencias[1].vida+267;
@@ -3309,8 +3271,6 @@ class Play extends Phaser.Scene {
                 depositoExplosivosBar.x=config.Partida.baseAliados[2].vida+267;
                 depositoCombustibleBar.x = config.Partida.baseAliados[1].vida+267;
                 torreBar.x = config.Partida.baseAliados[0].vida+70;  
-      //      }
-       //     prueba = time+5000;
             }
 
     }
