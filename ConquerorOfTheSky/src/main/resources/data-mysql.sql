@@ -10,7 +10,7 @@ insert into configuracion (id_configuracion,
                             torre_danio,torre_radio_disparo,torre_salud)
                             values (1, 
                             8, 10, 450, 50, 
-                            85,30,35,80,150,
+                            85,30,50,80,150,
                             25,26,
                             300,400,
                             156,103,
