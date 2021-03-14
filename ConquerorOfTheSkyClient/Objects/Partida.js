@@ -58,10 +58,9 @@ class Partida {
             }else if(msg.carga.tipoOp == "sincronizarBombaAvion"){
                 this.aviones[msg.carga.idavion-1].cargarbomba=msg.carga.bomba;
                 if(!msg.carga.bomba){
-                    this.aviones[msg.carga.idavion-1].velocidad= this.aviones[msg.carga.idavion-1].calcularVelocidad();
+                    this.aviones[msg.carga.idavion-1].soltarBomba();
                 }
                
-
             }else if(msg.carga.tipoOp == "sincronizarCombustibleAvion"){
                 this.aviones[msg.carga.idavion-1].cargarCombustible=msg.carga.combustible;
 

@@ -2058,7 +2058,7 @@ class Play extends Phaser.Scene {
                 this.avionVistaLateral.depth =100;            
                 avion_1.tengobomba=false;
                 config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:1, bomba: false});
-                avion_1.velocidad= avion_1.calcularVelocidad();
+                avion_1.soltarBomba();
                 this.sonidoBomba.play();
             } 
 
@@ -2071,7 +2071,8 @@ class Play extends Phaser.Scene {
                 this.vistaLateral.depth =100;   
                 this.avionVistaLateral.depth =100; 
                 avion_2.tengobomba=false;
-                avion_2.velocidad= avion_2.calcularVelocidad();
+                config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:2, bomba: false});
+                avion_2.soltarBomba();
                 this.sonidoBomba.play();
             }
 
@@ -2084,7 +2085,8 @@ class Play extends Phaser.Scene {
                 this.vistaLateral.depth =100;   
                 this.avionVistaLateral.depth =100; 
                 avion_3.tengobomba=false;
-                avion_3.velocidad= avion_3.calcularVelocidad();
+                config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:3, bomba: false});
+                avion_3.soltarBomba();
                 this.sonidoBomba.play();
             }
             if (avion_4.focus==true && avion_4.tengobomba){
@@ -2096,7 +2098,8 @@ class Play extends Phaser.Scene {
                 this.vistaLateral.depth =100;   
                 this.avionVistaLateral.depth =100; 
                 avion_4.tengobomba=false;
-                avion_4.velocidad= avion_4.calcularVelocidad();
+                config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:4, bomba: false});
+                avion_4.soltarBomba();
                 this.sonidoBomba.play();
             } 
             if (avion_1_Aliados.focus==true && avion_1_Aliados.tengobomba){
@@ -2108,7 +2111,8 @@ class Play extends Phaser.Scene {
                 this.vistaLateral.depth =100;   
                 this.avionVistaLateral.depth =100; 
                 avion_1_Aliados.tengobomba=false;
-                avion_1_Aliados.velocidad= avion_1_Aliados.calcularVelocidad();
+                config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:5, bomba: false});
+                avion_1_Aliados.soltarBomba();
                 this.sonidoBomba.play();
             }
             if (avion_2_Aliados.focus==true && avion_2_Aliados.tengobomba){
@@ -2120,7 +2124,8 @@ class Play extends Phaser.Scene {
                 this.vistaLateral.depth =100;   
                 this.avionVistaLateral.depth =100; 
                 avion_2_Aliados.tengobomba=false;
-                avion_2_Aliados.velocidad= avion_2_Aliados.calcularVelocidad();
+                config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:6, bomba: false});
+                avion_2_Aliados.soltarBomba();
                 this.sonidoBomba.play();
             }
             if (avion_3_Aliados.focus==true && avion_3_Aliados.tengobomba){
@@ -2132,7 +2137,8 @@ class Play extends Phaser.Scene {
                 this.vistaLateral.depth =100;   
                 this.avionVistaLateral.depth =100; 
                 avion_3_Aliados.tengobomba=false;
-                avion_3_Aliados.velocidad= avion_3_Aliados.calcularVelocidad();
+                config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:7, bomba: false});
+                avion_3_Aliados.soltarBomba();
                 this.sonidoBomba.play();
             }
             if (avion_4_Aliados.focus==true && avion_4_Aliados.tengobomba){
@@ -2144,7 +2150,8 @@ class Play extends Phaser.Scene {
                 this.vistaLateral.depth =100;   
                 this.avionVistaLateral.depth =100; 
                 avion_4_Aliados.tengobomba=false;
-                avion_4_Aliados.velocidad= avion_4_Aliados.calcularVelocidad();
+                config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:8, bomba: false});
+                avion_4_Aliados.soltarBomba();
                 this.sonidoBomba.play();
             }     
         });

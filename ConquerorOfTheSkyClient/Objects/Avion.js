@@ -68,8 +68,11 @@ class Avion extends Phaser.GameObjects.Sprite {
         }
 
     }
-    mePegaron(mepegaron){
-        this.mepegaron=mepegaron;
+
+    soltarBomba(){
+        this.velocidad = this.calcularVelocidad();
+        var angle = this.rotation;	
+        this.scene.physics.velocityFromRotation(angle, this.velocidad, this.body.velocity);
     }
 
 
