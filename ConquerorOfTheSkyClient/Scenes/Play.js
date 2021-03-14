@@ -397,14 +397,14 @@ class Play extends Phaser.Scene {
         //Bullets, se define el grupo de balas que utilizaran los aviones
         bullets = this.add.group({
             classType: Bullet,
-            maxSize: 10,
+            maxSize: 25,
             runChildUpdate: true
         });
 
          //bulletsArtilleria, se define el grupo de balas que utilizaran las artillerias Aliados
          bulletsArtilleria = this.add.group({
             classType: Bullet,
-            maxSize: 8,
+            maxSize: 25,
             runChildUpdate: true
         });
 
@@ -3221,15 +3221,17 @@ class Play extends Phaser.Scene {
         {   
             if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0 )
             {
-                this.scene.launch('GameOver');
                 config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
-                this.scene.pause();   
+                this.scene.remove('Play');  
+                this.scene.launch('GameOver');
+     
 
             }else{
                 if(config.Partida.estado == 'Terminada')
                 {
+                    this.scene.remove('Play');    
                     this.scene.launch('Win');
-                    this.scene.pause();  
+                    
                 } 
             }
 
@@ -3239,15 +3241,17 @@ class Play extends Phaser.Scene {
         {   
             if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 )
             {
-                this.scene.launch('GameOver');
                 config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
-                this.scene.pause();   
+                this.scene.remove('Play');  
+                this.scene.launch('GameOver');
+                  
 
             }else{
                 if(config.Partida.estado == 'Terminada')
                 {
+                    this.scene.remove('Play');  
                     this.scene.launch('Win');
-                    this.scene.pause();  
+                    
                 } 
             }
 

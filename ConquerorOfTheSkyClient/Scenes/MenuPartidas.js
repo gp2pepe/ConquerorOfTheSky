@@ -123,7 +123,7 @@ class MenuPartidas extends Phaser.Scene {
                     .setDepth(0);
             }, this)
             .on('cell.click', function (cellContainer, cellIndex, pointer) {
-                this.print.text += 'click ' + cellIndex + ': ' + cellContainer.text + '\n';
+                //this.print.text += 'click ' + cellIndex + ': ' + cellContainer.text + '\n';
                 var partida =cellContainer.text.split(' ');
                 
                 //No necesario ?
@@ -183,16 +183,16 @@ class MenuPartidas extends Phaser.Scene {
             this.scene.remove('MenuPartidas');
             this.scene.remove('PartidaLlena');
             this.scene.start('Play');
-        }else*/ if(config.Partida.hayError){
+        }else if(config.Partida.hayError){
             if(config.Partida.mensajeError=="La partida esta llena"){
                 console.log("Sigo avisando de error");
-                this.scene.sendToBack();
+                //this.scene.sendToBack();
                 this.scene.launch('PartidaLlena');
                 this.currentScene = this.scene.get('PartidaLlena');
                 this.scene.setVisible(true, this.currentScene);
-            }
+            }       
             
-        }
+        }*/
      }
 }
 

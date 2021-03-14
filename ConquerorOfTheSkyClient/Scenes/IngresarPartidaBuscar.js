@@ -163,7 +163,7 @@ class IngresarPartidaBuscar extends Phaser.Scene
 
         var alerta = this.add.text(700, 960, '', { font: 'bold 48px Courier', fill: '#080808' });
 
-        this.unirseAPartida = this.add.image(780, 900, 'crearPartida').setOrigin(0).setScale(0.5).setInteractive();
+        this.unirseAPartida = this.add.image(550, 890, 'crearPartida').setOrigin(0).setScale(0.7).setAlpha(0.01).setInteractive();
         this.unirseAPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
             if (textNick.text.length > 10)
             {
@@ -213,10 +213,13 @@ class IngresarPartidaBuscar extends Phaser.Scene
         if(config.Partida.hayError){
             if(config.Partida.mensajeError=="La partida esta llena"){
                 console.log("Sigo avisando de error");
-                this.scene.sendToBack();
+                //this.scene.sendToBack();
                 this.scene.launch('PartidaLlena');
+                this.scene.bringToTop('PartidaLlena');
                 this.currentScene = this.scene.get('PartidaLlena');
                 this.scene.setVisible(true, this.currentScene);
+                this.scene.stop('IngresarPartidaBuscar');
+                this.scene.resume('MenuPartidas');
             }
             
         }
