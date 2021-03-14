@@ -2451,11 +2451,11 @@ class Play extends Phaser.Scene {
 
     // Funcion que recibe por parametro el Sprite usado para la máscara, que va a seguir al avion
     // dependiendo de si se está moviendo y ademas está enfocado.
-    lightAvionSinBomba()
+    lightAvion()
     {
         if (config.Partida.Bando=='Potencias')
         {
-            if (this.EstaMoviendose(avion_1) && !avion_1.tengobomba)
+            if (this.EstaMoviendose(avion_1))
             {
                 light1Bomba.setIntensity(0);
                 light1.setIntensity(10);
@@ -2463,6 +2463,15 @@ class Play extends Phaser.Scene {
                 light1Bomba.y = avion_1.y;
                 light1.x = avion_1.x;
                 light1.y = avion_1.y;
+                if (avion_1.tengobomba)  
+                {  
+                    light1Bomba.setIntensity(12);  
+                    light1.setIntensity(5);  
+                    light1Bomba.x = avion_1.x;  
+                    light1Bomba.y = avion_1.y;  
+                    light1.x = avion_1.x;  
+                    light1.y = avion_1.y;  
+                } 
             }
             if (this.EstaMoviendose(avion_2))
             {
@@ -2472,6 +2481,15 @@ class Play extends Phaser.Scene {
                 light2Bomba.y = avion_2.y;
                 light2.x = avion_2.x;
                 light2.y = avion_2.y;
+                if (avion_2.tengobomba)  
+                {  
+                    light2Bomba.setIntensity(12);  
+                    light2.setIntensity(5);  
+                    light2Bomba.x = avion_2.x;
+                    light2Bomba.y = avion_2.y;
+                    light2.x = avion_2.x;
+                    light2.y = avion_2.y;  
+                }
             }
             if (this.EstaMoviendose(avion_3))
             {
@@ -2481,6 +2499,16 @@ class Play extends Phaser.Scene {
                 light3Bomba.y = avion_3.y;
                 light3.x = avion_3.x;
                 light3.y = avion_3.y;
+                if (avion_3.tengobomba)
+            {
+                light3Bomba.setIntensity(12);
+                light3.setIntensity(5);
+                light3Bomba.x = avion_3.x;
+                light3Bomba.y = avion_3.y;
+                light3.x = avion_3.x;
+                light3.y = avion_3.y;  
+            }
+                
             }
             if (this.EstaMoviendose(avion_4))
             {
@@ -2490,6 +2518,15 @@ class Play extends Phaser.Scene {
                 light4Bomba.y = avion_4.y;
                 light4.x = avion_4.x;
                 light4.y = avion_4.y;
+                if (avion_4.tengobomba)
+                {
+                    light4Bomba.setIntensity(12);
+                    light4.setIntensity(5);
+                    light4Bomba.x = avion_4.x;
+                    light4Bomba.y = avion_4.y;
+                    light4.x = avion_4.x;
+                    light4.y = avion_4.y;  
+                }
             }           
         }
         else
@@ -2502,6 +2539,15 @@ class Play extends Phaser.Scene {
                 light1Bomba.y = avion_1_Aliados.y;
                 light1.x = avion_1_Aliados.x;
                 light1.y = avion_1_Aliados.y;
+                if (avion_1_Aliados.tengobomba)
+                {
+                    light1Bomba.setIntensity(12);
+                    light1.setIntensity(5);
+                    light1Bomba.x = avion_1_Aliados.x;
+                    light1Bomba.y = avion_1_Aliados.y;
+                    light1.x = avion_1_Aliados.x;
+                    light1.y = avion_1_Aliados.y;
+                }
             } 
             if (this.EstaMoviendose(avion_2_Aliados))
             {
@@ -2511,6 +2557,15 @@ class Play extends Phaser.Scene {
                 light2Bomba.y = avion_2_Aliados.y;
                 light2.x = avion_2_Aliados.x;
                 light2.y = avion_2_Aliados.y;
+                if (avion_2_Aliados.tengobomba)
+            {
+                light2Bomba.setIntensity(12);
+                light2.setIntensity(5);
+                light2Bomba.x = avion_2_Aliados.x;
+                light2Bomba.y = avion_2_Aliados.y;
+                light2.x = avion_2_Aliados.x;
+                light2.y = avion_2_Aliados.y;
+            }
             }
             if (this.EstaMoviendose(avion_3_Aliados))
             {
@@ -2520,6 +2575,15 @@ class Play extends Phaser.Scene {
                 light3Bomba.y = avion_3_Aliados.y;
                 light3.x = avion_3_Aliados.x;
                 light3.y = avion_3_Aliados.y;
+                if (avion_3_Aliados.tengobomba)
+            {
+                light3Bomba.setIntensity(12);
+                light3.setIntensity(5);
+                light3Bomba.x = avion_3_Aliados.x;
+                light3Bomba.y = avion_3_Aliados.y;
+                light3.x = avion_3_Aliados.x;
+                light3.y = avion_3_Aliados.y;
+            }
             }
             if (this.EstaMoviendose(avion_4_Aliados))
             {
@@ -2529,87 +2593,15 @@ class Play extends Phaser.Scene {
                 light4Bomba.y = avion_4_Aliados.y;
                 light4.x = avion_4_Aliados.x;
                 light4.y = avion_4_Aliados.y;
-            }
-        }
-    }
-    lightAvionConBomba()  
-    {  
-        if (config.Partida.Bando == 'Potencias')  
-        {  
-            if (avion_1.tengobomba)  
-            {  
-                light1Bomba.setIntensity(12);  
-                light1.setIntensity(5);  
-                light1Bomba.x = avion_1.x;  
-                light1Bomba.y = avion_1.y;  
-                light1.x = avion_1.x;  
-                light1.y = avion_1.y;  
-            }  
-            if (avion_2.tengobomba)  
-            {  
-                light2Bomba.setIntensity(12);  
-                light2.setIntensity(5);  
-                light2Bomba.x = avion_2.x;
-                light2Bomba.y = avion_2.y;
-                light2.x = avion_2.x;
-                light2.y = avion_2.y;  
-            }
-            if (avion_3.tengobomba)
-            {
-                light3Bomba.setIntensity(12);
-                light3.setIntensity(5);
-                light3Bomba.x = avion_3.x;
-                light3Bomba.y = avion_3.y;
-                light3.x = avion_3.x;
-                light3.y = avion_3.y;  
-            }
-            if (avion_4.tengobomba)
-            {
-                light4Bomba.setIntensity(12);
-                light4.setIntensity(5);
-                light4Bomba.x = avion_4.x;
-                light4Bomba.y = avion_4.y;
-                light4.x = avion_4.x;
-                light4.y = avion_4.y;  
-            }
-        }
-        else
-        {
-            if (avion_1_Aliados.tengobomba)
-            {
-                light1Bomba.setIntensity(12);
-                light1.setIntensity(5);
-                light1Bomba.x = avion_1_Aliados.x;
-                light1Bomba.y = avion_1_Aliados.y;
-                light1.x = avion_1_Aliados.x;
-                light1.y = avion_1_Aliados.y;
-            }
-            if (avion_2_Aliados.tengobomba)
-            {
-                light2Bomba.setIntensity(12);
-                light2.setIntensity(5);
-                light2Bomba.x = avion_2_Aliados.x;
-                light2Bomba.y = avion_2_Aliados.y;
-                light2.x = avion_2_Aliados.x;
-                light2.y = avion_2_Aliados.y;
-            }
-            if (avion_3_Aliados.tengobomba)
-            {
-                light3Bomba.setIntensity(12);
-                light3.setIntensity(5);
-                light3Bomba.x = avion_3_Aliados.x;
-                light3Bomba.y = avion_3_Aliados.y;
-                light3.x = avion_3_Aliados.x;
-                light3.y = avion_3_Aliados.y;
-            }
-            if (avion_4_Aliados.tengobomba)
-            {
-                light4Bomba.setIntensity(12);
-                light4.setIntensity(5);
-                light4Bomba.x = avion_4_Aliados.x;
-                light4Bomba.y = avion_4_Aliados.y;
-                light4.x = avion_4_Aliados.x;
-                light4.y = avion_4_Aliados.y;
+                if (avion_4_Aliados.tengobomba)
+                {
+                    light4Bomba.setIntensity(12);
+                    light4.setIntensity(5);
+                    light4Bomba.x = avion_4_Aliados.x;
+                    light4Bomba.y = avion_4_Aliados.y;
+                    light4.x = avion_4_Aliados.x;
+                    light4.y = avion_4_Aliados.y;
+                }
             }
         }
     }
@@ -2869,12 +2861,12 @@ class Play extends Phaser.Scene {
     {           
         this.time = time;
         this.actualizarVidaAvion();
-        //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
-        this.lightAvionSinBomba(); // Cambio de color al avion sin bomba
-        this.lightAvionConBomba(); // cambio de color al avion con bomba
-        //Tiempo que se usa para las balas    
         
         this.actualizarCombustible(time);
+        //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
+        
+        //Efecto visual para el campo visual de los aviones
+        this.lightAvion(); 
 
         //Se setea la posicion de los circulos de cada avion para que sigan al avion correspondiente
         this.circulo_1.setPosition(avion_1.x, avion_1.y);  
@@ -2955,6 +2947,7 @@ class Play extends Phaser.Scene {
                     mensajeAvionDestruido1 = true;
                 }
                 this.circulo_1.destroy();
+                
                 if (config.Partida.Bando == 'Potencias')
                 {
                     this.panelAvion1 = this.add.image(45, 500, "panelAvionDestruido").setOrigin(0).setScale(.3).setInteractive();
@@ -2964,6 +2957,8 @@ class Play extends Phaser.Scene {
                     combustibleContainer1.destroy();
                     combustibleBar1.destroy();
                     avion_1.focus = false;
+                    light1.setIntensity(0);
+                    light1Bomba.setIntensity(0);
                 }
             }
         if(avion_2.vidaAvion <= 0 ) 
@@ -2984,6 +2979,8 @@ class Play extends Phaser.Scene {
                 combustibleContainer2.destroy();
                 combustibleBar2.destroy();
                 avion_2.focus = false;
+                light2.setIntensity(0);
+                light2Bomba.setIntensity(0);
             }
         }
             
@@ -3005,6 +3002,8 @@ class Play extends Phaser.Scene {
                     combustibleContainer3.destroy();
                     combustibleBar3.destroy();
                     avion_3.focus = false;
+                    light3.setIntensity(0);
+                    light3Bomba.setIntensity(0);
                 }
             }
         if(avion_4.vidaAvion <= 0) 
@@ -3025,6 +3024,8 @@ class Play extends Phaser.Scene {
                     combustibleContainer4.destroy();
                     combustibleBar4.destroy();
                     avion_4.focus = false;
+                    light4.setIntensity(0);
+                light4Bomba.setIntensity(0);
                 }
             }   
         if(this.torrePotencias.vida <= 0) 
@@ -3073,6 +3074,8 @@ class Play extends Phaser.Scene {
                     combustibleContainer1.destroy();
                     combustibleBar1.destroy();
                     avion_1_Aliados.focus = false;
+                    light1.setIntensity(0);
+                    light1Bomba.setIntensity(0);
                 }
             }
         if(avion_2_Aliados.vidaAvion <= 0) 
@@ -3093,6 +3096,8 @@ class Play extends Phaser.Scene {
                     combustibleContainer2.destroy();
                     combustibleBar2.destroy();
                     avion_2_Aliados.focus = false;
+                    light2.setIntensity(0);
+                    light2Bomba.setIntensity(0);
                 }
             }
         if(avion_3_Aliados.vidaAvion <= 0) 
@@ -3113,6 +3118,8 @@ class Play extends Phaser.Scene {
                     combustibleContainer3.destroy();
                     combustibleBar3.destroy();
                     avion_3_Aliados.focus = false;
+                    light3.setIntensity(0);
+                    light3Bomba.setIntensity(0);
                 }
             }
         if(avion_4_Aliados.vidaAvion <= 0) 
@@ -3133,6 +3140,8 @@ class Play extends Phaser.Scene {
                     combustibleContainer4.destroy();
                     combustibleBar4.destroy();
                     avion_4_Aliados.focus = false;
+                    light4.setIntensity(0);
+                    light4Bomba.setIntensity(0);
                 }
             }
 
@@ -3167,56 +3176,7 @@ class Play extends Phaser.Scene {
             this.depositoAliados.destroy();            
         }
 
-
-        if (config.Partida.Bando == 'Potencias')
-        {
-            if(avion_1.vidaAvion <= 0)
-            {
-                light1.setIntensity(0);
-                light1Bomba.setIntensity(0);
-            }
-            if(avion_2.vidaAvion <= 0)
-            {
-                light2.setIntensity(0);
-                light2Bomba.setIntensity(0);
-            }
-            if(avion_3.vidaAvion <= 0)
-            {
-                light3.setIntensity(0);
-                light3Bomba.setIntensity(0);
-                
-            }
-            if(avion_4.vidaAvion <= 0)
-            {
-                light4.setIntensity(0);
-                light4Bomba.setIntensity(0);
-                
-            }
-        }
-        else
-        {
-            if(avion_1_Aliados.vidaAvion <= 0)
-            {
-                light1.setIntensity(0);
-                light1Bomba.setIntensity(0);
-            }
-            if(avion_2_Aliados.vidaAvion <= 0)
-            {
-                light2.setIntensity(0);
-                light2Bomba.setIntensity(0);
-            }
-            if(avion_3_Aliados.vidaAvion <= 0)
-            {
-                light3.setIntensity(0);
-                light3Bomba.setIntensity(0);
-            }
-            if(avion_4_Aliados.vidaAvion <= 0)
-            {
-                light4.setIntensity(0);
-                light4Bomba.setIntensity(0);
-            }
-        }
-        
+        //compruebo condicion de victoria para bando Potencia
         if (config.Partida.Bando=='Potencias')
         {   
             if ((this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0)||(avion_1.vidaAvion <= 0 && avion_2.vidaAvion <= 0 && avion_3.vidaAvion <= 0 && avion_4.vidaAvion <= 0))
@@ -3234,7 +3194,7 @@ class Play extends Phaser.Scene {
             }
 
         }
-        
+         //compruebo condicion de victoria para bando Aliados
         if (config.Partida.Bando=='Aliados')
         {   
             if ((this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 )||(avion_1_Aliados.vidaAvion <= 0 && avion_2_Aliados.vidaAvion <= 0 && avion_3_Aliados.vidaAvion <= 0 && avion_4_Aliados.vidaAvion <= 0))
@@ -3255,7 +3215,7 @@ class Play extends Phaser.Scene {
 
         }           
       
-
+        //Chequea si la partida se manda pausar
         if(config.Partida.estado=='Pausado'){
             if(!config.Partida.duenio)
                 this.scene.launch('Pausado');
@@ -3264,15 +3224,17 @@ class Play extends Phaser.Scene {
             this.scene.resume();
             
         }
-            if(config.Partida.Bando=="Potencias"){
-                depositoExplosivosBar.x=config.Partida.basePotencias[2].vida+267;
-                depositoCombustibleBar.x = config.Partida.basePotencias[1].vida+267;
-                torreBar.x = config.Partida.basePotencias[0].vida+70;            
-            }else{
-                depositoExplosivosBar.x=config.Partida.baseAliados[2].vida+267;
-                depositoCombustibleBar.x = config.Partida.baseAliados[1].vida+267;
-                torreBar.x = config.Partida.baseAliados[0].vida+70;  
-            }
+
+        //esto porque esta aca?
+        if(config.Partida.Bando=="Potencias"){
+            depositoExplosivosBar.x=config.Partida.basePotencias[2].vida+267;
+            depositoCombustibleBar.x = config.Partida.basePotencias[1].vida+267;
+            torreBar.x = config.Partida.basePotencias[0].vida+70;            
+        }else{
+            depositoExplosivosBar.x=config.Partida.baseAliados[2].vida+267;
+            depositoCombustibleBar.x = config.Partida.baseAliados[1].vida+267;
+            torreBar.x = config.Partida.baseAliados[0].vida+70;  
+        }
 
     }
 
