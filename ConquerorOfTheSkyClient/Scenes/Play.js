@@ -1554,8 +1554,9 @@ class Play extends Phaser.Scene {
         var velAvion = config.Partida.configuraciones.avionVelocidad;
         //Se definen los aviones de ambos bandos
         var posi = 70;
-        if (config.Partida.estado == "Preparado")
+        if (config.Partida.tipoPartida == "cargarPartida")
         {               
+            
             for(var i = 0; i < 4; i++)
             {              
                 eval("avion_"+(i+1)+"= new Avion({scene: this,x:"+ config.Partida.avionesPotencias[i].posicionX+",y:"+ config.Partida.avionesPotencias[i].posicionY+",altitud: "+config.Partida.avionesPotencias[i].altitud+",vidaAvion:"+ config.Partida.avionesPotencias[i].salud+",combustible: "+config.Partida.avionesPotencias[i].combustible+",idavion:" +(i+1)+" }).setInteractive(); ")
@@ -3313,7 +3314,6 @@ class Play extends Phaser.Scene {
             
         }
 
-        //esto porque esta aca?
         if(config.Partida.Bando=="Potencias"){
             depositoExplosivosBar.x=config.Partida.basePotencias[2].vida+267;
             depositoCombustibleBar.x = config.Partida.basePotencias[1].vida+267;

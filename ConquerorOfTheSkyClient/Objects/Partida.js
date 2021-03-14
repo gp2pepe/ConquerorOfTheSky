@@ -35,7 +35,7 @@ class Partida {
             this.partidaCargada = true;
             //this.pass = msg.Partida.passwd;
             if(msg.partida.publica == false){
-                this.estado = "Preparado";
+                config.Partida.tipoPartida = "cargarPartida";
             }
 
         }else if(msg.operacion == "ingresoUnJugador"){            

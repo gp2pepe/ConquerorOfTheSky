@@ -124,6 +124,7 @@ class MenuCargar extends Phaser.Scene
             this.scene.remove('MenuInicial');
             this.scene.remove('MenuBando');
             this.scene.start('Play');
+			
 		}
 		//Manejo los errores que vienen de backend
 		if(config.Partida.hayError){
