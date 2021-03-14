@@ -139,12 +139,6 @@ public class Fachada implements IFachada{
 
         Base base2 = new Base(base2X,base2Y,depositoExp2,torre2,tanque2);
 
-        int yInicialAvionCampo2;
-        if (posicionCampo2Y > 540)
-          yInicialAvionCampo2 = base2Y - 120;
-        else
-          yInicialAvionCampo2 = base2Y - 120;
-
         List<Jugador> jugadores2 = new LinkedList<>();
         List<Avion> aviones2 = new LinkedList<>();
         if(modalidad.equals("1vs1")){
