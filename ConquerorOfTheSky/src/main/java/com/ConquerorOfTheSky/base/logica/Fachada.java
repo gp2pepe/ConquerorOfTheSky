@@ -91,7 +91,7 @@ public class Fachada implements IFachada{
         bases.add(base1);
 
         int yInicialAvionCampo;
-        if (baseY - posicionCampoY + 50 > 200)
+        if ((baseY - (posicionCampoY + 50)) > 200)
           yInicialAvionCampo = posicionCampoY + 50 - 120;
         else
           yInicialAvionCampo = posicionCampoY + 50 + 120;
@@ -146,7 +146,7 @@ public class Fachada implements IFachada{
         Base base2 = new Base(base2X,base2Y,depositoExp2,torre2,tanque2);
 
         int yInicialAvionCampo2;
-        if (base2Y - posicionCampo2Y + 50 > 200)
+        if ((base2Y - (posicionCampo2Y + 50)) > 200)
           yInicialAvionCampo2 = posicionCampo2Y + 50 - 120;
         else
           yInicialAvionCampo2 = posicionCampo2Y + 50 + 120;
