@@ -397,7 +397,7 @@ class Play extends Phaser.Scene {
         //Bullets, se define el grupo de balas que utilizaran los aviones
         bullets = this.add.group({
             classType: Bullet,
-            maxSize: 25,
+            maxSize: -1,
             runChildUpdate: true
         });
 
@@ -919,9 +919,9 @@ class Play extends Phaser.Scene {
     //Evento  llamado al disparar automaticamente 
     disparar(avion_focus,avion_A_pegar)
     {           
-        //Dispara balas entre aviones    
+        //Dispara balas entre aviones
         bullet = bullets.get();     
-        bullet.fire( avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});    
+        bullet.fire( avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y}); 
         this.sonidoDisparos.play();     
     }
 
