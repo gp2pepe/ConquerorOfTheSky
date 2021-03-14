@@ -3217,63 +3217,46 @@ class Play extends Phaser.Scene {
             }
         }
         
-        
-        //Se controla condicion de victoria del juego
-        if((avion_1.vidaAvion <= 0 && avion_2.vidaAvion <= 0 && avion_3.vidaAvion <= 0 && avion_4.vidaAvion <= 0)  ) //||(avion_1.combustible <= 0 && avion_2.combustible <= 0 && avion_3.combustible <= 0 && avion_4.combustible <= 0)
-        {
-            config.Partida.estado="Terminada";
-            if (config.Partida.Bando=='Potencias')
+        if (config.Partida.Bando=='Potencias')
+        {   
+            if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0 )
             {
-                //config.Partida.estado="Pausado";
-                this.scene.start('GameOver');
-                config.Partida.terminarPartida();
-                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                //this.scene.pause();
-            }
-            else
-            {
-                //config.Partida.estado="Terminada";
-                //config.Partida.estado="Pausado";
-                this.scene.launch('Win');
-                config.Partida.terminarPartida();
-                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-            }
-                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-               
-                this.scene.pause();
-        }
-
-
-        //Se controla condicion de victoria del juego
-        if(avion_1_Aliados.vidaAvion <= 0 && avion_2_Aliados.vidaAvion <= 0 && avion_3_Aliados.vidaAvion <= 0 && avion_4_Aliados.vidaAvion <= 0)
-        {
-            config.Partida.estado="Terminada";
-            if (config.Partida.Bando=='Potencias')
-            {
-                
-               // config.Partida.estado="Pausado";
-                this.scene.launch('Win');
-                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                config.Partida.terminarPartida();
-                //this.scene.pause();
-            }
-            else
-            {
-                //config.Partida.estado="Pausado";
                 this.scene.launch('GameOver');
                 config.Partida.terminarPartida();
-                //config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                //this.scene.pause();
-                //config.Partida.estado="Terminada";
+                this.scene.pause();   
 
-                
+            }else{
+                if(config.Partida.estado == 'Terminada')
+                {
+                    this.scene.launch('Win');
+                    this.scene.pause();  
+                } 
             }
-            this.scene.pause();
+
         }
+        
+        if (config.Partida.Bando=='Aliados')
+        {   
+            if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 )
+            {
+                this.scene.launch('GameOver');
+                config.Partida.terminarPartida();
+                this.scene.pause();   
 
+            }else{
+                if(config.Partida.estado == 'Terminada')
+                {
+                    this.scene.launch('Win');
+                    this.scene.pause();  
+                } 
+            }
 
+        }           
+      
+
+     /*   
         //Se controla condicion de victoria del juego por destruccion de la base
-        if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 && config.Partida.estado == "Terminada" ) 
+        if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 ) 
         {
             
             if (config.Partida.Bando=='Potencias')
@@ -3287,7 +3270,8 @@ class Play extends Phaser.Scene {
             this.scene.pause();    
         }
 
-        if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0 && config.Partida.estado == "Terminada")
+
+        if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0 )
         {
             
             //config.Partida.estado="Terminada";
@@ -3301,6 +3285,7 @@ class Play extends Phaser.Scene {
             }
             this.scene.pause();
         }
+        */
 
         if(config.Partida.estado=='Pausado'){
             if(!config.Partida.duenio)

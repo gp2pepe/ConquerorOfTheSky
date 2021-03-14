@@ -64,13 +64,9 @@ class Partida {
                 */
                 if(msg.carga.bando=="Potencias"){
                     this.basePotencias[msg.carga.objeto].vida = msg.carga.vida;
-                    if(this.basePotencias[0].vida  == 0 && this.basePotencias[1].vida  == 0 && this.basePotencias[2].vida  == 0 )
-                    this.estado="Terminada";
 
                 }else{
                     this.baseAliados[msg.carga.objeto].vida = msg.carga.vida;
-                    if(this.baseAliados[0].vida  == 0 && this.baseAliados[1].vida  == 0 && this.baseAliados[2].vida  == 0 )
-                    this.estado="Terminada";
                 }
 
             }else if(msg.carga.tipoOp == "sincronizarPausa"){
@@ -103,7 +99,8 @@ class Partida {
             this.duenio = true;
             this.partidaCargada = true;
             console.log('Partida1: '+msg);
-
+        }else if(msg.operacion == "Terminada"){ 
+            this.estado = "Terminada";
         }else if(msg.operacion == "errorServidor"){ 
                 this.hayError = true;
                 this.mensajeError = msg.mensaje;
