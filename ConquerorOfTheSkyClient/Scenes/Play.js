@@ -2027,6 +2027,7 @@ class Play extends Phaser.Scene {
                 this.avionVistaLateral = this.add.image(100,240,'Nieuport_28C1Lateral').setOrigin(0).setScale(.7); 
                 this.avionVistaLateral.depth =100;            
                 avion_1.tengobomba=false;
+                config.Partida.sincronizar({tipoOp:"sincronizarBombaAvion", idavion:1, bomba: false});
                 avion_1.velocidad= avion_1.calcularVelocidad();
                 this.sonidoBomba.play();
             } 
