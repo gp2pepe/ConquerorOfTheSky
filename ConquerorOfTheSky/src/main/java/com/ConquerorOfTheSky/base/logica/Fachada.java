@@ -98,10 +98,10 @@ public class Fachada implements IFachada{
         
         List<Avion> aviones = new LinkedList<>();
         if(modalidad.equals("1vs1")){
-          aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+70, yInicialAvionCampo));
-          aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+140, yInicialAvionCampo));
-          aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+210, yInicialAvionCampo));
-          aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+280, yInicialAvionCampo));
+          aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+50, yInicialAvionCampo));
+          aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+100, yInicialAvionCampo));
+          aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+150, yInicialAvionCampo));
+          aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+200, yInicialAvionCampo));
         }
         List<Jugador> jugadores = new LinkedList<>();
         jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
@@ -154,10 +154,10 @@ public class Fachada implements IFachada{
         List<Jugador> jugadores2 = new LinkedList<>();
         List<Avion> aviones2 = new LinkedList<>();
         if(modalidad.equals("1vs1")){
-          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+70, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+140, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+210, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+280, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+50, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+100, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+150, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+200, yInicialAvionCampo2));
           jugadores2.add(new Jugador("", null, false, aviones2));
 
         }
