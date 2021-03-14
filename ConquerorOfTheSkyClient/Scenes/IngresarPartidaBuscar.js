@@ -173,7 +173,7 @@ class IngresarPartidaBuscar extends Phaser.Scene
             if (this.Publica == 'No')
                 {
                     config.Partida.ingresarAPartida(this.IdPartida, textContra.text);   
-                    config.Partida.estado = "Pausado";
+                    //config.Partida.estado = "Pausado";
                     //this.scene.launch('EsperandoContrincante');
                 }
             else

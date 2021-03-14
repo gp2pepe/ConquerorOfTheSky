@@ -80,6 +80,8 @@ var sleep;
 var Espera;
 var prueba =0;
 var prendido = false;
+var inicioMapaX;
+var inicioMapaY;
 
 const arregloVida = new Array();
 
@@ -137,8 +139,8 @@ class Play extends Phaser.Scene {
         
 
         //Offset inicio de campo
-        var inicioMapaX=433;
-        var inicioMapaY=40;
+        inicioMapaX=433;
+        inicioMapaY=40;
 
         //Cargo campo y base para bando 1 - Potencias
         campoPotencias = config.Partida.campoPotencias;
@@ -251,11 +253,10 @@ class Play extends Phaser.Scene {
             artilleriasAliados.getChildren()[i].setOffset(-250,-250);    
             artilleriasAliados.getChildren()[i].lastFired = 0; 
             artilleriasAliados.getChildren()[i].vida = campoAliados.artillerias[i].salud; 
-
        }
 
         //Se define la posicion inicial de aviones y se llama a funcion que definira los aviones 
-
+/*
         if (campoPotencias.base.posicionY - campoPotencias.posicionY + 50 > 200)
 	        yInicialAvionBasePotencias = campoPotencias.base.posicionY + 50 - 120;
         else
@@ -264,7 +265,7 @@ class Play extends Phaser.Scene {
         if (campoAliados.base.posicionY - campoAliados.posicionY + 50 > 200)
 	        yInicialAvionBaseAliados = campoAliados.base.posicionY + 50 - 120;
         else
-	        yInicialAvionBaseAliados = campoAliados.base.posicionY + 50 + 120;
+	        yInicialAvionBaseAliados = campoAliados.base.posicionY + 50 + 120;*/
 
        //Llamo a la funcion para definir los aviones
         
@@ -398,7 +399,7 @@ class Play extends Phaser.Scene {
         //Bullets, se define el grupo de balas que utilizaran los aviones
         bullets = this.add.group({
             classType: Bullet,
-            maxSize: 25,
+            maxSize: -1,
             runChildUpdate: true
         });
 
@@ -955,9 +956,9 @@ class Play extends Phaser.Scene {
     //Evento  llamado al disparar automaticamente 
     disparar(avion_focus,avion_A_pegar)
     {           
-        //Dispara balas entre aviones    
+        //Dispara balas entre aviones
         bullet = bullets.get();     
-        bullet.fire( avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y});    
+        bullet.fire( avion_focus,{x: avion_A_pegar.x, y: avion_A_pegar.y}); 
         this.sonidoDisparos.play();     
     }
 
@@ -1587,48 +1588,30 @@ class Play extends Phaser.Scene {
     
     definicionAviones()
     {	         
-        var velAvion = config.Partida.configuraciones.avionVelocidad;
+        velAvion = config.Partida.configuraciones.avionVelocidad;
         //Se definen los aviones de ambos bandos
-        var posi = 70;
-        if (config.Partida.tipoPartida == "cargarPartida")
-        {               
-            
-            for(var i = 0; i < 4; i++)
-            {              
-                eval("avion_"+(i+1)+"= new Avion({scene: this,x:"+ config.Partida.avionesPotencias[i].posicionX+",y:"+ config.Partida.avionesPotencias[i].posicionY+",altitud: "+config.Partida.avionesPotencias[i].altitud+",vidaAvion:"+ config.Partida.avionesPotencias[i].salud+",combustible: "+config.Partida.avionesPotencias[i].combustible+",idavion:" +(i+1)+" }).setInteractive(); ")
-                eval("avion_"+(i+1)+".xInicial = campoPotencias.posicionX +"+posi+";")
-                eval("avion_"+(i+1)+".yInicial = yInicialAvionBasePotencias;")                
-                eval("avion_"+(i+1)+".cambiarAltitud("+config.Partida.avionesPotencias[i].altitud+");")
-                posi = posi +50;                
-            }
-            posi = 70;
-            for(var i = 0; i < 4; i++){
-                eval("avion_"+(i+1)+"_Aliados = new Avion({scene: this,x:"+ config.Partida.avionesAliados[i].posicionX+",y:"+ config.Partida.avionesAliados[i].posicionY+",altitud: "+config.Partida.avionesAliados[i].altitud+",vidaAvion:"+ config.Partida.avionesAliados[i].salud+",combustible: "+config.Partida.avionesAliados[i].combustible+",idavion:" +(i+5)+" }).setInteractive(); ")
-                eval("avion_"+(i+1)+"_Aliados.xInicial = campoAliados.posicionX +"+posi+";")
-                eval("avion_"+(i+1)+"_Aliados.yInicial = yInicialAvionBaseAliados;")
-                eval("avion_"+(i+1)+"_Aliados.cambiarAltitud("+config.Partida.avionesAliados[i].altitud+");")  
-                posi = posi +50; 
-            }
+        var posi = 50;
+        inicioMapaX=433;
+        inicioMapaY=40;
+        for(var i = 0; i < 4; i++)
+        {              
+            eval("avion_"+(i+1)+"= new Avion({scene: this,x:"+ (config.Partida.avionesPotencias[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesPotencias[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesPotencias[i].altitud+"',vidaAvion:"+ config.Partida.avionesPotencias[i].salud+",combustible: "+config.Partida.avionesPotencias[i].combustible+",idavion:" +(i+1)+" }).setInteractive(); ")
+            eval("avion_"+(i+1)+".xInicial = campoPotencias.posicionX +"+posi+";")
+            eval("avion_"+(i+1)+".yInicial = campoPotencias.base.posicionY-30;")                
+            eval("avion_"+(i+1)+".cambiarAltitud('"+config.Partida.avionesPotencias[i].altitud+"');")
+            posi = posi +50;                
         }
-        else  
-        {  
-            posi = 70;
-            for(var i = 0; i < 4; i++){
-                eval("avion_"+(i+1)+"= new Avion({scene: this,x:campoPotencias.posicionX +"+ posi+",y: yInicialAvionBasePotencias ,altitud: 'Inicial',vidaAvion:"+ 100 +",combustible: "+85+",idavion:" +(i+1)+" }).setInteractive(); ")//)= new Avion({
-                eval("avion_"+(i+1)+".xInicial = campoPotencias.posicionX +"+posi+";")
-                eval("avion_"+(i+1)+".yInicial = yInicialAvionBasePotencias;")                
-                posi = posi +50; 
-            }    
-            posi = 70;
-            for(var i = 0; i < 4; i++){
-                eval("avion_"+(i+1)+"_Aliados = new Avion({scene: this,x:campoAliados.posicionX +"+ posi+",y: yInicialAvionBaseAliados ,altitud: 'Inicial',vidaAvion:"+ 100 +",combustible: "+85+",idavion:" +(i+5)+" }).setInteractive(); ")//)= new Avion({
-                eval("avion_"+(i+1)+"_Aliados.xInicial = campoAliados.posicionX +"+posi+";")
-                eval("avion_"+(i+1)+"_Aliados.yInicial = yInicialAvionBaseAliados;")                
-                posi = posi +50; 
-            }  
+        posi = 50;
+        for(var i = 0; i < 4; i++){
+            eval("avion_"+(i+1)+"_Aliados = new Avion({scene: this,x:"+ (config.Partida.avionesAliados[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesAliados[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesAliados[i].altitud+"',vidaAvion:"+ config.Partida.avionesAliados[i].salud+",combustible: "+config.Partida.avionesAliados[i].combustible+",idavion:" +(i+5)+" }).setInteractive(); ")
+            eval("avion_"+(i+1)+"_Aliados.xInicial = campoAliados.posicionX +"+posi+";")
+            eval("avion_"+(i+1)+"_Aliados.yInicial = campoAliados.base.posicionY-30;")
+            eval("avion_"+(i+1)+"_Aliados.cambiarAltitud('"+config.Partida.avionesAliados[i].altitud+"');")  
+            posi = posi +50; 
         }
 
-        //circulos
+
+        //circulos     
         this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_1);
         this.circulo_1.body.setCircle(35);
