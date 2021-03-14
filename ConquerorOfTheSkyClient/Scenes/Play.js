@@ -1644,49 +1644,41 @@ class Play extends Phaser.Scene {
         this.circulo_1 = this.add.image(avion_1.x-50,avion_1.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_1);
         this.circulo_1.body.setCircle(config.Partida.configuraciones.avionRadioVision);
-        this.circulo_1.body.setOffset(15,16); 
         this.circulo_1.idAvion=1;  
  
         this.circulo_2 = this.add.image(avion_2.x-50,avion_2.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_2);
         this.circulo_2.body.setCircle(config.Partida.configuraciones.avionRadioVision);
-        this.circulo_2.body.setOffset(15,16);
         this.circulo_2.idAvion=2;
       
         this.circulo_3 = this.add.image(avion_3.x-50,avion_3.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_3);
         this.circulo_3.body.setCircle(config.Partida.configuraciones.avionRadioVision);
-        this.circulo_3.body.setOffset(15,16);
         this.circulo_2.idAvion=3;
     
         this.circulo_4 = this.add.image(avion_4.x-50,avion_4.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_4);
         this.circulo_4.body.setCircle(config.Partida.configuraciones.avionRadioVision);
-        this.circulo_4.body.setOffset(15,16);
         this.circulo_4.idAvion=4;
 
         this.circulo_5 = this.add.image(avion_1_Aliados.x-50,avion_1_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_5);
         this.circulo_5.body.setCircle(config.Partida.configuraciones.avionRadioVision);
-        this.circulo_5.body.setOffset(15,16); 
         this.circulo_5.idAvion=5;
 
         this.circulo_6 = this.add.image(avion_2_Aliados.x-50,avion_2_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_6);
         this.circulo_6.body.setCircle(config.Partida.configuraciones.avionRadioVision);
-        this.circulo_6.body.setOffset(15,16);
         this.circulo_6.idAvion=6;
 
         this.circulo_7 = this.add.image(avion_3_Aliados.x-50,avion_3_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_7);
         this.circulo_7.body.setCircle(config.Partida.configuraciones.avionRadioVision);
-        this.circulo_7.body.setOffset(15,16);
         this.circulo_7.idAvion=7;
  
         this.circulo_8 = this.add.image(avion_4_Aliados.x-50,avion_4_Aliados.y-50,'circuloAvion').setScale(1.5);
         this.physics.world.enable(this.circulo_8);
         this.circulo_8.body.setCircle(config.Partida.configuraciones.avionRadioVision);
-        this.circulo_8.body.setOffset(15,16);
         this.circulo_8.idAvion=8;
 
         this.circulo_bomba_grande = this.add.image(1,1,'circuloAvion').setScale(1.5);
