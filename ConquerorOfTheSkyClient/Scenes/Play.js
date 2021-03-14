@@ -975,13 +975,24 @@ class Play extends Phaser.Scene {
      
     choqueAviones(avion_potencia,avion_aliado)
     {
-        if (avion_potencia.altitud == avion_aliado.altitud)
-        {
-            console.log("rompi");
-            avion_potencia.vidaAvion= 0;
-            avion_aliado.vidaAvion= 0;
+        if (config.Partida.Bando=='Potencias')
+        { 
+            if (avion_potencia.altitud == avion_aliado.altitud)
+            {
+                avion_potencia.vidaAvion= 0;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:0});                    
+               
 
-        }     
+            }  
+        }else{
+            if (avion_potencia.altitud == avion_aliado.altitud)
+            {
+                console.log("rompi");
+                avion_aliado.vidaAvion= 0;
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:0});  
+
+            }
+        }   
     }
 
     colision_aviones_deposito(circulo,objeto)
@@ -1021,7 +1032,7 @@ class Play extends Phaser.Scene {
             this.physics.add.overlap(this.circulo_torrePotencias, aviones_aliados, this.colision_torre_avion, null, this);        
         }
             
-       // this.physics.add.overlap([avion_1,avion_2,avion_3,avion_4],[avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados], this.choqueAviones, null, this);
+        this.physics.add.overlap([avion_1,avion_2,avion_3,avion_4],[avion_1_Aliados,avion_2_Aliados,avion_3_Aliados,avion_4_Aliados], this.choqueAviones, null, this);
         this.physics.add.overlap(circulo_aviones, this.depositoAliados, this.colision_aviones_deposito, null, this); 
         this.physics.add.overlap(circulo_aviones_aliados, this.depositoPotencias, this.colision_aviones_deposito, null, this); 
 
