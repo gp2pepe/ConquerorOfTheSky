@@ -191,8 +191,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 {
                 console.log('Antes de intresar a Partida');
                 config.Partida.ingresarAPartida(this.IdPartida, '');
-                config.Partida.estado = "Pausado";
-                this.scene.launch('EsperandoContrincante');
                 console.log('Bien, entré en publica');
                 }
             //console.log(config.Partida);
