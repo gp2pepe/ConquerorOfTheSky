@@ -81,21 +81,15 @@ public class Fachada implements IFachada{
         TorreDeControl torre = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
         TanqueDeCombustible tanque = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
 
-
+        //Math.floor(Math.random()*(N-M+1)+M);
         //Randomizo la posición de la base 1
-        int baseX = (int) (Math.random() * (((posicionCampoX  + conf.getCampoTamanioX() - (conf.getBaseTamanioX() +10 ) ) - posicionCampoX + 10) + 1)) + posicionCampoX + 10 ;
-        int baseY = (int) (Math.random() * (((posicionCampoY + conf.getCampoTamanioY() - (conf.getBaseTamanioY() +30 ) ) - posicionCampoY + 30) + 1)) + posicionCampoY + 30;
+        int baseX = (int) (Math.random() * (((posicionCampoX + conf.getCampoTamanioX() - 10) - conf.getBaseTamanioX()) - (posicionCampoX + 10 + 1))) + (posicionCampoX + 10) ;
+        int baseY = (int) (Math.random() * (((posicionCampoY + conf.getCampoTamanioY() - 30) - conf.getBaseTamanioY()) - (posicionCampoY + 30 + 1))) + (posicionCampoY + 30);
 
         List<Base> bases = new LinkedList<>();
         Base base1 = new Base(baseX,baseY,depositoExp,torre,tanque);
         bases.add(base1);
 
-        int yInicialAvionCampo;
-        if (posicionCampoY > 540)
-          yInicialAvionCampo = baseY - 120;
-        else
-          yInicialAvionCampo = baseY  + 120;
-        
         List<Avion> aviones = new LinkedList<>();
         if(modalidad.equals("1vs1")){
           aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+50, baseY - 30));
@@ -140,8 +134,8 @@ public class Fachada implements IFachada{
         TanqueDeCombustible tanque2 = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());       
 
         //Randomizo la posición de la base 2
-        int base2X = (int) (Math.random() * (((posicionCampo2X + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampo2X) + 1)) + posicionCampo2X;
-        int base2Y = (int) (Math.random() * (((posicionCampo2Y + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampo2Y) + 1)) + posicionCampo2Y;
+        int base2X = (int) (Math.random() * (((posicionCampo2X + conf.getCampoTamanioX() - 10) - conf.getBaseTamanioX()) - (posicionCampo2X + 10 + 1))) + (posicionCampo2X + 10);
+        int base2Y = (int) (Math.random() * (((posicionCampo2Y + conf.getCampoTamanioY() - 30) - conf.getBaseTamanioY()) - (posicionCampo2Y + 30 + 1))) + (posicionCampo2Y + 30);
 
         Base base2 = new Base(base2X,base2Y,depositoExp2,torre2,tanque2);
 
@@ -154,10 +148,10 @@ public class Fachada implements IFachada{
         List<Jugador> jugadores2 = new LinkedList<>();
         List<Avion> aviones2 = new LinkedList<>();
         if(modalidad.equals("1vs1")){
-          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+50, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+100, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+150, yInicialAvionCampo2));
-          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+200, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+50, base2Y - 30));
+          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+100, base2Y - 30));
+          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+150, base2Y - 30));
+          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampo2X+200, base2Y - 30));
           jugadores2.add(new Jugador("", null, false, aviones2));
 
         }
