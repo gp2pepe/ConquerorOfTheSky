@@ -13,6 +13,7 @@ import Guardar from '../Scenes/popups/Guardar.js';
 import Pausado from '../Scenes/popups/Pausado.js';
 import PartidaLlena from '../Scenes/popups/PartidaLlena.js';
 import EsperandoContrincante from '../Scenes/popups/EsperandoContrincante.js';
+import ContraIncorrecta from '../Scenes/popups/ContraIncorrecta.js';
 
 var config = {
     type: Phaser.AUTO,
@@ -30,7 +31,7 @@ var config = {
             debug: true
         }
     },
-    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuCargar,MenuBando,PartidaLlena,GameOver,Win,Guardar,Pausado,EsperandoContrincante, IngresarPartidaBuscar],
+    scene: [Bootloader, Play,MenuInicial,MenuPartidas,MenuCargar,MenuBando,PartidaLlena,GameOver,Win,Guardar,Pausado,EsperandoContrincante, IngresarPartidaBuscar,ContraIncorrecta],
     WebSocket: new Client(),
     Partida: new Partida(),   
     

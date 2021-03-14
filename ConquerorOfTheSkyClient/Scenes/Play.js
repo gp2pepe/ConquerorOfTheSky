@@ -79,6 +79,7 @@ var moverX;
 var sleep;
 var Espera;
 var prueba =0;
+var prendido = false;
 
 const arregloVida = new Array();
 
@@ -289,7 +290,7 @@ class Play extends Phaser.Scene {
             light4Bomba = this.lights.addLight(500, 800, 100).setColor(0xFF0000).setIntensity(0);
             lightBasePotencia = this.lights.addLight(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 200).setIntensity(12);
             this.lightCampoPotencia = this.lights.addLight(campoPotencias.posicionX +150, campoPotencias.posicionY + 200, 300).setIntensity(8);
-            
+            this.lightTorre = this.lights.addLight(this.torrePotencias.x + 12 , this.torrePotencias.y - 22, 150).setColor(0xFF9900).setIntensity(0);
         }
         else
         {
@@ -303,7 +304,7 @@ class Play extends Phaser.Scene {
             light4Bomba = this.lights.addLight(1500, 800, 100).setColor(0xFF0000).setIntensity(0);
             lightBaseAliados = this.lights.addLight(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 200).setIntensity(12);
             this.lightCampoAliados = this.lights.addLight(campoAliados.posicionX +150, campoAliados.posicionY + 200, 300).setIntensity(8);
-            
+            this.lightTorre = this.lights.addLight(this.torreAliados.x + 12 , this.torreAliados.y - 22, 150).setColor(0xFF9900).setIntensity(0);
         }
         //Se define el grupo de aviones Potencias para darle fisica y eventos 
         aviones = this.physics.add.group({
@@ -518,6 +519,41 @@ class Play extends Phaser.Scene {
     BotonesLaterales()
     {
         //Se definen los eventos de los botones del tablero/panel
+
+        this.mostrarRango.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.mostrarRango,
+                ease: 'Bounce.easeIn',
+                onComplete:() => {
+                    if (config.Partida.Bando == 'Potencias')
+                    {    if (prendido == true)
+                        {
+                            this.lightTorre.setIntensity(0);
+                            prendido = false;
+                        }
+                        else
+                        {
+                            this.lightTorre.setIntensity(1000);
+                            prendido = true;
+                        }
+                    }
+                    else
+                    {
+                        if (prendido == true)
+                        {
+                            this.lightTorre.setIntensity(0);
+                            prendido = false;
+                        }
+                        else
+                        {
+                            this.lightTorre.setIntensity(1000);
+                            prendido = true;
+                        }
+                    }
+                }
+            })
+        })
+
         this.cargarBomba1.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.cargarBomba1,

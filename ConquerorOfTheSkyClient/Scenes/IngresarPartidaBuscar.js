@@ -17,7 +17,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
 
     init(data)
     {
-        console.log('init', data);
         this.IdPartida = data.Id;
         this.Nombre = data.Nombre
         this.Bando = data.Bando;
@@ -31,7 +30,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
 
     create()
     {
-        console.log(this.Publica);
         var ingresoTexto = false;
         var ingresoTexto2 = false;
         this.add.image(0,0, 'desenfocar').setOrigin(0);
@@ -47,7 +45,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 onComplete: () => {
                     this.scene.stop('IngresarPartidaBuscar');
                     this.scene.resume('MenuPartidas');
-                    console.log('Post sleep');
                 }
             });
 
@@ -109,14 +106,11 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
                 {
                     textNick.text += event.key;
-                    console.log(textNick.text);
                 }
             }
         });
-        console.log(this.Publica);
         if (this.Publica == 'No')
       {  
-        console.log('Mal, entré a privado')
         this.textBox = this.add.image(570,780, 'textBox').setOrigin(0).setScale(0.5);
         this.text = this.add.text(605, 805, 'Click para ingresar contraseña', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
         var textContra = this.add.text(580, 800, '', { font: '48px Courier', fill: '#474747' });
@@ -149,7 +143,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
                 {
                     textContra.text += event.key;
-                    console.log(textContra.text);
                 }
             }
         });
@@ -158,7 +151,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
         else
         {
             this.textBox = this.add.text(570,780, 'N/A').setOrigin(0).setScale(4);
-            console.log('Bien, entré en publica');
         }
 
         var alerta = this.add.text(700, 960, '', { font: 'bold 48px Courier', fill: '#080808' });
@@ -173,25 +165,20 @@ class IngresarPartidaBuscar extends Phaser.Scene
             //Creo la partida con el bando y el nombre seleccionado
             //this.sonidoConfirmar.play();
             //this.sonidoFondoPartida.play();
-            console.log('Ingresé a una partida');
             //config.Partida.Bando = bandoElegido;
             //config.Partida.Nombre = this.Nombre;
-            console.log(config.Partida);
             config.Partida.nick = textNick.text;
             //config.Partida.pass = textContra.text;
             config.Partida.tipoPartida = "ingresarAPartida";
             if (this.Publica == 'No')
                 {
-                    config.Partida.ingresarAPartida(this.IdPartida, textContra.text);
-                    console.log('Mal, entré a privado')    
+                    config.Partida.ingresarAPartida(this.IdPartida, textContra.text);   
                     config.Partida.estado = "Pausado";
-                    this.scene.launch('EsperandoContrincante');
+                    //this.scene.launch('EsperandoContrincante');
                 }
             else
                 {
-                console.log('Antes de intresar a Partida');
                 config.Partida.ingresarAPartida(this.IdPartida, '');
-                console.log('Bien, entré en publica');
                 }
             //console.log(config.Partida);
             //this.scene.launch('confirmarNuevaPartida');
@@ -203,7 +190,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
 
     update() {
         if(config.Partida.partidaCargada){
-            console.log('Estoy en el update');
             this.scene.remove('MenuInicial');
             this.scene.remove('MenuPartidas');
             this.scene.remove('PartidaLlena');
@@ -214,7 +200,6 @@ class IngresarPartidaBuscar extends Phaser.Scene
         }else 
         if(config.Partida.hayError){
             if(config.Partida.mensajeError=="La partida esta llena"){
-                console.log("Sigo avisando de error");
                 //this.scene.sendToBack();
                 this.scene.launch('PartidaLlena');
                 this.scene.bringToTop('PartidaLlena');
@@ -223,7 +208,12 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 this.scene.stop('IngresarPartidaBuscar');
                 this.scene.resume('MenuPartidas');
             }
-            
+            if (config.Partida.mensajeError == 'La contraseña no es correcta')
+            {
+                this.scene.launch('ContraIncorrecta');
+                this.scene.bringToTop('ContraIncorrecta');
+                this.scene.setVisible(true,this.currentScene);
+            }
         }
      }
 
