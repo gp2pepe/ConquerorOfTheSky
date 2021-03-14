@@ -83,8 +83,8 @@ public class Fachada implements IFachada{
 
 
         //Randomizo la posición de la base 1
-        int baseX = (int) (Math.random() * (((posicionCampoX + 20 + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampoX + 20) + 1)) + posicionCampoX + 20;
-        int baseY = (int) (Math.random() * (((posicionCampoY + 20 + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampoY + 20) + 1)) + posicionCampoY + 20;
+        int baseX = (int) (Math.random() * (((posicionCampoX  + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampoX) + 1)) + posicionCampoX ;
+        int baseY = (int) (Math.random() * (((posicionCampoY + 30 + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampoY + 30) + 1)) + posicionCampoY + 30;
 
         List<Base> bases = new LinkedList<>();
         Base base1 = new Base(baseX,baseY,depositoExp,torre,tanque);
@@ -98,10 +98,10 @@ public class Fachada implements IFachada{
         
         List<Avion> aviones = new LinkedList<>();
         if(modalidad.equals("1vs1")){
-          aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+50, baseY - 20));
-          aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+100, baseY - 20));
-          aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+150, baseY - 20));
-          aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+200, baseY - 20));
+          aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+50, baseY - 30));
+          aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+100, baseY - 30));
+          aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+150, baseY - 30));
+          aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Inicial", posicionCampoX+200, baseY - 30));
         }
         List<Jugador> jugadores = new LinkedList<>();
         jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
