@@ -64,12 +64,12 @@ class Partida {
                 */
                 if(msg.carga.bando=="Potencias"){
                     this.basePotencias[msg.carga.objeto].vida = msg.carga.vida;
-                    if(msg.carga.vida[0] == 0 && msg.carga.vida[1] == 0 && msg.carga.vida[2] == 0 )
+                    if(this.basePotencias[0].vida  == 0 && this.basePotencias[1].vida  == 0 && this.basePotencias[2].vida  == 0 )
                     this.estado="Terminada";
 
                 }else{
                     this.baseAliados[msg.carga.objeto].vida = msg.carga.vida;
-                    if(msg.carga.vida[0] == 0 && msg.carga.vida[1] == 0 && msg.carga.vida[2] == 0 )
+                    if(this.basePotencias[0].vida  == 0 && this.basePotencias[1].vida  == 0 && this.basePotencias[2].vida  == 0 )
                     this.estado="Terminada";
                 }
 
