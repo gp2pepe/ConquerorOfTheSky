@@ -34,6 +34,9 @@ class Partida {
             this.duenio = false;
             this.partidaCargada = true;
             //this.pass = msg.Partida.passwd;
+            if(msg.partida.publica == false){
+                this.estado = "Preparado";
+            }
 
         }else if(msg.operacion == "ingresoUnJugador"){            
             this.estado = "Jugando";
