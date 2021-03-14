@@ -183,15 +183,10 @@ class IngresarPartidaBuscar extends Phaser.Scene
             if (this.Publica == 'No')
                 {
                     config.Partida.ingresarAPartida(this.IdPartida, textContra.text);
-                    console.log('Mal, entré a privado')    
-                    config.Partida.estado = "Pausado";
-                    this.scene.launch('EsperandoContrincante');
                 }
             else
                 {
-                console.log('Antes de intresar a Partida');
                 config.Partida.ingresarAPartida(this.IdPartida, '');
-                console.log('Bien, entré en publica');
                 }
             //console.log(config.Partida);
             //this.scene.launch('confirmarNuevaPartida');
