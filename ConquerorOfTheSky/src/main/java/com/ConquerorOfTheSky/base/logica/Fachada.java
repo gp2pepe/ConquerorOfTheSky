@@ -91,10 +91,10 @@ public class Fachada implements IFachada{
         bases.add(base1);
 
         int yInicialAvionCampo;
-        if ((baseY - posicionCampoY + 50) > 200)
-          yInicialAvionCampo = posicionCampoY + 50 - 120;
+        if (posicionCampoY > 540)
+          yInicialAvionCampo = baseY - 120;
         else
-          yInicialAvionCampo = posicionCampoY + 50 + 120;
+          yInicialAvionCampo = baseY  + 120;
         
         List<Avion> aviones = new LinkedList<>();
         if(modalidad.equals("1vs1")){
@@ -146,10 +146,10 @@ public class Fachada implements IFachada{
         Base base2 = new Base(base2X,base2Y,depositoExp2,torre2,tanque2);
 
         int yInicialAvionCampo2;
-        if ((base2Y - posicionCampo2Y + 50) > 200)
-          yInicialAvionCampo2 = posicionCampo2Y + 50 - 120;
+        if (posicionCampo2Y > 540)
+          yInicialAvionCampo2 = base2Y - 120;
         else
-          yInicialAvionCampo2 = posicionCampo2Y + 50 + 120;
+          yInicialAvionCampo2 = base2Y - 120;
 
         List<Jugador> jugadores2 = new LinkedList<>();
         List<Avion> aviones2 = new LinkedList<>();
