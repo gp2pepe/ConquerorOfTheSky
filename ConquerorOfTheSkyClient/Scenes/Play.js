@@ -1603,16 +1603,23 @@ class Play extends Phaser.Scene {
         {              
             eval("avion_"+(i+1)+"= new Avion({scene: this,x:"+ (config.Partida.avionesPotencias[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesPotencias[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesPotencias[i].altitud+"',vidaAvion:"+ config.Partida.avionesPotencias[i].salud+",combustible: "+config.Partida.avionesPotencias[i].combustible+",idavion:" +(i+1)+" }).setInteractive(); ")
             eval("avion_"+(i+1)+".xInicial = campoPotencias.posicionX +"+posi+";")
-            eval("avion_"+(i+1)+".yInicial = campoPotencias.base.posicionY-30;")                
-            eval("avion_"+(i+1)+".cambiarAltitud('"+config.Partida.avionesPotencias[i].altitud+"');")
-            posi = posi +50;                
+            eval("avion_"+(i+1)+".yInicial = campoPotencias.base.posicionY-30;") 
+            console.log('altitud'); 
+            console.log(config.Partida.avionesPotencias[i].altitud);
+            if (config.Partida.avionesPotencias[i].altitud!="\"Inicial\"")   
+            {       
+                eval("avion_"+(i+1)+".cambiarAltitud('"+config.Partida.avionesPotencias[i].altitud+"');")
+                console.log('entre 1');     
+            }     
+            posi = posi +50;      
         }
         posi = 50;
         for(var i = 0; i < 4; i++){
             eval("avion_"+(i+1)+"_Aliados = new Avion({scene: this,x:"+ (config.Partida.avionesAliados[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesAliados[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesAliados[i].altitud+"',vidaAvion:"+ config.Partida.avionesAliados[i].salud+",combustible: "+config.Partida.avionesAliados[i].combustible+",idavion:" +(i+5)+" }).setInteractive(); ")
             eval("avion_"+(i+1)+"_Aliados.xInicial = campoAliados.posicionX +"+posi+";")
             eval("avion_"+(i+1)+"_Aliados.yInicial = campoAliados.base.posicionY-30;")
-            eval("avion_"+(i+1)+"_Aliados.cambiarAltitud('"+config.Partida.avionesAliados[i].altitud+"');")  
+            if (config.Partida.avionesAliados[i].altitud!="\"Inicial\"")
+                eval("avion_"+(i+1)+"_Aliados.cambiarAltitud('"+config.Partida.avionesAliados[i].altitud+"');")  
             posi = posi +50; 
         }
 
@@ -2865,10 +2872,11 @@ class Play extends Phaser.Scene {
    mensajeAviso(String)
     {        
         if(this.mensaje.text.length > 0 || this.mensaje2.text.length > 0)
-            {this.mensaje.destroy();
-            this.mensaje2.destroy();    
-            console.log('Entré al if de destruir texto');}
-         sleep = (delay) => new Promise((resolve) => setTimeout(resolve,delay))
+        {   
+            this.mensaje.destroy();
+            this.mensaje2.destroy(); 
+        }
+        sleep = (delay) => new Promise((resolve) => setTimeout(resolve,delay))
             Espera = async () => {
                 this.mensaje = this.add.text(800,5, String).setScale(1.9)
                 console.log(this.mensaje.text);
@@ -2884,19 +2892,20 @@ class Play extends Phaser.Scene {
     {        
         console.log(this.mensaje2);
         if(this.mensaje.text.length > 0 || this.mensaje2.text.length > 0)
-            {this.mensaje2.destroy();
-            this.mensaje.destroy();    
-            console.log('Entré al if de destruir texto');}
-         sleep = (delay) => new Promise((resolve) => setTimeout(resolve,delay))
-            Espera = async () => {
-                this.mensaje2 = this.add.text(800,5, String).setScale(1.9)
-                console.log(this.mensaje2.text);
-                await sleep(1000)
-                await sleep(2000)
-                await sleep(1000)
-                this.mensaje2.destroy();
-            }
-            Espera();  
+        {
+            this.mensaje2.destroy();
+            this.mensaje.destroy();     
+        }
+        sleep = (delay) => new Promise((resolve) => setTimeout(resolve,delay))
+        Espera = async () => {
+            this.mensaje2 = this.add.text(800,5, String).setScale(1.9)
+            console.log(this.mensaje2.text);
+            await sleep(1000)
+            await sleep(2000)
+            await sleep(1000)
+            this.mensaje2.destroy();
+        }
+        Espera();  
     }
 
     onEvent()
@@ -2911,7 +2920,6 @@ class Play extends Phaser.Scene {
                 if(config.Partida.aviones[i].vidaAvion<arregloVida[i]){
                     moverX =  (( arregloVida[i] - config.Partida.aviones[i].vidaAvion) * 100 / config.Partida.configuraciones.avionSalud );
                     arregloVida[i] = config.Partida.aviones[i].vidaAvion;
-                    console.log("llegue, la vida que tengo es: " +config.Partida.aviones[i].vidaAvion + " y lo voy a mover - :" + moverX);
                     eval("vidaBar"+(i+1)+".x-="+ moverX + ";")
                 }
                 
@@ -2920,8 +2928,7 @@ class Play extends Phaser.Scene {
             for(var i = 4; i < 8; i++){
                 if(config.Partida.aviones[i].vidaAvion<arregloVida[i]){
                     moverX =  (( arregloVida[i] - config.Partida.aviones[i].vidaAvion) * 100 / config.Partida.configuraciones.avionSalud );
-                    arregloVida[i] = config.Partida.aviones[i].vidaAvion;
-                    console.log("llegue " + moverX);
+                    arregloVida[i] = config.Partida.aviones[i].vidaAvion;                    
                     eval("vidaBar"+((i-3))+".x-="+ moverX + ";")
                 }
                 
@@ -2965,12 +2972,10 @@ class Play extends Phaser.Scene {
             if (config.Partida.aviones[i].altitud=='EnBase')
             {   
                 if(config.Partida.Bando=='Potencias' && i<4 && this.contenedorPotencias.vida>0)
-                {    
-                   console.log('entre aca');
+                {                     
                     config.Partida.aviones[i].combustible =85;
                     moverX = config.Partida.aviones[i].combustible+253;
-                    eval("combustibleBar"+((i+1))+".x="+ moverX + ";")
-                    
+                    eval("combustibleBar"+((i+1))+".x="+ moverX + ";")                    
                     this.vistaLateral = this.add.image(45,113,'vistaLateralEnBase').setOrigin(0).setScale(1); 
                 }  
                 else if(config.Partida.Bando=='Aliados' && i>3 && this.contenedorAliados.vida>0)
