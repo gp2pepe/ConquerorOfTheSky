@@ -2907,8 +2907,19 @@ class Play extends Phaser.Scene {
 
     actualizarCombustible(){
 
-        
-        for(var i = 0; i < 8; i++){
+       var inicio;
+       var fin;
+        if(config.Partida.Bando=='Potencias')
+        {
+            inicio = 0;
+            fin = 4;
+        }else{
+            inicio = 4;
+            fin = 8;
+        }
+
+
+        for(var i = inicio; i < fin; i++){
             if (this.EstaMoviendose(config.Partida.aviones[i]) && this.time>config.Partida.aviones[i].timeNafta 
                 && config.Partida.aviones[i].altitud!='EnBase')
             {  
@@ -2930,6 +2941,7 @@ class Play extends Phaser.Scene {
             {   
                 if(config.Partida.Bando=='Potencias' && i<4 && this.contenedorPotencias.vida>0)
                 {    
+                   console.log('entre aca');
                     config.Partida.aviones[i].combustible =85;
                     moverX = config.Partida.aviones[i].combustible+253;
                     eval("combustibleBar"+((i+1))+".x="+ moverX + ";")

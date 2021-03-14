@@ -124,6 +124,8 @@ class MenuCargar extends Phaser.Scene
             this.scene.remove('MenuInicial');
             this.scene.remove('MenuBando');
             this.scene.start('Play');
+			config.Partida.estado = "Pausado";
+            this.scene.launch('EsperandoContrincante');
 			
 		}
 		//Manejo los errores que vienen de backend
