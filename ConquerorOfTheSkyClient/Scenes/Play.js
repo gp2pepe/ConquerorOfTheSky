@@ -974,24 +974,14 @@ class Play extends Phaser.Scene {
      }
      
     choqueAviones(avion_potencia,avion_aliado)
-    {
-        if (config.Partida.Bando=='Potencias')
-        { 
-            if (avion_potencia.altitud == avion_aliado.altitud)
-            {
-                avion_potencia.vidaAvion= 0;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:100});                    
-               
-
-            }  
-        }else{
-            if (avion_potencia.altitud == avion_aliado.altitud)
-            {
-                console.log("rompi");
-                avion_aliado.vidaAvion= 0;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:100});  
-
-            }
+{
+        if (avion_potencia.altitud == avion_aliado.altitud)
+        {
+            avion_potencia.vidaAvion= 0;
+            avion_aliado.vidaAvion= 0;
+            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:config.Partida.configuraciones.avionSalud });                    
+            config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:config.Partida.configuraciones.avionSalud });                    
+        
         }   
     }
 
