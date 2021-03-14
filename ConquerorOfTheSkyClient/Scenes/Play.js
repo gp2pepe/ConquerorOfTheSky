@@ -2886,18 +2886,6 @@ class Play extends Phaser.Scene {
 
     actualizarCombustible(){
 
-        inicio;
-        fin;
-        if(config.Partida.Bando=='Potencias')
-        {
-            inicio = 0;
-            fin = 4;
-        }else{
-            inicio = 4;
-            fin = 8;
-        }
-
-
         for(var i = inicio; i < fin; i++){
             if (this.EstaMoviendose(config.Partida.aviones[i]) && this.time>config.Partida.aviones[i].timeNafta 
                 && config.Partida.aviones[i].altitud!='EnBase')
@@ -2918,16 +2906,15 @@ class Play extends Phaser.Scene {
             }
             if (config.Partida.aviones[i].altitud=='EnBase')
             {   
+                config.Partida.aviones[i].combustible =config.Partida.configuraciones.avionCombustible;
                 if(config.Partida.Bando=='Potencias' && i<4 && this.contenedorPotencias.vida>0)
                 {                     
-                    config.Partida.aviones[i].combustible =config.Partida.configuraciones.avionCombustible;
                     moverX = config.Partida.aviones[i].combustible+253;
                     eval("combustibleBar"+((i+1))+".x="+ moverX + ";")                    
                     this.vistaLateral = this.add.image(45,113,'vistaLateralEnBase').setOrigin(0).setScale(1); 
                 }  
                 else if(config.Partida.Bando=='Aliados' && i>3 && this.contenedorAliados.vida>0)
                 {    
-                    config.Partida.aviones[i].combustible =config.Partida.configuraciones.avionCombustible;
                     moverX = config.Partida.aviones[i].combustible+253;  
                     eval("combustibleBar"+((i-3))+".x="+ moverX + ";")
                 }   
