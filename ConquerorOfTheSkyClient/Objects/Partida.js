@@ -51,6 +51,7 @@ class Partida {
 
             }else if(msg.carga.tipoOp == "sincronizarBombaAvion"){
                 this.aviones[msg.carga.idavion-1].cargarbomba=msg.carga.bomba;
+               
 
             }else if(msg.carga.tipoOp == "sincronizarCombustibleAvion"){
                 this.aviones[msg.carga.idavion-1].cargarCombustible=msg.carga.combustible;
@@ -63,8 +64,13 @@ class Partida {
                 */
                 if(msg.carga.bando=="Potencias"){
                     this.basePotencias[msg.carga.objeto].vida = msg.carga.vida;
+                    if(msg.carga.vida[0] == 0 && msg.carga.vida[1] == 0 && msg.carga.vida[2] == 0 )
+                        config.Partida.estado="Terminada";
+
                 }else{
                     this.baseAliados[msg.carga.objeto].vida = msg.carga.vida;
+                    if(msg.carga.vida[0] == 0 && msg.carga.vida[1] == 0 && msg.carga.vida[2] == 0 )
+                        config.Partida.estado="Terminada";
                 }
 
             }else if(msg.carga.tipoOp == "sincronizarPausa"){

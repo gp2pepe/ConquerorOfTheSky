@@ -3273,9 +3273,9 @@ class Play extends Phaser.Scene {
 
 
         //Se controla condicion de victoria del juego por destruccion de la base
-        if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0)
+        if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 && config.Partida.estado == "Terminada" ) 
         {
-            config.Partida.estado="Terminada";
+            
             if (config.Partida.Bando=='Potencias')
             {
                 this.scene.launch('Win');
@@ -3287,10 +3287,10 @@ class Play extends Phaser.Scene {
             this.scene.pause();    
         }
 
-        if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0)
+        if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0 && config.Partida.estado == "Terminada")
         {
             
-            config.Partida.estado="Terminada";
+            //config.Partida.estado="Terminada";
             if (config.Partida.Bando=='Aliados')
             {
                 this.scene.launch('Win');
