@@ -19,6 +19,8 @@ class Partida {
             this.Bando = msg.bando;
             this.campoPotencias = msg.campoPotencias;
             this.campoAliados = msg.campoAliados;
+            this.avionesPotencias = msg.avionesPotencias;
+            this.avionesAliados = msg.avionesAliados;
             this.configuraciones = msg.configuraciones;
             this.duenio = true;
             this.partidaCargada = true;
@@ -30,6 +32,8 @@ class Partida {
             this.Bando = msg.bando;
             this.campoPotencias = msg.campoPotencias;
             this.campoAliados = msg.campoAliados;
+            this.avionesPotencias = msg.avionesPotencias;
+            this.avionesAliados = msg.avionesAliados;
             this.configuraciones = msg.configuraciones;
             this.duenio = false;
             this.partidaCargada = true;

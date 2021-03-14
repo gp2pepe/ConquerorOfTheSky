@@ -76,16 +76,7 @@ public class Fachada implements IFachada{
         }
 
         //Equipo 1
-        List<Avion> aviones = new LinkedList<>();
-        if(modalidad.equals("1vs1")){
-          aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-        }
-        List<Jugador> jugadores = new LinkedList<>();
-        jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
-        
+
         DepositoDeExplosivos depositoExp = new DepositoDeExplosivos(conf.getDepositoExplosivosSalud());
         TorreDeControl torre = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
         TanqueDeCombustible tanque = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());
@@ -98,6 +89,23 @@ public class Fachada implements IFachada{
         List<Base> bases = new LinkedList<>();
         Base base1 = new Base(baseX,baseY,depositoExp,torre,tanque);
         bases.add(base1);
+
+        int yInicialAvionCampo;
+        if (baseY - posicionCampoY + 50 > 200)
+          yInicialAvionCampo = posicionCampoY + 50 - 120;
+        else
+          yInicialAvionCampo = posicionCampoY + 50 + 120;
+        
+        List<Avion> aviones = new LinkedList<>();
+        if(modalidad.equals("1vs1")){
+          aviones.add(new Avion( "Avion", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", posicionCampoX+70, yInicialAvionCampo));
+          aviones.add(new Avion( "Avion1", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", posicionCampoX+140, yInicialAvionCampo));
+          aviones.add(new Avion( "Avion2", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", posicionCampoX+210, yInicialAvionCampo));
+          aviones.add(new Avion( "Avion3", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", posicionCampoX+280, yInicialAvionCampo));
+        }
+        List<Jugador> jugadores = new LinkedList<>();
+        jugadores.add(new Jugador(nick, sesionUsu, true, aviones));
+        
 
         //Seteo la artilleria para el campo 1
         Set<Artilleria> artillerias = new HashSet<Artilleria>();
@@ -127,17 +135,6 @@ public class Fachada implements IFachada{
 
 
         //Equipo 2
-        List<Jugador> jugadores2 = new LinkedList<>();
-        List<Avion> aviones2 = new LinkedList<>();
-        if(modalidad.equals("1vs1")){
-          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", 0, 0));
-          jugadores2.add(new Jugador("", null, false, aviones2));
-
-        }
-
         DepositoDeExplosivos depositoExp2 = new DepositoDeExplosivos(conf.getDepositoExplosivosSalud());
         TorreDeControl torre2 = new TorreDeControl( conf.getTorreSalud(), conf.getTorreRadioDisparo(), conf.getTorreDanio());
         TanqueDeCombustible tanque2 = new TanqueDeCombustible(conf.getTanqueCombustibleSalud());       
@@ -147,6 +144,23 @@ public class Fachada implements IFachada{
         int base2Y = (int) (Math.random() * (((posicionCampo2Y + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampo2Y) + 1)) + posicionCampo2Y;
 
         Base base2 = new Base(base2X,base2Y,depositoExp2,torre2,tanque2);
+
+        int yInicialAvionCampo2;
+        if (base2Y - posicionCampo2Y + 50 > 200)
+          yInicialAvionCampo2 = posicionCampo2Y + 50 - 120;
+        else
+          yInicialAvionCampo2 = posicionCampo2Y + 50 + 120;
+
+        List<Jugador> jugadores2 = new LinkedList<>();
+        List<Avion> aviones2 = new LinkedList<>();
+        if(modalidad.equals("1vs1")){
+          aviones2.add(new Avion( "Avion4", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", posicionCampoX+70, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion5", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", posicionCampoX+140, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion6", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", posicionCampoX+210, yInicialAvionCampo2));
+          aviones2.add(new Avion( "Avion7", conf.getAvionSalud(),conf.getAvionDanio(),conf.getAvionVelocidad(), conf.getAvionCombustible(), "Baja", posicionCampoX+280, yInicialAvionCampo2));
+          jugadores2.add(new Jugador("", null, false, aviones2));
+
+        }
 
         //Seteo la artilleria para el campo 2
         Set<Artilleria> artillerias2 = new HashSet<Artilleria>();
@@ -199,6 +213,8 @@ public class Fachada implements IFachada{
         JsonElement jsonElementPartida = gson.toJsonTree(partidaNueva);
         JsonElement jsonElementCampo = gson.toJsonTree(campo1);
         JsonElement jsonElementCampo2 = gson.toJsonTree(campo2);
+        JsonElement jsonElementAviones = gson.toJsonTree(aviones);
+        JsonElement jsonElementAviones2 = gson.toJsonTree(aviones2);
 
         JsonObject innerObject = new JsonObject();
         innerObject.addProperty("operacion", "iniciarPartida");
@@ -207,8 +223,12 @@ public class Fachada implements IFachada{
         innerObject.addProperty("bando", bando);
         innerObject.add("campo"+bando, jsonElementCampo);
         innerObject.add("campo"+bando2, jsonElementCampo2);
+        innerObject.add("aviones"+bando, jsonElementAviones);
+        innerObject.add("aviones"+bando2, jsonElementAviones2);
 
         return gson.toJson(innerObject);
+
+
 
     }
 
@@ -223,6 +243,9 @@ public class Fachada implements IFachada{
       Campo campoContrario = null;
       String bando = "";
       String bandoContrario = "";
+      List<Avion> aviones= null; 
+      List<Avion> aviones2= null; 
+
       int i = 0;
       boolean encontre = false;
       while(i<partidas.size() && encontre == false){
@@ -250,8 +273,13 @@ public class Fachada implements IFachada{
               partida.setEquipos(equipos);
               campo =  equipos.get(1).getCampo();
               bando = equipos.get(1).getBando();
+              aviones = equipos.get(1).getJugadores().get(0).getAviones();
+
               campoContrario =  equipos.get(0).getCampo();
               bandoContrario =  equipos.get(0).getBando();
+              aviones2 = equipos.get(0).getJugadores().get(0).getAviones();
+
+
             }
             encontre = true;
           }else{
@@ -271,6 +299,8 @@ public class Fachada implements IFachada{
       JsonElement jsonElementPartida = gson.toJsonTree(partida);
       JsonElement jsonElementCampo = gson.toJsonTree(campo);
       JsonElement jsonElementCampoContrario = gson.toJsonTree(campoContrario);
+      JsonElement jsonElementAviones = gson.toJsonTree(aviones);
+      JsonElement jsonElementAviones2 = gson.toJsonTree(aviones2);
 
       JsonObject innerObject = new JsonObject();
       innerObject.addProperty("operacion", "ingresarAPartida");
@@ -279,6 +309,8 @@ public class Fachada implements IFachada{
       innerObject.addProperty("bando", bando);
       innerObject.add("campo"+bando, jsonElementCampo);
       innerObject.add("campo"+bandoContrario, jsonElementCampoContrario);
+      innerObject.add("aviones"+bando, jsonElementAviones);
+      innerObject.add("aviones"+bandoContrario, jsonElementAviones2);
       LOGGER.debug("Devolvi la partida: " + innerObject);
 
       return gson.toJson(innerObject);
