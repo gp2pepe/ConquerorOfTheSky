@@ -980,7 +980,7 @@ class Play extends Phaser.Scene {
             if (avion_potencia.altitud == avion_aliado.altitud)
             {
                 avion_potencia.vidaAvion= 0;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:0});                    
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_aliado.idavion, vida:100});                    
                
 
             }  
@@ -989,7 +989,7 @@ class Play extends Phaser.Scene {
             {
                 console.log("rompi");
                 avion_aliado.vidaAvion= 0;
-                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:0});  
+                config.Partida.sincronizar({tipoOp:"sincronizarVidaAvion", idavion:avion_potencia.idavion, vida:100});  
 
             }
         }   
