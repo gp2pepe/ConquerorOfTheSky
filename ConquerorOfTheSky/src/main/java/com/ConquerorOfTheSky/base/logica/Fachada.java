@@ -83,8 +83,8 @@ public class Fachada implements IFachada{
 
 
         //Randomizo la posición de la base 1
-        int baseX = (int) (Math.random() * (((posicionCampoX  + conf.getCampoTamanioX() - conf.getBaseTamanioX() ) - posicionCampoX) + 1)) + posicionCampoX ;
-        int baseY = (int) (Math.random() * (((posicionCampoY + 30 + conf.getCampoTamanioY() - conf.getBaseTamanioY() ) - posicionCampoY + 30) + 1)) + posicionCampoY + 30;
+        int baseX = (int) (Math.random() * (((posicionCampoX  + conf.getCampoTamanioX() - (conf.getBaseTamanioX() +10 ) ) - posicionCampoX + 10) + 1)) + posicionCampoX + 10 ;
+        int baseY = (int) (Math.random() * (((posicionCampoY + conf.getCampoTamanioY() - (conf.getBaseTamanioY() +30 ) ) - posicionCampoY + 30) + 1)) + posicionCampoY + 30;
 
         List<Base> bases = new LinkedList<>();
         Base base1 = new Base(baseX,baseY,depositoExp,torre,tanque);
