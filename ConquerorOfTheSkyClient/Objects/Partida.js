@@ -65,12 +65,12 @@ class Partida {
                 if(msg.carga.bando=="Potencias"){
                     this.basePotencias[msg.carga.objeto].vida = msg.carga.vida;
                     if(msg.carga.vida[0] == 0 && msg.carga.vida[1] == 0 && msg.carga.vida[2] == 0 )
-                        config.Partida.estado="Terminada";
+                    this.estado="Terminada";
 
                 }else{
                     this.baseAliados[msg.carga.objeto].vida = msg.carga.vida;
                     if(msg.carga.vida[0] == 0 && msg.carga.vida[1] == 0 && msg.carga.vida[2] == 0 )
-                        config.Partida.estado="Terminada";
+                    this.estado="Terminada";
                 }
 
             }else if(msg.carga.tipoOp == "sincronizarPausa"){
