@@ -76,6 +76,8 @@ class Partida {
                     this.estado = "Jugando";
                 }
 
+            }else if(msg.carga.tipoOp == "terminarPartida"){
+                this.estado = "Terminada";
             }
 
         }else if(msg.operacion == "listarPartidas"){ 
@@ -99,8 +101,6 @@ class Partida {
             this.duenio = true;
             this.partidaCargada = true;
             console.log('Partida1: '+msg);
-        }else if(msg.operacion == "Terminada"){ 
-            this.estado = "Terminada";
         }else if(msg.operacion == "errorServidor"){ 
                 this.hayError = true;
                 this.mensajeError = msg.mensaje;

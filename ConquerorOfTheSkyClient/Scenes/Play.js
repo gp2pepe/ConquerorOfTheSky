@@ -3222,7 +3222,7 @@ class Play extends Phaser.Scene {
             if (this.torrePotencias.vida <= 0 && this.depositoPotencias.vida <= 0 && this.contenedorPotencias.vida <= 0 )
             {
                 this.scene.launch('GameOver');
-                config.Partida.terminarPartida();
+                config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
                 this.scene.pause();   
 
             }else{
@@ -3240,7 +3240,7 @@ class Play extends Phaser.Scene {
             if (this.torreAliados.vida <= 0 && this.depositoAliados.vida <= 0 && this.contenedorAliados.vida <= 0 )
             {
                 this.scene.launch('GameOver');
-                config.Partida.terminarPartida();
+                config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
                 this.scene.pause();   
 
             }else{
