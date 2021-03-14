@@ -78,7 +78,8 @@ class Avion extends Phaser.GameObjects.Sprite {
 
     calcularVelocidad()
     {
-        var velocidad = config.Partida.configuraciones.avionVelocidad        
+        var velocidad = config.Partida.configuraciones.avionVelocidad;
+     
         if (this.altitud == "Baja")
             if (this.tengobomba)
                 return velocidad/2;

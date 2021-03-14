@@ -57,7 +57,8 @@ class Partida {
 
             }else if(msg.carga.tipoOp == "sincronizarBombaAvion"){
                 this.aviones[msg.carga.idavion-1].cargarbomba=msg.carga.bomba;
-                if(!msg.carga.bomba){
+                if(msg.carga.bomba==false){
+                    this.aviones[msg.carga.idavion-1].tengobomba=msg.carga.bomba;
                     this.aviones[msg.carga.idavion-1].soltarBomba();
                 }
                
