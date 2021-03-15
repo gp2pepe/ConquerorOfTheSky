@@ -27,7 +27,7 @@ class Avion extends Phaser.GameObjects.Sprite {
         this.cargarCombustible=false; 
         this.lastFired = 0;
         this.activarColision=0;
-        this.tengobomba=false;
+        this.tengobomba=configuracion.tengoBomba;
         this.mepegaron='false';
         this.timeNafta=550;
         this.saliBase=true;

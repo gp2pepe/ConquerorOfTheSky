@@ -1636,18 +1636,29 @@ class Play extends Phaser.Scene {
         
         for(var i = 0; i < 4; i++)
         {              
-            eval("avion_"+(i+1)+"= new Avion({scene: this,x:"+ (config.Partida.avionesPotencias[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesPotencias[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesPotencias[i].altitud+"',vidaAvion:"+ config.Partida.avionesPotencias[i].salud+",combustible: "+config.Partida.avionesPotencias[i].combustible+",idavion:" +(i+1)+" }).setInteractive(); ")
+            var bomba = false;
+            if (typeof config.Partida.avionesPotencias[i].bomba !== 'undefined')
+                bomba = true;
+
+            eval("avion_"+(i+1)+"= new Avion({scene: this,x:"+ (config.Partida.avionesPotencias[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesPotencias[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesPotencias[i].altitud+"',vidaAvion:"+ config.Partida.avionesPotencias[i].salud+",combustible: "+config.Partida.avionesPotencias[i].combustible+",idavion:" +(i+1)+",tengoBomba: "+bomba+" }).setInteractive(); ")
             eval("avion_"+(i+1)+".xInicial = campoPotencias.posicionX +"+posi+";")
             eval("avion_"+(i+1)+".yInicial = campoPotencias.base.posicionY-30;") 
             if (config.Partida.tipoPartida=='cargarPartida')
                 eval("avion_"+(i+1)+".cambiarAltitud("+config.Partida.avionesPotencias[i].altitud+");")
             else
                 eval("avion_"+(i+1)+".cambiarAltitud('"+config.Partida.avionesPotencias[i].altitud+"');")
+
+
             posi = posi +50;      
         }
         posi = 50;
         for(var i = 0; i < 4; i++){
-            eval("avion_"+(i+1)+"_Aliados = new Avion({scene: this,x:"+ (config.Partida.avionesAliados[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesAliados[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesAliados[i].altitud+"',vidaAvion:"+ config.Partida.avionesAliados[i].salud+",combustible: "+config.Partida.avionesAliados[i].combustible+",idavion:" +(i+5)+" }).setInteractive(); ")
+
+            var bomba = false;
+            if (typeof config.Partida.avionesPotencias[i].bomba !== 'undefined')
+                bomba = true;
+
+            eval("avion_"+(i+1)+"_Aliados = new Avion({scene: this,x:"+ (config.Partida.avionesAliados[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesAliados[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesAliados[i].altitud+"',vidaAvion:"+ config.Partida.avionesAliados[i].salud+",combustible: "+config.Partida.avionesAliados[i].combustible+",idavion:" +(i+5)+",tengoBomba: "+bomba+" }).setInteractive(); ")
             eval("avion_"+(i+1)+"_Aliados.xInicial = campoAliados.posicionX +"+posi+";")
             eval("avion_"+(i+1)+"_Aliados.yInicial = campoAliados.base.posicionY-30;")             
             if (config.Partida.tipoPartida=='cargarPartida')
