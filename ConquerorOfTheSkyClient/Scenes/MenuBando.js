@@ -304,8 +304,7 @@ class MenuBando extends Phaser.Scene
             config.Partida.tipoPartida = "NuevaPartida";
             console.log(config.Partida.nick);
             config.Partida.iniciarPartida();
-            //console.log(config.Partida);
-            //this.scene.launch('confirmarNuevaPartida');
+
         }
         });
 

@@ -22,8 +22,6 @@ class MenuPartidas extends Phaser.Scene {
 
     create() {
         var listaPartidass = config.Partida.listaPartidas;
-        console.log(listaPartidass);
-        console.log(config.Partida.listaPartidas);
         //this.add.image(0, 0, "fondoMenu").setOrigin(0);
         //this.add.image(0,0, 'desenfocar').setOrigin(0);
         this.add.image(150, 150, "fondoBuscarPartida").setOrigin(0).setScale(2);
@@ -92,10 +90,7 @@ class MenuPartidas extends Phaser.Scene {
                             top: (scrollMode === 0) ? 0 : 15,
                         }
                     });
-                    console.log(cell.index + ': create new cell-container');
-                } else {
-                    console.log(cell.index + ': reuse cell-container');
-                }
+                } 
 
                 // Set properties from item value
                 cellContainer.setMinSize(width, height); // Size might changed in this demo
@@ -125,25 +120,10 @@ class MenuPartidas extends Phaser.Scene {
             .on('cell.click', function (cellContainer, cellIndex, pointer) {
                 //this.print.text += 'click ' + cellIndex + ': ' + cellContainer.text + '\n';
                 var partida =cellContainer.text.split(' ');
-                
-                //No necesario ?
-               /*var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
-               encontre = false;
-                var i = 0;
-                const partida1;
-                while(i < listaPartidas.length && !encontre){
-                    if(listaPartidas[i].idPartida==partida[0]){
-                        partida1 = listaPartidas[i].idPartida;
-                        encontre = true;
-                    }
-                    i++;
-                }*/
                 var nombrePartida = listaPartidass[partida[0]].nombre;
                 var cantLetrasPartida = cantLetrasString(nombrePartida)
-                console.log(partida);
                 var bando = listaPartidass[partida[0]].bandoDuenio;
                 var posicionNombre = 44 - cantLetrasPartida;
-                console.log()
                 this.scene.pause();
                 this.scene.launch('IngresarPartidaBuscar', { Id: partida[0], Nombre: partida[posicionNombre], Bando: bando, Publica: partida[posicionNombre  + 62] });
                 this.scene.pause('MenuPartidas');
@@ -177,37 +157,17 @@ class MenuPartidas extends Phaser.Scene {
         });
     }
 
-    update() {
-        /*if(config.Partida.partidaCargada){
-            this.scene.remove('MenuInicial');
-            this.scene.remove('MenuPartidas');
-            this.scene.remove('PartidaLlena');
-            this.scene.start('Play');
-        }else if(config.Partida.hayError){
-            if(config.Partida.mensajeError=="La partida esta llena"){
-                console.log("Sigo avisando de error");
-                //this.scene.sendToBack();
-                this.scene.launch('PartidaLlena');
-                this.currentScene = this.scene.get('PartidaLlena');
-                this.scene.setVisible(true, this.currentScene);
-            }       
-            
-        }*/
-     }
 }
 
 var CreateItems = function (count) {
     var data = [];  
     var listaPartidas = config.Partida.listaPartidas; //Acá suplantaría este arreglo con lo que me diga Gabriel luego de agregarle lo faltante  
     var cantPartidas = listaPartidas.length;
-    console.log(listaPartidas);
-    console.log(data);
     for (var i = 0; i < cantPartidas; i++) {
         data.push({
             id: +listaPartidas[i].idPartida + '                                '  +listaPartidas[i].nombre + '                             ' + listaPartidas[i].jugConectados + '/2' + '                                 ' + esPublica(listaPartidas[i].publica) + '                                 ' + listaPartidas[i].modalidad,
             gold:listaPartidas[i].idPartida ,
         });
-        console.log(listaPartidas);
     }
     return data;
 }
@@ -231,7 +191,6 @@ var cantLetrasString = function (String)
     var cantLetras = 0;
     for(var i = 0; i<12; i++)
     {
-        console.log(String[i]);
         if (String[i] != ' ')
         {
             cantLetras++;

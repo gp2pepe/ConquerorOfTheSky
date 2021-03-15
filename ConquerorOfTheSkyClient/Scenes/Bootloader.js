@@ -12,11 +12,6 @@ class Bootloader extends Phaser.Scene {
         this.load.image([
             'Nieuport_28C1',
             'fondoMapa',
-            'mapa_1',
-            'mapa_2',
-            'mapa_3',
-            'mapa_4',
-            'mapa_5',
             'mapa_6',
             'campo',
             'bullet',
@@ -31,27 +26,14 @@ class Bootloader extends Phaser.Scene {
             'Aliados',
             'potenciasCentrales',
             'titulo',
-            'contenedor',
             'contenedor_2',
             'torre',
-            'muralla',
             'deposito',
             'artilleria',
-            'artilleria_2',
-            'artilleria_3',
-            'artilleria_4',
-            'artilleria_5',
-            'albatros',
             'pisoBase',
             'depositoCombustible',
             'circuloAvion',
             'Nieuport_28C1Lateral',
-
-
-            'boton_1',
-            'boton_2',
-            'boton_3',
-            'boton_4',
             'botonBomba',
             'botonBombaRojo',
             'botonCombustible',
@@ -74,63 +56,42 @@ class Bootloader extends Phaser.Scene {
             'vidaBar',
             'combustibleBar',
             'avionBombaLateral',
-
-             'menupartidas',
-             'menupartidas_2',
-             'nubeslateral',
-             'vistaLateralBaja',
-             'vistaLateralEnBase',
-
-
+            'nubeslateral',
+            'vistaLateralBaja',
+            'vistaLateralEnBase',
             'wall1',
             'wall2',
             'seleccioncarac',
             'seleccionBando',
-            'fondoendgame',
             'pruebaEndGame',
             'imagenWinGame2estrellas',
             'imagenWinGame1estrellas',
             'imagenWinGame3estrellas',
-             'imagenDerrota',
-             'mask',
-             'mitadMapa',
-             'mapa_6Claro',
-             'Save-64',
-             'guardando',
-             'pausado',
-             'fondoGuardar',
-             "fondoCargar",
-             'fondoBuscarPartida',
-             'menuEmergenteBuscar',
-             'esperandoContrincante'
-             //'loading'
+            'imagenDerrota',
+            'mask',
+            'Save-64',
+            'guardando',
+            'pausado',
+            'fondoGuardar',
+            "fondoCargar",
+            'fondoBuscarPartida',
+            'menuEmergenteBuscar',
+            'esperandoContrincante',
+            'imagenWinGame1estrellaSeRetiro'
 
         ])
-        /* var context = new AudioContext();
-        console.log(context); */
         this.load.audio('fondo_menu','audio/fondo_menu.wav');
         this.load.audio('sonido_disparos','audio/sonido_disparos.wav');
         this.load.audio('sonido_click','audio/sonido_click.mp3');
         this.load.audio('sonido_confirmar','audio/sonido_confirmar.wav');
         this.load.audio('Battleship','audio/Battleship.wav');
-        this.load.audio('click','audio/click.wav');
-        this.load.audio('sonido_derrota','audio/sonido_derrota.wav');
-        this.load.audio('sonido_victoria','audio/sonido_victoria.wav');
-        
+        this.load.atlas('test', 'animaciones/explosion.png', 'animaciones/explosion_atlas.json',Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
         this.load.on('complete',()=>{
             this.scene.start('MenuInicial');
         })
         config.WebSocket.openConnection();
     }
     create(){       
-        /* let sonido_fondo = this.sound.add('fondo_menu',{loop:true})
-        sonido_fondo.resume();
-         this.input.keyboard.on('keydown_RIGHT',() => {
-            sonido_fondo.play();
-        })
-        this.input.keyboard.on('keydown_LEFT',() => {
-            sonido_fondo.stop(0);
-        })  */
     }
 }
 

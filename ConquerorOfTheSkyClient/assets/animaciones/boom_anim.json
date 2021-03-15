@@ -1,0 +1,36 @@
+{
+    "anims": [
+        {
+            "key": "kboom",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "boom",
+                    "frame": "yed3_0"
+                },
+                {
+                    "key": "boom",
+                    "frame": "yed3_1"
+                },
+                {
+                    "key": "boom",
+                    "frame": "yed3_2"
+                },
+                {
+                    "key": "boom",
+                    "frame": "yed3_3"
+                },
+                {
+                    "key": "boom",
+                    "frame": "yed3_4"
+                },
+                {
+                    "key": "boom",
+                    "frame": "yed3_5"
+                }
+            ]
+        }
+    ]
+}

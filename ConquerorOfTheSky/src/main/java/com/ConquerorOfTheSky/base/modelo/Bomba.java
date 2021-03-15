@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="bomba")
 public class Bomba {
@@ -15,7 +17,9 @@ public class Bomba {
     @Column(name="id_bomba")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idBomba;
-    private int radioImpacto;
+    @Expose
+    private int radioImpacto; 
+    @Expose
     private int danio;
 
     public Bomba() {

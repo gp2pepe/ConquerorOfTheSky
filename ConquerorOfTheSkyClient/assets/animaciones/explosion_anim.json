@@ -1,0 +1,80 @@
+{
+    "anims": [
+        {
+            "key": "boom",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_0"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_1"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_2"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_3"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_4"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_5"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_6"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_7"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_8"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_9"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_10"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_11"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_12"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_13"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_14"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_15"
+                },
+                {
+                    "key": "explosion",
+                    "frame": "2a9n_16"
+                }
+            ]
+        }
+    ]
+}
