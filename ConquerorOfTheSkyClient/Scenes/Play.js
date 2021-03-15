@@ -1655,7 +1655,7 @@ class Play extends Phaser.Scene {
         for(var i = 0; i < 4; i++){
 
             var bomba = false;
-            if (typeof config.Partida.avionesPotencias[i].bomba !== 'undefined')
+            if (typeof config.Partida.avionesAliados[i].bomba !== 'undefined')
                 bomba = true;
 
             eval("avion_"+(i+1)+"_Aliados = new Avion({scene: this,x:"+ (config.Partida.avionesAliados[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesAliados[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesAliados[i].altitud+"',vidaAvion:"+ config.Partida.avionesAliados[i].salud+",combustible: "+config.Partida.avionesAliados[i].combustible+",idavion:" +(i+5)+",tengoBomba: "+bomba+" }).setInteractive(); ")

@@ -303,8 +303,7 @@ class MenuBando extends Phaser.Scene
             config.Partida.tipoPartida = "NuevaPartida";
             console.log(config.Partida.nick);
             config.Partida.iniciarPartida();
-            console.log(config.Partida);
-            this.scene.launch('confirmarNuevaPartida');
+
         }
         });
 
@@ -335,8 +334,8 @@ class MenuBando extends Phaser.Scene
             this.scene.remove('MenuInicial');
             this.scene.remove('MenuBando');
             this.scene.start('Play');
-            //config.Partida.estado = "Pausado";
-            //this.scene.launch('EsperandoContrincante');
+            config.Partida.estado = "Pausado";
+            this.scene.launch('EsperandoContrincante');
 
         }
 
