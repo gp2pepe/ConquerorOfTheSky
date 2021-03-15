@@ -159,7 +159,7 @@ class Play extends Phaser.Scene {
         this.pisoBasePotencias = this.add.image(campoPotencias.base.posicionX + 50, campoPotencias.base.posicionY + 50, 'pisoBase').setScale(.25);
         this.contenedorExplosivosPotencias = this.add.image(campoPotencias.base.posicionX+10, campoPotencias.base.posicionY + 10, 'contenedor_2').setScale(.15);
         this.depositoCombustiblePotencias = this.add.image(campoPotencias.base.posicionX + 70, campoPotencias.base.posicionY + 10, 'depositoCombustible').setScale(.10);
-        this.torrePotencias = this.add.image(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 'torre').setScale(.07);
+        this.torrePotencias = this.add.image(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 'torre').setScale(.7);
         avionXInicial = campoPotencias.base.posicionX ; 
 
         this.torrePotencias.vida= campoPotencias.base.torreControl.salud;
@@ -218,7 +218,7 @@ class Play extends Phaser.Scene {
         this.pisoBaseAliados = this.add.image(campoAliados.base.posicionX + 50, campoAliados.base.posicionY + 50, 'pisoBase').setScale(.25);
         this.contenedorExplosivosAliados = this.add.image(campoAliados.base.posicionX+10, campoAliados.base.posicionY + 10, 'contenedor_2').setScale(.15);
         this.depositoCombustibleAliados = this.add.image(campoAliados.base.posicionX + 70, campoAliados.base.posicionY + 10, 'depositoCombustible').setScale(.10);
-        this.torreAliados = this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.07);
+        this.torreAliados = this.add.image(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 'torre').setScale(.7);
        
         this.torreAliados.vida= campoAliados.base.torreControl.salud;
         this.physics.world.enable(this.torreAliados);        
