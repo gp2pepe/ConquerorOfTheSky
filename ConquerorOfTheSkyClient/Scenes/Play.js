@@ -82,6 +82,7 @@ var timer1 = 100;
 var timer2 = 100;
 var timer3 = 100;
 var timer4 = 100;
+var boom;
 
 const arregloVida = new Array();
 
@@ -93,7 +94,9 @@ class Play extends Phaser.Scene {
         super({key: 'Play'});
         this.bullets;
     }
-    create(){         
+    create(){       
+       // boom = this.add.sprite(0, 0, "Nieuport_28C1");
+        //boom.setVisible(false);  
         console.log(config.Partida);
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);45
@@ -197,8 +200,7 @@ class Play extends Phaser.Scene {
             artilleriasPotencias.getChildren()[i].setCircle(campoPotencias.artillerias[i].radioDisparo);
             artilleriasPotencias.getChildren()[i].setOffset(-250,-250);  
             artilleriasPotencias.getChildren()[i].lastFired = 0; 
-            artilleriasPotencias.getChildren()[i].vida = campoPotencias.artillerias[i].salud; 
-
+            artilleriasPotencias.getChildren()[i].vida = campoPotencias.artillerias[i].salud;
         }
 
         //Cargo base para bando 2 - Aliados
@@ -504,20 +506,18 @@ class Play extends Phaser.Scene {
             duration: 5000
         });
 */
-        /*
+
         this.anims.create({
             key: 'explosion',
-            frames: this.anims.generateFrameNames('Nieuport_28C1',{
+            frames: this.anims.generateFrameNames('test',{
                 prefix: '2a9n_',
                 start: 0,
                 end: 16,
             }),
-            repeat: -1,
+            repeat: 3,
             frameRate: 12
 
         })
-        this.boom = this.add.sprite(233, 520 , "Nieuport_28C1");
-        this.boom.play('explosion')*/
     }
 
 
@@ -1113,6 +1113,7 @@ class Play extends Phaser.Scene {
                     this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_chico.danio;                   
                     config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
                     this.mensajeAviso('Se ha hecho ' + this.circulo_bomba_chico.danio + ' de daño a la Torre enemiga');
+                    console.log(this.torreAliados.vida);
                 }
             });
 
@@ -1124,6 +1125,7 @@ class Play extends Phaser.Scene {
                     this.torreAliados.vida = this.torreAliados.vida - this.circulo_bomba_grande.danio;                   
                     config.Partida.sincronizar({tipoOp:"sincronizarVidaBase", objeto:0, bando:"Aliados", vida: this.torreAliados.vida});                    
                     this.mensajeAviso2('Se ha hecho ' + this.circulo_bomba_grande.danio + ' de daño a la Torre enemiga');
+                    console.log(this.torreAliados.vida);
                 }
             });
             //contendor
@@ -2971,24 +2973,21 @@ class Play extends Phaser.Scene {
             } 
         } 
         else
-        {
-            
+        {            
             dx = avion.x - avion_1.x;
             dy = avion.y - avion_1.y;           
             distance = Math.sqrt(dx * dx + dy * dy);                   
             if (distance < 100 && avion_1.vidaAvion>0)      
             {                   
                 return true;           
-            } 
-            
+            }            
             dx = avion.x - avion_2.x;
             dy = avion.y - avion_2.y;
             distance = Math.sqrt(dx * dx + dy * dy);         
             if (distance < 100 && avion_2.vidaAvion>0)      
             {   
                 return true;           
-            } 
-
+            }
             dx = avion.x - avion_3.x;
             dy = avion.y - avion_3.y;
             distance = Math.sqrt(dx * dx + dy * dy);         
@@ -2996,7 +2995,6 @@ class Play extends Phaser.Scene {
             {   
                 return true;           
             } 
-
             dx = avion.x - avion_4.x;
             dy = avion.y - avion_4.y;
             distance = Math.sqrt(dx * dx + dy * dy);         
@@ -3060,8 +3058,7 @@ class Play extends Phaser.Scene {
                     moverX =  (( arregloVida[i] - config.Partida.aviones[i].vidaAvion) * 100 / config.Partida.configuraciones.avionSalud );
                     arregloVida[i] = config.Partida.aviones[i].vidaAvion;
                     eval("vidaBar"+(i+1)+".x-="+ moverX + ";")
-                }
-                
+                }                
             }
         }else{
             for(var i = 4; i < 8; i++){
@@ -3069,8 +3066,7 @@ class Play extends Phaser.Scene {
                     moverX =  (( arregloVida[i] - config.Partida.aviones[i].vidaAvion) * 100 / config.Partida.configuraciones.avionSalud );
                     arregloVida[i] = config.Partida.aviones[i].vidaAvion;                    
                     eval("vidaBar"+((i-3))+".x-="+ moverX + ";")
-                }
-                
+                }                
             }
         }
 
@@ -3213,6 +3209,9 @@ class Play extends Phaser.Scene {
         
         if(avion_1.vidaAvion <= 0 ) 
             {
+               // boom = this.add.sprite(avion_1.x, avion_1.y , "Nieuport_28C1");
+                //boom.setVisible(true);
+                //boom.play('explosion');
                 avion_1.destroy();
                 if (mensajeAvionDestruido1 == false && config.Partida.Bando == 'Aliados')
                 {
@@ -3233,6 +3232,7 @@ class Play extends Phaser.Scene {
                     light1.setIntensity(0);
                     light1Bomba.setIntensity(0);
                 }
+                
             }
         if(avion_2.vidaAvion <= 0 ) 
         {
