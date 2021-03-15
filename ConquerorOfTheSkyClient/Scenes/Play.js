@@ -3502,6 +3502,17 @@ class Play extends Phaser.Scene {
             torreBar.x = config.Partida.baseAliados[0].vida+70;  
         }
 
+        //Manejo los errores que vienen de backend
+		if(config.Partida.hayError){
+			if(config.Partida.mensajeError=="Se desconecto un jugador" ){
+                config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
+                this.scene.remove('Play');  
+                this.scene.launch('WinHuida'); 
+
+			}
+
+		}
+
     }
 
 
