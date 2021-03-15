@@ -24,14 +24,25 @@ class Pausado extends Phaser.Scene
 
     create() 
     {   
-		this.Pausado = this.add.image(900,550, "pausado").setOrigin(0).setScale(1); 
-
+		this.fondo = this.add.image(900,550, "fondoGuardar").setOrigin(0).setScale(1);
+		this.menuInicial =this.add.text(1082,770, 'Menu Inicial', { font: 'bold 32px Courier', fill: '#333' }).setInteractive();
+		this.partidaPausada =this.add.text(1000,620, 'Partida Pausada', { font: 'bold 32px Courier', fill: '#333' }).setScale (1.5);
+		this.menuInicial.on(Phaser.Input.Events.POINTER_DOWN, () => {
+			location.reload();
+		});
 	}
 
 	update(){
 		if(config.Partida.estado=="Jugando"){
 			this.scene.setVisible(false, this);
 			this.scene.resume("Play");
+		}
+		else
+		if (config.Partida.hayError)
+		{	
+			if (config.Partida.mensajeError == 'Se desconecto un jugador')
+			this.scene.remove('Play');
+			this.scene.launch('WinHuida');
 		}
 	}
 
