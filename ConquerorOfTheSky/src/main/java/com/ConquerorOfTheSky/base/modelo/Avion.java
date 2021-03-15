@@ -38,6 +38,7 @@ public class Avion {
     @Expose
     private int posicionY;
 
+    @Expose
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_bomba", referencedColumnName = "id_bomba")
     private Bomba bomba;
