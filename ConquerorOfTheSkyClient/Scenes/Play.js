@@ -64,9 +64,6 @@ var depositoExplosivosContainer;
 var torreBar;
 var depositoCombustibleBar;
 var depositoExplosivosBar;
-var yInicialAvionBasePotencias;
-var yInicialAvionBaseAliados;
-var timedEvent;
 var mensajeAvionDestruido1 = false;
 var mensajeAvionDestruido2 = false;
 var mensajeAvionDestruido3 = false;
@@ -78,12 +75,9 @@ var mensajeAvionDestruido8 = false;
 var moverX;
 var sleep;
 var Espera;
-var prueba =0;
 var prendido = false;
 var inicioMapaX;
 var inicioMapaY;
-var inicio;
-var fin;
 var timer1 = 100;
 var timer2 = 100;
 var timer3 = 100;
@@ -101,7 +95,6 @@ class Play extends Phaser.Scene {
     }
     create(){         
         console.log(config.Partida);
-
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);45
         this.vistaLateral = this.add.image(45,113,'vistaLateralEnBase').setOrigin(0).setScale(1);
@@ -501,7 +494,7 @@ class Play extends Phaser.Scene {
         this.depositoExplosivosMask.visible = false;
         // Asigno la mascara la barra de vida
         depositoExplosivosBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.depositoExplosivosMask);
-
+        
         this.BotonesLaterales();
         /*this.anims.create({
             key: 'explosion',
@@ -1646,22 +1639,21 @@ class Play extends Phaser.Scene {
             eval("avion_"+(i+1)+"= new Avion({scene: this,x:"+ (config.Partida.avionesPotencias[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesPotencias[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesPotencias[i].altitud+"',vidaAvion:"+ config.Partida.avionesPotencias[i].salud+",combustible: "+config.Partida.avionesPotencias[i].combustible+",idavion:" +(i+1)+" }).setInteractive(); ")
             eval("avion_"+(i+1)+".xInicial = campoPotencias.posicionX +"+posi+";")
             eval("avion_"+(i+1)+".yInicial = campoPotencias.base.posicionY-30;") 
-            console.log('altitud'); 
-            console.log(config.Partida.avionesPotencias[i].altitud);
-            if (config.Partida.avionesPotencias[i].altitud!="\"Inicial\"")   
-            {       
+            if (config.Partida.tipoPartida=='cargarPartida')
+                eval("avion_"+(i+1)+".cambiarAltitud("+config.Partida.avionesPotencias[i].altitud+");")
+            else
                 eval("avion_"+(i+1)+".cambiarAltitud('"+config.Partida.avionesPotencias[i].altitud+"');")
-                console.log('entre 1');     
-            }     
             posi = posi +50;      
         }
         posi = 50;
         for(var i = 0; i < 4; i++){
             eval("avion_"+(i+1)+"_Aliados = new Avion({scene: this,x:"+ (config.Partida.avionesAliados[i].posicionX+inicioMapaX)+",y:"+ (config.Partida.avionesAliados[i].posicionY+inicioMapaY)+",altitud: '"+config.Partida.avionesAliados[i].altitud+"',vidaAvion:"+ config.Partida.avionesAliados[i].salud+",combustible: "+config.Partida.avionesAliados[i].combustible+",idavion:" +(i+5)+" }).setInteractive(); ")
             eval("avion_"+(i+1)+"_Aliados.xInicial = campoAliados.posicionX +"+posi+";")
-            eval("avion_"+(i+1)+"_Aliados.yInicial = campoAliados.base.posicionY-30;")
-            if (config.Partida.avionesAliados[i].altitud!="\"Inicial\"")
-                eval("avion_"+(i+1)+"_Aliados.cambiarAltitud('"+config.Partida.avionesAliados[i].altitud+"');")  
+            eval("avion_"+(i+1)+"_Aliados.yInicial = campoAliados.base.posicionY-30;")             
+            if (config.Partida.tipoPartida=='cargarPartida')
+                eval("avion_"+(i+1)+"_Aliados.cambiarAltitud("+config.Partida.avionesAliados[i].altitud+");")  
+            else
+                eval("avion_"+(i+1)+"_Aliados.cambiarAltitud('"+config.Partida.avionesAliados[i].altitud+"');") 
             posi = posi +50; 
         }
 
@@ -3074,7 +3066,7 @@ class Play extends Phaser.Scene {
     }
 
     update(time,delta)
-    {           
+    {     
         this.time = time;
         this.actualizarVidaAvion();
         if (timer1 > 0)
