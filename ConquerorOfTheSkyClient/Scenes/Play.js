@@ -173,8 +173,8 @@ class Play extends Phaser.Scene {
         this.circulo_torrePotencias = this.add.image(this.torrePotencias.x,this.torrePotencias.y,'circuloAvion').setScale(1.5);
         this.circulo_torrePotencias.setVisible(false);
         this.physics.world.enable(this.circulo_torrePotencias);
-        this.circulo_torrePotencias.body.setCircle(campoPotencias.base.torreControl.radioDisparo); 
-        this.circulo_torrePotencias.body.setOffset(-10,-10); 
+        this.circulo_torrePotencias.body.setCircle(campoPotencias.base.torreControl.radioDisparo+32); 
+        this.circulo_torrePotencias.body.setOffset(-35,-47); 
                
         //deposito de combustible
         this.depositoCombustiblePotencias.vida= campoPotencias.base.tanqueCombustible.salud;
@@ -232,8 +232,8 @@ class Play extends Phaser.Scene {
         this.circulo_torreAliados = this.add.image(this.torreAliados.x,this.torreAliados.y,'circuloAvion').setScale(1.5);
         this.circulo_torreAliados.setVisible(false);
         this.physics.world.enable(this.circulo_torreAliados);
-        this.circulo_torreAliados.body.setCircle(campoAliados.base.torreControl.radioDisparo);
-        this.circulo_torreAliados.body.setOffset(-10,-10); 
+        this.circulo_torreAliados.body.setCircle(campoAliados.base.torreControl.radioDisparo+32);
+        this.circulo_torreAliados.body.setOffset(-35,-47); 
 
         this.depositoCombustibleAliados.vida= campoAliados.base.tanqueCombustible.salud;
         this.physics.world.enable(this.depositoCombustibleAliados);        
@@ -278,9 +278,9 @@ class Play extends Phaser.Scene {
             light2Bomba = this.lights.addLight(500, 400, 100).setColor(0xFF0000).setIntensity(0);
             light3Bomba = this.lights.addLight(500, 600, 100).setColor(0xFF0000).setIntensity(0);
             light4Bomba = this.lights.addLight(500, 800, 100).setColor(0xFF0000).setIntensity(0);
-            lightBasePotencia = this.lights.addLight(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 200).setIntensity(12);
+            //lightBasePotencia = this.lights.addLight(campoPotencias.base.posicionX +40, campoPotencias.base.posicionY + 70, 200).setIntensity(12);
             this.lightCampoPotencia = this.lights.addLight(campoPotencias.posicionX +150, campoPotencias.posicionY + 200, 300).setIntensity(8);
-            this.lightTorre = this.lights.addLight(this.torrePotencias.x + 12 , this.torrePotencias.y - 22, 150).setColor(0xFF9900).setIntensity(0);
+            this.lightTorre = this.lights.addLight(this.torrePotencias.x + 12 , this.torrePotencias.y - 12, 150).setColor(0xFF9900).setIntensity(0);
         }
         else
         {
@@ -292,7 +292,7 @@ class Play extends Phaser.Scene {
             light2Bomba = this.lights.addLight(1500, 400, 100).setColor(0xFF0000).setIntensity(0);
             light3Bomba = this.lights.addLight(1500, 600, 100).setColor(0xFF0000).setIntensity(0);
             light4Bomba = this.lights.addLight(1500, 800, 100).setColor(0xFF0000).setIntensity(0);
-            lightBaseAliados = this.lights.addLight(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 200).setIntensity(12);
+            //lightBaseAliados = this.lights.addLight(campoAliados.base.posicionX +40, campoAliados.base.posicionY + 70, 200).setIntensity(12);
             this.lightCampoAliados = this.lights.addLight(campoAliados.posicionX +150, campoAliados.posicionY + 200, 300).setIntensity(8);
             this.lightTorre = this.lights.addLight(this.torreAliados.x + 12 , this.torreAliados.y - 22, 150).setColor(0xFF9900).setIntensity(0);
         }
