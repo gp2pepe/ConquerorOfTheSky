@@ -85,7 +85,7 @@ var timer4 = 100;
 var boom;
 
 const arregloVida = new Array();
-
+ 
 //Inicializo la clase/escena
 class Play extends Phaser.Scene {
 
