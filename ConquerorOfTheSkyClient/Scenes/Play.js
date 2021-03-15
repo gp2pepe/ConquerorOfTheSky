@@ -84,6 +84,7 @@ var inicioMapaX;
 var inicioMapaY;
 var inicio;
 var fin;
+var timer1 = 15000;
 
 const arregloVida = new Array();
 
@@ -1707,15 +1708,21 @@ class Play extends Phaser.Scene {
                 }
                 this.vistaLateral.depth = 100;
                 this.avionVistaLateral.depth =100;
-                if (!avion_1.saliBase)
-                    {                
-                        avion_1.setScale(0.08);
-                        avion_1.altitud ="Alta";
-                        avion_1.body.setSize(180,180); 
-                    }
-                else{
-                    avion_1.body.setSize(180,180);
-                    avion_1.cambiarAltitud("Alta");  
+                if (timer1 == 0)
+                {
+                    timer1 = 15000;
+                    console.log(timer1);
+                    if (!avion_1.saliBase)
+                        {                
+                            
+                            avion_1.setScale(0.08);
+                            avion_1.altitud ="Alta";
+                            avion_1.body.setSize(180,180); 
+                        }
+                    else{
+                        avion_1.body.setSize(180,180);
+                        avion_1.cambiarAltitud("Alta");
+                    }  
                 }
                  config.Partida.sincronizar({tipoOp:"sincronizarAltitudAvion", idavion:1, altitud:"Alta"});                
             }
@@ -3002,6 +3009,12 @@ class Play extends Phaser.Scene {
     {           
         this.time = time;
         this.actualizarVidaAvion();
+        while (timer1 != 0)
+            {
+                timer1--;
+                
+            }
+            console.log(timer1);
         
         this.actualizarCombustible(time);
         //llama a funcion que actualiza el efecto visual de luces en los aviones y la base
