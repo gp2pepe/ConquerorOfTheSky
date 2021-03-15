@@ -85,14 +85,13 @@ class Bootloader extends Phaser.Scene {
         this.load.audio('sonido_click','audio/sonido_click.mp3');
         this.load.audio('sonido_confirmar','audio/sonido_confirmar.wav');
         this.load.audio('Battleship','audio/Battleship.wav');
-        this.load.atlas('Nieuport_28C1', 'animaciones/explosion.png', 'animaciones/explosion_atlas.json');
+        this.load.atlas('test', 'animaciones/explosion.png', 'animaciones/explosion_atlas.json',Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
         this.load.on('complete',()=>{
             this.scene.start('MenuInicial');
         })
         config.WebSocket.openConnection();
     }
     create(){       
-
     }
 }
 
