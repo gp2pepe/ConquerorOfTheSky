@@ -165,7 +165,7 @@ class Play extends Phaser.Scene {
         this.torrePotencias.vida= campoPotencias.base.torreControl.salud;
         this.physics.world.enable(this.torrePotencias);        
 		this.torrePotencias.body.setCollideWorldBounds(true);
-        this.torrePotencias.body.setSize(300,900);
+        this.torrePotencias.body.setSize(30,90);
         this.torrePotencias.lastFired=0;
 
         this.circulo_torrePotencias = this.add.image(this.torrePotencias.x,this.torrePotencias.y,'circuloAvion').setScale(1.5);
@@ -223,7 +223,7 @@ class Play extends Phaser.Scene {
         this.torreAliados.vida= campoAliados.base.torreControl.salud;
         this.physics.world.enable(this.torreAliados);        
 		this.torreAliados.body.setCollideWorldBounds(true);
-        this.torreAliados.body.setSize(300,900);
+        this.torreAliados.body.setSize(30,90);
         this.torreAliados.lastFired=0;
         
         this.circulo_torreAliados = this.add.image(this.torreAliados.x,this.torreAliados.y,'circuloAvion').setScale(1.5);
