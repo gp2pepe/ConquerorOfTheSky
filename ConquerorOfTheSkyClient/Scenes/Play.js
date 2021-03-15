@@ -82,6 +82,7 @@ var timer1 = 100;
 var timer2 = 100;
 var timer3 = 100;
 var timer4 = 100;
+var boom;
 
 const arregloVida = new Array();
 
@@ -93,7 +94,9 @@ class Play extends Phaser.Scene {
         super({key: 'Play'});
         this.bullets;
     }
-    create(){         
+    create(){       
+       // boom = this.add.sprite(0, 0, "Nieuport_28C1");
+        //boom.setVisible(false);  
         console.log(config.Partida);
         //Se agrega imagenes a utilizar y dibujar en pantalla primero (fondo, muros, vista lateral)
         this.add.image(0, 0, "fondoMapa").setOrigin(0);45
@@ -503,20 +506,18 @@ class Play extends Phaser.Scene {
             duration: 5000
         });
 */
-        /*
+
         this.anims.create({
             key: 'explosion',
-            frames: this.anims.generateFrameNames('Nieuport_28C1',{
+            frames: this.anims.generateFrameNames('test',{
                 prefix: '2a9n_',
                 start: 0,
                 end: 16,
             }),
-            repeat: -1,
+            repeat: 3,
             frameRate: 12
 
         })
-        this.boom = this.add.sprite(233, 520 , "Nieuport_28C1");
-        this.boom.play('explosion')*/
     }
 
 
@@ -3208,6 +3209,9 @@ class Play extends Phaser.Scene {
         
         if(avion_1.vidaAvion <= 0 ) 
             {
+               // boom = this.add.sprite(avion_1.x, avion_1.y , "Nieuport_28C1");
+                //boom.setVisible(true);
+                //boom.play('explosion');
                 avion_1.destroy();
                 if (mensajeAvionDestruido1 == false && config.Partida.Bando == 'Aliados')
                 {
@@ -3228,6 +3232,7 @@ class Play extends Phaser.Scene {
                     light1.setIntensity(0);
                     light1Bomba.setIntensity(0);
                 }
+                
             }
         if(avion_2.vidaAvion <= 0 ) 
         {

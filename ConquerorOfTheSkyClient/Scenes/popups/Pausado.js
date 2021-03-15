@@ -33,11 +33,11 @@ class Pausado extends Phaser.Scene
 	}
 
 	update(){
+		 console.log(config.Partida.mensajeError);
 		if(config.Partida.estado=="Jugando"){
 			this.scene.setVisible(false, this);
 			this.scene.resume("Play");
 		}
-		else
 		if (config.Partida.hayError)
 		{	
 			if (config.Partida.mensajeError == 'Se desconecto un jugador')
