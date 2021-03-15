@@ -368,14 +368,14 @@ class Play extends Phaser.Scene {
             config.Partida.artilleriasAliados[i] = artilleriasAliados.getChildren()[i];
         }
 
-        arregloVida[0] = config.Partida.aviones[0].vidaAvion;
-        arregloVida[1] = config.Partida.aviones[1].vidaAvion;
-        arregloVida[2] = config.Partida.aviones[2].vidaAvion;
-        arregloVida[3] = config.Partida.aviones[3].vidaAvion;
-        arregloVida[4] = config.Partida.aviones[4].vidaAvion;
-        arregloVida[5] = config.Partida.aviones[5].vidaAvion;
-        arregloVida[6] = config.Partida.aviones[6].vidaAvion;
-        arregloVida[7] = config.Partida.aviones[7].vidaAvion;
+        arregloVida[0] = config.Partida.configuraciones.avionSalud;
+        arregloVida[1] = config.Partida.configuraciones.avionSalud;
+        arregloVida[2] = config.Partida.configuraciones.avionSalud;
+        arregloVida[3] = config.Partida.configuraciones.avionSalud;
+        arregloVida[4] = config.Partida.configuraciones.avionSalud;
+        arregloVida[5] = config.Partida.configuraciones.avionSalud;
+        arregloVida[6] = config.Partida.configuraciones.avionSalud;
+        arregloVida[7] = config.Partida.configuraciones.avionSalud;
 
         //Evento que escucha cuando se clickea con el mouse y llama al onObjectClicked
         this.input.on('pointerdown',this.onObjectClicked);   
