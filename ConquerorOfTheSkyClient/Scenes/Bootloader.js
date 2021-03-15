@@ -102,7 +102,8 @@ class Bootloader extends Phaser.Scene {
              "fondoCargar",
              'fondoBuscarPartida',
              'menuEmergenteBuscar',
-             'esperandoContrincante'
+             'esperandoContrincante',
+             'imagenWinGame1estrellaSeRetiro'
              //'loading'
 
         ])
