@@ -26,9 +26,8 @@ class MenuInicial extends Phaser.Scene {
         this.fondoMenu = this.add.image(0, 0, "fondoMenu").setOrigin(0).setInteractive();
         this.add.image(900, 100, "titulo").setOrigin(0);
         this.sonido_fondo = this.sound.add('fondo_menu',{loop:false,volume:0.02});
-        this.sonido_fondo.resume();
-        console.log('antes del sonido');
-        console.log(this.sonido_fondo);
+        this.sonido_click = this.sound.add('click',{loop:false});
+        //this.sonido_fondo.resume();
         this.fondoMenu.on(Phaser.Input.Events.POINTER_DOWN, () =>{
             this.sonido_fondo.play();
         })
@@ -62,7 +61,7 @@ class MenuInicial extends Phaser.Scene {
                 y: 400,
                 duration: 1000
             });
-            this.sonido_fondo.play();
+            this.sonido_click.play();
         });
 
         //Se carga imagen interactiva de Buscar Partida
@@ -85,7 +84,7 @@ class MenuInicial extends Phaser.Scene {
                 y: 400,
                 duration: 1000
             });
-            this.sonido_fondo.play();
+            this.sonido_click.play();
         });
 
          //Se carga imagen interactiva de Buscar Partida
@@ -108,7 +107,7 @@ class MenuInicial extends Phaser.Scene {
                 y: 400,
                 duration: 1000
             });
-            this.sonido_fondo.play();
+            this.sonido_click.play();
         });
     }
     update(){     
