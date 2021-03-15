@@ -96,7 +96,7 @@ class MenuInicial extends Phaser.Scene {
             this.add.tween({
                 targets: this.cargarPartida,
                 ease: 'Bounce.easeIn',
-                x:1300,
+                x:1070,
                 duration: 1000,
                 onComplete: () => {    
                     this.scene.launch('MenuCargar');
