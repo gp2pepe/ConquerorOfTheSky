@@ -22,6 +22,8 @@ class MenuInicial extends Phaser.Scene {
 	 */
     
 	create() {
+
+
         //Carga boton de nueva partida y dirije a la escena nueva partida
         this.fondoMenu = this.add.image(0, 0, "fondoMenu").setOrigin(0).setInteractive();
         this.add.image(900, 100, "titulo").setOrigin(0);

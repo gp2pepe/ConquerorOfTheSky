@@ -113,6 +113,7 @@ class Bootloader extends Phaser.Scene {
         this.load.audio('sonido_click','audio/sonido_click.mp3');
         this.load.audio('sonido_confirmar','audio/sonido_confirmar.wav');
         this.load.audio('Battleship','audio/Battleship.wav');
+        this.load.atlas('Nieuport_28C1', 'animaciones/explosion.png', 'animaciones/explosion_atlas.json');
         this.load.on('complete',()=>{
             this.scene.start('MenuInicial');
         })
@@ -127,6 +128,7 @@ class Bootloader extends Phaser.Scene {
         this.input.keyboard.on('keydown_LEFT',() => {
             sonido_fondo.stop(0);
         })  */
+        console.log(this.anims.generateFrameNames('Nieuport_28C1'));
     }
 }
 

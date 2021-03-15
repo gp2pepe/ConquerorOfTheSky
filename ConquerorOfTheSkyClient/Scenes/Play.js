@@ -499,6 +499,28 @@ class Play extends Phaser.Scene {
         depositoExplosivosBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.depositoExplosivosMask);
 
         this.BotonesLaterales();
+        /*this.anims.create({
+            key: 'explosion',
+            frames: '2a9n_0"',
+            frameRate: 12,
+            repeat: -1,
+            duration: 5000
+        });
+*/
+        /*
+        this.anims.create({
+            key: 'explosion',
+            frames: this.anims.generateFrameNames('Nieuport_28C1',{
+                prefix: '2a9n_',
+                start: 0,
+                end: 16,
+            }),
+            repeat: -1,
+            frameRate: 12
+
+        })
+        this.boom = this.add.sprite(233, 520 , "Nieuport_28C1");
+        this.boom.play('explosion')*/
     }
 
 
