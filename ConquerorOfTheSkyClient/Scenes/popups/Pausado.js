@@ -29,6 +29,8 @@ class Pausado extends Phaser.Scene
 		this.menuInicial =this.add.text(1082,770, 'Menu Inicial', { font: 'bold 32px Courier', fill: '#333' }).setInteractive();
 		this.partidaPausada =this.add.text(1000,620, 'Partida Pausada', { font: 'bold 32px Courier', fill: '#333' }).setScale (1.5);
 		this.menuInicial.on(Phaser.Input.Events.POINTER_DOWN, () => {
+			config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
+			config.Partida.terminarPartida();
 			location.reload();
 		});
 	}
