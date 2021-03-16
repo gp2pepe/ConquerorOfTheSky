@@ -41,7 +41,6 @@ class MenuBando extends Phaser.Scene
         this.sonidoClick = this.sound.add('sonido_click',{loop:false,volume:0.06});
         this.sonidoConfirmar = this.sound.add('sonido_confirmar',{loop:false,volume:0.08});
         this.sonidoFondoPartida = this.sound.add('Battleship',{loop:true,volume:0.007});
-        this.click = this.sound.add('click',{loop:false});
         
         
     
@@ -213,7 +212,7 @@ class MenuBando extends Phaser.Scene
                 y: 400,
                 duration: 1000
             });
-            this.click.play();
+            this.sonidoClick.play();
         });
         this.textoPotencias.on(Phaser.Input.Events.POINTER_OVER, () => {
             this.add.tween({
@@ -248,7 +247,7 @@ class MenuBando extends Phaser.Scene
                 y: 400,
                 duration: 1000
             });
-            this.click.play();
+            this.sonidoClick.play();
         });
         
         this.textoAliados.on(Phaser.Input.Events.POINTER_OVER, () => {
