@@ -2875,7 +2875,6 @@ class Play extends Phaser.Scene {
             for(var i = 0; i < 4; i++){
                 if(config.Partida.aviones[i].vidaAvion<arregloVida[i]){
                     moverX =  (( arregloVida[i] - config.Partida.aviones[i].vidaAvion) * 90 / config.Partida.configuraciones.avionSalud );
-                    console.log("Vida actual: "+ config.Partida.aviones[i].vidaAvion +" MoverX: " + moverX);
                     arregloVida[i] = config.Partida.aviones[i].vidaAvion;
                     eval("vidaBar"+(i+1)+".x-="+ moverX + ";")
                 }                
@@ -2884,7 +2883,6 @@ class Play extends Phaser.Scene {
             for(var i = 4; i < 8; i++){
                 if(config.Partida.aviones[i].vidaAvion<arregloVida[i]){
                     moverX =  (( arregloVida[i] - config.Partida.aviones[i].vidaAvion) * 90 / config.Partida.configuraciones.avionSalud );
-                    console.log("Vida actual: "+ config.Partida.aviones[i].vidaAvion +" MoverX: " + moverX);
                     arregloVida[i] = config.Partida.aviones[i].vidaAvion;                    
                     eval("vidaBar"+((i-3))+".x-="+ moverX + ";")
                 }                
