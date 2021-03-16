@@ -42,8 +42,6 @@ class MenuBando extends Phaser.Scene
         this.sonidoConfirmar = this.sound.add('sonido_confirmar',{loop:false,volume:0.08});
         this.sonidoFondoPartida = this.sound.add('Battleship',{loop:true,volume:0.007});
         
-        
-    
         this.text.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.text,
@@ -56,8 +54,6 @@ class MenuBando extends Phaser.Scene
                     ingresoTexto2 = false;
                 }
             });
-
-        
 
             this.add.tween({
                 targets: [ this.pointsText, this.bestPointsText ],                
@@ -78,8 +74,6 @@ class MenuBando extends Phaser.Scene
                     ingresoTexto = false;
                 }
             });
-
-        
 
             this.add.tween({
                 targets: [ this.pointsText, this.bestPointsText ],                
@@ -230,7 +224,6 @@ class MenuBando extends Phaser.Scene
             });
         });
         // Cuando hace click en Aliados
-
         this.textoAliados.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.add.tween({
                 targets: this.textoAliados,
@@ -269,7 +262,6 @@ class MenuBando extends Phaser.Scene
         var alerta = this.add.text(680, 960, '', { font: 'bold 44px Courier', fill: '#080808' });
         this.crearNuevaPartida = this.add.image(680, 1025, 'crearPartida').setOrigin(0).setScale(0.36).setInteractive();
         this.crearNuevaPartida.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            console.log(ingresoTexto);
             if(IngresoNombrePartida == false ){
                 alerta.setText('Ingrese Nombre Partida'); 
             }else
@@ -292,7 +284,6 @@ class MenuBando extends Phaser.Scene
             //Creo la partida con el bando y el nombre seleccionado
             this.sonidoConfirmar.play();
             this.sonidoFondoPartida.play();
-            console.log('Entre iniciando partida en Menu Bando');
             while (textEntry.text.length != 12)
             {
                 textEntry.text = ' ' + textEntry.text;     
@@ -301,7 +292,6 @@ class MenuBando extends Phaser.Scene
             config.Partida.Nombre = textEntry.text;
             config.Partida.nick = textEntryNick.text;
             config.Partida.tipoPartida = "NuevaPartida";
-            console.log(config.Partida.nick);
             config.Partida.iniciarPartida();
 
         }
@@ -326,7 +316,6 @@ class MenuBando extends Phaser.Scene
                 duration: 100
             });
         });
-
     }
 
     update(){
@@ -338,10 +327,6 @@ class MenuBando extends Phaser.Scene
             this.scene.launch('EsperandoContrincante');
 
         }
-
-
     }
-
-
 }
 export  default MenuBando;

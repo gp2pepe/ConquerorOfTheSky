@@ -25,7 +25,6 @@ class Guardar extends Phaser.Scene
     create() 
     {   
 		var ingresoTexto = false;
-		//this.Guardando = this.add.image(900,550, "guardando").setOrigin(0).setScale(1); 
 		this.add.image(720,450, 'fondoGuardar').setOrigin(0);
 		this.add.text(850,470, 'Guardar Partida', { font: 'bold 40px Courier', fill: '#333' });
 

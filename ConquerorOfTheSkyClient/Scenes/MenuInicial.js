@@ -29,8 +29,6 @@ class MenuInicial extends Phaser.Scene {
         this.add.image(900, 50, "titulo").setOrigin(0);
         this.sonido_fondo = this.sound.add('fondo_menu',{loop:false,volume:0.02});
         this.sonido_fondo.resume();
-        console.log('antes del sonido');
-        console.log(this.sonido_fondo);
         this.fondoMenu.on(Phaser.Input.Events.POINTER_DOWN, () =>{
             this.sonido_fondo.play();
         })
@@ -68,8 +66,7 @@ class MenuInicial extends Phaser.Scene {
                 x:1070,
                 duration: 1000,
                 onComplete: () => {   
-                    config.Partida.listarPartidas(); //Hacer luego un boton refresh            
-                   // this.scene.launch('MenuPartidas');
+                    config.Partida.listarPartidas(); 
                 }
             });
 
