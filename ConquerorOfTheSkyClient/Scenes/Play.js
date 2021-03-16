@@ -720,7 +720,6 @@ class Play extends Phaser.Scene {
                     if (avion_3_Aliados.focus==true && avion_3_Aliados.altitud!='Inicial')
                     {    
                         avion_3_Aliados.altitud_anterior=avion_3_Aliados.altitud;
-                        
                         avion_3_Aliados.cargarbomba=true;  
                         this.cargarBomba3.setTint(0xff5b5b);         
                         config.Partida.idavion=7;
@@ -3457,6 +3456,7 @@ class Play extends Phaser.Scene {
             if ((this.torrePotencias.vida <= 0 && this.depositoCombustiblePotencias.vida <= 0 && this.contenedorExplosivosPotencias.vida <= 0)||(avion_1.vidaAvion <= 0 && avion_2.vidaAvion <= 0 && avion_3.vidaAvion <= 0 && avion_4.vidaAvion <= 0))
             {
                 config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
+                config.Partida.terminarPartida();
                 this.scene.remove('Play');  
                 this.scene.launch('GameOver');
             }else{
@@ -3475,6 +3475,7 @@ class Play extends Phaser.Scene {
             if ((this.torreAliados.vida <= 0 && this.depositoCombustibleAliados.vida <= 0 && this.contenedorExplosivosAliados.vida <= 0 )||(avion_1_Aliados.vidaAvion <= 0 && avion_2_Aliados.vidaAvion <= 0 && avion_3_Aliados.vidaAvion <= 0 && avion_4_Aliados.vidaAvion <= 0))
             {
                 config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
+                config.Partida.terminarPartida();
                 this.scene.remove('Play');  
                 this.scene.launch('GameOver');
             }else{
@@ -3507,7 +3508,7 @@ class Play extends Phaser.Scene {
         //Manejo los errores que vienen de backend
 		if(config.Partida.hayError){
 			if(config.Partida.mensajeError=="Se desconecto un jugador" ){
-                config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
+                config.Partida.terminarPartida();
                 this.scene.remove('Play');  
                 this.scene.launch('WinHuida'); 
 
@@ -3516,8 +3517,6 @@ class Play extends Phaser.Scene {
 		}
 
     }
-
-
 
 }
 
