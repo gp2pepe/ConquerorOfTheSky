@@ -1,5 +1,6 @@
 import { config } from '../../lib/main.js';
 var textEntry;
+var timer;
 
 class Guardar extends Phaser.Scene
 {
@@ -24,6 +25,7 @@ class Guardar extends Phaser.Scene
 
     create() 
     {   
+		timer = 11000;
 		var ingresoTexto = false;
 		this.add.image(720,450, 'fondoGuardar').setOrigin(0);
 		this.add.text(850,470, 'Guardar Partida', { font: 'bold 40px Courier', fill: '#333' });
@@ -90,6 +92,18 @@ class Guardar extends Phaser.Scene
 	}
 
 	update(){
+
+		if (timer > 0)
+		{
+			timer--;
+		}
+		if (timer == 0)
+		{
+			config.Partida.estado = "Jugando";
+			this.scene.resume("Play");
+			this.scene.stop('Guardar');
+			
+		}
 
 		if(config.Partida.estado=="Preparado"){
 			this.guardar.destroy();
