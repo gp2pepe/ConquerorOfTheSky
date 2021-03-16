@@ -114,6 +114,7 @@ class MenuCargar extends Phaser.Scene
 		this.cancelar =this.add.text(800,730, 'Cancelar', { font: 'bold 32px Courier', fill: '#333' }).setInteractive();
 		this.cancelar.on(Phaser.Input.Events.POINTER_DOWN, () => {
 			this.scene.setVisible(false, this);
+
         });
 	}
 
@@ -130,17 +131,22 @@ class MenuCargar extends Phaser.Scene
 		}
 		//Manejo los errores que vienen de backend
 		if(config.Partida.hayError){
-			if(config.Partida.mensajeError=="Hubo un error al guardar la partida" || config.Partida.mensajeError=="La partida ya no esta disponible"){
-				this.guardar.destroy();
-				this.guardando.destroy();
+			if(config.Partida.mensajeError=="No existe una partida con esa contraseña" || config.Partida.mensajeError=="No existe la partida "){
+				this.cargar.destroy();
+				this.cargar.destroy();
 				this.textBox.destroy();
 				this.text.destroy();
 				textEntry.destroy();
-				this.alerta.setY(470);
+				this.textBox2.destroy();
+				this.text2.destroy();
+				textEntry2.destroy();
+				this.alerta.setY(570);
 				this.alerta.setX(780);
 				this.alerta.setText("ERROR: " + config.Partida.mensajeError); 
 				this.cancelar.setX(900);
 				this.cancelar.setText("Volver");
+				config.Partida.mensajeError = "";
+				config.Partida.hayError = false;
 
 			}
 

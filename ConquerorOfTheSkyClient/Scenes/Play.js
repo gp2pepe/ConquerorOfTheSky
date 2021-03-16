@@ -2687,7 +2687,7 @@ class Play extends Phaser.Scene {
         difX= Math.abs(avion.x - avion.xInicial); 
         difY= Math.abs(avion.y - avion.yInicial);
 
-        if (difX < 4 && difY < 4)
+        if (difX < 6 && difY < 6)
         {                                      
             if (avion.cargarbomba==true)
             {            
