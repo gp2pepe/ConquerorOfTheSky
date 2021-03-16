@@ -71,6 +71,10 @@ var prendido = false;
 var inicioMapaX;
 var inicioMapaY;
 var timer1 = 100;
+var avionXInicial;
+var avionYInicial;
+var velAvion;
+
 const arregloVida = new Array();
 
 //Inicializo la clase/escena
