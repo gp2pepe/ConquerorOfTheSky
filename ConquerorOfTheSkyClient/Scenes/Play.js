@@ -123,6 +123,8 @@ class Play extends Phaser.Scene {
         // agrego sonido de fondo de la partida
         this.sonidoDisparos = this.sound.add('sonido_disparos',{loop:false});
         this.sonidoBomba = this.sound.add('sonido_confirmar',{loop:false});
+        this.sonidoVictoria = this.sound.add('sonido_victoria',{loop:false});
+        this.sonidoDerrota = this.sound.add('sonido_derrota',{loop:false});
         
         //Se imprime en consola la partida que devuelve el servidor
         console.log("Before Change", JSON.parse(JSON.stringify(config.Partida)));
@@ -3253,11 +3255,14 @@ class Play extends Phaser.Scene {
                 config.Partida.terminarPartida();
                 this.scene.remove('Play');  
                 this.scene.launch('GameOver');
+                this.sonidoDerrota.play();
+                
             }else{
                 if(config.Partida.estado == 'Terminada')
                 {
                     this.scene.remove('Play');    
                     this.scene.launch('Win');
+                    this.sonidoVictoria.play();
                     
                 } 
             }
@@ -3272,11 +3277,13 @@ class Play extends Phaser.Scene {
                 config.Partida.terminarPartida();
                 this.scene.remove('Play');  
                 this.scene.launch('GameOver');
+                this.sonidoDerrota.play();
             }else{
                 if(config.Partida.estado == 'Terminada')
                 {
                     this.scene.remove('Play');  
-                    this.scene.launch('Win');                    
+                    this.scene.launch('Win');
+                    this.sonidoVictoria.play();                    
                 } 
             }
 

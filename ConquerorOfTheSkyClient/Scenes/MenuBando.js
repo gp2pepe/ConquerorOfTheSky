@@ -38,7 +38,7 @@ class MenuBando extends Phaser.Scene
         this.text = this.add.text(800, 155, 'Click para ingresar nombre', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
         this.textBox2 = this.add.image(750,860, 'textBox').setOrigin(0).setScale(0.5);
         this.text2 = this.add.text(800, 885, 'Click para ingresar nombre', { font: '16px Arial', fill: '#474747' }).setScale(1.5).setInteractive();
-        this.sonidoClick = this.sound.add('sonido_click',{loop:false,volume:0.06});
+        this.sonidoClick = this.sound.add('click',{loop:false,volume:0.06});
         this.sonidoConfirmar = this.sound.add('sonido_confirmar',{loop:false,volume:0.08});
         this.sonidoFondoPartida = this.sound.add('Battleship',{loop:true,volume:0.007});
         
