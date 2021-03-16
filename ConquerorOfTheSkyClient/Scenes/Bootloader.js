@@ -70,6 +70,7 @@ class Bootloader extends Phaser.Scene {
             'imagenDerrota',
             'mask',
             'Save-64',
+            'Logout-64',
             'guardando',
             'pausado',
             'fondoGuardar',

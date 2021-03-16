@@ -389,7 +389,7 @@ class Play extends Phaser.Scene {
         //Coloco boton para que el jugador que creo la partida pueda guardar la misma
         if(config.Partida.duenio)   
             this.botonGuardar();
-
+        this.botonSalir();
         //Se definen las barras de vida  de cada avion
         vidaContainer1 = this.add.sprite(233, 520 , "vidaContainer").setScale(0.25);
         vidaContainer2 = this.add.sprite(233, 615 , "vidaContainer").setScale(0.25);
@@ -793,12 +793,27 @@ class Play extends Phaser.Scene {
                 ease: 'Bounce.easeIn',                
                 onComplete: () => {
          
-                        this.guardar.setScale(0.6);  
-                        config.Partida.estado="Pausado";
-                        this.scene.launch('Guardar');
-                        config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
-                        this.scene.pause();
+                    this.guardar.setScale(0.6);  
+                    config.Partida.estado="Pausado";
+                    this.scene.launch('Guardar');
+                    config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Pausar"});
+                    this.scene.pause();
                         
+                }
+            });
+        });
+    }
+    botonSalir(){
+
+        this.salir = this.add.image(324, 55, "Logout-64").setOrigin(0).setScale(.7).setInteractive(); 
+        this.salir.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.add.tween({
+                targets: this.salir,
+                ease: 'Bounce.easeIn',                
+                onComplete: () => {
+                    config.Partida.sincronizar({tipoOp:"terminarPartida", estado:"Terminada"});
+                    config.Partida.terminarPartida();
+                    location.reload();    
                 }
             });
         });
