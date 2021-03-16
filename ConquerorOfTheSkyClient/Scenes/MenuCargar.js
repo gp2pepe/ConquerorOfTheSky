@@ -113,7 +113,7 @@ class MenuCargar extends Phaser.Scene
 
 		this.cancelar =this.add.text(800,730, 'Cancelar', { font: 'bold 32px Courier', fill: '#333' }).setInteractive();
 		this.cancelar.on(Phaser.Input.Events.POINTER_DOWN, () => {
-			this.scene.setVisible(false, this);
+			this.scene.stop();
 
         });
 	}
