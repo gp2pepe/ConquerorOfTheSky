@@ -29,9 +29,7 @@ class GameOver extends Phaser.Scene
                 x:620,
                 duration: 100,
                 onComplete: () => {
-                    console.log('Antes del reload');
                     location.reload();
-                    console.log('Despues del reload');
                 }
             });
 

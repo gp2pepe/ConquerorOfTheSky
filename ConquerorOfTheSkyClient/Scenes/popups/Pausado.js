@@ -37,7 +37,6 @@ class Pausado extends Phaser.Scene
 		if (timer > 0)
 		{
 			timer--;
-			console.log(timer);
 		}
 		if (timer == 0)
 		{

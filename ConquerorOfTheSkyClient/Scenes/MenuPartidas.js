@@ -22,8 +22,6 @@ class MenuPartidas extends Phaser.Scene {
 
     create() {
         var listaPartidass = config.Partida.listaPartidas;
-        //this.add.image(0, 0, "fondoMenu").setOrigin(0);
-        //this.add.image(0,0, 'desenfocar').setOrigin(0);
         this.add.image(150, 150, "fondoBuscarPartida").setOrigin(0).setScale(2);
         var scrollMode = 0; // 0:vertical, 1:horizontal
         var gridTable = this.rexUI.add.gridTable({
@@ -81,7 +79,6 @@ class MenuPartidas extends Phaser.Scene {
 
                         orientation: scrollMode,
                         background: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 0).setStrokeStyle(2, COLOR_DARK),
-                        //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10, 0x0),
                         text: scene.add.text(0, 0, '', { font: '22px Sportlight Stencil', fill: '#080808' }),
 
                         space: {
@@ -95,14 +92,12 @@ class MenuPartidas extends Phaser.Scene {
                 // Set properties from item value
                 cellContainer.setMinSize(width, height); // Size might changed in this demo
                 cellContainer.getElement('text').setText(item.id); // Set text of text object
-              //  cellContainer.getElement('icon').setFillStyle(item.color); // Set fill color of round rectangle object
                 cellContainer.getElement('background').setStrokeStyle(2, COLOR_DARK).setDepth(0);
                 return cellContainer;
             },
             items: CreateItems(100)
         })
             .layout()
-        //.drawBounds(this.add.graphics(), 0xff0000);
 
         this.print = this.add.text(0, 0, '');
         gridTable
@@ -118,7 +113,6 @@ class MenuPartidas extends Phaser.Scene {
                     .setDepth(0);
             }, this)
             .on('cell.click', function (cellContainer, cellIndex, pointer) {
-                //this.print.text += 'click ' + cellIndex + ': ' + cellContainer.text + '\n';
                 var partida =cellContainer.text.split(' ');
                 var nombrePartida = listaPartidass[partida[0]].nombre;
                 var cantLetrasPartida = cantLetrasString(nombrePartida)
