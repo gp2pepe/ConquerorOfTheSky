@@ -162,30 +162,22 @@ class IngresarPartidaBuscar extends Phaser.Scene
                 alerta.setText('el nick debe de ser menor a 10 caracteres').setScale(0.45);
             }
             else{
-            //Creo la partida con el bando y el nombre seleccionado
-            //this.sonidoConfirmar.play();
-            //this.sonidoFondoPartida.play();
-            //config.Partida.Bando = bandoElegido;
-            //config.Partida.Nombre = this.Nombre;
-            config.Partida.nick = textNick.text;
-            //config.Partida.pass = textContra.text;
-            config.Partida.tipoPartida = "ingresarAPartida";
-            if (this.Publica == 'No')
+
+                config.Partida.nick = textNick.text;
+                config.Partida.tipoPartida = "ingresarAPartida";
+                if (this.Publica == 'No')
                 {
                     config.Partida.ingresarAPartida(this.IdPartida, textContra.text);   
-                    //config.Partida.estado = "Pausado";
-                    //this.scene.launch('EsperandoContrincante');
+
                 }
-            else
+                else
                 {
-                config.Partida.ingresarAPartida(this.IdPartida, '');
+                    config.Partida.ingresarAPartida(this.IdPartida, '');
                 }
-            //console.log(config.Partida);
-            //this.scene.launch('confirmarNuevaPartida');
+
         }
         });
 
-        //config.Partida.ingresarAPartida(this.IdPartida);
     }
 
     update() {

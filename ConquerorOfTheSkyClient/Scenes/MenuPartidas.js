@@ -114,9 +114,19 @@ class MenuPartidas extends Phaser.Scene {
             }, this)
             .on('cell.click', function (cellContainer, cellIndex, pointer) {
                 var partida =cellContainer.text.split(' ');
-                var nombrePartida = listaPartidass[partida[0]].nombre;
+                var encontre = false;
+                var i = 0;
+                var partidaDatos;
+                while(i<listaPartidass.length && encontre == false){
+                    if(listaPartidass[i].idPartida == partida[0]){
+                        partidaDatos = listaPartidass[i];
+                        encontre = true;
+                    }
+                    i++;
+                }
+                var nombrePartida = partidaDatos.nombre;
                 var cantLetrasPartida = cantLetrasString(nombrePartida)
-                var bando = listaPartidass[partida[0]].bandoDuenio;
+                var bando = partidaDatos.bandoDuenio;
                 var posicionNombre = 44 - cantLetrasPartida;
                 this.scene.pause();
                 this.scene.launch('IngresarPartidaBuscar', { Id: partida[0], Nombre: partida[posicionNombre], Bando: bando, Publica: partida[posicionNombre  + 62] });
