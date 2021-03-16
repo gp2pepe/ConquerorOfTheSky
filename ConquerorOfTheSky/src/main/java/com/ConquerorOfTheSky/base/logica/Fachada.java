@@ -186,9 +186,11 @@ public class Fachada implements IFachada{
 
         Partida partidaNueva = new Partida(publica, modalidad, nombre, passwd, equipos, nuevoMapa);
 
-        Long idpartida ;
+        Long idpartida = Long.valueOf(1);
         synchronized(this) {
-          idpartida = Long.valueOf(partidas.size());
+          if(partidas.size()!=0)
+            idpartida = Long.valueOf(partidas.get(partidas.size()-1).getIdpartida()+1);
+        
           partidaNueva.setIdpartida(idpartida);
           partidas.add(partidaNueva);
         }
@@ -443,12 +445,16 @@ public class Fachada implements IFachada{
         //Partida partida = new Partida(par.isPublica(), par.getModalidad(), par.getNombre(), par.getPassword(), par.getEquipos(), par.getMapa());
         if(partida.getPassword().equals(passwd)){
           partida.getEquipos().get(0).getJugadores().get(0).setSesionActual(sesionUsu);
-          Long idpartida ;
+
+          Long idpartida = Long.valueOf(1);
           synchronized(this) {
-            idpartida = Long.valueOf(partidas.size());
+            if(partidas.size()!=0)
+              idpartida = Long.valueOf(partidas.get(partidas.size()-1).getIdpartida()+1);
+          
             partida.setIdpartida(idpartida);
             partidas.add(partida);
           }
+
           List<Avion> aviones = partida.getEquipos().get(0).getJugadores().get(0).getAviones();
           List<Avion> aviones2 = partida.getEquipos().get(1).getJugadores().get(0).getAviones();
 
