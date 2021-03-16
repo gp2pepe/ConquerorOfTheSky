@@ -45,7 +45,7 @@ class Pausado extends Phaser.Scene
 			this.scene.stop('Pausado');
 		}
 		if(config.Partida.estado=="Jugando"){
-			this.scene.setVisible(false, this);
+			this.scene.stop();
 			this.scene.resume("Play");
 		}
 		if (config.Partida.hayError)

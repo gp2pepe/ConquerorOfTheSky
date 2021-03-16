@@ -79,7 +79,7 @@ class Guardar extends Phaser.Scene
 		this.cancelar =this.add.text(870,670, 'Cancelar', { font: 'bold 32px Courier', fill: '#333' }).setInteractive();
 		this.cancelar.on(Phaser.Input.Events.POINTER_DOWN, () => {
     		config.Partida.estado="Jugando";
-			this.scene.setVisible(false, this);
+			this.scene.stop();
 			config.Partida.sincronizar({tipoOp:"sincronizarPausa", estado:"Activar"});
 			this.scene.resume("Play");
         });
