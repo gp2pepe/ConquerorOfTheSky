@@ -1,6 +1,8 @@
 # ConquerorOfTheSky
- Juego de aviones de la primera guerra mundial realizado para proyecto de tercer año de Licenciatura en Informática:
- 
+ Juego de aviones de la primera guerra mundial realizado para proyecto de tercer año de Licenciatura en Informática.
+ <br><br>
+**Autores:**
+ <br><br>
  <a href="https://github.com/wanico34">@wanico34</a>  <br>
  <a href="https://github.com/mailzurdo">@mailzurdo </a><br>
  <a href="https://github.com/TabaRivas">@TabaRivas </a><br>
@@ -23,7 +25,7 @@
 <h5>Requisitos:</h5>
 
 Visual Studio Code 1.53.2 (https://code.visualstudio.com/)<br>
-Plugins: 
+**Plugins:** 
 - Live Server (https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 - Maven for Java (https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven)
 - Spring Boot Dashboard (https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-boot-dashboard)
